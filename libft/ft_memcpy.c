@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 16:51:14 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/07 17:22:28 by gyopark          ###   ########.fr       */
+/*   Created: 2022/11/07 17:45:33 by gyopark           #+#    #+#             */
+/*   Updated: 2022/11/07 18:06:06 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
 #include "libft.h"
+#include <stddef.h>
 
-void	*ft_memset(void *dest, int c, size_t n)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
 	unsigned char	*new_dest;
-	unsigned char	src;
+	unsigned char	*new_src;
 	size_t			i;
 
 	new_dest = dest;
-	src = c;
+	new_src = (const unsigned char *) src;
 	i = 0;
 	while (i++ < n)
-		*new_dest++ = src;
+		*new_dest++ = *new_src++;
 	return (dest);
 }

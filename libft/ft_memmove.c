@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 16:51:14 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/07 17:22:28 by gyopark          ###   ########.fr       */
+/*   Created: 2022/11/07 18:06:26 by gyopark           #+#    #+#             */
+/*   Updated: 2022/11/07 19:30:02 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
 #include "libft.h"
+#include <stddef.h>
 
-void	*ft_memset(void *dest, int c, size_t n)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
 	unsigned char	*new_dest;
-	unsigned char	src;
-	size_t			i;
+	unsigned char	*new_src;
 
-	new_dest = dest;
-	src = c;
-	i = 0;
-	while (i++ < n)
-		*new_dest++ = src;
+	if (dest == src || n == 0)
+		return (dest);
+	if (dest < src)
+	{
+		new_dest = (unsigned char *)dest;
+		new_src = (unsigned char *)src;
+		while (n--)
+			*new_dest++ = *new_src--;
+	}
 	return (dest);
 }
