@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 16:51:14 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/09 11:51:19 by gyopark          ###   ########.fr       */
+/*   Created: 2022/11/08 15:03:49 by gyopark           #+#    #+#             */
+/*   Updated: 2022/11/08 15:19:36 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
 #include "libft.h"
 
-void	*ft_memset(void *dest, int c, size_t n)
+unsigned int	ft_strlcpy(char *dest, char *src, unsigned int size)
 {
-	unsigned char	*new_dest;
-	unsigned char	src;
-	size_t			i;
+	char	*c;
+	int		cnt;
 
-	new_dest = dest;
-	src = c;
-	i = 0;
-	while (i++ < n)
-		*new_dest++ = src;
-	return (dest);
+	c = src;
+	cnt = 0;
+	while (*c)
+	{
+		c++;
+		cnt++;
+	}
+	if (size)
+	{
+		while (*src && --size)
+		{
+			*dest = *src;
+			src++;
+			dest++;
+		}
+		*dest = '\0';
+	}
+	return (cnt);
 }

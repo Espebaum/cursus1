@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 16:51:14 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/09 11:51:19 by gyopark          ###   ########.fr       */
+/*   Created: 2022/11/09 17:31:37 by gyopark           #+#    #+#             */
+/*   Updated: 2022/11/09 19:27:04 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
 #include "libft.h"
+#include <stddef.h>
 
-void	*ft_memset(void *dest, int c, size_t n)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	unsigned char	*new_dest;
-	unsigned char	src;
-	size_t			i;
+	size_t	i;
 
-	new_dest = dest;
-	src = c;
-	i = 0;
-	while (i++ < n)
-		*new_dest++ = src;
-	return (dest);
+	if (!(*little))
+		return ((char *)big);
+	while (*big != '\0' && len--)
+	{
+		i = 0;
+		while (*(big + i) == *(little + i) && i < len)
+		{
+			i++;
+			if (*(little + i) == '\0')
+				return ((char *)big);
+		}
+		big++;
+	}
+	return (0);
 }
