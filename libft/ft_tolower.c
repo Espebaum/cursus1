@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 13:49:32 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/09 15:21:47 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/11 17:33:59 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_tolower(int c)
 {
-	if (c >= 'A' && c >= 'Z')
+	if (c >= 'A' && c <= 'Z')
 		return (c + 32);
 	return (c);
 }

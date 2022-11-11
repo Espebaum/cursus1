@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:35:47 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/10 11:34:01 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/11 17:00:15 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	is_space(char c)
 		return (0);
 }
 
-int	ft_atoi(char *str)
+int	ft_atoi(const char *str)
 {
 	int		cnt;
 	int		is_minus;
@@ -31,7 +31,7 @@ int	ft_atoi(char *str)
 	while (*str)
 	{
 		if (is_space(*str))
-			*str++;
+			str++;
 		else
 			break ;
 	}

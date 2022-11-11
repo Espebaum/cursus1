@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:45:33 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/10 13:12:23 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/11 17:38:50 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	size_t			i;
 
 	new_dest = dest;
-	new_src = (const unsigned char *) src;
+	new_src = (unsigned char *) src;
 	i = 0;
 	while (i++ < n)
 		*new_dest++ = *new_src++;

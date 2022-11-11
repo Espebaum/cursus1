@@ -6,18 +6,18 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:56 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/10 17:31:56 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/11 17:02:10 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strlen(char *str)
+size_t	ft_strlen(const char *s)
 {
-	int	cnt;
+	size_t	cnt;
 
 	cnt = 0;
-	while (*str++)
+	while (*s++)
 		cnt++;
 	return (cnt);
 }
