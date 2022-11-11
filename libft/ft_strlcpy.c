@@ -6,13 +6,13 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:03:49 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/08 15:19:36 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/10 13:26:10 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-unsigned int	ft_strlcpy(char *dest, char *src, unsigned int size)
+size_t	ft_strlcpy(char *dest, char *src, size_t size)
 {
 	char	*c;
 	int		cnt;

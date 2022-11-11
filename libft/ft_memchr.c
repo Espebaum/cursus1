@@ -6,12 +6,11 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 16:29:54 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/09 16:53:55 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/10 13:12:51 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stddef.h>
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {

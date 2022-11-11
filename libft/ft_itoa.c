@@ -1,33 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/09 17:31:37 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/10 13:12:15 by gyopark          ###   ########.fr       */
+/*   Created: 2022/11/10 19:54:43 by gyopark           #+#    #+#             */
+/*   Updated: 2022/11/10 20:04:30 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft.a"
 
-char	*ft_strnstr(const char *big, const char *little, size_t len)
+char	*ft_itoa(int n)
 {
-	size_t	i;
+	int	len;
 
-	if (!(*little))
-		return ((char *)big);
-	while (*big != '\0' && len--)
-	{
-		i = 0;
-		while (*(big + i) == *(little + i) && i < len)
-		{
-			i++;
-			if (*(little + i) == '\0')
-				return ((char *)big);
-		}
-		big++;
-	}
-	return (0);
 }

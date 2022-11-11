@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/09 17:31:37 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/10 13:12:15 by gyopark          ###   ########.fr       */
+/*   Created: 2022/11/10 13:14:21 by gyopark           #+#    #+#             */
+/*   Updated: 2022/11/10 16:53:50 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *big, const char *little, size_t len)
+char	*ft_strcpy(char *dest, char *src)
 {
-	size_t	i;
+	char	*p;
 
-	if (!(*little))
-		return ((char *)big);
-	while (*big != '\0' && len--)
-	{
-		i = 0;
-		while (*(big + i) == *(little + i) && i < len)
-		{
-			i++;
-			if (*(little + i) == '\0')
-				return ((char *)big);
-		}
-		big++;
-	}
-	return (0);
+	p = dest;
+	while (*src)
+		*p++ = *src++;
+	*p = '\0';
+	return (dest);
+}
+
+char	*ft_strdup(char *src)
+{
+	int		src_len;
+	char	*mem;
+
+	src_len = ft_strlen(src);
+	mem = (char *)malloc(sizeof(char) * src_len + 1);
+	if (mem != NULL)
+		ft_strcpy(mem, src);
+	return (mem);
 }

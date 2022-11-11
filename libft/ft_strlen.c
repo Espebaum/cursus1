@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:56 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/10 11:11:15 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/10 17:31:56 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	ft_strlen(char *str)
 {
 	int	cnt;
 
+	cnt = 0;
 	while (*str++)
 		cnt++;
 	return (cnt);

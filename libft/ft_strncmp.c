@@ -6,12 +6,11 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 16:18:07 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/09 16:28:43 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/10 13:11:08 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stddef.h>
 
 int	strncmp(const char *s1, const char *s2, size_t n)
 {

@@ -6,12 +6,11 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 16:54:21 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/09 17:21:49 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/10 13:11:37 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stddef.h>
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
