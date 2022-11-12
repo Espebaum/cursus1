@@ -6,28 +6,29 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 13:09:16 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/11 17:02:05 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/12 16:38:58 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dest, const char *src, size_t size)
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	size_t	p_dest;
+	size_t	p_dst;
 	size_t	p_src;
-	size_t	dest_len;
+	size_t	dst_len;
 	size_t	src_len;
 
-	dest_len = ft_strlen(dest);
+	if (dstsize == 0)
+		return (ft_strlen(src));
+	dst_len = ft_strlen(dst);
 	src_len = ft_strlen(src);
-	p_dest = dest_len;
+	p_dst = dst_len;
 	p_src = 0;
-	while (src[p_src] && (p_src + dest_len + 1) < size)
-		dest[p_dest++] = src[p_src++];
-	dest[p_dest] = '\0';
-	if (dest_len < size)
-		return (src_len + dest_len);
-	else
-		return (src_len + size);
+	if (dst_len >= dstsize)
+		return (src_len + dstsize);
+	while (src[p_src] && (p_src + dst_len + 1) < dstsize)
+		dst[p_dst++] = src[p_src++];
+	dst[p_dst] = '\0';
+	return (src_len + dst_len);
 }

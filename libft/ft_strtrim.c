@@ -6,39 +6,37 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 15:34:40 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/11 17:08:17 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/12 20:22:07 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	is_set(char c, char const *set)
-{
-	while (*set)
-	{
-		if (*set == c)
-			return (1);
-		set++;
-	}
-	return (0);
-}
-
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*strtrim;
-	size_t	start;
-	size_t	end;
+	char	*start;
+	char	*end;
 
 	if (!s1)
 		return (0);
-	start = 0;
-	end = ft_strlen((char *) s1);
-	while (is_set(*(s1 + start), set))
+	start = (char *)s1;
+	end = (char *)s1 + ft_strlen(s1);
+	while (*start)
+	{
+		if (!ft_strchr(set, *start))
+			break ;
 		start++;
-	while (is_set(*(s1 + end), set))
+	}
+	while (start != NULL && start < end)
+	{
+		if (!ft_strchr(set, *end))
+			break;
 		end--;
-	if (start > end)
-		return (ft_strdup(""));
-	strtrim = ft_substr(s1, (unsigned int) s1 + start, end - start);
+	}
+	strtrim = (char *)malloc(end - start + 2);
+	if (!strtrim)
+		return (NULL);
+	ft_strlcpy(strtrim, start, end - start + 2);
 	return (strtrim);
 }

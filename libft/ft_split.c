@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 18:06:50 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/11 17:01:51 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/12 20:22:58 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	place_word(char **spl, char const *str, char c)
 	int		strs_idx;
 	int		i;
 
+	if (!spl || !str)
+		return ;
 	strs_idx = 0;
 	while (*str)
 	{
@@ -76,6 +78,8 @@ char	**ft_split(char const *s, char c)
 	char	**spl;
 	int		strs_size;
 
+	if (!s)
+		return (NULL);
 	strs_size = count_size(s, c);
 	spl = (char **) malloc(sizeof(char *) * (strs_size + 1));
 	if (spl == NULL)
