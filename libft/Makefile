@@ -6,13 +6,15 @@
 #    By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 17:16:36 by gyopark           #+#    #+#              #
-#    Updated: 2022/11/11 18:08:50 by gyopark          ###   ########.fr        #
+#    Updated: 2022/11/14 20:19:43 by gyopark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+NAME = libft.a
+
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
-NAME = libft.a
+
 SRCS = ft_atoi.c		\
 	   ft_bzero.c		\
 	   ft_calloc.c		\
@@ -46,20 +48,35 @@ SRCS = ft_atoi.c		\
 	   ft_strtrim.c		\
 	   ft_substr.c		\
 	   ft_tolower.c		\
-	   ft_toupper.c		
+	   ft_toupper.c
+
+SRC_BONUS = ft_lstnew.c	
+
 OBJS = ${SRCS:.c=.o}
 
-all : $(NAME)
+OBJS_BONUS = ${SRC_BONUS:.c=.o}
 
-${NAME}: ${OBJS}
-	ar rsc $@ $^
+ifdef WITH_BONUS
+	OBJ = $(OBJS) $(OBJS_BONUS)
+else
+	OBJ = $(OBJS)
+endif
+
+all : ${NAME}
+
+$(NAME): ${OBJ}
+	ar -rcs $@ $^
+
+bonus:
+	make WITH_BONUS=1 ${NAME}
 
 clean:
-	rm -f ${OBJS}
+	rm -f ${OBJS} ${OBJS_BONUS}
 
 fclean: clean
 	rm -f ${NAME}
 
 re : fclean all
 
-.PHONY : all clean fclean re
+.PHONY : all clean fclean bonus re 
+
