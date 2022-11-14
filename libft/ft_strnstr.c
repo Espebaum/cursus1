@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 17:31:37 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/12 17:47:40 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/13 20:08:39 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
 	size_t	i;
 
+	if ((haystack) && len < ft_strlen(needle))
+		return (NULL);
 	if (!(*needle) || len == 0 || haystack == needle)
 		return ((char *)haystack);
 	while (*haystack != '\0' && len--)

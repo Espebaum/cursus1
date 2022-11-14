@@ -6,24 +6,24 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 19:54:43 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/11 17:00:39 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/13 17:03:58 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_len(int n)
+int	ft_len(long long num)
 {
-	int		len;
-	int		tmp;
+	int				len;
+	long long		tmp;
 
 	len = 0;
-	if (n <= 0)
+	if (num <= 0)
 	{
 		len += 1;
-		n *= -1;
+		num *= -1;
 	}
-	tmp = n;
+	tmp = num;
 	while (tmp)
 	{
 		len += 1;
@@ -34,20 +34,24 @@ int	ft_len(int n)
 
 char	*ft_itoa(int n)
 {
-	int		len;
-	char	*ascii;
+	int			len;
+	char		*ascii;
+	long long	num;
 
-	len = ft_len(n);
+	num = (long long) n;
+	len = ft_len(num);
+	if (num <= 0)
+		num *= -1;
 	ascii = (char *) malloc(sizeof(char) * (len + 1));
 	if (ascii == NULL)
 		return (NULL);
-	ascii[len] = 0;
+	ascii[len] = '\0';
 	ascii[0] = '-';
 	while (1)
 	{
-		ascii[--len] = n % 10;
-		n /= 10;
-		if (n == 0)
+		ascii[--len] = num % 10 + '0';
+		num /= 10;
+		if (num == 0)
 			break ;
 	}
 	return (ascii);

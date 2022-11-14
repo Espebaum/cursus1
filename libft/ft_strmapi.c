@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:56:46 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/11 17:26:56 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/13 17:08:09 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,18 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	char			*new_s;
 	unsigned int	index;
 
-	new_s = NULL;
+	if (!s)
+		return (NULL);
 	index = 0;
 	len = ft_strlen(s);
-	if (!(new_s == (char *)malloc(sizeof(char) * (len + 1))))
+	new_s = (char *)malloc(sizeof(char) * (len + 1));
+	if (!(new_s))
 		return (NULL);
-	while (index++ < len)
+	while (index < len)
+	{
 		new_s[index] = f(index, s[index]);
-	new_s[index] = '\0';
+		index++;
+	}
+	new_s[len] = '\0';
 	return (new_s);
 }

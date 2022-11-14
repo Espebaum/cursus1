@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 15:34:40 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/12 20:22:07 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/13 14:37:04 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	while (start != NULL && start < end)
 	{
 		if (!ft_strchr(set, *end))
-			break;
+			break ;
 		end--;
 	}
 	strtrim = (char *)malloc(end - start + 2);
