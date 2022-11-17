@@ -6,7 +6,7 @@
 #    By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 17:16:36 by gyopark           #+#    #+#              #
-#    Updated: 2022/11/17 15:44:36 by gyopark          ###   ########.fr        #
+#    Updated: 2022/11/17 17:15:13 by gyopark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,20 +62,16 @@ OBJS_MAN = $(SRCS_MAN:.c=.o)
 
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
-$(NAME): $(OBJS_MAN) libft.h
-	ar rc $@ $^
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+$(NAME): all
 
 all bonus:
 	rm -f all bonus $(NAME)
 	ar rc $(NAME) $^
 	touch $@
 
-all: $(SRCS_MAN:.c=.o)
+all: $(OBJS_MAN)
 
-bonus: $(SRCS_BONUS:.c=.o)
+bonus: $(OBJS_MAN) $(OBJS_BONUS)
 
 clean:
 	rm -f $(OBJS_MAN) $(OBJS_BONUS) all bonus
