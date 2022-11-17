@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/10 11:22:20 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/17 15:34:28 by gyopark          ###   ########.fr       */
+/*   Created: 2022/11/15 16:18:13 by gyopark           #+#    #+#             */
+/*   Updated: 2022/11/15 16:23:07 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t count, size_t size)
+t_list	*ft_lstlast(t_list *lst)
 {
-	void	*ptr;
-
-	ptr = malloc(count * size);
-	if (!ptr)
+	if (!lst)
 		return (NULL);
-	ft_memset(ptr, 0, count * size);
-	return (ptr);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
 }

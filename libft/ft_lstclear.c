@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/10 11:22:20 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/17 15:34:28 by gyopark          ###   ########.fr       */
+/*   Created: 2022/11/15 17:01:33 by gyopark           #+#    #+#             */
+/*   Updated: 2022/11/15 17:08:17 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t count, size_t size)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	void	*ptr;
+	t_list	*tmp;
+	t_list	*curr;
 
-	ptr = malloc(count * size);
-	if (!ptr)
-		return (NULL);
-	ft_memset(ptr, 0, count * size);
-	return (ptr);
+	curr = *lst;
+	if (!lst || !del)
+		return ;
+	while (curr)
+	{
+		tmp = curr->next;
+		ft_lstdelone(curr, del);
+		curr = tmp;
+	}
+	*lst = NULL;
 }
