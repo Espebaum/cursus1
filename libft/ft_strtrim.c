@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 15:34:40 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/13 14:37:04 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/18 20:04:59 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,20 @@
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	char	*strtrim;
-	char	*start;
-	char	*end;
+	size_t	start;
+	size_t	end;
+	char	*result;
 
-	if (!s1)
-		return (0);
-	start = (char *)s1;
-	end = (char *)s1 + ft_strlen(s1);
-	while (*start)
-	{
-		if (!ft_strchr(set, *start))
-			break ;
-		start++;
-	}
-	while (start != NULL && start < end)
-	{
-		if (!ft_strchr(set, *end))
-			break ;
-		end--;
-	}
-	strtrim = (char *)malloc(end - start + 2);
-	if (!strtrim)
+	start = 0;
+	if (s1 == NULL)
 		return (NULL);
-	ft_strlcpy(strtrim, start, end - start + 2);
-	return (strtrim);
+	end = ft_strlen(s1);
+	while (s1[start] && ft_strchr(set, s1[start]))
+		start++;
+	while (end && s1[end - 1] && ft_strchr(set, s1[end - 1]))
+		end--;
+	if (start > end)
+		return (ft_strdup(""));
+	result = ft_substr(s1, start, end - start);
+	return (result);
 }

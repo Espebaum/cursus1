@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:25:52 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/15 16:40:59 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/20 21:06:18 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,5 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 		return ;
 	}
 	last = ft_lstlast(*lst);
-	new->next = last->next;
 	last->next = new;
 }

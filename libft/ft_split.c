@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 18:06:50 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/12 20:22:58 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/21 16:17:36 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,56 +19,58 @@ int	is_sep(char s, char c)
 	return (0);
 }
 
-int	count_size(char const *str, char c)
+int	count_size(char const *s, char c)
 {
-	int	strs_size;
+	int	s_size;
 
-	strs_size = 0;
-	while (*str)
+	s_size = 0;
+	while (*s)
 	{
-		if (!is_sep(*str, c) && is_sep(*(str + 1), c))
-			strs_size++;
-		str++;
+		if (!is_sep(*s, c) && is_sep(*(s + 1), c))
+			s_size++;
+		s++;
 	}
-	return (strs_size);
+	return (s_size);
 }
 
-void	ft_strncpy(char *dest, char const *src, int n)
+void	ft_freeall(char **spl)
 {
-	int		i;
+	size_t	j;
 
-	i = 0;
-	while (i < n)
+	j = 0;
+	while (spl[j])
 	{
-		dest[i] = src[i];
-		i++;
+		free(spl[j]);
+		j++;
 	}
-	dest[i] = 0;
+	free(spl);
+	return ;
 }
 
-void	place_word(char **spl, char const *str, char c)
+void	place_word(char **spl, char const *s, char c, int *flag)
 {
-	int		strs_idx;
+	int		s_idx;
 	int		i;
 
-	if (!spl || !str)
-		return ;
-	strs_idx = 0;
-	while (*str)
+	s_idx = 0;
+	while (*s)
 	{
-		if (is_sep(*str, c))
-			str++;
+		if (is_sep(*s, c))
+			s++;
 		else
 		{
 			i = 0;
-			while (!is_sep(str[i], c))
+			while (*(s + i) && !is_sep(*(s + i), c))
 				i++;
-			spl[strs_idx] = (char *) malloc(sizeof(char) * (i + 1));
-			if (spl[strs_idx] == NULL)
+			spl[s_idx] = ft_substr(s, 0, i);
+			if (spl[s_idx] == NULL)
+			{
+				*flag = 1;
+				ft_freeall(spl);
 				return ;
-			ft_strncpy(spl[strs_idx], str, i);
-			strs_idx += 1;
-			str += i;
+			}
+			s_idx += 1;
+			s += i;
 		}
 	}
 }
@@ -76,15 +78,19 @@ void	place_word(char **spl, char const *str, char c)
 char	**ft_split(char const *s, char c)
 {
 	char	**spl;
-	int		strs_size;
+	int		s_size;
+	int		flag;
 
+	flag = 0;
 	if (!s)
 		return (NULL);
-	strs_size = count_size(s, c);
-	spl = (char **) malloc(sizeof(char *) * (strs_size + 1));
+	s_size = count_size(s, c);
+	spl = (char **) malloc(sizeof(char *) * (s_size + 1));
 	if (spl == NULL)
 		return (NULL);
-	spl[strs_size] = NULL;
-	place_word(spl, s, c);
+	place_word(spl, s, c, &flag);
+	if (flag == 1)
+		return (NULL);
+	spl[s_size] = NULL;
 	return (spl);
 }

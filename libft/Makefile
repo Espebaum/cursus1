@@ -6,7 +6,7 @@
 #    By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 17:16:36 by gyopark           #+#    #+#              #
-#    Updated: 2022/11/17 17:15:13 by gyopark          ###   ########.fr        #
+#    Updated: 2022/11/19 18:39:33 by gyopark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,9 @@ SRCS_BONUS = ft_lstnew.c		\
 			ft_lstlast.c		\
 			ft_lstadd_back.c	\
 			ft_lstdelone.c		\
-			ft_lstclear.c
+			ft_lstclear.c		\
+			ft_lstiter.c		\
+			ft_lstmap.c
 
 OBJS_MAN = $(SRCS_MAN:.c=.o)
 

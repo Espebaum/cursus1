@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 17:31:37 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/17 16:46:48 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/18 18:11:32 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,19 @@
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	size_t	i;
+	size_t	h_len;
+	size_t	n_len;
 
-	if ((haystack) && len < ft_strlen(needle))
-		return (NULL);
-	if (!(*needle) || len == 0 || haystack == needle)
+	if (*needle == '\0')
 		return ((char *)haystack);
-	while (*haystack != '\0' && len--)
+	h_len = ft_strlen(haystack);
+	n_len = ft_strlen(needle);
+	if (h_len < n_len || len < n_len)
+		return (NULL);
+	while (len-- >= n_len && *haystack)
 	{
-		i = 0;
-		while (*(haystack + i) == *(needle + i) && i < len)
-		{
-			i++;
-			if (*(needle + i) == '\0')
-				return ((char *)haystack);
-		}
+		if (ft_memcmp(haystack, needle, n_len) == 0)
+			return ((char *)haystack);
 		haystack++;
 	}
 	return (NULL);

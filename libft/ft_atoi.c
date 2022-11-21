@@ -6,13 +6,13 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 19:35:47 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/17 12:15:59 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/21 17:11:37 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	is_space(char c)
+static int	is_space(char c)
 {
 	if (c == 9 || c == 10 || c == 11
 		|| c == 12 || c == 13 || c == 32)
@@ -41,7 +41,7 @@ int	ft_atoi(const char *str)
 			is_minus *= -1;
 		str++;
 	}
-	while (*str >= '0' && *str <= '9')
+	while (ft_isdigit(*str))
 	{
 		cnt *= 10;
 		cnt += *str - '0';
