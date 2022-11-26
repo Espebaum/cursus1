@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 17:24:48 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/23 18:15:29 by gyopark          ###   ########.fr       */
+/*   Created: 2022/11/07 15:49:52 by gyopark           #+#    #+#             */
+/*   Updated: 2022/11/11 17:00:23 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_bzero(void *s, size_t n)
+int	ft_isalnum(int c)
 {
-	unsigned char	*dest;
-	size_t			i;
-
-	dest = s;
-	i = 0;
-	while (i++ < n)
-		*dest++ = 0;
-	return (s);
+	if (ft_isalpha(c) || ft_isdigit(c))
+		return (1);
+	else
+		return (0);
 }

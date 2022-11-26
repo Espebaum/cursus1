@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 17:24:48 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/23 18:15:29 by gyopark          ###   ########.fr       */
+/*   Created: 2022/11/09 13:49:32 by gyopark           #+#    #+#             */
+/*   Updated: 2022/11/13 14:37:50 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_bzero(void *s, size_t n)
+int	ft_tolower(int c)
 {
-	unsigned char	*dest;
-	size_t			i;
-
-	dest = s;
-	i = 0;
-	while (i++ < n)
-		*dest++ = 0;
-	return (s);
+	if (c >= 'A' && c <= 'Z')
+		return (c + 32);
+	return (c);
 }

@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 17:24:48 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/23 18:15:29 by gyopark          ###   ########.fr       */
+/*   Created: 2022/11/07 16:51:14 by gyopark           #+#    #+#             */
+/*   Updated: 2022/11/12 18:58:01 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_bzero(void *s, size_t n)
+void	*ft_memset(void *dest, int c, size_t n)
 {
-	unsigned char	*dest;
+	unsigned char	*new_dest;
+	unsigned char	src;
 	size_t			i;
 
-	dest = s;
+	new_dest = dest;
+	src = c;
 	i = 0;
 	while (i++ < n)
-		*dest++ = 0;
-	return (s);
+		*new_dest++ = src;
+	return (dest);
 }

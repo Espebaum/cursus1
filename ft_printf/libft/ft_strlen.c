@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 17:24:48 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/23 18:15:29 by gyopark          ###   ########.fr       */
+/*   Created: 2022/11/07 16:28:56 by gyopark           #+#    #+#             */
+/*   Updated: 2022/11/11 17:02:10 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_bzero(void *s, size_t n)
+size_t	ft_strlen(const char *s)
 {
-	unsigned char	*dest;
-	size_t			i;
+	size_t	cnt;
 
-	dest = s;
-	i = 0;
-	while (i++ < n)
-		*dest++ = 0;
-	return (s);
+	cnt = 0;
+	while (*s++)
+		cnt++;
+	return (cnt);
 }
