@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_char.c                                    :+:      :+:    :+:   */
+/*   ft_printf_char.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:39:31 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/26 20:41:52 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/27 17:03:52 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-size_t	ft_print_c(va_list **ap)
+ssize_t	ft_print_c(va_list **ap)
 {
 	unsigned char	vatemp;
-	size_t			print_size;
+	ssize_t			print_size;
 
 	print_size = 0;
 	vatemp = (unsigned char)va_arg(**ap, int);
@@ -23,10 +23,10 @@ size_t	ft_print_c(va_list **ap)
 	return (print_size);
 }
 
-size_t	ft_print_s(va_list **ap)
+ssize_t	ft_print_s(va_list **ap)
 {
 	char	*vatemp;
-	size_t	print_size;
+	ssize_t	print_size;
 
 	print_size = 0;
 	vatemp = (char *)va_arg(**ap, char *);

@@ -6,7 +6,7 @@
 #    By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 17:16:36 by gyopark           #+#    #+#              #
-#    Updated: 2022/11/24 17:32:57 by gyopark          ###   ########.fr        #
+#    Updated: 2022/11/27 13:57:07 by gyopark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,8 @@ SRCS_MAN = ft_atoi.c		\
 		   ft_strtrim.c		\
 		   ft_substr.c		\
 		   ft_tolower.c		\
-		   ft_toupper.c
+		   ft_toupper.c		\
+		   ft_ltoa.c
 
 SRCS_BONUS = ft_lstnew.c		\
 			ft_lstadd_front.c	\

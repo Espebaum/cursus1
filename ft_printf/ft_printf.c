@@ -6,15 +6,15 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 15:46:03 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/26 20:41:47 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/27 17:03:43 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-size_t	print_va(const char *str, va_list *ap)
+ssize_t	print_va(const char *str, va_list *ap)
 {
-	size_t print_size;
+	ssize_t	print_size;
 
 	print_size = 0;
 	if (str[1] == 'c')
@@ -42,8 +42,8 @@ int	ft_printf(const char *str, ...)
 {
 	va_list	ap;
 	int		i;
-	size_t	print_size;
-	size_t	past_print_size;
+	ssize_t	print_size;
+	ssize_t	past_print_size;
 
 	i = 0;
 	print_size = 0;
