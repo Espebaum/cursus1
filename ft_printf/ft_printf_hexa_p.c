@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 14:01:32 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/27 17:05:26 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/28 19:36:48 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 ssize_t	ft_print_sx(va_list **a)
 {
-	unsigned int	vatemp;
-	ssize_t			print_size;
-	char			*str;
+	unsigned int		vatemp;
+	ssize_t				print_size;
+	char				*str;
 
 	print_size = 0;
-	vatemp = (unsigned int)va_arg(**a, unsigned int);
+	vatemp = va_arg(**a, int);
 	if (vatemp == 0)
 		return (write(1, "0", 1));
-	str = ft_change_hexa((long long)vatemp);
+	str = ft_change_hexa((unsigned int)vatemp);
 	print_size = write(1, str, ft_strlen(str));
 	free(str);
 	return (print_size);
@@ -30,17 +30,17 @@ ssize_t	ft_print_sx(va_list **a)
 
 ssize_t	ft_print_bx(va_list **a)
 {
-	unsigned int	vatemp;
-	int				i;
-	ssize_t			print_size;
-	char			*str;
+	unsigned int		vatemp;
+	int					i;
+	ssize_t				print_size;
+	char				*str;
 
 	i = 0;
 	print_size = 0;
-	vatemp = (unsigned int)va_arg(**a, unsigned int);
+	vatemp = va_arg(**a, int);
 	if (vatemp == 0)
 		return (write(1, "0", 1));
-	str = ft_change_hexa((long long)vatemp);
+	str = ft_change_hexa((unsigned)vatemp);
 	while (str[i] != '\0')
 	{
 		if (str[i] >= 'a' && str[i] <= 'z')

@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 14:05:54 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/27 17:19:33 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/28 20:28:29 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 const char	*g_base1 = "0123456789abcdef";
 
-size_t	ft_hexalen(long long num)
+size_t	ft_hexalen(size_t num)
 {
 	int		size;
 
@@ -27,10 +27,9 @@ size_t	ft_hexalen(long long num)
 	return (size);
 }
 
-char	*ft_change_hexa(long long vatemp)
+char	*ft_change_hexa(unsigned int vatemp)
 {
 	size_t		size;
-	size_t		i;
 	char		*hexa;
 	long long	num;
 
@@ -38,16 +37,11 @@ char	*ft_change_hexa(long long vatemp)
 	hexa = (char *)malloc(sizeof(char) * (size + 1));
 	hexa[size] = '\0';
 	num = vatemp;
-	i = 0;
-	while (num)
+	while (num || size)
 	{
-		hexa[i] = g_base1[num / 16];
-		i++;
-		if (num < 16)
-		{
-			hexa[i] = g_base1[num % 16];
-			break ;
-		}
+		hexa[size - 1] = g_base1[num % 16];
+		num /= 16;
+		size--;
 	}
 	return (hexa);
 }
