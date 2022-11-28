@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:28:04 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/28 20:32:20 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/28 22:31:04 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,36 +45,38 @@ int	ft_printf(const char *str, ...)
 	va_list	ap;
 	int		i;
 	ssize_t	print_size;
-	/** ssize_t	past_print_size; */
+	ssize_t	past_print_size;
 
 	i = 0;
 	print_size = 0;
 	va_start(ap, str);
 	while (str[i])
 	{
-		/** past_print_size = print_size; */
+		past_print_size = print_size;
 		if (str[i] != '%')
 			print_size += write(1, &str[i], 1);
 		else
 			print_size += print_va(&str[i++], &ap);
-		/** if (past_print_size > print_size) */
-		/** { */
-		/**     print_size = -1; */
-		/**     va_end(ap); */
-		/**     return (print_size); */
-		/** } */
+		if (past_print_size > print_size)
+		{
+			print_size = -1;
+			va_end(ap);
+			return (print_size);
+		}
 		i++;
 	}
 	va_end(ap);
 	return ((int)print_size);
 }
 
-/** int main(void) */
-/** { */
-/**     ft_printf(" %p ", (void *) ULONG_MAX); */
-/**     printf("\n"); */
-/**     printf(" %p ",(void *) ULONG_MAX); */
-/**     printf("\n"); */
-/**  */
-/**     return (0); */
-/** } */
+int main(void)
+{
+	int	a = printf("%d", -10);
+	printf("\n");
+	int	b = ft_printf("%d", -10);
+	printf("\n");
+
+	printf("%d\n", a);
+	printf("%d\n", b);
+	return (0);
+}
