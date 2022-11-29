@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 14:05:54 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/28 20:28:29 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/29 17:39:25 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ size_t	ft_hexalen(size_t num)
 	return (size);
 }
 
-char	*ft_change_hexa(unsigned int vatemp)
+char	*ft_change_hexa(unsigned int vatemp, int *flag)
 {
 	size_t		size;
 	char		*hexa;
@@ -35,6 +35,12 @@ char	*ft_change_hexa(unsigned int vatemp)
 
 	size = ft_hexalen(vatemp);
 	hexa = (char *)malloc(sizeof(char) * (size + 1));
+	if (!hexa)
+	{
+		free(hexa);
+		*flag = 0;
+		return (NULL);
+	}
 	hexa[size] = '\0';
 	num = vatemp;
 	while (num || size)

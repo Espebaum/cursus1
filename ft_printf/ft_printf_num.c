@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 17:36:40 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/27 20:33:13 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/29 17:42:29 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ ssize_t	ft_print_d(va_list **ap)
 	else
 	{
 		str = ft_itoa(vatemp);
+		if (!str)
+			return (-1);
 		print_size = write(1, str, ft_strlen(str));
 		free(str);
 	}
@@ -44,6 +46,8 @@ ssize_t	ft_print_i(va_list **ap)
 	else
 	{
 		str = ft_itoa(vatemp);
+		if (!str)
+			return (-1);
 		print_size = write(1, str, ft_strlen(str));
 		free(str);
 	}
@@ -63,6 +67,8 @@ ssize_t	ft_print_u(va_list **a)
 	else
 	{
 		str = ft_ltoa(vatemp);
+		if (!str)
+			return (-1);
 		print_size = write(1, str, ft_strlen(str));
 		free(str);
 	}

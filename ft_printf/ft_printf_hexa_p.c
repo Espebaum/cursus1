@@ -6,69 +6,108 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 14:01:32 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/28 19:36:48 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/29 20:01:42 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-ssize_t	ft_print_sx(va_list **a)
+char	*ft_strtoupper(char *str)
 {
-	unsigned int		vatemp;
-	ssize_t				print_size;
-	char				*str;
-
-	print_size = 0;
-	vatemp = va_arg(**a, int);
-	if (vatemp == 0)
-		return (write(1, "0", 1));
-	str = ft_change_hexa((unsigned int)vatemp);
-	print_size = write(1, str, ft_strlen(str));
-	free(str);
-	return (print_size);
-}
-
-ssize_t	ft_print_bx(va_list **a)
-{
-	unsigned int		vatemp;
-	int					i;
-	ssize_t				print_size;
-	char				*str;
+	int		i;
 
 	i = 0;
-	print_size = 0;
-	vatemp = va_arg(**a, int);
-	if (vatemp == 0)
-		return (write(1, "0", 1));
-	str = ft_change_hexa((unsigned)vatemp);
-	while (str[i] != '\0')
+	while (str[i])
 	{
 		if (str[i] >= 'a' && str[i] <= 'z')
 			str[i] -= 'a' - 'A';
 		i++;
+	}
+	return (str);
+}
+
+ssize_t	ft_print_sx(va_list **ap)
+{
+	unsigned int		vatemp;
+	ssize_t				print_size;
+	char				*str;
+	int					flag;
+
+	flag = 1;
+	print_size = 0;
+	vatemp = va_arg(**ap, int);
+	if (vatemp == 0)
+		return (write(1, "0", 1));
+	str = ft_change_hexa((unsigned int)vatemp, &flag);
+	if (flag == 0)
+	{
+		free(str);
+		return (-1);
 	}
 	print_size = write(1, str, ft_strlen(str));
 	free(str);
 	return (print_size);
 }
 
-ssize_t	ft_print_p(va_list **a)
+ssize_t	ft_print_bx(va_list **ap)
+{
+	unsigned int		vatemp;
+	ssize_t				print_size;
+	char				*str;
+	int					flag;
+
+	flag = 1;
+	print_size = 0;
+	vatemp = va_arg(**ap, int);
+	if (vatemp == 0)
+		return (write(1, "0", 1));
+	str = ft_change_hexa((unsigned)vatemp, &flag);
+	if (flag == 0)
+	{
+		free(str);
+		return (-1);
+	}
+	str = ft_strtoupper(str);
+	print_size = write(1, str, ft_strlen(str));
+	free(str);
+	return (print_size);
+}
+
+ssize_t	ft_write_p(ssize_t *print_size, char *str)
+{
+	*print_size = write(1, "0x", 2);
+	if (*print_size == -1)
+	{
+		free(str);
+		return (-1);
+	}
+	*print_size = write(1, str, ft_strlen(str));
+	if (*print_size == -1)
+	{
+		free(str);
+		return (-1);
+	}
+	free(str);
+	return (*print_size);
+}
+
+ssize_t	ft_print_p(va_list **ap)
 {
 	size_t	vatemp;
 	ssize_t	print_size;
 	char	*str;
+	int		flag;
 
+	flag = 1;
 	print_size = 0;
-	vatemp = (size_t)va_arg(**a, size_t);
+	vatemp = (size_t)va_arg(**ap, size_t);
 	if (vatemp == 0)
 		return (write(1, "0x0", 3));
-	str = ft_change_hexa_address((size_t)vatemp);
-	print_size = write(1, "0x", 2);
+	str = ft_change_hexa_address((size_t)vatemp, &flag);
+	if (flag == 0)
+		return (-1);
+	print_size = ft_write_p(&print_size, str);
 	if (print_size == -1)
-		return (print_size);
-	print_size = write(1, str, ft_strlen(str));
-	if (print_size == -1)
-		return (print_size);
-	free(str);
+		return (-1);
 	return (print_size + 2);
 }

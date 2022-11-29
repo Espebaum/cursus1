@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 15:39:50 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/28 20:13:41 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/29 19:42:00 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 const char	*g_base2 = "0123456789abcdef";
 
-char	*ft_change_hexa_address(size_t vatemp)
+char	*ft_change_hexa_address(size_t vatemp, int *flag)
 {
 	char	*addr;
 	size_t	addr_len;
@@ -23,6 +23,12 @@ char	*ft_change_hexa_address(size_t vatemp)
 	p = vatemp;
 	addr_len = ft_hexalen(vatemp);
 	addr = (char *)malloc(sizeof(char) * (addr_len + 1));
+	if (!addr)
+	{
+		free(addr);
+		*flag = 0;
+		return (NULL);
+	}
 	addr[addr_len] = '\0';
 	while (p || addr_len)
 	{

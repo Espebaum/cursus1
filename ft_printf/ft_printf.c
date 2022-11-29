@@ -6,13 +6,12 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:28:04 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/28 22:31:04 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/29 19:23:08 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
-#include <limits.h>
+#include <signal.h>
 
 ssize_t	print_va(const char *str, va_list *ap)
 {
@@ -69,14 +68,14 @@ int	ft_printf(const char *str, ...)
 	return ((int)print_size);
 }
 
-int main(void)
-{
-	int	a = printf("%d", -10);
-	printf("\n");
-	int	b = ft_printf("%d", -10);
-	printf("\n");
-
-	printf("%d\n", a);
-	printf("%d\n", b);
-	return (0);
-}
+/** int main(void) */
+/** { */
+/**     int	a = printf("%p", ""); */
+/**     printf("\n"); */
+/**     int	b = ft_printf("%p",""); */
+/**     printf("\n"); */
+/**  */
+/**     printf("%d\n", a); */
+/**     printf("%d\n", b); */
+/**     return (0); */
+/** } */

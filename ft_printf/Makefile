@@ -6,7 +6,7 @@
 #    By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/27 16:18:37 by gyopark           #+#    #+#              #
-#    Updated: 2022/11/28 16:49:34 by gyopark          ###   ########.fr        #
+#    Updated: 2022/11/29 15:44:08 by gyopark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,3 +45,5 @@ clean :
 re : 
 	make fclean 
 	make all
+
+.PHONY : fclean clean all re 
