@@ -6,7 +6,7 @@
 #    By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/27 16:18:37 by gyopark           #+#    #+#              #
-#    Updated: 2022/11/29 15:44:08 by gyopark          ###   ########.fr        #
+#    Updated: 2022/11/29 20:56:06 by gyopark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,9 @@ LIBFT		= libft
 LIBFT_LIB	= libft.a
 
 SRCS 		= ft_printf.c				\
-			  ft_printf_char.c			\
-			  ft_printf_num.c			\
-			  ft_printf_hexa_p.c		\
+			  ft_printf_cs.c			\
+			  ft_printf_diu.c			\
+			  ft_printf_xXp.c			\
 			  ft_change_hexa.c			\
 			  ft_change_hexa_address.c
 

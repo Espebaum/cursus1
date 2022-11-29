@@ -6,20 +6,20 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 15:39:50 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/29 19:42:00 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/29 20:53:26 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-const char	*g_base2 = "0123456789abcdef";
-
 char	*ft_change_hexa_address(size_t vatemp, int *flag)
 {
-	char	*addr;
-	size_t	addr_len;
-	size_t	p;
+	char		*addr;
+	size_t		addr_len;
+	size_t		p;
+	const char	*g_base;
 
+	g_base = "0123456789abcdef";
 	p = vatemp;
 	addr_len = ft_hexalen(vatemp);
 	addr = (char *)malloc(sizeof(char) * (addr_len + 1));
@@ -32,7 +32,7 @@ char	*ft_change_hexa_address(size_t vatemp, int *flag)
 	addr[addr_len] = '\0';
 	while (p || addr_len)
 	{
-		addr[addr_len - 1] = g_base2[p % 16];
+		addr[addr_len - 1] = g_base[p % 16];
 		p /= 16;
 		addr_len--;
 	}
