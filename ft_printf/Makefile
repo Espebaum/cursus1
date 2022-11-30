@@ -6,7 +6,7 @@
 #    By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/27 16:18:37 by gyopark           #+#    #+#              #
-#    Updated: 2022/11/29 21:19:33 by gyopark          ###   ########.fr        #
+#    Updated: 2022/11/30 14:05:40 by gyopark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRCS 		= ft_printf.c				\
 OBJS 		= ${SRCS:.c=.o}
 
 $(NAME) : $(OBJS)
-		make all -C $(LIBFT)/
+		make all -C $(LIBFT)
 		cp $(LIBFT)/$(LIBFT_LIB) $(NAME)
 		ar rcs $(NAME) $(OBJS)
 

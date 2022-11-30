@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 14:05:54 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/29 20:54:27 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/30 13:53:12 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	*ft_change_hexa(unsigned int vatemp, int *flag)
 {
 	size_t		size;
 	char		*hexa;
-	long long	num;
 	const char	*g_base;
 
 	g_base = "0123456789abcdef";
@@ -42,11 +41,10 @@ char	*ft_change_hexa(unsigned int vatemp, int *flag)
 		return (NULL);
 	}
 	hexa[size] = '\0';
-	num = vatemp;
-	while (num || size)
+	while (size)
 	{
-		hexa[size - 1] = g_base[num % 16];
-		num /= 16;
+		hexa[size - 1] = g_base[vatemp % 16];
+		vatemp /= 16;
 		size--;
 	}
 	return (hexa);

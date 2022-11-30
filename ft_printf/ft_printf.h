@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 16:52:56 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/29 20:53:33 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/30 14:15:21 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,5 @@ ssize_t	ft_print_p(va_list **ap);
 char	*ft_change_hexa(unsigned int vatemp, int *flag);
 size_t	ft_hexalen(size_t num);
 char	*ft_change_hexa_address(size_t vatemp, int *flag);
-ssize_t	ft_write_p(ssize_t *print_size, char *str);
 
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_xXp.c                                    :+:      :+:    :+:   */
+/*   ft_printf_pxX.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 14:01:32 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/29 20:01:42 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/11/30 14:12:09 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,12 @@ ssize_t	ft_print_sx(va_list **ap)
 
 	flag = 1;
 	print_size = 0;
-	vatemp = va_arg(**ap, int);
+	vatemp = va_arg(**ap, unsigned int);
 	if (vatemp == 0)
 		return (write(1, "0", 1));
 	str = ft_change_hexa((unsigned int)vatemp, &flag);
 	if (flag == 0)
-	{
-		free(str);
 		return (-1);
-	}
 	print_size = write(1, str, ft_strlen(str));
 	free(str);
 	return (print_size);
@@ -58,15 +55,12 @@ ssize_t	ft_print_bx(va_list **ap)
 
 	flag = 1;
 	print_size = 0;
-	vatemp = va_arg(**ap, int);
+	vatemp = va_arg(**ap, unsigned int);
 	if (vatemp == 0)
 		return (write(1, "0", 1));
 	str = ft_change_hexa((unsigned)vatemp, &flag);
 	if (flag == 0)
-	{
-		free(str);
 		return (-1);
-	}
 	str = ft_strtoupper(str);
 	print_size = write(1, str, ft_strlen(str));
 	free(str);
