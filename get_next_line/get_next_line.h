@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/10 13:14:21 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/02 19:11:05 by gyopark          ###   ########.fr       */
+/*   Created: 2022/12/02 19:38:55 by gyopark           #+#    #+#             */
+/*   Updated: 2022/12/04 21:55:28 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-char	*ft_strdup(const char *s1)
-{
-	size_t	s1_len;
-	char	*mem;
+# include <stdlib.h>
+# include <unistd.h>
 
-	s1_len = ft_strlen(s1);
-	mem = (char *)malloc(sizeof(char) * s1_len + 1);
-	if (mem != NULL)
-	{
-		ft_memcpy(mem, s1, s1_len);
-		mem[s1_len] = '\0';
-	}
-	return (mem);
-}
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 4
+# endif
+
+# ifndef OPEN_MAX
+#  define OPEN_MAX 10240
+# endif
+
+char	*get_next_line(int fd);
+char	*ft_strchr(const char *s, int c);
+size_t	ft_strlen(const char *s);
+char	*ft_strdup(char *s1);
+char	*ft_strjoin(char *s1, char *s2);
+
+#endif

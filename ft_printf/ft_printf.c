@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:28:04 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/30 13:13:50 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/02 17:14:58 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,11 @@ int	ft_printf(const char *str, ...)
 	}
 	va_end(ap);
 	return ((int)print_size);
+}
+
+int	main(void)
+{
+	printf("%d", 111111111111111111111111);
+	ft_printf("%d", 1111111111111);
+
 }
