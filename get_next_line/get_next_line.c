@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 19:38:42 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/04 22:40:00 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/05 15:15:25 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ char	*get_next_line(int fd)
 	j = 0;
 	if (BUFFER_SIZE <= 0 || fd < 0 || fd >= OPEN_MAX)
 		return (0);
-	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1)); //1th malloc
 	if (!buf)
 		return (0);
 	while (!ft_strchr(backup[fd], '\n'))
