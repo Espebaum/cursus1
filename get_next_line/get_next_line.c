@@ -6,11 +6,17 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 19:38:42 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/05 15:15:25 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/05 21:44:57 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	str_free(char **str)
+{
+	free(*str);
+	*str = NULL;
+}
 
 char	*cut_line(char *backup)
 {
@@ -24,71 +30,61 @@ char	*cut_line(char *backup)
 		i++;
 	if (backup[i] == '\0')
 	{
-		free(backup);
+		str_free(&backup);
 		return (NULL);
 	}
 	if (backup[i] == '\n')
 		i++;
 	str = ft_strdup(&backup[i]);
 	if (!str)
-		return (0);
-	free(backup);
+	{
+		str_free(&backup);
+		return (NULL);
+	}
+	str_free(&backup);
 	return (str);
 }
 
-char	*make_line(char *backup, int j)
+char	*make_line(char *backup, int i)
 {
 	char	*str;
 
 	if (backup == NULL || backup[0] == '\0')
 		return (NULL);
-	while (backup[j] != '\n' && backup[j] != '\0')
-		j++;
-	if (backup[j] == '\n')
-		str = malloc(sizeof(char) * (j + 2));
+	while (backup[i] != '\n' && backup[i] != '\0')
+		i++;
+	if (backup[i] == '\n')
+		str = malloc(sizeof(char) * (i + 2));
 	else
-		str = malloc(sizeof(char) * (j + 1));
+		str = malloc(sizeof(char) * (i + 1));
 	if (!str)
 		return (NULL);
-	j = 0;
-	while (backup[j] != '\n' && backup[j] != '\0')
+	i = 0;
+	while (backup[i] != '\n' && backup[i] != '\0')
 	{
-		str[j] = backup[j];
-		j++;
+		str[i] = backup[i];
+		i++;
 	}
-	if (backup[j] == '\n')
-		str[j++] = '\n';
-	str[j] = '\0';
+	if (backup[i] == '\n')
+		str[i++] = '\n';
+	str[i] = '\0';
 	return (str);
 }
 
-static ssize_t	buf_read(int fd, char *buf, char **backup)
-{
-	ssize_t	read_size;
-
-	read_size = read(fd, buf, BUFFER_SIZE);
-	if (read_size < 0)
-	{
-		free(buf);
-		buf = 0;
-		free(*backup);
-		*backup = 0;
-		return (-1);
-	}
-	buf[read_size] = '\0';
-	return (read_size);
-}
-
-static char	*meet_eof(char **backup, char *buf)
+static char	*meet_eof(char **backup, char *buf, int read_size)
 {
 	char	*line;
 
-	free(buf);
-	buf = 0;
+	if (read_size == -1)
+	{
+		str_free(&buf);
+		str_free(backup);
+		return;
+	}
+	str_free(&buf);
 	if (ft_strlen(*backup) == 0)
 	{
-		free(*backup);
-		*backup = 0;
+		str_free(backup);
 		return (0);
 	}
 	else
@@ -105,25 +101,24 @@ char	*get_next_line(int fd)
 	static char	*backup[OPEN_MAX];
 	char		*str;
 	int			read_size;
-	int			j;
 
-	j = 0;
 	if (BUFFER_SIZE <= 0 || fd < 0 || fd >= OPEN_MAX)
 		return (0);
-	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1)); //1th malloc
+	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buf)
 		return (0);
 	while (!ft_strchr(backup[fd], '\n'))
 	{
-		read_size = buf_read(fd, buf, &backup[fd]);
-		if (read_size == -1)
-			return (0);
+		read_size = read(fd, buf, BUFFER_SIZE);
+		if (read_size <= 0)
+			return (meet_eof(&backup[fd], buf, read_size));
+		buf[read_size] = '\0';
 		backup[fd] = ft_strjoin(backup[fd], buf);
-		if (read_size == 0)
-			return (meet_eof(&backup[fd], buf));
 	}
-	str = make_line(backup[fd], j);
+	str = make_line(backup[fd], 0);
 	backup[fd] = cut_line(backup[fd]);
-	free(buf);
+	str_free(&buf);
+	if (!str || !backup[fd])
+		return (NULL);
 	return (str);
 }
