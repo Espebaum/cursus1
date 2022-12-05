@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 19:38:42 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/05 21:44:57 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/05 21:46:44 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static char	*meet_eof(char **backup, char *buf, int read_size)
 	{
 		str_free(&buf);
 		str_free(backup);
-		return;
+		return (0);
 	}
 	str_free(&buf);
 	if (ft_strlen(*backup) == 0)
