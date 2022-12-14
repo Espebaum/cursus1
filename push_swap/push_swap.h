@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:57:08 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/14 17:26:35 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/14 21:53:31 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 #include <stdlib.h>
 #include <unistd.h>
-
-const int	G_MEMORY_BORDER = 1024;
+#include "./libft/libft.h"
 
 typedef struct s_deque
 {
@@ -40,6 +39,7 @@ void	push_front(t_deque *d, int val);
 int		pop_back(t_deque *d);
 void	rotate(t_deque *d);
 void	reverse_rotate(t_deque *d);
-
+void	delete_deque(t_deque *d);
+void	dup_check(int *arr, int n);
 
 #endif

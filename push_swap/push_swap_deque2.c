@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:07:02 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/14 17:37:41 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/14 19:16:11 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,10 @@ void	push(t_deque *from, t_deque *to)
 	if (empty(from))
 		return ;
 	push_front(to, pop_front(from));
+}
+
+void	delete_deque(t_deque *d)
+{
+	free(d->arr);
+	free(d);
 }

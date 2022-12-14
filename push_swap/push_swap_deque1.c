@@ -6,11 +6,13 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:31:08 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/14 17:06:41 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/14 18:36:12 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+const int	g_memory_border = 1024;
 
 void	swap_top(t_deque *d)
 {
@@ -48,7 +50,7 @@ int	pop_front(t_deque *d)
 {
 	int		ret;
 
-	if (d->capacity > G_MEMORY_BORDER
+	if (d->capacity > g_memory_border
 		&& d->size * 2 < d->capacity)
 		resize(d, d->capacity / 2);
 	ret = front(d);
@@ -74,7 +76,7 @@ int	pop_back(t_deque *d)
 {
 	int		ret;
 
-	if (d->capacity > G_MEMORY_BORDER
+	if (d->capacity > g_memory_border
 		&& d->size * 2 < d->capacity)
 		resize(d, d->capacity / 2);
 	ret = back(d);
