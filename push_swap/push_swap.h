@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:57:08 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/14 21:53:31 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/15 21:37:21 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <stdlib.h>
 #include <unistd.h>
-#include "./libft/libft.h"
+// #include "./libft/libft.h"
 
 typedef struct s_deque
 {
@@ -41,5 +41,9 @@ void	rotate(t_deque *d);
 void	reverse_rotate(t_deque *d);
 void	delete_deque(t_deque *d);
 void	dup_check(int *arr, int n);
+void	push_arr_deq(int *arr, int argc, t_deque *deq);
+
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	**ft_split(char const *s, char c);
 
 #endif

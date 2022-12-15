@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:56:49 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/14 21:55:13 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/15 22:26:30 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,7 @@
 const long long	g_max = 2147483647;
 const long long	g_min = -2147483648;
 const long long	g_ll = 3000000000;
-
-void	ft_freeall(char **spl)
-{
-	size_t	j;
-
-	j = 0;
-	while (spl[j])
-	{
-		free(spl[j]);
-		j++;
-	}
-	free(spl);
-	return ;
-}
+void	ft_freeall(char **spl);
 
 long long	check_num(char *str)
 {
@@ -105,7 +92,7 @@ void	split_space(char *s, int *num)
 	ft_freeall(save);
 }
 
-int	main(int argc, char **argv)
+int	check_push_argv(int argc, char **argv, t_deque *deq)
 {
 	int	n;
 	int	i;
@@ -114,60 +101,42 @@ int	main(int argc, char **argv)
 
 	i = 0;
 	n = 0;
+	if (argc == 1)
+	{
+		return (write(1, "Error\n", 6));
+		exit(0);
+	}
 	while (++i < argc)
 		split_space(argv[i], &n);
-	printf("%d\n", n);
 	i = 0;
 	idx = 0;
 	arr = (int *) malloc(sizeof(int) * n);
 	while (++i < argc)
 		append_num(argv[i], arr, &idx);
-	/** for (int j = 0; j < n ;++j) */
-	/** { */
-	/**     printf("%d ", arr[j]); */
-	/** } */
 	dup_check(arr, n);
+	push_arr_deq(arr, argc - 1, deq);
 	free(arr);
 	return (0);
 }
 
-/** void	print(t_deque *d) */
-/** { */
-/**     int		i; */
-/**  */
-/**     i = d->head - 1; */
-/**     if (!empty(d)) */
-/**     { */
-/**         if (d->head < d->tail) */
-/**             while (++i < d->tail) */
-/**                 printf("%d ", d->arr[i]); */
-/**         else */
-/**         { */
-/**             while (++i < d->capacity) */
-/**                 printf("%d ", d->arr[i]); */
-/**             i = -1; */
-/**             while (++i < d->tail) */
-/**                 printf("%d ", d->arr[i]); */
-/**         } */
-/**     } */
-/**     printf("\n"); */
-/** } */
+int	main(int argc, char **argv)
+{
+	t_deque		*deq_a;
+	t_deque		*deq_b;
+	t_deque		*deq_str;
+	int			i;
 
-/** int	main(void) */
-/** { */
-/**     t_deque	*d; */
-/**  */
-/**     d = make_deque(); */
-/**     print(d); */
-/**     push_back(d, 1); */
-/**     push_back(d, 2); */
-/**     push_back(d, 3); */
-/**     push_back(d, 4); */
-/**     print(d); */
-/**     push_front(d, 5); */
-/**     push_front(d, 6); */
-/**     push_front(d, 7); */
-/**     push_front(d, 8); */
-/**     print(d); */
-/**     return (0); */
-/** } */
+	i = 0;
+	deq_a = make_deque();
+	deq_b = make_deque();
+	deq_str = make_deque();
+	
+	check_push_argv(argc, argv, deq_a);
+	while (i < argc - 1)
+	{
+		printf("%d ", deq_a->arr[i]);
+		i++;
+	}
+	printf("\n");
+	return (0);
+}

@@ -6,11 +6,25 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 21:32:29 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/14 21:51:35 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/15 22:26:45 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <stdio.h>
+
+void	push_arr_deq(int *arr, int size, t_deque *deq)
+{
+	int		i;
+
+	i = 0;
+	while (size)
+	{
+		deq->arr[i] = arr[size - 1];
+		i++;
+		size--;
+	}
+}
 
 void	my_qsort(int *arr, int left, int right)
 {

@@ -6,20 +6,20 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 18:06:50 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/14 21:15:50 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/15 14:28:54 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft/libft.h"
+#include "push_swap.h"
 
-static int	is_sep(char s, char c)
+int	is_sep(char s, char c)
 {
 	if (s == c || s == 0)
 		return (1);
 	return (0);
 }
 
-static int	count_size(char const *s, char c)
+int	count_size(char const *s, char c)
 {
 	int	s_size;
 
@@ -33,7 +33,7 @@ static int	count_size(char const *s, char c)
 	return (s_size);
 }
 
-static void	ft_freeall(char **spl)
+void	ft_freeall(char **spl)
 {
 	size_t	j;
 
@@ -47,7 +47,7 @@ static void	ft_freeall(char **spl)
 	return ;
 }
 
-static void	place_word(char **spl, char const *s, char c, int *flag)
+void	place_word(char **spl, char const *s, char c, int *flag)
 {
 	int		s_idx;
 	int		i;
