@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:07:02 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/14 19:16:11 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/16 16:05:53 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,6 @@ void	reverse_rotate(t_deque *d)
 	push_front(d, pop_back(d));
 }
 
-//rotate
-// 5 6 - - 1 2 3 4
-//     t   h
-
-// 5 6 - - 1 2 3 4
-//     t     h
-
-// 5 6 1 - 1 2 3 4
-//       t   h
 void	push(t_deque *from, t_deque *to)
 {
 	if (empty(from))
@@ -70,3 +61,13 @@ void	delete_deque(t_deque *d)
 	free(d->arr);
 	free(d);
 }
+
+//rotate
+// 5 6 - - 1 2 3 4
+//     t   h
+
+// 5 6 - - 1 2 3 4
+//     t     h
+
+// 5 6 1 - 1 2 3 4
+//       t   h

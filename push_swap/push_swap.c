@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:56:49 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/15 22:26:30 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/16 18:46:08 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ long long	check_num(char *str)
 			return (g_ll);
 		l *= 10LL;
 		l += *str - '0';
-		if (l > -g_min)
-			return (g_ll);
 	}
 	if ((neg < 0 && l <= -g_min) || (neg > 0 && l <= g_max))
 		return (neg * l);
@@ -103,7 +101,7 @@ int	check_push_argv(int argc, char **argv, t_deque *deq)
 	n = 0;
 	if (argc == 1)
 	{
-		return (write(1, "Error\n", 6));
+		return (!(write(1, "Error\n", 6)));
 		exit(0);
 	}
 	while (++i < argc)
@@ -130,13 +128,15 @@ int	main(int argc, char **argv)
 	deq_a = make_deque();
 	deq_b = make_deque();
 	deq_str = make_deque();
-	
 	check_push_argv(argc, argv, deq_a);
+	printf("%s %s\n", "val", "capacity");
 	while (i < argc - 1)
 	{
 		printf("%d ", deq_a->arr[i]);
+		printf("%d\n", deq_a->capacity);
 		i++;
 	}
+	printf("top : %d", front(deq_a));
 	printf("\n");
 	return (0);
 }

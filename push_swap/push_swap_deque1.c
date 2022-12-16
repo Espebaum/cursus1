@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:31:08 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/14 18:36:12 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/16 16:06:49 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,7 @@ void	swap_top(t_deque *d)
 	d->arr[idx1] = d->arr[idx2];
 	d->arr[idx2] = tmp;
 }
-
 // 22 운 없이 헤드가 capacity - 1의 인덱스일 경우
-
-// push_back, push_front 구현
-// pop_back, pop_front 구현
-// 위 함수들을 이용하여 rotate, reverse rotate 구현
 
 void	push_back(t_deque *d, int val)
 {
@@ -86,3 +81,6 @@ int	pop_back(t_deque *d)
 	d->size--;
 	return (ret);
 }
+// push_back, push_front 구현
+// pop_back, pop_front 구현
+// 위 함수들을 이용하여 rotate, reverse rotate 구현

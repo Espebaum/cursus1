@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 21:32:29 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/15 22:26:45 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/16 18:46:55 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	push_arr_deq(int *arr, int size, t_deque *deq)
 	int		i;
 
 	i = 0;
-	while (size)
+	while (i < size)
 	{
-		deq->arr[i] = arr[size - 1];
-		i++;
-		size--;
+		push_back(deq, arr[i++]);
+		printf("size : %d\n", deq->size);
 	}
+	printf("\n");
 }
 
 void	my_qsort(int *arr, int left, int right)

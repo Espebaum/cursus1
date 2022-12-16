@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:29:31 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/15 20:53:24 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/16 15:32:42 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	my_qsort(int *arr, int L, int R)
 	int	pivot = arr[(L + R) / 2];
 	int	temp;
 
+	if (L >= R)
+		return ;
 	while (L <= R)
 	{
 		while (arr[L] < pivot)
