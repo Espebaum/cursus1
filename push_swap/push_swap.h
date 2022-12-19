@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:57:08 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/19 15:35:38 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/19 22:47:34 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ int		is_sorted_deq(t_deque *a);
 
 void	atob(t_deque *a, t_deque *b);
 int		check_min_idx(int *arr, int size);
+void	push_min_b(t_deque *a, t_deque *b, int min);
 
 #endif

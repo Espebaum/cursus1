@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:35:34 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/19 18:54:29 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/19 22:48:33 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	pi_push(t_deque *a, t_deque *b, int pivot1, int pivot2)
 		do_pb(a, b);
 		(a_size)--;
 	}
-	// 파티셔닝된 b 스택을 확인하는 부분 (* 중요)
+	printf("\n파티셔닝 b스택\n"); 
 	b_size = b->size;
 	printf("b stack : ");
 	idx = 0;
@@ -57,6 +57,7 @@ void	check_a_cnt(int *b_cnt, t_deque *a, t_deque *b)
 	int		b_size;
 	int		a_head;
 	int		a_size;
+	int		min;
 
 	b_size = b->size;
 	idx = 0;
@@ -74,11 +75,8 @@ void	check_a_cnt(int *b_cnt, t_deque *a, t_deque *b)
 		}
 		idx++;
 	}
-	b_size = b->size;
-	idx = 0;
-	printf("\n");
-	while (b_size--)
-		printf("2회차 b_cnt : %d\n", b_cnt[idx++]);
+	min = check_min_idx(b_cnt, b->size);
+	push_min_b(a, b, min);
 }
 
 void	check_b_cnt(t_deque *a, t_deque *b)
@@ -88,13 +86,11 @@ void	check_b_cnt(t_deque *a, t_deque *b)
 	int			idx;
 	static int	first = 0;
 
-	printf("b->size : %d\n", b->size);
 	idx = 0;
 	b_size = b->size;
 	if (first == 0)
 	{
 		do_pa(a, b);
-		printf("첫 부분 그냥 넘겨주는 것\n\n");
 		first++;
 		return ;
 	}
@@ -106,7 +102,6 @@ void	check_b_cnt(t_deque *a, t_deque *b)
 		else
 			b_cnt[idx] = idx;
 		idx++;
-		printf("1회차 b_cnt : %d\n", b_cnt[idx - 1]);
 	}
 	check_a_cnt(b_cnt, a, b);
 	free(b_cnt);
@@ -114,9 +109,6 @@ void	check_b_cnt(t_deque *a, t_deque *b)
 
 void	check_cnt_push(t_deque *a, t_deque *b)
 {
-	int		cnt;
-
-	cnt = 0;
 	check_b_cnt(a, b);
 }
 
@@ -136,5 +128,10 @@ void	atob(t_deque *a, t_deque *b)
 	printf("pivot1: %d pivot2: %d\n", pivot1, pivot2);
 	pi_push(a, b, pivot1, pivot2);
 	check_cnt_push(a, b);
-	check_cnt_push(a, b);
+	b_size = b->size;
+	while (b_size)
+	{
+		check_cnt_push(a, b);
+		b_size--;
+	}
 }

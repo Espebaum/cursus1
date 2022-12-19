@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 21:57:25 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/18 17:35:25 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/19 23:02:21 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,6 @@ int	start_sort(t_deque *deq_a, t_deque *deq_b, t_deque *deq_str)
 		sort_5(deq_a, deq_b);
 	else
 		atob(deq_a, deq_b);
-	deq_str->size = 0;
+	deq_str = 0;
 	return (0);
 }

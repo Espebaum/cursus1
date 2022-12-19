@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:36:39 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/17 18:42:03 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/19 21:49:21 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ void	do_rra(t_deque *deq)
 
 void	do_rrb(t_deque *deq)
 {
-	write(1, "rra\n", 4);
+	write(1, "rrb\n", 4);
 	reverse_rotate(deq);
 }
