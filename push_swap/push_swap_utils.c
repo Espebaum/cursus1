@@ -6,12 +6,18 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 21:32:29 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/16 18:46:55 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/17 16:50:20 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <stdio.h>
+
+int	error_exit(void)
+{
+	write(1, "Error\n", 6);
+	exit(0);
+}
 
 void	push_arr_deq(int *arr, int size, t_deque *deq)
 {
@@ -19,11 +25,7 @@ void	push_arr_deq(int *arr, int size, t_deque *deq)
 
 	i = 0;
 	while (i < size)
-	{
 		push_back(deq, arr[i++]);
-		printf("size : %d\n", deq->size);
-	}
-	printf("\n");
 }
 
 void	my_qsort(int *arr, int left, int right)
@@ -71,8 +73,7 @@ void	dup_check(int *arr, int n)
 		{
 			free(arr);
 			free(tmp_arr);
-			write(1, "Error\n", 6);
-			exit(0);
+			error_exit();
 		}
 	}
 	free(tmp_arr);

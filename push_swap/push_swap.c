@@ -6,12 +6,11 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:56:49 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/16 18:46:08 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/18 15:07:20 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
 
 const long long	g_max = 2147483647;
 const long long	g_min = -2147483648;
@@ -57,7 +56,8 @@ void	append_num(char *s, int *arr, int *idx)
 	while (*(++spl))
 	{
 		l = check_num(*spl);
-		arr[(*idx)++] = l;
+		arr[*idx] = l;
+		(*idx)++;
 	}
 	ft_freeall(save);
 }
@@ -67,14 +67,15 @@ void	split_space(char *s, int *num)
 	char		**spl;
 	char		**save;
 	long long	l;
+	int			i;
 
+	i = ft_strlen(s);
+	if (*s == ' ' && *(s + 1) == '\0')
+		error_exit();
 	spl = ft_split(s, ' ');
 	save = spl;
 	if (!spl)
-	{
-		write(1, "Error\n", 6);
-		exit(0);
-	}
+		error_exit();
 	--spl;
 	while (*(++spl))
 	{
@@ -82,8 +83,7 @@ void	split_space(char *s, int *num)
 		if (l == g_ll || ((*spl)[0] == '-' && (*spl)[1] == '\0'))
 		{
 			ft_freeall(save);
-			write(1, "Error\n", 6);
-			exit(0);
+			error_exit();
 		}
 		(*num)++;
 	}
@@ -100,10 +100,7 @@ int	check_push_argv(int argc, char **argv, t_deque *deq)
 	i = 0;
 	n = 0;
 	if (argc == 1)
-	{
-		return (!(write(1, "Error\n", 6)));
-		exit(0);
-	}
+		return (error_exit());
 	while (++i < argc)
 		split_space(argv[i], &n);
 	i = 0;
@@ -112,7 +109,8 @@ int	check_push_argv(int argc, char **argv, t_deque *deq)
 	while (++i < argc)
 		append_num(argv[i], arr, &idx);
 	dup_check(arr, n);
-	push_arr_deq(arr, argc - 1, deq);
+	i = 0;
+	push_arr_deq(arr, n, deq);
 	free(arr);
 	return (0);
 }
@@ -129,14 +127,6 @@ int	main(int argc, char **argv)
 	deq_b = make_deque();
 	deq_str = make_deque();
 	check_push_argv(argc, argv, deq_a);
-	printf("%s %s\n", "val", "capacity");
-	while (i < argc - 1)
-	{
-		printf("%d ", deq_a->arr[i]);
-		printf("%d\n", deq_a->capacity);
-		i++;
-	}
-	printf("top : %d", front(deq_a));
-	printf("\n");
+	start_sort(deq_a, deq_b, deq_str);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 18:06:50 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/15 14:28:54 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/17 14:46:31 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,11 @@ char	**ft_split(char const *s, char c)
 	char	**spl;
 	int		s_size;
 	int		flag;
+	int		i;
 
+	i = ft_strlen(s);
+	if (s[i] == ' ' && s[i + 1] == '\0')
+		error_exit();
 	flag = 0;
 	if (!s)
 		return (NULL);
