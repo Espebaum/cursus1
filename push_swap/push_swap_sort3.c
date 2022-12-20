@@ -6,67 +6,65 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:29:42 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/20 16:54:41 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/20 22:26:15 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <stdio.h>
 
-int	check_a_up(t_deque)
+int	check_a_up(t_deque *a, t_deque *b, int idx)
 {
+	int	a_size;
+	int	a_head;
+	int	a_cnt;
 
-}
-
-int	check_a_down()
-{
-
-}
-
-int	check_min_idx(int *arr, int size)
-{
-	int	i;
-	int	min_idx;
-
-	i = 0;
-	min_idx = 0;
-	while (i < size)
+	a_cnt = 0;
+	a_head = a->head;
+	a_size = a->size;
+	while (a_size--)
 	{
-		if (arr[min_idx] > arr[i++])
-			min_idx = i;
+		if (a->arr[a_head] < front_idx(b, idx))
+		{
+			a_cnt++;
+			a_head++;
+			if (a_head == a->capacity)
+				a_head = 0;
+		}
 	}
-	return (min_idx);
+	return (a_cnt);
 }
 
-void	push_min_a(int *a_cnt, t_deque *a, t_deque *b, int min)
+int	check_a_down(t_deque *a, t_deque *b, int idx)
 {
-	while (a_cnt[min]--)
+	int	a_size;
+	int	a_tail;
+	int	a_cnt;
+
+	a_cnt = 0;
+	a_tail = a->tail - 1;
+	a_size = a->size;
+	while (a_size--)
 	{
-		if (min < a->size / 2)
-			do_ra(a);
-		else
-			do_rra(a);
-		a_cnt[min]--;
+		if (a->arr[a_tail] < front_idx(b, idx))
+		{
+			a_cnt++;
+			a_tail--;
+			if (a_tail < 0)
+				a_tail = a->capacity;
+		}
 	}
-	do_pa(a, b);
-	printf("a->head %d\n", a->arr[a->head]);
-	printf("b->head %d\n", b->arr[b->head]);
+	return (a_cnt);
 }
 
-void	push_min_b(t_deque *a, t_deque *b, int *a_cnt, int min)
+void	push_min_a(t_deque *a, t_deque *b, int min_idx)
 {
-	while (1)
-	{
-		if (b->arr[b->head] == front_idx(b, min))
-			break ;
-		if (min > b->size / 2)
-			do_rrb(b);
-		else
-			do_rb(b);
-	}
+	int		a_up;
+	int		a_down;
+
 	if (a->size == 1)
 	{
-		if (b->arr[b->head] > a->arr[a->head])
+		if (a->arr[a->head] < b->arr[b->head])
 		{
 			do_pa(a, b);
 			do_sa(a);
@@ -75,6 +73,23 @@ void	push_min_b(t_deque *a, t_deque *b, int *a_cnt, int min)
 			do_pa(a, b);
 		return ;
 	}
+	a_up = check_a_up(a, b, min_idx);
+	a_down = check_a_down(a, b, min_idx);
+	if (ft_min(a_up, a_down) == a_up)
+		while (min_idx--)
+			do_ra(a);
 	else
-		push_min_a(a_cnt, a, b, min);
+		while (min_idx--)
+			do_rra(a);
+	do_pa(a, b);
+}
+
+void	push_min_b(t_deque *b, int min_idx)
+{
+	if (min_idx < b->size / 2)
+		while (min_idx--)
+			do_rb(b);
+	else
+		while (min_idx--)
+			do_rrb(b);
 }
