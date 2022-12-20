@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 21:32:29 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/17 16:50:20 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/20 16:48:47 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@ int	error_exit(void)
 {
 	write(1, "Error\n", 6);
 	exit(0);
+}
+
+int	ft_min(a, b)
+{
+	if (a > b)
+		return (b);
+	return (a);
 }
 
 void	push_arr_deq(int *arr, int size, t_deque *deq)

@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:57:08 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/19 22:47:34 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/20 16:49:27 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int		is_sorted_deq(t_deque *a);
 int		sort_3(t_deque *deq);
 int		sort_4(t_deque *a, t_deque *b);
 int		sort_5(t_deque *a, t_deque *b);
+int		ft_min(int a, int b);
 void	my_qsort(int *arr, int left, int right);
 int		front_idx(t_deque *deq, int idx);
 void	deque_to_arr(t_deque *d, int *a);
@@ -71,6 +72,9 @@ int		is_sorted_deq(t_deque *a);
 
 void	atob(t_deque *a, t_deque *b);
 int		check_min_idx(int *arr, int size);
-void	push_min_b(t_deque *a, t_deque *b, int min);
+int		check_a_up(t_deque *a, t_deque *b);
+int		check_a_down(t_deque *a, t_deque *b);
+void	push_min_b(t_deque *a, t_deque *b, int *a_cnt, int min);
+void	push_min_a(int *a_cnt, t_deque *a, t_deque *b, int min);
 
 #endif

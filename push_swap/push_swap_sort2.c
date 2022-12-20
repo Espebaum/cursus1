@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:35:34 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/19 22:48:33 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/20 16:46:04 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,35 +51,49 @@ void	pi_push(t_deque *a, t_deque *b, int pivot1, int pivot2)
 	printf("\n\n");
 }
 
+void	check_sum_min(int *a_cnt, int *b_cnt, t_deque *a, t_deque *b)
+{
+	int		*sum_cnt;
+	int		b_size;
+	int		i;
+	int		min;
+
+	i = 0;
+	b_size = b->size;
+	sum_cnt = (int *)malloc(sizeof(int) * b_size);
+	while (b_size--)
+	{
+		sum_cnt[i] = a_cnt[i] + b_cnt[i];
+		i++;
+	}
+	min = check_min_idx(sum_cnt, b->size);
+	push_min_b(a, b, a_cnt, min);
+	free(sum_cnt);
+}
+
 void	check_a_cnt(int *b_cnt, t_deque *a, t_deque *b)
 {
 	int		idx;
 	int		b_size;
 	int		a_head;
 	int		a_size;
-	int		min;
+	int		*a_cnt;
 
 	b_size = b->size;
+	a_cnt = (int *)malloc(sizeof(int) * b_size);
 	idx = 0;
 	while (b_size--)
 	{
 		a_size = a->size;
 		a_head = a->head;
-		while (a_size--)
-		{
-			if (a->arr[a_head] < front_idx(b, idx))
-			{
-				b_cnt[idx]++;
-				a_head++;
-			}
-		}
-		idx++;
+		if (a_size--)
+			 a_cnt[idx++] = ft_min(check_a_up(a, b), check_a_down(a, b));
 	}
-	min = check_min_idx(b_cnt, b->size);
-	push_min_b(a, b, min);
+	check_sum_min(a_cnt, b_cnt, a, b);
+	free(a_cnt);
 }
 
-void	check_b_cnt(t_deque *a, t_deque *b)
+void	check_cnt(t_deque *a, t_deque *b)
 {
 	int			*b_cnt;
 	int			b_size;
@@ -107,11 +121,6 @@ void	check_b_cnt(t_deque *a, t_deque *b)
 	free(b_cnt);
 }
 
-void	check_cnt_push(t_deque *a, t_deque *b)
-{
-	check_b_cnt(a, b);
-}
-
 void	atob(t_deque *a, t_deque *b)
 {	
 	int		*arr;
@@ -127,11 +136,13 @@ void	atob(t_deque *a, t_deque *b)
 	pivot2 = arr[(a->size / 3) * 2];
 	printf("pivot1: %d pivot2: %d\n", pivot1, pivot2);
 	pi_push(a, b, pivot1, pivot2);
-	check_cnt_push(a, b);
+	check_cnt(a, b);
 	b_size = b->size;
-	while (b_size)
-	{
-		check_cnt_push(a, b);
-		b_size--;
-	}
+	check_cnt(a, b);
+	check_cnt(a, b);
+	/** while (b_size) */
+	/** { */
+	/**     check_cnt(a, b); */
+	/**     b_size--; */
+	/** } */
 }
