@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 21:32:29 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/20 16:48:47 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/21 18:15:17 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	error_exit(void)
 	exit(0);
 }
 
-int	ft_min(a, b)
+int	ft_min(int a, int b)
 {
 	if (a > b)
 		return (b);

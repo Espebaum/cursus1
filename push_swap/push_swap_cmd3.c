@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:42:17 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/17 18:43:08 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/21 15:33:43 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,4 +17,12 @@ void	do_rrr(t_deque *a, t_deque *b)
 	write(1, "rrr\n", 4);
 	reverse_rotate(a);
 	reverse_rotate(b);
+}
+
+int	ft_max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	else
+		return (b);
 }

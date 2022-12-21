@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:35:34 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/20 22:34:24 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/21 17:11:40 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,23 @@ void	pi_push(t_deque *a, t_deque *b, int pivot1, int pivot2)
 int	check_a_cnt(int idx, t_deque *a, t_deque *b)
 {
 	int		a_cnt;
-	int		a_head;
-	int		a_size;
+	int		a_case;
 
-	a_cnt = 0;
-	a_head = a->head;
-	a_size = a->size;
-	a_cnt = ft_min(check_a_up(a, b, idx), check_a_down(a, b, idx));
+	a_case = check_case(front_idx(b, idx), a);
+	printf("최종 a_case : %d\n", a_case);
+	if (a_case == 1)
+		a_cnt = 0;
+	else if (a_case == 2)
+		a_cnt = ft_min(check_a_up(a, b, idx), check_a_down(a, b, idx));
+	else
+		a_cnt = 1;
 	return (a_cnt);
 }
 
 void	first_check_cnt(t_deque *a, t_deque *b)
 {
 	do_pa(a, b);
+	printf("\n");
 	return ;
 }
 
@@ -85,13 +89,18 @@ void	check_cnt(t_deque *a, t_deque *b)
 	{
 		sum_check = sum_cnt;
 		b_cnt = ft_min(b_cnt, ft_min(idx, (b->size) - idx));
+		printf("idx : %d b cnt : %d a_cnt : %d\n", idx, b_cnt, check_a_cnt(idx, a, b));
 		sum_cnt = ft_min(sum_cnt, b_cnt + check_a_cnt(idx, a, b));
 		if (sum_check != sum_cnt)
 			min_idx = idx;
+		b_cnt++;
+		if (b_cnt > b->size / 2)
+			b_cnt = (b->size) - idx;
 		idx++;
 	}
-	push_min_b(b, min_idx);
-	push_min_a(a, b, min_idx);
+	printf("최종 min idx : %d\n", min_idx);
+	push_min_b(a, b, min_idx);
+	/** push_min_a(a, b, min_idx); */
 }
 
 void	atob(t_deque *a, t_deque *b)
@@ -116,7 +125,7 @@ void	atob(t_deque *a, t_deque *b)
 		check_cnt(a, b);
 	//체크
 	a_size = a->size;
-	printf("a stack : ");
+	printf("\n최종 a stack : ");
 	i = 0;
 	while (a_size--)
 	{
