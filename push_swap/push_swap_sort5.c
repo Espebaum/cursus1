@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 18:07:13 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/21 22:19:04 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/22 18:26:13 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,40 +16,48 @@
 int	get_max_a_idx(t_deque *a)
 {
 	int		*arr;
-	int		max;
+	int		max_idx;
 	int		i;
 
-	i = 0;
+	i = -1;
+	max_idx = 0;
 	arr = (int *)malloc(sizeof(int) * a->size);
-	max = -2147483648;
 	deque_to_arr(a, arr);
-	if (i < a->size - 1)
-	{
-		max = ft_max(arr[i], arr[i + 1]);
-		i++;
-	}
+	while (++i < a->size)
+		if (arr[i] > arr[max_idx])
+			max_idx = i;
 	free(arr);
-	printf("max i : %d\n", i);
-	return (i);
+	return (max_idx);
 }
 
 int	get_min_a_idx(t_deque *a)
 {
 	int		*arr;
-	int		min;
+	int		min_idx;
 	int		i;
 
-	i = 0;
+	i = -1;
+	min_idx = 0;
 	arr = (int *)malloc(sizeof(int) * a->size);
-	min = 2147483647;
 	deque_to_arr(a, arr);
-	if (i < a->size - 1)
-	{
-		printf("\narr[i] : %d arr[i + 1] : %d\n", arr[i], arr[i + 1]);
-		min = ft_max(arr[i], arr[i + 1]);
-		i++;
-	}
+	while (++i < a->size)
+		if (arr[i] < arr[min_idx])
+			min_idx = i;
 	free(arr);
-	return (i);
+	return (min_idx);
 }
-// 12/22일 여기서부터 봐야함
+
+void	turn_min(t_deque *a)
+{
+	int		min_idx;
+	int		cnt;
+
+	min_idx = get_min_a_idx(a);
+	cnt = a->size - min_idx;
+	if (min_idx >= a->size / 2)
+		while (cnt--)
+			do_rra(a);
+	else
+		while (min_idx--)
+			do_ra(a);
+}

@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:35:34 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/21 17:11:40 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/22 18:22:10 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void	check_cnt(t_deque *a, t_deque *b)
 			b_cnt = (b->size) - idx;
 		idx++;
 	}
-	printf("최종 min idx : %d\n", min_idx);
 	push_min_b(a, b, min_idx);
 	/** push_min_a(a, b, min_idx); */
 }
@@ -123,6 +122,7 @@ void	atob(t_deque *a, t_deque *b)
 	b_size = b->size;
 	while (b_size--)
 		check_cnt(a, b);
+	turn_min(a);
 	//체크
 	a_size = a->size;
 	printf("\n최종 a stack : ");

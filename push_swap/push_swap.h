@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:57:08 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/21 19:59:20 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/22 18:10:05 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ void	push_mid_a(t_deque *a, t_deque *b, int min_idx);
 void	push_max_a(t_deque *a, t_deque *b);
 int		get_max_a_idx(t_deque *a);
 int		get_min_a_idx(t_deque *a);
+void	turn_min(t_deque *a);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:42:17 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/21 15:33:43 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/22 15:30:49 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,5 @@ int	ft_max(int a, int b)
 {
 	if (a > b)
 		return (a);
-	else
-		return (b);
+	return (b);
 }
