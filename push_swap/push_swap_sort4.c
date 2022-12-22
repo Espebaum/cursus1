@@ -6,12 +6,11 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:50:41 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/22 18:26:42 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/22 18:35:43 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
 
 void	push_min_a(t_deque *a, t_deque *b)
 {
@@ -22,7 +21,6 @@ void	push_min_a(t_deque *a, t_deque *b)
 	cnt = a->size - min_a_idx;
 	if (min_a_idx >= a->size / 2)
 	{
-		printf("min cnt %d\n", cnt);
 		while (cnt--)
 			do_rra(a);
 	}

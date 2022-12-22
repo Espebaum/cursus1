@@ -6,12 +6,11 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 18:07:13 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/22 18:26:13 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/22 18:35:41 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
 
 int	get_max_a_idx(t_deque *a)
 {
