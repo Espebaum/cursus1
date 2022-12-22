@@ -6,17 +6,20 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:35:34 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/22 19:16:13 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/22 19:35:10 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <stdio.h>
 
 void	pi_push(t_deque *a, t_deque *b, int pivot1, int pivot2)
 {
 	int		a_size;
 	int		b_size;
+	int		idx; //check
 
+	idx = 0; //check
 	a_size = a->size;
 	b_size = b->size;
 	while (a_size)
@@ -37,6 +40,11 @@ void	pi_push(t_deque *a, t_deque *b, int pivot1, int pivot2)
 		do_pb(a, b);
 		(a_size)--;
 	}
+	//check
+	b_size = b->size;
+	printf("\n파티셔닝된 b stack : ");
+	while (b_size--)
+		printf("%d ", front_idx(b, idx++));
 }
 
 int	check_a_cnt(int idx, t_deque *a, t_deque *b)
@@ -92,16 +100,29 @@ void	atob(t_deque *a, t_deque *b)
 	int		pivot1;
 	int		pivot2;
 	int		b_size;
+	//check
+	int		a_size;
+	int		idx;
 
+	idx = 0; //check
+	a_size = a->size; //check
 	arr = (int *) malloc(sizeof(int) * a->size);
 	deque_to_arr(a, arr);
 	my_qsort(arr, 0, a->size);
 	pivot1 = arr[a->size / 3];
 	pivot2 = arr[(a->size / 3) * 2];
+	printf("pivot1 : %d pivot2 : %d\n", pivot1, pivot2); //pivot check
 	pi_push(a, b, pivot1, pivot2);
 	first_check_cnt(a, b);
 	b_size = b->size;
 	while (b_size--)
 		check_cnt(a, b);
 	turn_min(a);
+	//check
+	printf("\na stack : ");
+	while (a_size--)
+	{
+		printf("%d ", front_idx(a, idx));
+		idx++;
+	}
 }
