@@ -6,11 +6,12 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:50:41 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/22 18:35:43 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/22 19:08:30 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <stdio.h>
 
 void	push_min_a(t_deque *a, t_deque *b)
 {
@@ -26,11 +27,8 @@ void	push_min_a(t_deque *a, t_deque *b)
 	}
 	else
 	{
-		while (min_a_idx)
-		{
+		while (min_a_idx--)
 			do_ra(a);
-			min_a_idx--;
-		}
 	}
 	do_pa(a, b);
 }
@@ -64,18 +62,19 @@ void	push_max_a(t_deque *a, t_deque *b)
 
 	max_a_idx = get_max_a_idx(a);
 	cnt = a->size - max_a_idx - 1;
-	if (max_a_idx <= a->size / 2)
-	{
-		while (cnt--)
-			do_ra(a);
-	}
-	else
+	printf("\nmax idx : %d cnt : %d\n", max_a_idx, cnt);
+	if (max_a_idx < a->size / 2)
 	{
 		while (max_a_idx + 1)
 		{
-			do_rra(a);
+			do_ra(a);
 			max_a_idx--;
 		}
+	}
+	else
+	{
+		while (cnt--)
+			do_rra(a);
 	}
 	do_pa(a, b);
 }
