@@ -6,24 +6,29 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:29:42 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/22 18:35:46 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/26 22:52:41 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <stdio.h>
 
 int	check_a_up(t_deque *a, t_deque *b, int idx)
 {
 	int	a_size;
 	int	a_head;
+	int	a_tail;
 	int	a_cnt;
 
 	a_cnt = 0;
 	a_head = a->head;
+	a_tail = a->tail - 1;
 	a_size = a->size;
 	while (a_size--)
 	{
-		if (a->arr[a_head] < front_idx(b, idx))
+		if (a->arr[a_head] < front_idx(b, idx)
+			|| (a->arr[a_head] > front_idx(b, idx)
+				&& (a->arr[a_tail] > front_idx(b, idx))))
 		{
 			a_cnt++;
 			a_head++;
@@ -31,6 +36,7 @@ int	check_a_up(t_deque *a, t_deque *b, int idx)
 				a_head = 0;
 		}
 	}
+	/** printf("acnt : %d\n", a_cnt); */
 	return (a_cnt);
 }
 
@@ -57,6 +63,7 @@ int	check_a_down(t_deque *a, t_deque *b, int idx)
 				a_tail = a->capacity;
 		}
 	}
+	/** printf("acnt : %d\n", a_cnt); */
 	return (a_cnt);
 }
 
@@ -65,6 +72,7 @@ void	push_a(t_deque *a, t_deque *b, int min_idx)
 	int		a_case;
 
 	a_case = check_case(front_idx(b, min_idx), a);
+	/** printf("\na case : %d\n", a_case); */
 	if (a->size == 1)
 	{
 		if (a->arr[a->head] < b->arr[b->head])
