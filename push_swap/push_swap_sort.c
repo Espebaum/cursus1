@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 21:57:25 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/27 14:59:52 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/27 16:02:21 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,18 @@ int	sort_arr(t_deque *a)
 	arg = is_sorted(tmp_arr, a->size);
 	free(tmp_arr);
 	return (arg);
+}
+
+void	*get_pivot(t_deque *a, int *pivot)
+{
+	int	*arr;
+
+	arr = (int *) malloc(sizeof(int) * a->size);
+	deque_to_arr(a, arr);
+	my_qsort(arr, 0, a->size);
+	pivot[0] = arr[a->size / 3];
+	pivot[1] = arr[(a->size * 2) / 3];
+	return (pivot);
 }
 
 int	start_sort(t_deque *a, t_deque *b, t_deque *deq_str)

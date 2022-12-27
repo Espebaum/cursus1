@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:35:34 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/27 14:42:08 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/27 16:05:41 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 
 void	pi_push(t_deque *a, t_deque *b, int pivot1, int pivot2)
 {
-	int		a_size;
-	int		b_size;
+	int		a_idx;
 
-	a_size = a->size;
-	b_size = b->size;
-	while (a_size--)
+	a_idx = 0;
+	while (a->size > 5)
 	{
-		if (a->arr[a->head] < pivot2)
+		if (front_idx(a, a_idx) < pivot2)
 		{
 			do_pb(a, b);
 			if (b->size > 1 && b->arr[b->head] < pivot1)
@@ -30,10 +28,9 @@ void	pi_push(t_deque *a, t_deque *b, int pivot1, int pivot2)
 		}
 		else
 			do_ra(a);
+		a_idx++;
 	}
-	a_size = a->size;
-	while (a_size--)
-		do_pb(a, b);
+	sort_5(a, b);
 	//체크
 	/** int		idx = 0; */
 	/** b_size = b->size; */
@@ -58,12 +55,6 @@ int	check_a_cnt(int idx, t_deque *a, t_deque *b)
 	return (a_cnt);
 }
 
-void	first_push(t_deque *a, t_deque *b)
-{
-	do_pa(a, b);
-	return ;
-}
-
 void	check_cnt(t_deque *a, t_deque *b)
 {
 	int			b_cnt;
@@ -80,6 +71,7 @@ void	check_cnt(t_deque *a, t_deque *b)
 		sum_check = sum_cnt;
 		b_cnt = ft_min(idx, ft_min(idx, (b->size) - idx));
 		sum_cnt = ft_min(sum_cnt, b_cnt + check_a_cnt(idx, a, b));
+		/** sum_cnt -= same_cnt(idx, check_a_cnt(idx, a, b)) */
 		if (sum_check > sum_cnt)
 			min_idx = idx;
 		idx++;
@@ -101,33 +93,26 @@ void	check_cnt(t_deque *a, t_deque *b)
 
 void	atob(t_deque *a, t_deque *b)
 {	
-	int		*arr;
-	int		pivot1;
-	int		pivot2;
+	int		*pivot;
 	int		b_size;
-	//check
-	int		a_size;
-	int		idx;
 
-	idx = 0; //check
-	a_size = a->size; //check
-	arr = (int *) malloc(sizeof(int) * a->size);
-	deque_to_arr(a, arr);
-	my_qsort(arr, 0, a->size);
-	pivot1 = arr[a->size / 3];
-	pivot2 = arr[(a->size * 2) / 3];
-	/** printf("pivot1 : %d pivot2 : %d\n", pivot1, pivot2); //pivot check */
-	pi_push(a, b, pivot1, pivot2);
-	first_push(a, b);
+	pivot = (int *)malloc(sizeof(int) * 2);
+	get_pivot(a, pivot);
+	pi_push(a, b, pivot[0], pivot[1]);
 	b_size = b->size;
 	while (b_size--)
 		check_cnt(a, b);
 	turn_min(a);
 	//check
-	/** printf("\n최종 a stack : "); */
+	/** int		a_size; */
+	/** int		idx; */
+	/** idx = 0; */
+	/** a_size = a->size; */
+	/** printf("최종 a stack : "); */
 	/** while (a_size--) */
 	/** { */
 	/**     printf("%d ", front_idx(a, idx)); */
 	/**     idx++; */
 	/** } */
+	/** printf("\n"); */
 }

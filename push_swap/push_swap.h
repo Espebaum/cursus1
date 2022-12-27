@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:57:08 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/22 18:10:05 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/27 16:02:35 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	deque_to_arr(t_deque *d, int *a);
 int		is_sorted_deq(t_deque *a);
 
 void	atob(t_deque *a, t_deque *b);
+void	*get_pivot(t_deque *a, int *pivot);
 int		check_a_up(t_deque *a, t_deque *b, int idx);
 int		check_a_down(t_deque *a, t_deque *b, int idx);
 int		check_case(int b_idx, t_deque *a);
