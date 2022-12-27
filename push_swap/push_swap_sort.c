@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 21:57:25 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/22 18:35:55 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/27 14:59:52 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,55 +32,41 @@ int	is_sorted(int *arr, int size)
 	return (1);
 }
 
-int	sort_arr(t_deque *deq)
+int	sort_arr(t_deque *a)
 {
 	int	*tmp_arr;
-	int	idx;
-	int	i;
 	int	arg;
 
-	tmp_arr = (int *)malloc(sizeof(int) * deq->size);
-	idx = 0;
-	i = deq->head - 1;
-	if (deq->head < deq->tail)
-		while (++i < deq->tail)
-			tmp_arr[idx++] = deq->arr[i];
-	else
-	{
-		while (++i < deq->capacity)
-			tmp_arr[idx++] = deq->arr[i];
-		i = -1;
-		while (++i < deq->tail)
-			tmp_arr[idx++] = deq->arr[i];
-	}
-	arg = is_sorted(tmp_arr, deq->size);
+	tmp_arr = (int *)malloc(sizeof(int) * a->size);
+	deque_to_arr(a, tmp_arr);
+	arg = is_sorted(tmp_arr, a->size);
 	free(tmp_arr);
 	return (arg);
 }
 
-int	start_sort(t_deque *deq_a, t_deque *deq_b, t_deque *deq_str)
+int	start_sort(t_deque *a, t_deque *b, t_deque *deq_str)
 {
 	int	arg;
 	int	idx1;
 	int	idx2;
 
-	idx1 = deq_a->head;
-	idx2 = deq_a->tail - 1;
-	if (deq_a->arr[idx1] == deq_a->arr[idx2])
+	idx1 = 0;
+	idx2 = a->size - 1;
+	if (front_idx(a, idx1) == front_idx(a, idx2))
 		return (0);
-	arg = sort_arr(deq_a);
+	arg = sort_arr(a);
 	if (arg == 1)
 		return (0);
 	else if (arg == 2)
-		do_sa(deq_a);
+		do_sa(a);
 	else if (arg == 3)
-		sort_3(deq_a);
+		sort_3(a);
 	else if (arg == 4)
-		sort_4(deq_a, deq_b);
+		sort_4(a, b);
 	else if (arg == 5)
-		sort_5(deq_a, deq_b);
+		sort_5(a, b);
 	else
-		atob(deq_a, deq_b);
+		atob(a, b);
 	deq_str = 0;
 	return (0);
 }
