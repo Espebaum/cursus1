@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:35:34 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/26 22:47:56 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/27 14:42:08 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	check_a_cnt(int idx, t_deque *a, t_deque *b)
 void	first_push(t_deque *a, t_deque *b)
 {
 	do_pa(a, b);
-	/** printf("\n첫 푸쉬 a head %d\n", a->arr[a->head]); */
 	return ;
 }
 
@@ -90,13 +89,13 @@ void	check_cnt(t_deque *a, t_deque *b)
 	/** int		a_size = a->size; */
 	/** int		b_size = b->size; */
 	/** idx = 0; */
-	/** printf("\na stack : "); */
-	/** while (a_size--) */
-	/**     printf("%d ", front_idx(a, idx++)); */
 	/** printf("\nb stack : "); */
-	/** idx = 0; */
 	/** while (b_size--) */
 	/**     printf("%d ", front_idx(b, idx++)); */
+	/** printf("\na stack : "); */
+	/** idx = 0; */
+	/** while (a_size--) */
+	/**     printf("%d ", front_idx(a, idx++)); */
 	/** printf("\n"); */
 }
 

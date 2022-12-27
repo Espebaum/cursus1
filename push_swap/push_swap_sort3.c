@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:29:42 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/26 22:52:41 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/27 14:41:49 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,54 +16,50 @@
 int	check_a_up(t_deque *a, t_deque *b, int idx)
 {
 	int	a_size;
-	int	a_head;
-	int	a_tail;
 	int	a_cnt;
+	int	a_idx;
+	int	a_pidx;
 
+	a_idx = 0;
+	a_pidx = a->size - 1;
 	a_cnt = 0;
-	a_head = a->head;
-	a_tail = a->tail - 1;
 	a_size = a->size;
 	while (a_size--)
 	{
-		if (a->arr[a_head] < front_idx(b, idx)
-			|| (a->arr[a_head] > front_idx(b, idx)
-				&& (a->arr[a_tail] > front_idx(b, idx))))
+		if (front_idx(a, a_idx) < front_idx(b, idx)
+			|| (front_idx(a, a_idx) > front_idx(b, idx)
+				&& (front_idx(a, a_pidx) > front_idx(b, idx))))
 		{
 			a_cnt++;
-			a_head++;
-			if (a_head == a->capacity)
-				a_head = 0;
+			a_idx++;
+			a_pidx = a_idx - 1;
 		}
 	}
-	/** printf("acnt : %d\n", a_cnt); */
 	return (a_cnt);
 }
 
 int	check_a_down(t_deque *a, t_deque *b, int idx)
 {
 	int	a_size;
-	int	a_head;
-	int	a_tail;
 	int	a_cnt;
+	int	a_idx;
+	int	a_nidx;
 
+	a_idx = a->size - 1;
+	a_nidx = 0;
 	a_cnt = 0;
-	a_head = a->head;
-	a_tail = a->tail - 1;
 	a_size = a->size;
 	while (a_size--)
 	{
-		if (a->arr[a_tail] > front_idx(b, idx)
-			|| (a->arr[a_tail] < front_idx(b, idx)
-				&& a->arr[a_head] < front_idx(b, idx)))
+		if (front_idx(a, a_idx) > front_idx(b, idx)
+			|| (front_idx(a, a_idx) < front_idx(b, idx)
+				&& front_idx(a, a_nidx) < front_idx(b, idx)))
 		{
 			a_cnt++;
-			a_tail--;
-			if (a_tail < 0)
-				a_tail = a->capacity;
+			a_idx--;
+			a_nidx = a_idx + 1;
 		}
 	}
-	/** printf("acnt : %d\n", a_cnt); */
 	return (a_cnt);
 }
 
@@ -98,10 +94,20 @@ void	push_min_b(t_deque *a, t_deque *b, int min_idx)
 
 	min = min_idx;
 	if (min_idx < b->size / 2)
-		while (min--)
+		while (min)
+		{
 			do_rb(b);
+			min--;
+		}
 	else
-		while (min--)
+		while (min)
+		{
 			do_rrb(b);
-	push_a(a, b, min_idx);
+			min--;
+		}
+	//check
+	/** printf("\nmin_idx : %d min : %d\n", min_idx, min); */
+	/** printf("\n최저 b cnt인 b stack top : %d\n", b->arr[b->head]); */
+	//
+	push_a(a, b, min);
 }

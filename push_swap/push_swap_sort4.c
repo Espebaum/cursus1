@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:50:41 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/22 19:16:24 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/27 14:41:57 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,26 +77,27 @@ void	push_max_a(t_deque *a, t_deque *b)
 	do_pa(a, b);
 }
 
+#include <stdio.h>
+
 int	check_case(int min_b, t_deque *a)
 {
 	int		a_case;
-	int		a_head;
 	int		a_size;
+	int		idx;
 
+	idx = 0;
 	a_case = 0;
 	a_size = a->size;
-	a_head = a->head;
+	/** printf("min_b : %d\n", min_b); */
 	while (a_size--)
 	{			
-		if (a_head == a->capacity)
-				a_head = 0;
-		if (a->arr[a_head] < min_b)
+		if (front_idx(a, idx) <= min_b)
 		{
 			a_case++;
-			a_head++;
+			idx++;
 		}
 		else
-			a_head++;
+			idx++;
 	}
 	if (a_case == a->size)
 		return (3);
