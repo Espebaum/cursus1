@@ -6,24 +6,24 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:35:34 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/27 16:05:41 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/27 16:10:25 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <stdio.h>
 
-void	pi_push(t_deque *a, t_deque *b, int pivot1, int pivot2)
+void	pi_push(t_deque *a, t_deque *b, int *pivot)
 {
 	int		a_idx;
 
 	a_idx = 0;
 	while (a->size > 5)
 	{
-		if (front_idx(a, a_idx) < pivot2)
+		if (front_idx(a, a_idx) < pivot[1])
 		{
 			do_pb(a, b);
-			if (b->size > 1 && b->arr[b->head] < pivot1)
+			if (b->size > 1 && b->arr[b->head] < pivot[0])
 				do_rb(b);
 		}
 		else
@@ -31,6 +31,7 @@ void	pi_push(t_deque *a, t_deque *b, int pivot1, int pivot2)
 		a_idx++;
 	}
 	sort_5(a, b);
+	free(pivot);
 	//체크
 	/** int		idx = 0; */
 	/** b_size = b->size; */
@@ -98,7 +99,7 @@ void	atob(t_deque *a, t_deque *b)
 
 	pivot = (int *)malloc(sizeof(int) * 2);
 	get_pivot(a, pivot);
-	pi_push(a, b, pivot[0], pivot[1]);
+	pi_push(a, b, pivot);
 	b_size = b->size;
 	while (b_size--)
 		check_cnt(a, b);
