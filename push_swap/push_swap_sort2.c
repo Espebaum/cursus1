@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:35:34 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/27 16:10:25 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/28 21:45:42 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,8 @@ void	pi_push(t_deque *a, t_deque *b, int *pivot)
 	free(pivot);
 	//체크
 	/** int		idx = 0; */
-	/** b_size = b->size; */
 	/** printf("파티셔닝된 b stack : "); */
-	/** while (b_size--) */
+	/** while (idx < b->size) */
 	/**     printf("%d ", front_idx(b, idx++)); */
 	/** printf("\n"); */
 }
@@ -45,15 +44,43 @@ int	check_a_cnt(int idx, t_deque *a, t_deque *b)
 {
 	int		a_cnt;
 	int		a_case;
+	int		min_a_idx;
+	int		cnt;
 
 	a_case = check_case(front_idx(b, idx), a);
-	if (a_case == 1)
-		a_cnt = 0;
-	else if (a_case == 2)
-		a_cnt = ft_min(check_a_up(a, b, idx), check_a_down(a, b, idx));
+	min_a_idx = get_min_a_idx(a);
+	if (a_case == 1 || a_case == 3)
+	{
+		cnt = a->size - min_a_idx;
+		a_cnt = ft_min(min_a_idx, cnt);
+	}
 	else
-		a_cnt = 1;
+		a_cnt = ft_min(check_a_up(a, b, idx), check_a_down(a, b, idx));
 	return (a_cnt);
+}
+
+int	same_cnt(t_deque *a, t_deque *b, int min_idx)
+{
+	int	a_case;
+	int	b_cnt;
+	int	a_cnt;
+	int	max_acnt;
+	int	same_cnt;
+
+	max_acnt = a->size - get_min_a_idx(a);
+	a_case = check_case(front_idx(b, min_idx), a);
+	b_cnt = get_bcnt(b, min_idx);
+	a_cnt = check_a_cnt(min_idx, a, b);
+	if (min_idx < b->size / 2
+		&& (a_cnt == get_min_a_idx(a) || a_cnt == check_a_up(a, b, min_idx)))
+		same_cnt = ft_min(b_cnt, a_cnt);
+	else if (min_idx >= b->size / 2
+		&& (a_cnt == max_acnt || a_cnt == check_a_down(a, b, min_idx)))
+			same_cnt = -ft_max(b_cnt, a_cnt);
+	else
+		same_cnt = 0;
+	/** printf("b->size %d bcnt : %d acnt : %d same_cnt %d\n", b->size, b_cnt, a_cnt, same_cnt); */
+	return (same_cnt);
 }
 
 void	check_cnt(t_deque *a, t_deque *b)
@@ -61,23 +88,24 @@ void	check_cnt(t_deque *a, t_deque *b)
 	int			b_cnt;
 	int			idx;
 	int			min_idx;
-	int			sum_check;
+	int			temp;
 	int			sum_cnt;
 
 	sum_cnt = 2147483647;
 	b_cnt = b->size;
-	idx = 0;
-	while (idx < b->size)
+	idx = -1;
+	while (++idx < b->size)
 	{
-		sum_check = sum_cnt;
-		b_cnt = ft_min(idx, ft_min(idx, (b->size) - idx));
+		temp = sum_cnt;
+		b_cnt = get_bcnt(b, idx);
+		/** printf("최초 bcnt : %d 최초 acnt : %d\n", b_cnt, check_a_cnt(idx, a, b)); */
 		sum_cnt = ft_min(sum_cnt, b_cnt + check_a_cnt(idx, a, b));
-		/** sum_cnt -= same_cnt(idx, check_a_cnt(idx, a, b)) */
-		if (sum_check > sum_cnt)
+		if (temp != sum_cnt)
 			min_idx = idx;
-		idx++;
+		/** printf("min_idx : %d idx : %d\n", min_idx, idx); */
 	}
-	push_min_b(a, b, min_idx);
+	/** printf("중간 min_idx : %d\n", min_idx); */
+	push_min_b(a, b, min_idx, temp);
 	//체크
 	/** int		a_size = a->size; */
 	/** int		b_size = b->size; */

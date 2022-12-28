@@ -6,11 +6,12 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:50:41 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/27 14:41:57 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/28 21:45:28 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <stdio.h>
 
 void	push_min_a(t_deque *a, t_deque *b)
 {
@@ -19,7 +20,8 @@ void	push_min_a(t_deque *a, t_deque *b)
 
 	min_a_idx = get_min_a_idx(a);
 	cnt = a->size - min_a_idx;
-	if (min_a_idx >= a->size / 2)
+	/** printf("cnt %d min_a_idx %d\n", cnt, min_a_idx); */
+	if (min_a_idx > a->size / 2)
 	{
 		while (cnt--)
 			do_rra(a);
@@ -37,8 +39,10 @@ void	push_mid_a(t_deque *a, t_deque *b, int min_idx)
 	int	up;
 	int	down;
 
+	/** printf("최종 min_idx %d\n", min_idx); */
 	up = check_a_up(a, b, min_idx);
 	down = check_a_down(a, b, min_idx);
+	/** printf("up %d down %d\n", up, down); */
 	if (ft_min(up, down) == up)
 		while (up--)
 			do_ra(a);
@@ -50,29 +54,6 @@ void	push_mid_a(t_deque *a, t_deque *b, int min_idx)
 			if (down == 0)
 				break ;
 		}
-	}
-	do_pa(a, b);
-}
-
-void	push_max_a(t_deque *a, t_deque *b)
-{
-	int		max_a_idx;
-	int		cnt;
-
-	max_a_idx = get_max_a_idx(a);
-	cnt = a->size - max_a_idx - 1;
-	if (max_a_idx < a->size / 2)
-	{
-		while (max_a_idx + 1)
-		{
-			do_ra(a);
-			max_a_idx--;
-		}
-	}
-	else
-	{
-		while (cnt--)
-			do_rra(a);
 	}
 	do_pa(a, b);
 }
