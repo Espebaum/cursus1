@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:07:02 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/29 16:55:37 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/29 20:01:16 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,11 @@ void	push(t_deque *from, t_deque *to)
 	push_front(to, pop_front(from));
 }
 
+#include <stdio.h>
 void	delete_deque(t_deque *d)
 {
+	/** printf("[debug] delete : %p\n", d); */
+	/** printf("[debug] delete : %p\n", d->arr); */
 	free(d->arr);
 	free(d);
 }

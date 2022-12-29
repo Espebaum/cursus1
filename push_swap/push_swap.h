@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:57:08 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/29 17:15:34 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/29 20:24:28 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ void	delete_deque(t_deque *d);
 void	dup_check(int *arr, int n, t_deque *a);
 void	push_arr_deq(int *arr, int argc, t_deque *deq);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	**ft_split(char const *s, char c, t_deque *a);
+char	**ft_split(char const *s, char c);
 size_t	ft_strlen(const char *s);
+int		is_bad_input(char *s);
 int		error_exit(t_deque *a);
 
 int		start_sort(t_deque *deq_a, t_deque *deq_b);
@@ -73,7 +74,7 @@ void	deque_to_arr(t_deque *d, int *a);
 int		is_sorted_deq(t_deque *a);
 
 void	atob(t_deque *a, t_deque *b);
-void	*get_pivot(t_deque *a, int *pivot, int *arr);
+// void	get_pivot(t_deque *a, int *pivot, int *arr);
 int		get_bcnt(t_deque *b, int idx);
 void	bflag_check(t_deque *b, int min_idx, int *bflag);
 void	aflag_check(t_deque *a, t_deque *b, int min_idx, int *aflag);

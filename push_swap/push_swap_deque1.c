@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 16:31:08 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/16 16:06:49 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/29 19:38:10 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	swap_top(t_deque *d)
 	d->arr[idx1] = d->arr[idx2];
 	d->arr[idx2] = tmp;
 }
-// 22 운 없이 헤드가 capacity - 1의 인덱스일 경우
 
 void	push_back(t_deque *d, int val)
 {

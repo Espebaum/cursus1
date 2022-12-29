@@ -6,51 +6,50 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:56:49 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/29 17:16:26 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/29 20:24:10 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-const long long	g_max = 2147483647;
-const long long	g_min = -2147483648;
-const long long	g_ll = 3000000000;
+const long long	g_long = 3000000000;
 void	ft_freeall(char **spl);
 
 long long	check_num(char *str)
 {
-	long long	l;
-	long long	neg;
+	long long	ret;
+	long long	sign;
 
 	if (*str == '-')
-		neg = -1;
+		sign = -1;
 	else if (isdigit(*str))
-		neg = 1;
+		sign = 1;
 	else
-		return (g_ll);
+		return (g_long);
 	if (*str != '-')
 		--str;
-	l = 0;
+	ret = 0;
 	while (*(++str))
 	{
-		if (*str < '0' || *str > '9')
-			return (g_ll);
-		l *= 10LL;
-		l += *str - '0';
+		if (!isdigit(*str))
+			return (g_long);
+		ret *= 10;
+		ret += *str - '0';
 	}
-	if ((neg < 0 && l <= -g_min) || (neg > 0 && l <= g_max))
-		return (neg * l);
+	if ((sign < 0 && ret <= 2147483648)
+		|| (sign > 0 && ret <= 2147483647))
+		return (sign * ret);
 	else
-		return (g_ll);
+		return (g_long);
 }
 
-void	append_num(char *s, int *arr, int *idx, t_deque *a)
+void	append_num(char *s, int *arr, int *idx)
 {
 	char		**spl;
 	char		**save;
 	long long	l;
 
-	spl = ft_split(s, ' ', a);
+	spl = ft_split(s, ' ');
 	save = spl;
 	--spl;
 	while (*(++spl))
@@ -66,21 +65,21 @@ void	split_space(char *s, int *num, t_deque *a)
 {
 	char		**spl;
 	char		**save;
-	long long	l;
-	int			i;
+	long long	ret;
+	int			len;
 
-	i = ft_strlen(s);
-	if (*s == ' ' && *(s + 1) == '\0')
+	len = ft_strlen(s);
+	if (!is_bad_input(s) || *s == '\0')
 		error_exit(a);
-	spl = ft_split(s, ' ', a);
+	spl = ft_split(s, ' ');
 	save = spl;
 	if (!spl)
 		error_exit(a);
 	--spl;
 	while (*(++spl))
 	{
-		l = check_num(*spl);
-		if (l == g_ll || ((*spl)[0] == '-' && (*spl)[1] == '\0'))
+		ret = check_num(*spl);
+		if (ret == g_long || ((*spl)[0] == '-' && (*spl)[1] == '\0'))
 		{
 			ft_freeall(save);
 			error_exit(a);
@@ -92,25 +91,25 @@ void	split_space(char *s, int *num, t_deque *a)
 
 int	check_push_argv(int argc, char **argv, t_deque *a)
 {
-	int	n;
+	int	num;
 	int	i;
 	int	*arr;
 	int	idx;
 
 	i = 0;
-	n = 0;
+	num = 0;
 	if (argc == 1)
 		return (error_exit(a));
 	while (++i < argc)
-		split_space(argv[i], &n, a);
+		split_space(argv[i], &num, a);
 	i = 0;
 	idx = 0;
-	arr = (int *) malloc(sizeof(int) * n);
+	arr = (int *) malloc(sizeof(int) * num);
 	while (++i < argc)
-		append_num(argv[i], arr, &idx, a);
-	dup_check(arr, n, a);
+		append_num(argv[i], arr, &idx);
+	dup_check(arr, num, a);
 	i = 0;
-	push_arr_deq(arr, n, a);
+	push_arr_deq(arr, num, a);
 	free(arr);
 	return (0);
 }

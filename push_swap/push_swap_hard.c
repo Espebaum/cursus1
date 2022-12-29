@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:51:25 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/18 15:00:46 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/29 20:12:54 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,9 @@ int	front_idx(t_deque *deq, int idx)
 	int	i;
 
 	i = deq->head;
-	while (idx--)
-	{
-		i++;
-		if (i == deq->capacity)
-			i = 0;
-	}
+	i += idx;
+	if (i >= deq->capacity)
+		i -= deq->capacity;
 	return (deq->arr[i]);
 }
 
