@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:57:08 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/29 15:24:41 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/29 17:15:34 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_deque
 }			t_deque;
 
 t_deque	*make_deque(void);
+int		isdigit(int c);
 int		front(t_deque *d);
 int		back(t_deque *d);
 int		size(t_deque *d);
@@ -40,12 +41,12 @@ void	push(t_deque *from, t_deque *to);
 void	rotate(t_deque *d);
 void	reverse_rotate(t_deque *d);
 void	delete_deque(t_deque *d);
-void	dup_check(int *arr, int n);
+void	dup_check(int *arr, int n, t_deque *a);
 void	push_arr_deq(int *arr, int argc, t_deque *deq);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	**ft_split(char const *s, char c);
+char	**ft_split(char const *s, char c, t_deque *a);
 size_t	ft_strlen(const char *s);
-int		error_exit(void);
+int		error_exit(t_deque *a);
 
 int		start_sort(t_deque *deq_a, t_deque *deq_b);
 void	do_sa(t_deque *deq);

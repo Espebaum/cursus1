@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:56:49 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/29 16:54:06 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/29 17:16:26 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ long long	check_num(char *str)
 
 	if (*str == '-')
 		neg = -1;
-	else if (*str >= '0' && *str <= '9')
+	else if (isdigit(*str))
 		neg = 1;
 	else
 		return (g_ll);
@@ -44,13 +44,13 @@ long long	check_num(char *str)
 		return (g_ll);
 }
 
-void	append_num(char *s, int *arr, int *idx)
+void	append_num(char *s, int *arr, int *idx, t_deque *a)
 {
 	char		**spl;
 	char		**save;
 	long long	l;
 
-	spl = ft_split(s, ' ');
+	spl = ft_split(s, ' ', a);
 	save = spl;
 	--spl;
 	while (*(++spl))
@@ -62,7 +62,7 @@ void	append_num(char *s, int *arr, int *idx)
 	ft_freeall(save);
 }
 
-void	split_space(char *s, int *num)
+void	split_space(char *s, int *num, t_deque *a)
 {
 	char		**spl;
 	char		**save;
@@ -71,11 +71,11 @@ void	split_space(char *s, int *num)
 
 	i = ft_strlen(s);
 	if (*s == ' ' && *(s + 1) == '\0')
-		error_exit();
-	spl = ft_split(s, ' ');
+		error_exit(a);
+	spl = ft_split(s, ' ', a);
 	save = spl;
 	if (!spl)
-		error_exit();
+		error_exit(a);
 	--spl;
 	while (*(++spl))
 	{
@@ -83,7 +83,7 @@ void	split_space(char *s, int *num)
 		if (l == g_ll || ((*spl)[0] == '-' && (*spl)[1] == '\0'))
 		{
 			ft_freeall(save);
-			error_exit();
+			error_exit(a);
 		}
 		(*num)++;
 	}
@@ -100,18 +100,15 @@ int	check_push_argv(int argc, char **argv, t_deque *a)
 	i = 0;
 	n = 0;
 	if (argc == 1)
-	{
-		delete_deque(a);
-		return (error_exit());
-	}
+		return (error_exit(a));
 	while (++i < argc)
-		split_space(argv[i], &n);
+		split_space(argv[i], &n, a);
 	i = 0;
 	idx = 0;
 	arr = (int *) malloc(sizeof(int) * n);
 	while (++i < argc)
-		append_num(argv[i], arr, &idx);
-	dup_check(arr, n);
+		append_num(argv[i], arr, &idx, a);
+	dup_check(arr, n, a);
 	i = 0;
 	push_arr_deq(arr, n, a);
 	free(arr);
@@ -124,8 +121,8 @@ int	main(int argc, char **argv)
 	t_deque		*b;
 
 	a = make_deque();
-	b = make_deque();
 	check_push_argv(argc, argv, a);
+	b = make_deque();
 	start_sort(a, b);
 	delete_deque(a);
 	delete_deque(b);

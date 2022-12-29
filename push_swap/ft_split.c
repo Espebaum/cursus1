@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 18:06:50 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/17 14:46:31 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/29 17:04:24 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	place_word(char **spl, char const *s, char c, int *flag)
 	}
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c, t_deque *a)
 {
 	char	**spl;
 	int		s_size;
@@ -84,7 +84,7 @@ char	**ft_split(char const *s, char c)
 
 	i = ft_strlen(s);
 	if (s[i] == ' ' && s[i + 1] == '\0')
-		error_exit();
+		error_exit(a);
 	flag = 0;
 	if (!s)
 		return (NULL);

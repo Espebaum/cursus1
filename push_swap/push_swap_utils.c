@@ -6,15 +6,16 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 21:32:29 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/21 18:15:17 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/29 17:04:56 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <stdio.h>
 
-int	error_exit(void)
+int	error_exit(t_deque *a)
 {
+	delete_deque(a);
 	write(1, "Error\n", 6);
 	exit(0);
 }
@@ -63,7 +64,7 @@ void	my_qsort(int *arr, int left, int right)
 	my_qsort(arr, r + 1, right);
 }
 
-void	dup_check(int *arr, int n)
+void	dup_check(int *arr, int n, t_deque *a)
 {
 	int		*tmp_arr;
 	int		i;
@@ -80,7 +81,7 @@ void	dup_check(int *arr, int n)
 		{
 			free(arr);
 			free(tmp_arr);
-			error_exit();
+			error_exit(a);
 		}
 	}
 	free(tmp_arr);
