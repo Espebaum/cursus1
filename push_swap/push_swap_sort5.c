@@ -6,43 +6,22 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 18:07:13 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/28 17:08:17 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/29 16:47:43 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	get_max_a_idx(t_deque *a)
-{
-	int		*arr;
-	int		max_idx;
-	int		i;
-
-	i = -1;
-	max_idx = 0;
-	arr = (int *)malloc(sizeof(int) * a->size);
-	deque_to_arr(a, arr);
-	while (++i < a->size)
-		if (arr[i] > arr[max_idx])
-			max_idx = i;
-	free(arr);
-	return (max_idx);
-}
-
 int	get_min_a_idx(t_deque *a)
 {
-	int		*arr;
 	int		min_idx;
 	int		i;
 
 	i = -1;
 	min_idx = 0;
-	arr = (int *)malloc(sizeof(int) * a->size);
-	deque_to_arr(a, arr);
 	while (++i < a->size)
-		if (arr[i] < arr[min_idx])
+		if (front_idx(a, i) < front_idx(a, min_idx))
 			min_idx = i;
-	free(arr);
 	return (min_idx);
 }
 

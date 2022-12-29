@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:56:49 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/18 15:07:20 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/29 16:54:06 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	split_space(char *s, int *num)
 	ft_freeall(save);
 }
 
-int	check_push_argv(int argc, char **argv, t_deque *deq)
+int	check_push_argv(int argc, char **argv, t_deque *a)
 {
 	int	n;
 	int	i;
@@ -100,7 +100,10 @@ int	check_push_argv(int argc, char **argv, t_deque *deq)
 	i = 0;
 	n = 0;
 	if (argc == 1)
+	{
+		delete_deque(a);
 		return (error_exit());
+	}
 	while (++i < argc)
 		split_space(argv[i], &n);
 	i = 0;
@@ -110,23 +113,22 @@ int	check_push_argv(int argc, char **argv, t_deque *deq)
 		append_num(argv[i], arr, &idx);
 	dup_check(arr, n);
 	i = 0;
-	push_arr_deq(arr, n, deq);
+	push_arr_deq(arr, n, a);
 	free(arr);
 	return (0);
 }
 
 int	main(int argc, char **argv)
 {
-	t_deque		*deq_a;
-	t_deque		*deq_b;
-	t_deque		*deq_str;
-	int			i;
+	t_deque		*a;
+	t_deque		*b;
 
-	i = 0;
-	deq_a = make_deque();
-	deq_b = make_deque();
-	deq_str = make_deque();
-	check_push_argv(argc, argv, deq_a);
-	start_sort(deq_a, deq_b, deq_str);
+	a = make_deque();
+	b = make_deque();
+	check_push_argv(argc, argv, a);
+	start_sort(a, b);
+	delete_deque(a);
+	delete_deque(b);
+	/** system("leaks push_swap"); */
 	return (0);
 }

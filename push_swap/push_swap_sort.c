@@ -6,13 +6,13 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 21:57:25 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/27 16:02:21 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/29 16:26:29 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	is_sorted(int *arr, int size)
+int	is_sorted(t_deque *a, int size)
 {
 	int		i;
 	int		j;
@@ -23,7 +23,7 @@ int	is_sorted(int *arr, int size)
 		j = i + 1;
 		while (j < size)
 		{
-			if (arr[i] > arr[j])
+			if (front_idx(a, i) > front_idx(a, j))
 				return (size);
 			j++;
 		}
@@ -34,29 +34,27 @@ int	is_sorted(int *arr, int size)
 
 int	sort_arr(t_deque *a)
 {
-	int	*tmp_arr;
-	int	arg;
+	int		arg;
 
-	tmp_arr = (int *)malloc(sizeof(int) * a->size);
-	deque_to_arr(a, tmp_arr);
-	arg = is_sorted(tmp_arr, a->size);
-	free(tmp_arr);
+	arg = is_sorted(a, a->size);
 	return (arg);
 }
 
-void	*get_pivot(t_deque *a, int *pivot)
+void	*get_pivot(t_deque *a, int *pivot, int *arr)
 {
-	int	*arr;
+	int	pivot1;
+	int	pivot2;
 
-	arr = (int *) malloc(sizeof(int) * a->size);
 	deque_to_arr(a, arr);
 	my_qsort(arr, 0, a->size);
-	pivot[0] = arr[a->size / 3];
-	pivot[1] = arr[(a->size * 2) / 3];
+	pivot1 = arr[a->size / 3];
+	pivot2 = arr[(a->size * 2) / 3];
+	pivot[0] = pivot1;
+	pivot[1] = pivot2;
 	return (pivot);
 }
 
-int	start_sort(t_deque *a, t_deque *b, t_deque *deq_str)
+int	start_sort(t_deque *a, t_deque *b)
 {
 	int	arg;
 	int	idx1;
@@ -79,6 +77,5 @@ int	start_sort(t_deque *a, t_deque *b, t_deque *deq_str)
 		sort_5(a, b);
 	else
 		atob(a, b);
-	deq_str = 0;
 	return (0);
 }

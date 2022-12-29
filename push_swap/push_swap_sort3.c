@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:29:42 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/28 21:45:31 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/29 14:15:30 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void	push_a(t_deque *a, t_deque *b, int min_idx)
 	int		a_case;
 
 	a_case = check_case(front_idx(b, min_idx), a);
-	/** printf("\na case : %d\n", a_case); */
 	if (a_case == 1 || a_case == 3)
 		push_min_a(a, b);
 	else
@@ -89,14 +88,11 @@ void	push_min_b(t_deque *a, t_deque *b, int min_idx, int temp)
 {
 	int	cnt;
 
-	temp = 0;
-	/** if (temp != 0) */
-	/** { */
-	/**     merge_rr(a, b, min_idx, temp); */
-	/**     return ; */
-	/** } */
-    /**  */
-	/** printf("min_idx : %d b->size : %d b->size 절반 : %d\n", min_idx, b->size, b->size / 2); */
+	if (temp != 0)
+	{
+		merge_rr(a, b, min_idx, temp);
+		return ;
+	}
 	cnt = b->size - min_idx;
 	if (min_idx < b->size / 2)
 	{
@@ -111,9 +107,5 @@ void	push_min_b(t_deque *a, t_deque *b, int min_idx, int temp)
 		while (cnt--)
 			do_rrb(b);
 	}
-	//check
-	/** printf("\nmin_idx : %d min : %d\n", min_idx, min); */
-	/** printf("\n최저 b cnt인 b stack top : %d\n", b->arr[b->head]); */
-	//
 	push_a(a, b, 0);
 }

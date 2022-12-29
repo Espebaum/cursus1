@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:57:08 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/28 17:27:32 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/29 15:24:41 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	**ft_split(char const *s, char c);
 size_t	ft_strlen(const char *s);
 int		error_exit(void);
 
-int		start_sort(t_deque *deq_a, t_deque *deq_b, t_deque *deq);
+int		start_sort(t_deque *deq_a, t_deque *deq_b);
 void	do_sa(t_deque *deq);
 void	do_sb(t_deque *deq);
 void	do_ss(t_deque *a, t_deque *b);
@@ -72,7 +72,7 @@ void	deque_to_arr(t_deque *d, int *a);
 int		is_sorted_deq(t_deque *a);
 
 void	atob(t_deque *a, t_deque *b);
-void	*get_pivot(t_deque *a, int *pivot);
+void	*get_pivot(t_deque *a, int *pivot, int *arr);
 int		get_bcnt(t_deque *b, int idx);
 void	bflag_check(t_deque *b, int min_idx, int *bflag);
 void	aflag_check(t_deque *a, t_deque *b, int min_idx, int *aflag);
