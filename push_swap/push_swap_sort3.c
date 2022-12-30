@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:29:42 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/29 14:15:30 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/30 14:27:06 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,12 @@ void	push_a(t_deque *a, t_deque *b, int min_idx)
 		push_mid_a(a, b, min_idx);
 }
 
-void	push_min_b(t_deque *a, t_deque *b, int min_idx, int temp)
+void	push_min_b(t_deque *a, t_deque *b, int temp)
 {
 	int	cnt;
+	int	min_idx;
 
+	min_idx = get_min_idx(a, b);
 	if (temp != 0)
 	{
 		merge_rr(a, b, min_idx, temp);

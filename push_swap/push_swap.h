@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:57:08 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/29 20:24:28 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/30 14:27:14 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,14 @@ void	deque_to_arr(t_deque *d, int *a);
 int		is_sorted_deq(t_deque *a);
 
 void	atob(t_deque *a, t_deque *b);
-// void	get_pivot(t_deque *a, int *pivot, int *arr);
+void	get_pivot(t_deque *a, int *pivot, int *arr);
 int		get_bcnt(t_deque *b, int idx);
-void	bflag_check(t_deque *b, int min_idx, int *bflag);
-void	aflag_check(t_deque *a, t_deque *b, int min_idx, int *aflag);
 int		check_a_up(t_deque *a, t_deque *b, int idx);
+int		get_min_idx(t_deque *a, t_deque *b);
 int		check_a_down(t_deque *a, t_deque *b, int idx);
 int		check_case(int b_idx, t_deque *a);
 int		check_a_cnt(int idx, t_deque *a, t_deque *b);
-void	push_min_b(t_deque *a, t_deque *b, int min_idx, int temp);
+void	push_min_b(t_deque *a, t_deque *b, int temp);
 void	push_a(t_deque *a, t_deque *b, int min_idx);
 void	push_min_a(t_deque *a, t_deque *b);
 void	push_mid_a(t_deque *a, t_deque *b, int min_idx);

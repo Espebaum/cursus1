@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:50:41 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/29 16:43:14 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/30 14:35:18 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	push_min_a(t_deque *a, t_deque *b)
 
 	min_a_idx = get_min_a_idx(a);
 	cnt = a->size - min_a_idx;
-	/** printf("cnt %d min_a_idx %d\n", cnt, min_a_idx); */
 	if (min_a_idx > a->size / 2)
 	{
 		while (cnt--)
@@ -41,7 +40,6 @@ void	push_mid_a(t_deque *a, t_deque *b, int min_idx)
 
 	up = check_a_up(a, b, min_idx);
 	down = check_a_down(a, b, min_idx);
-	/** printf("up %d down %d\n", up, down); */
 	if (ft_min(up, down) == up)
 		while (up--)
 			do_ra(a);

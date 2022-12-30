@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:35:34 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/29 20:49:38 by gyopark          ###   ########.fr       */
+/*   Updated: 2022/12/30 14:33:56 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ int	same_cnt(t_deque *a, t_deque *b, int min_idx)
 {
 	int	same_cnt;
 	int	a_cnt;
-	int a_case;
-	int a_flag;
+	int	a_case;
+	int	a_flag;
 	int	b_flag;
 
 	a_case = check_case(front_idx(b, min_idx), a);
@@ -71,15 +71,12 @@ int	same_cnt(t_deque *a, t_deque *b, int min_idx)
 		a_flag = 1;
 	if (min_idx >= b->size / 2)
 		b_flag = 1;
-	/** printf("aflag = %d bflag = %d\n", a_flag, b_flag); */
 	if (a_flag == 0 && b_flag == 0)
 		same_cnt = ft_min(min_idx, a_cnt);
 	else if (a_flag == 1 && b_flag == 1)
 		same_cnt = ft_max(-(b->size - min_idx), -a_cnt);
 	else
 		same_cnt = 0;
-	/** printf("b->size %d bcnt %d acnt %d\n", b->size, min_idx, a_cnt); */
-	/** printf("same_cnt : %d\n", same_cnt); */
 	return (same_cnt);
 }
 
@@ -94,19 +91,11 @@ void	check_cnt(t_deque *a, t_deque *b)
 	sum_cnt = 2147483647;
 	b_cnt = b->size;
 	idx = -1;
-	while (++idx < b->size)
-	{
-		temp = sum_cnt;
-		b_cnt = get_bcnt(b, idx);
-		sum_cnt = ft_min(sum_cnt, b_cnt + check_a_cnt(idx, a, b));
-		if (temp != sum_cnt)
-			min_idx = idx;
-	}
+	min_idx = get_min_idx(a, b);
 	temp = same_cnt(a, b, min_idx);
-	push_min_b(a, b, min_idx, temp);
+	push_min_b(a, b, temp);
 }
 
-#include <stdio.h>
 void	atob(t_deque *a, t_deque *b)
 {	
 	int		pivot1;
@@ -114,7 +103,6 @@ void	atob(t_deque *a, t_deque *b)
 	int		*arr;
 	int		sort_cnt;
 
-	/** printf("[debug] a_size : %d\n", a_size); */
 	arr = (int *) malloc(sizeof(int) * (a->size));
 	deque_to_arr(a, arr);
 	my_qsort(arr, 0, a->size - 1);
