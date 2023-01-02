@@ -6,22 +6,11 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:29:42 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/30 14:27:06 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/01 20:27:05 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
-
-int	get_bcnt(t_deque *b, int idx)
-{
-	int	b_cnt;
-	int	cnt;
-
-	cnt = b->size - idx;
-	b_cnt = ft_min(idx, cnt);
-	return (b_cnt);
-}
 
 int	check_a_up(t_deque *a, t_deque *b, int idx)
 {
@@ -73,41 +62,49 @@ int	check_a_down(t_deque *a, t_deque *b, int idx)
 	return (a_cnt);
 }
 
-void	push_a(t_deque *a, t_deque *b, int min_idx)
+void	push_min_a(t_deque *a, t_deque *b, int min_a_idx)
 {
-	int		a_case;
+	int		cnt;
 
-	a_case = check_case(front_idx(b, min_idx), a);
-	if (a_case == 1 || a_case == 3)
-		push_min_a(a, b);
-	else
-		push_mid_a(a, b, min_idx);
-}
-
-void	push_min_b(t_deque *a, t_deque *b, int temp)
-{
-	int	cnt;
-	int	min_idx;
-
-	min_idx = get_min_idx(a, b);
-	if (temp != 0)
-	{
-		merge_rr(a, b, min_idx, temp);
-		return ;
-	}
-	cnt = b->size - min_idx;
-	if (min_idx < b->size / 2)
-	{
-		while (min_idx)
-		{
-			do_rb(b);
-			min_idx--;
-		}
-	}
-	else
+	cnt = a->size - min_a_idx;
+	if (min_a_idx > a->size / 2)
 	{
 		while (cnt--)
-			do_rrb(b);
+			do_rra(a);
 	}
-	push_a(a, b, 0);
+	else
+	{
+		while (min_a_idx--)
+			do_ra(a);
+	}
+	do_pa(a, b);
+}
+
+void	push_mid_a(t_deque *a, t_deque *b)
+{
+	int	up;
+	int	down;
+
+	up = check_a_up(a, b, 0);
+	down = check_a_down(a, b, 0);
+	if (ft_min(up, down) == up)
+		while (up--)
+			do_ra(a);
+	else
+		while (down--)
+			do_rra(a);
+	do_pa(a, b);
+}
+
+void	push_a(t_deque *a, t_deque *b, int min_idx)
+{
+	int		min_a_idx;
+	int		a_case;
+
+	min_a_idx = get_min_a_idx(a);
+	a_case = check_case(front_idx(b, min_idx), a);
+	if (a_case == 1 || a_case == 3)
+		push_min_a(a, b, min_a_idx);
+	else
+		push_mid_a(a, b);
 }

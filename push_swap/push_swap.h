@@ -6,15 +6,15 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:57:08 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/30 14:27:14 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/01 20:25:37 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-#include <stdlib.h>
-#include <unistd.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 typedef struct s_deque
 {
@@ -24,6 +24,20 @@ typedef struct s_deque
 	int		size;
 	int		capacity;
 }			t_deque;
+
+typedef enum e_cmd {
+	SA,
+	SB,
+	RA,
+	RB,
+	RRA,
+	RRB,
+	PA,
+	PB,
+	RR,
+	RRR,
+	SS
+}	t_cmd;
 
 t_deque	*make_deque(void);
 int		isdigit(int c);
@@ -42,9 +56,9 @@ void	rotate(t_deque *d);
 void	reverse_rotate(t_deque *d);
 void	delete_deque(t_deque *d);
 void	dup_check(int *arr, int n, t_deque *a);
-void	push_arr_deq(int *arr, int argc, t_deque *deq);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	**ft_split(char const *s, char c);
+void	ft_freeall(char **spl);
 size_t	ft_strlen(const char *s);
 int		is_bad_input(char *s);
 int		error_exit(t_deque *a);
@@ -62,7 +76,7 @@ void	do_rra(t_deque *deq);
 void	do_rrb(t_deque *deq);
 void	do_rrr(t_deque *a, t_deque *b);
 
-int		is_sorted_deq(t_deque *a);
+int		is_sorted_arr(t_deque *a, int size);
 int		sort_3(t_deque *deq);
 int		sort_4(t_deque *a, t_deque *b);
 int		sort_5(t_deque *a, t_deque *b);
@@ -75,16 +89,17 @@ int		is_sorted_deq(t_deque *a);
 
 void	atob(t_deque *a, t_deque *b);
 void	get_pivot(t_deque *a, int *pivot, int *arr);
-int		get_bcnt(t_deque *b, int idx);
-int		check_a_up(t_deque *a, t_deque *b, int idx);
 int		get_min_idx(t_deque *a, t_deque *b);
+int		get_bcnt(t_deque *b, int idx);
+int		same_cnt(t_deque *a, t_deque *b, int min_idx);
+int		check_a_up(t_deque *a, t_deque *b, int idx);
 int		check_a_down(t_deque *a, t_deque *b, int idx);
 int		check_case(int b_idx, t_deque *a);
 int		check_a_cnt(int idx, t_deque *a, t_deque *b);
-void	push_min_b(t_deque *a, t_deque *b, int temp);
+void	push_min_b(t_deque *a, t_deque *b);
 void	push_a(t_deque *a, t_deque *b, int min_idx);
-void	push_min_a(t_deque *a, t_deque *b);
-void	push_mid_a(t_deque *a, t_deque *b, int min_idx);
+void	push_min_a(t_deque *a, t_deque *b, int min_a_idx);
+void	push_mid_a(t_deque *a, t_deque *b);
 void	push_max_a(t_deque *a, t_deque *b);
 int		get_max_a_idx(t_deque *a);
 int		get_min_a_idx(t_deque *a);

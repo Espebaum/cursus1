@@ -6,70 +6,66 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:56:49 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/29 20:24:10 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/02 14:14:20 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-const long long	g_long = 3000000000;
-void	ft_freeall(char **spl);
-
-long long	check_num(char *str)
+long long	check_num(char *str, long long err)
 {
 	long long	ret;
 	long long	sign;
 
+	if (ft_strlen(str) > 11)
+		return (err);
 	if (*str == '-')
 		sign = -1;
-	else if (isdigit(*str))
+	else if (*str == '+' || isdigit(*str))
 		sign = 1;
 	else
-		return (g_long);
-	if (*str != '-')
+		return (err);
+	if (*str != '-' && *str != '+')
 		--str;
 	ret = 0;
 	while (*(++str))
 	{
 		if (!isdigit(*str))
-			return (g_long);
+			return (err);
 		ret *= 10;
 		ret += *str - '0';
 	}
-	if ((sign < 0 && ret <= 2147483648)
-		|| (sign > 0 && ret <= 2147483647))
+	if ((sign < 0 && ret <= 2147483648) || (sign > 0 && ret <= 2147483647))
 		return (sign * ret);
 	else
-		return (g_long);
+		return (err);
 }
 
-void	append_num(char *s, int *arr, int *idx)
+void	append_num(char *s, int *arr, int *idx, long long err)
 {
 	char		**spl;
 	char		**save;
-	long long	l;
+	long long	ret;
 
 	spl = ft_split(s, ' ');
 	save = spl;
 	--spl;
 	while (*(++spl))
 	{
-		l = check_num(*spl);
-		arr[*idx] = l;
+		ret = check_num(*spl, err);
+		arr[*idx] = ret;
 		(*idx)++;
 	}
 	ft_freeall(save);
 }
 
-void	split_space(char *s, int *num, t_deque *a)
+void	count_num(char *s, int *num, t_deque *a, long long err)
 {
 	char		**spl;
 	char		**save;
 	long long	ret;
-	int			len;
 
-	len = ft_strlen(s);
-	if (!is_bad_input(s) || *s == '\0')
+	if (is_bad_input(s))
 		error_exit(a);
 	spl = ft_split(s, ' ');
 	save = spl;
@@ -78,8 +74,9 @@ void	split_space(char *s, int *num, t_deque *a)
 	--spl;
 	while (*(++spl))
 	{
-		ret = check_num(*spl);
-		if (ret == g_long || ((*spl)[0] == '-' && (*spl)[1] == '\0'))
+		ret = check_num(*spl, err);
+		if (ret == err || ((*spl)[0] == '-' && (*spl)[1] == '\0')
+			|| ((*spl)[0] == '+' && (*spl)[1] == '\0'))
 		{
 			ft_freeall(save);
 			error_exit(a);
@@ -91,25 +88,26 @@ void	split_space(char *s, int *num, t_deque *a)
 
 int	check_push_argv(int argc, char **argv, t_deque *a)
 {
-	int	num;
-	int	i;
-	int	*arr;
-	int	idx;
+	int				num;
+	int				len;
+	int				*arr;
+	int				idx;
+	long long		err;
 
-	i = 0;
+	len = 0;
 	num = 0;
-	if (argc == 1)
-		return (error_exit(a));
-	while (++i < argc)
-		split_space(argv[i], &num, a);
-	i = 0;
+	err = 3000000000;
+	while (++len < argc)
+		count_num(argv[len], &num, a, err);
+	len = 0;
 	idx = 0;
 	arr = (int *) malloc(sizeof(int) * num);
-	while (++i < argc)
-		append_num(argv[i], arr, &idx);
+	while (++len < argc)
+		append_num(argv[len], arr, &idx, err);
 	dup_check(arr, num, a);
-	i = 0;
-	push_arr_deq(arr, num, a);
+	len = 0;
+	while (len < num)
+		push_back(a, arr[len++]);
 	free(arr);
 	return (0);
 }
@@ -119,12 +117,13 @@ int	main(int argc, char **argv)
 	t_deque		*a;
 	t_deque		*b;
 
+	if (argc == 1)
+		return (0);
 	a = make_deque();
 	check_push_argv(argc, argv, a);
 	b = make_deque();
 	start_sort(a, b);
 	delete_deque(a);
 	delete_deque(b);
-	/** system("leaks push_swap"); */
 	return (0);
 }

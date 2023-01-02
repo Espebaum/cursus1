@@ -6,55 +6,39 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:50:41 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/30 14:35:18 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/01 20:27:17 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
 
-void	push_min_a(t_deque *a, t_deque *b)
+int	get_min_a_idx(t_deque *a)
 {
-	int		min_a_idx;
+	int		min_idx;
+	int		i;
+
+	i = -1;
+	min_idx = 0;
+	while (++i < a->size)
+		if (front_idx(a, i) < front_idx(a, min_idx))
+			min_idx = i;
+	return (min_idx);
+}
+
+void	turn_min(t_deque *a)
+{
+	int		min_idx;
 	int		cnt;
 
-	min_a_idx = get_min_a_idx(a);
-	cnt = a->size - min_a_idx;
-	if (min_a_idx > a->size / 2)
-	{
+	min_idx = get_min_a_idx(a);
+	cnt = a->size - min_idx;
+	if (min_idx >= a->size / 2)
 		while (cnt--)
 			do_rra(a);
-	}
 	else
-	{
-		while (min_a_idx--)
+		while (min_idx--)
 			do_ra(a);
-	}
-	do_pa(a, b);
 }
-
-void	push_mid_a(t_deque *a, t_deque *b, int min_idx)
-{
-	int	up;
-	int	down;
-
-	up = check_a_up(a, b, min_idx);
-	down = check_a_down(a, b, min_idx);
-	if (ft_min(up, down) == up)
-		while (up--)
-			do_ra(a);
-	else
-	{
-		while (down)
-		{
-			do_rra(a);
-			down--;
-		}
-	}
-	do_pa(a, b);
-}
-
-#include <stdio.h>
 
 int	check_case(int min_b, t_deque *a)
 {
@@ -65,16 +49,11 @@ int	check_case(int min_b, t_deque *a)
 	idx = 0;
 	a_case = 0;
 	a_size = a->size;
-	/** printf("min_b : %d\n", min_b); */
 	while (a_size--)
 	{			
 		if (front_idx(a, idx) <= min_b)
-		{
 			a_case++;
-			idx++;
-		}
-		else
-			idx++;
+		idx++;
 	}
 	if (a_case == a->size)
 		return (3);
