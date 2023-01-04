@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:36:39 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/30 15:28:43 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/04 20:57:37 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	do_ra(t_deque *a, t_deque *cmd)
 	rotate(a);
 }
 
-void	do_rb(t_deque *a, t_deque *cmd)
+void	do_rb(t_deque *b, t_deque *cmd)
 {
 	push_back(cmd, RB);
-	rotate(a);
+	rotate(b);
 }
 
 void	do_rr(t_deque *a, t_deque *b, t_deque *cmd)

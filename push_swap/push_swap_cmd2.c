@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_cmd2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:36:39 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/01 20:18:21 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/04 20:40:40 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	do_ra(t_deque *a)
 	rotate(a);
 }
 
-void	do_rb(t_deque *a)
+void	do_rb(t_deque *b)
 {
 	write(1, "rb\n", 3);
-	rotate(a);
+	rotate(b);
 }
 
 void	do_rr(t_deque *a, t_deque *b)

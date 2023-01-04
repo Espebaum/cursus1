@@ -3,6 +3,10 @@
 #include <fcntl.h>
 #include <stdio.h>
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
+
 char	*get_next_line(int fd)
 {
 	char	backup[100000];
@@ -20,8 +24,7 @@ char	*get_next_line(int fd)
 			return (0);
 		if (read_size == 0)
 			break ;
-		backup[i] = buf;
-		i++;
+		backup[i++] = buf;
 		if (buf == '\n')
 			break ;
 	}
@@ -33,7 +36,6 @@ char	*get_next_line(int fd)
 		i--;
 	}
 	return (str);
-
 }
 
 /** int	main(void) */

@@ -3,27 +3,30 @@
 #include <fcntl.h>
 #include <stdio.h>
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
+
 char	*get_next_line(int fd)
 {
 	char	backup[100000];
-	char	buf;
 	char	*str;
-	int		i;
-	int		read_size;
-
+	char	buf;
+	int	i;
+	int	read_size;
+	
 	i = 0;
-	backup[0] = 0;
+	backup[0] = '\0';
 	while (1)
 	{
 		read_size = read(fd, &buf, 1);
 		if (read_size < 0 || (read_size == 0 && backup[0] == '\0'))
 			return (0);
 		if (read_size == 0)
-			break ;
-		backup[i] = buf;
-		i++;
+			break;
+		backup[i++] = buf;
 		if (buf == '\n')
-			break ;
+			break;
 	}
 	backup[i] = '\0';
 	str = (char *)malloc(sizeof(char) * (i + 1));
