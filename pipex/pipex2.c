@@ -6,11 +6,45 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 19:20:48 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/05 17:17:34 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/05 21:12:23 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			break ;
+		i++;
+	}
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+void	pipe_inter(int pid, t_struct cmds)
+{
+	if (pid == 0)
+	{
+		close(cmds.fd[0]);
+		dup2(cmds.infile, STDIN_FILENO);
+		dup2(cmds.fd[1], STDOUT_FILENO);
+		close(cmds.infile);
+		close(cmds.fd[1]);
+	}
+	else if (pid > 0)
+	{
+		close(cmds.fd[1]);
+		dup2(cmds.fd[0], STDIN_FILENO);
+		dup2(cmds.outfile, STDOUT_FILENO);
+		close(cmds.outfile);
+		close(cmds.fd[0]);
+	}
+}
 
 void	open_pipe(t_struct cmds, char **arg_cmd1, char **arg_cmd2, char **envp)
 {
@@ -20,35 +54,37 @@ void	open_pipe(t_struct cmds, char **arg_cmd1, char **arg_cmd2, char **envp)
 	pid = fork();
 	if (pid == 0)
 	{
-		close(cmds.fd[0]);
-		dup2(cmds.infile, STDIN_FILENO);
-		dup2(cmds.fd[1], STDOUT_FILENO);
-		close(cmds.infile);
-		close(cmds.fd[1]);
-		execve(cmds.cmd1, arg_cmd1, envp);
+		pipe_inter(pid, cmds);
+		if (execve(cmds.cmd1, arg_cmd1, envp) == -1)
+			exit_err("execute error!");
 	}
 	else if (pid > 0)
 	{
-		close(cmds.fd[1]);
-		dup2(cmds.fd[0], STDIN_FILENO);
-		dup2(cmds.outfile, STDOUT_FILENO);
-		close(cmds.outfile);
-		close(cmds.fd[0]);
+		pipe_inter(pid, cmds);
 		waitpid(pid, NULL, WNOHANG);
-		execve(cmds.cmd2, arg_cmd2, envp);
+		if (execve(cmds.cmd2, arg_cmd2, envp) == -1)
+			exit_err("execute error!");
 	}
 	else
 		exit_err("fork fail");
 }
 
-void	parse_cmd(t_struct cmds, char **argv, char **envp)
+int	parse_cmd(t_struct cmds, char **argv, char **envp)
 {
 	char	**arg_cmd1;
 	char	**arg_cmd2;
+	int		result;
 
+	result = 0;
 	arg_cmd1 = check_commands(argv[2]);
 	arg_cmd2 = check_commands(argv[3]);
 	cmds.cmd1 = get_cmd(cmds.path, arg_cmd1[0]);
 	cmds.cmd2 = get_cmd(cmds.path, arg_cmd2[0]);
+	if (!cmds.cmd1 || !cmds.cmd2)
+	{
+		result = 127;
+		perror("command not found");
+	}
 	open_pipe(cmds, arg_cmd1, arg_cmd2, envp);
+	return (result);
 }

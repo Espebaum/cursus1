@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 21:24:06 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/04 23:00:20 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/05 21:19:58 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	exit_err(const char *str)
 {
-	write(1, str, ft_strlen(str));
-	exit(0);
+	perror(str);
+	exit(1);
 }
 
 char	*get_cmd(char **path, char *cmd)
@@ -65,17 +65,25 @@ char	**get_path(char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_struct	cmds;
+	int			result;
 
-	if (argc == 5)
+	result = 0;
+	if (argc >= 5)
 	{
 		cmds.infile = open(argv[1], O_RDONLY);
+		if (cmds.infile == -1)
+			perror("infile error!");
 		cmds.outfile = open(argv[argc - 1], O_RDWR | O_CREAT | O_TRUNC, 0644);
-		if (cmds.infile == -1 || cmds.outfile == -1)
-			exit_err("file error!");
+		if (cmds.outfile == -1)
+		{
+			perror("outfile error!");
+			exit(1);
+		}
 		cmds.path = get_path(envp);
-		cmds.size = argc - 4;
-		parse_cmd(cmds, argv, envp);
+		cmds.pipe_size = argc - 4;
+		result = parse_cmd(cmds, argv, envp);
 	}
 	else
 		exit_err("argument error!");
+	return (result);
 }

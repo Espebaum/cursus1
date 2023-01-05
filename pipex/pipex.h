@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 16:51:30 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/04 23:01:03 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/05 21:14:45 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <string.h>
 # include <stdio.h>
+# include <errno.h>
 # include "libft/libft.h"
 
 typedef struct s_struct
@@ -27,14 +28,15 @@ typedef struct s_struct
 	char	*cmd1;
 	char	*cmd2;
 	char	**path;
-	int		size;
+	int		pipe_size;
 	int		fd[2];
 }	t_struct;
 
-void	parse_cmd(t_struct cmds, char **argv, char **envp);
+int		parse_cmd(t_struct cmds, char **argv, char **envp);
 char	**check_commands(char *argv);
 char	*get_cmd(char **path, char *cmd);
 void	open_pipe(t_struct cmds, char **arg_cmd1, char **arg_cmd2, char **envp);
 void	exit_err(const char *str);
+int		ft_strcmp(const char *s1, const char *s2);
 
 #endif
