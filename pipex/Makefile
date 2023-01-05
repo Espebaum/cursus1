@@ -6,7 +6,7 @@
 #    By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/04 21:14:18 by gyopark           #+#    #+#              #
-#    Updated: 2023/01/05 14:45:10 by gyopark          ###   ########.fr        #
+#    Updated: 2023/01/05 21:36:09 by gyopark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ LIBFT		= libft
 LIBFT_LIB	= libft.a
 
 SRCS 		= pipex.c				\
-			  pipex2.c
+			  pipex2.c				\
+			  pipex_utils.c
 		
 
 OBJS 		= ${SRCS:.c=.o}

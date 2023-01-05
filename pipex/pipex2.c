@@ -6,25 +6,11 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 19:20:48 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/05 21:12:23 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/05 21:36:18 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (s1[i] || s2[i])
-	{
-		if (s1[i] != s2[i])
-			break ;
-		i++;
-	}
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
 
 void	pipe_inter(int pid, t_struct cmds)
 {
@@ -81,10 +67,7 @@ int	parse_cmd(t_struct cmds, char **argv, char **envp)
 	cmds.cmd1 = get_cmd(cmds.path, arg_cmd1[0]);
 	cmds.cmd2 = get_cmd(cmds.path, arg_cmd2[0]);
 	if (!cmds.cmd1 || !cmds.cmd2)
-	{
-		result = 127;
 		perror("command not found");
-	}
 	open_pipe(cmds, arg_cmd1, arg_cmd2, envp);
 	return (result);
 }
