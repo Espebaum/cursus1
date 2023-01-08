@@ -6,13 +6,13 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 21:24:06 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/06 21:23:25 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/08 19:38:58 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	exit_err(const char *str)
+void	exit_err_bonus(const char *str)
 {
 	perror(str);
 	if (strcmp(str, "execute error!") == 0)
@@ -27,17 +27,17 @@ char	**get_path_bonus(char **envp)
 	return (ft_split(*envp + 5, ':'));
 }
 
-char	**check_commands(char *argv)
+char	**check_commands_bonus(char *argv)
 {
 	char	**cmd;
 
 	cmd = ft_split(argv, ' ');
 	if (cmd == NULL)
-		exit_err("missing command!");
+		exit_err_bonus("missing command!");
 	return (cmd);
 }
 
-char	*get_cmd(char **path, char *cmd)
+char	*get_cmd_bonus(char **path, char *cmd)
 {
 	int		i;
 	int		fd;
@@ -64,7 +64,7 @@ char	*get_cmd(char **path, char *cmd)
 	return (NULL);
 }
 
-int	main_bonus(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_struct	cmds;
 	int			result;
@@ -82,10 +82,11 @@ int	main_bonus(int argc, char **argv, char **envp)
 			exit(1);
 		}
 		cmds.path = get_path_bonus(envp);
+		cmds.argc = argc;
 		cmds.pipe_size = argc - 4;
-		result = parse_cmd(cmds, argv, envp);
+		result = parse_cmd_bonus(cmds, argv, envp);
 	}
 	else
-		exit_err("argument error!");
+		exit_err_bonus("argument error!");
 	return (result);
 }

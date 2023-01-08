@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 16:51:30 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/08 14:23:29 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/08 19:29:25 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,21 @@
 
 typedef struct s_struct
 {
+	int		argc;
 	int		infile;
 	int		outfile;
 	char	**path;
-	int		pipe_size;	
-	char	*cmd1;
-	char	*cmd2;
-	int		pipeA[2];
-	int		pipeB[2];
+	int		pipe_size;
+	int		fd[2];
 }	t_struct;
 
-int		odd_even_pipe_bonus(t_struct cmds, char **argv, char **envp, int i);
-void	child_proc(t_struct cmds, int i, char **argv, char **envp);
-void	parent_proc(t_struct cmds, int i, char **argv, char **envp);
-int		parse_cmd(t_struct cmds, char **argv, char **envp);
-char	**check_commands(char *argv);
-char	*get_cmd(char **path, char *cmd);
-void	first_parent_proc(t_struct cmds, char **argv, char **envp);
-void	mid_parent_proc(t_struct cmds, int i, char **argv, char **envp);
-void	last_parent_proc(t_struct cmds, int i, char **argv, char **envp);
-void	first_child_proc(t_struct cmds, char **argv, char **envp);
-void	mid_child_proc(t_struct cmds, int i, char **argv, char **envp);
-void	last_child_proc(t_struct cmds, int i,char **argv, char **envp);
-void	exit_err(const char *str);
+int		parse_cmd_bonus(t_struct cmds, char **argv, char **envp);
+char	**check_commands_bonus(char *argv);
+char	*get_cmd_bonus(char **path, char *cmd);
+void	exit_err_bonus(const char *str);
+void	first_child_proc_bonus(t_struct cmds, char **argv, char **envp);
+void	child_proc_bonus(t_struct cmds, char *arg, char **envp);
+void	parent_proc_bonus(t_struct cmds);
+void	execute_bonus(t_struct cmds, char *arg, char **envp);
 
 #endif

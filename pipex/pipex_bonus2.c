@@ -6,76 +6,64 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 19:20:48 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/08 14:35:00 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/08 20:57:13 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	child_proc(t_struct cmds, int i, char **argv, char **envp)
+void	first_child_proc_bonus(t_struct cmds, char **argv, char **envp)
 {
-	if (i == 0)
-		first_child_proc(cmds, argv, envp);
-	else if (i == cmds.pipe_size - 1)
-		last_child_proc(cmds, i, argv, envp);
-	else
-		mid_parent_proc(cmds, i, argv, envp);
+	dup2(cmds.infile, STDIN_FILENO);
+	close(cmds.infile);
+	dup2(cmds.fd[1], STDOUT_FILENO);
+	close(cmds.fd[0]);
+	execute_bonus(cmds, argv[2], envp);
 }
 
-void	parent_proc(t_struct cmds, int i, char **argv, char **envp)
+void	last_child_proc_bonus(t_struct cmds, char **argv, char **envp)
 {
-	if (i == 0)
-		first_parent_proc(cmds, argv, envp);
-	else if (i == cmds.pipe_size - 1)
-		last_parent_proc(cmds, i, argv, envp);
-	else
-		mid_parent_proc(cmds, i, argv, envp);
+	dup2(cmds.outfile, STDOUT_FILENO);
+	close(cmds.outfile);
+	execute_bonus(cmds, argv[cmds.argc - 2], envp);
 }
 
-int	odd_even_pipe_bonus(t_struct cmds, char **argv, char **envp, int i)
+void	child_proc_bonus(t_struct cmds, char *arg, char **envp)
 {
-	int		result;
+	dup2(cmds.fd[1], STDOUT_FILENO);
+	close(cmds.fd[0]);
+	execute_bonus(cmds, arg, envp);
+}
+
+void	parent_proc_bonus(t_struct cmds)
+{
+	dup2(cmds.fd[0], STDIN_FILENO);
+	close(cmds.fd[0]);
+	close(cmds.fd[1]);
+}
+
+int	parse_cmd_bonus(t_struct cmds, char **argv, char **envp)
+{
 	pid_t	pid;
+	int		i;
 
-	result = 0;
-	i = -1;
-	while (++i < cmds.pipe_size)
+	i = 1;
+	while (++i < cmds.argc - 1)
 	{
-		if (!(i % 2))
-			if (pipe(cmds.pipeA) < 0)
-				exit(1);
-		if (i % 2)
-			if (pipe(cmds.pipeB) < 0)
-				exit(1);
+		if (pipe(cmds.fd) == -1)
+			exit_err_bonus("pipe error");
 		pid = fork();
 		if (pid == -1)
-			exit (1);
-		else if (!pid)
-			child_proc(cmds, i, argv, envp);
-		else
-			parent_proc(cmds, i, argv, envp);
+			exit_err_bonus("fork error");
+		else if (pid == 0)
+		{
+			if (i == 2)
+				first_child_proc_bonus(cmds, argv, envp);
+			if (i == cmds.argc - 2)
+				last_child_proc_bonus(cmds, argv, envp);
+			child_proc_bonus(cmds, argv[i], envp);
+		}
+		parent_proc_bonus(cmds);
 	}
-	return (result);
-}
-
-int	parse_cmd(t_struct cmds, char **argv, char **envp)
-{
-	int		i;
-	char	**arg_cmd1;
-	char	**arg_cmd2;
-	int		result;
-
-	result = 0;
-	i = -1;
-	while (++i < cmds.pipe_size)
-	{
-		arg_cmd1 = check_commands(argv[i + 2]);
-		arg_cmd2 = check_commands(argv[i + 3]);
-		cmds.cmd1 = get_cmd(cmds.path, arg_cmd1[0]);
-		cmds.cmd2 = get_cmd(cmds.path, arg_cmd2[1]);
-		if (!cmds.cmd1 || !cmds.cmd2)
-			perror("command not found");
-		result = odd_even_pipe_bonus(cmds, argv, envp, i);
-	}
-	return (result);
+	return (waitpid(pid, NULL, WNOHANG));
 }

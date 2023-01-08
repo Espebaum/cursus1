@@ -6,11 +6,25 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 19:20:48 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/06 20:47:26 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/08 20:11:37 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			break ;
+		i++;
+	}
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
 
 void	pipe_inter(int pid, t_struct cmds)
 {
