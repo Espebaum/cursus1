@@ -6,7 +6,7 @@
 #    By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/04 21:14:18 by gyopark           #+#    #+#              #
-#    Updated: 2023/01/05 21:36:09 by gyopark          ###   ########.fr        #
+#    Updated: 2023/01/05 22:55:05 by gyopark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,30 +18,39 @@ CFLAGS		= -Wall -Wextra -Werror
 LIBFT		= libft
 LIBFT_LIB	= libft.a
 
-SRCS 		= pipex.c				\
+SRCS_MAN	= pipex1.c				\
 			  pipex2.c				\
 			  pipex_utils.c
-		
 
-OBJS 		= ${SRCS:.c=.o}
+SRCS_BONUS	= pipex_bonus1.c		\
+			  pipex_bonus2.c		\
+			  pipex_bonus_utils.c
 
-$(NAME) : $(OBJS)
-		make all -C $(LIBFT)
-		$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFT)/$(LIBFT_LIB)
+OBJS_MAN 	= ${SRCS_MAN:.c=.o}
 
+OBJS_BONUS	= ${SRCS_BONUS:.c=.o}
 
-all : $(NAME)
+all bonus:
+		rm -f all bonus $(NAME)
+		make fclean -C $(LIBFT)
+		make all -C $(LIBFT) 
+		$(CC) $(CFLAGS) -o $(NAME) $^ $(LIBFT)/$(LIBFT_LIB)
+		touch $@
+
+all : $(OBJS_MAN)
+
+bonus : $(OBJS_MAN) $(OBJS_BONUS)
 
 fclean : clean
 		rm -f $(NAME)
 		make fclean -C $(LIBFT)
 
 clean :
-		rm -f $(OBJS)
+		rm -f $(OBJS_MAN) $(OBJS_BONUS) all bonus
 		make clean -C $(LIBFT)
 
 re : 
 	make fclean 
 	make all
 
-.PHONY : fclean clean all re libft
+.PHONY : fclean clean re libft
