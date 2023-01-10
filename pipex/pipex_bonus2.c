@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 19:20:48 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/08 20:57:13 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/10 14:37:46 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,36 @@
 
 void	first_child_proc_bonus(t_struct cmds, char **argv, char **envp)
 {
-	dup2(cmds.infile, STDIN_FILENO);
-	close(cmds.infile);
+	int		i;
+
+	if (is_heredoc(argv[1]))
+	{
+		dup2(cmds.hfd, STDIN_FILENO);
+		i = 3;
+	}
+	else
+	{
+		dup2(cmds.ifd, STDIN_FILENO);
+		close(cmds.ifd);
+		i = 2;
+	}
 	dup2(cmds.fd[1], STDOUT_FILENO);
 	close(cmds.fd[0]);
-	execute_bonus(cmds, argv[2], envp);
+	execute_bonus(cmds, argv[i], envp);
 }
 
 void	last_child_proc_bonus(t_struct cmds, char **argv, char **envp)
 {
-	dup2(cmds.outfile, STDOUT_FILENO);
-	close(cmds.outfile);
+	int		ofd;
+
+	if (is_heredoc(argv[1]))
+		ofd = open(argv[cmds.argc - 1], O_WRONLY | O_CREAT | O_APPEND, 00644);
+	else
+		ofd = open(argv[cmds.argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 00644);
+	if (ofd == -1)
+		perror("outfile error");
+	dup2(ofd, STDOUT_FILENO);
+	close(ofd);
 	execute_bonus(cmds, argv[cmds.argc - 2], envp);
 }
 

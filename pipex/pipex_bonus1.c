@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 21:24:06 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/08 19:38:58 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/10 12:56:19 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +72,13 @@ int	main(int argc, char **argv, char **envp)
 	result = 0;
 	if (argc >= 5)
 	{
-		cmds.infile = open(argv[1], O_RDONLY);
-		if (cmds.infile == -1)
-			perror("infile error!");
-		cmds.outfile = open(argv[argc - 1], O_RDWR | O_CREAT | O_TRUNC, 0644);
-		if (cmds.outfile == -1)
-		{
-			perror("outfile error!");
-			exit(1);
-		}
 		cmds.path = get_path_bonus(envp);
 		cmds.argc = argc;
 		cmds.pipe_size = argc - 4;
+		if (is_heredoc(argv[1]))
+			cmds.hfd = go_heredoc(cmds, argv);
+		else
+			cmds.ifd = open(argv[1], O_RDONLY);
 		result = parse_cmd_bonus(cmds, argv, envp);
 	}
 	else

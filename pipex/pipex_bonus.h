@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 16:51:30 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/08 19:29:25 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/10 14:15:00 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 typedef struct s_struct
 {
 	int		argc;
-	int		infile;
-	int		outfile;
+	int		ifd;
+	int		hfd;
 	char	**path;
 	int		pipe_size;
 	int		fd[2];
@@ -39,5 +39,9 @@ void	first_child_proc_bonus(t_struct cmds, char **argv, char **envp);
 void	child_proc_bonus(t_struct cmds, char *arg, char **envp);
 void	parent_proc_bonus(t_struct cmds);
 void	execute_bonus(t_struct cmds, char *arg, char **envp);
+
+int		is_heredoc(char *arg);
+int		here_doc(t_struct cmds, char *limiter);
+int		go_heredoc(t_struct cmds, char **argv);
 
 #endif
