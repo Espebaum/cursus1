@@ -6,21 +6,21 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 13:59:40 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/10 14:42:47 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/10 21:04:07 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	execute_bonus(t_struct cmds, char *arg, char **envp)
+void	execute(t_struct cmds, char *arg, char **envp)
 {
 	char	**arg_cmd;
 	char	*exec_cmd;
 
-	arg_cmd = check_commands_bonus(arg);
-	exec_cmd = get_cmd_bonus(cmds.path, arg_cmd[0]);
+	arg_cmd = check_commands(arg);
+	exec_cmd = get_cmd(cmds.path, arg_cmd[0]);
 	if (execve(exec_cmd, arg_cmd, envp) == -1)
-		exit_err_bonus("execute error");
+		cmd_error_handle(exec_cmd);
 }
 
 char	*get_next_line(int fd)
@@ -74,7 +74,7 @@ int	here_doc(t_struct cmds, char *limiter)
 	if (cmds.hfd == -1)
 	{
 		unlink("/tmp/.here_doc");
-		perror("here_doc");
+		ft_perror("here_doc", EXIT_FAILURE);
 	}
 	return (cmds.hfd);
 }
@@ -85,7 +85,7 @@ int	go_heredoc(t_struct cmds, char **argv)
 
 	limiter = ft_strjoin(argv[2], "\n");
 	if (!limiter)
-		exit_err_bonus("no limiter");
+		ft_perror("no limiter", EXIT_FAILURE);
 	cmds.hfd = here_doc(cmds, limiter);
 	free(limiter);
 	return (cmds.hfd);

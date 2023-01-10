@@ -6,38 +6,30 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 21:24:06 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/10 12:56:19 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/10 21:12:35 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	exit_err_bonus(const char *str)
-{
-	perror(str);
-	if (strcmp(str, "execute error!") == 0)
-		exit(127);
-	exit(1);
-}
-
-char	**get_path_bonus(char **envp)
+char	**get_path(char **envp)
 {
 	while (*envp && ft_strncmp(*envp, "PATH", 4))
 		envp++;
 	return (ft_split(*envp + 5, ':'));
 }
 
-char	**check_commands_bonus(char *argv)
+char	**check_commands(char *argv)
 {
 	char	**cmd;
 
 	cmd = ft_split(argv, ' ');
 	if (cmd == NULL)
-		exit_err_bonus("missing command!");
+		ft_perror("missing command!", EXIT_FAILURE);
 	return (cmd);
 }
 
-char	*get_cmd_bonus(char **path, char *cmd)
+char	*get_cmd(char **path, char *cmd)
 {
 	int		i;
 	int		fd;
@@ -72,16 +64,18 @@ int	main(int argc, char **argv, char **envp)
 	result = 0;
 	if (argc >= 5)
 	{
-		cmds.path = get_path_bonus(envp);
+		cmds.path = get_path(envp);
 		cmds.argc = argc;
 		cmds.pipe_size = argc - 4;
 		if (is_heredoc(argv[1]))
 			cmds.hfd = go_heredoc(cmds, argv);
 		else
 			cmds.ifd = open(argv[1], O_RDONLY);
-		result = parse_cmd_bonus(cmds, argv, envp);
+		if (cmds.ifd == -1)
+			error_handle("infile error", argv);
+		result = parse_cmd(cmds, argv, envp);
 	}
 	else
-		exit_err_bonus("argument error!");
+		ft_perror("argument error!", EXIT_FAILURE);
 	return (result);
 }

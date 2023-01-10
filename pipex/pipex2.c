@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 19:20:48 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/08 20:11:37 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/10 21:24:31 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,10 @@ int	parse_cmd(t_struct cmds, char **argv, char **envp)
 	cmds.cmd1 = get_cmd(cmds.path, arg_cmd1[0]);
 	cmds.cmd2 = get_cmd(cmds.path, arg_cmd2[0]);
 	if (!cmds.cmd1 || !cmds.cmd2)
+	{
+		result = 127;
 		perror("command not found");
+	}
 	open_pipe(cmds, arg_cmd1, arg_cmd2, envp);
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 21:24:06 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/05 22:55:39 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/10 21:23:34 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	exit_err(const char *str)
 	perror(str);
 	if (strcmp(str, "execute error!") == 0)
 		exit(127);
-	exit(1);
+	else
+		exit(1);
 }
 
 char	*get_cmd(char **path, char *cmd)

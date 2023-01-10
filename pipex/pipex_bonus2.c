@@ -6,62 +6,61 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 19:20:48 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/10 14:37:46 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/10 20:11:45 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	first_child_proc_bonus(t_struct cmds, char **argv, char **envp)
+void	first_child_proc(t_struct cmds, char **argv, char **envp, int *i)
 {
-	int		i;
-
 	if (is_heredoc(argv[1]))
 	{
 		dup2(cmds.hfd, STDIN_FILENO);
-		i = 3;
+		close(cmds.hfd);
+		*i = 3;
 	}
 	else
 	{
 		dup2(cmds.ifd, STDIN_FILENO);
 		close(cmds.ifd);
-		i = 2;
+		*i = 2;
 	}
 	dup2(cmds.fd[1], STDOUT_FILENO);
 	close(cmds.fd[0]);
-	execute_bonus(cmds, argv[i], envp);
+	execute(cmds, argv[*i], envp);
 }
 
-void	last_child_proc_bonus(t_struct cmds, char **argv, char **envp)
+void	last_child_proc(t_struct cmds, char **argv, char **envp)
 {
 	int		ofd;
 
 	if (is_heredoc(argv[1]))
-		ofd = open(argv[cmds.argc - 1], O_WRONLY | O_CREAT | O_APPEND, 00644);
+		ofd = open(argv[cmds.argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else
-		ofd = open(argv[cmds.argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 00644);
+		ofd = open(argv[cmds.argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (ofd == -1)
-		perror("outfile error");
+		ft_perror("outfile error", EXIT_FAILURE);
 	dup2(ofd, STDOUT_FILENO);
 	close(ofd);
-	execute_bonus(cmds, argv[cmds.argc - 2], envp);
+	execute(cmds, argv[cmds.argc - 2], envp);
 }
 
-void	child_proc_bonus(t_struct cmds, char *arg, char **envp)
+void	child_proc(t_struct cmds, char *arg, char **envp)
 {
 	dup2(cmds.fd[1], STDOUT_FILENO);
 	close(cmds.fd[0]);
-	execute_bonus(cmds, arg, envp);
+	execute(cmds, arg, envp);
 }
 
-void	parent_proc_bonus(t_struct cmds)
+void	parent_proc(t_struct cmds)
 {
 	dup2(cmds.fd[0], STDIN_FILENO);
 	close(cmds.fd[0]);
 	close(cmds.fd[1]);
 }
 
-int	parse_cmd_bonus(t_struct cmds, char **argv, char **envp)
+int	parse_cmd(t_struct cmds, char **argv, char **envp)
 {
 	pid_t	pid;
 	int		i;
@@ -70,19 +69,19 @@ int	parse_cmd_bonus(t_struct cmds, char **argv, char **envp)
 	while (++i < cmds.argc - 1)
 	{
 		if (pipe(cmds.fd) == -1)
-			exit_err_bonus("pipe error");
+			ft_perror("pipe : ", EXIT_FAILURE);
 		pid = fork();
 		if (pid == -1)
-			exit_err_bonus("fork error");
+			ft_perror("fork : ", EXIT_FAILURE);
 		else if (pid == 0)
 		{
 			if (i == 2)
-				first_child_proc_bonus(cmds, argv, envp);
+				first_child_proc(cmds, argv, envp, &i);
 			if (i == cmds.argc - 2)
-				last_child_proc_bonus(cmds, argv, envp);
-			child_proc_bonus(cmds, argv[i], envp);
+				last_child_proc(cmds, argv, envp);
+			child_proc(cmds, argv[i], envp);
 		}
-		parent_proc_bonus(cmds);
+		parent_proc(cmds);
 	}
 	return (waitpid(pid, NULL, WNOHANG));
 }
