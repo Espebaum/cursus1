@@ -6,12 +6,11 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 19:20:48 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/11 21:01:30 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/11 22:07:20 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include <stdlib.h>
 
 void	execute(t_struct cmds, char *arg, char **envp)
 {
@@ -20,6 +19,8 @@ void	execute(t_struct cmds, char *arg, char **envp)
 
 	arg_cmd = check_commands(arg);
 	exec_cmd = get_cmd(cmds.path, arg_cmd[0]);
+	if (exec_cmd == NULL)
+		command_not_found("command not found");
 	if (execve(exec_cmd, arg_cmd, envp) == -1)
 		ft_perror(exec_cmd, EXIT_FAILURE);
 }

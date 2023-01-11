@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 16:51:30 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/11 20:37:43 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/11 22:21:38 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 # define INFILE 0
 # define OUTFILE 1 
+# define BUFFER_SIZE 1
 
 typedef struct s_struct
 {

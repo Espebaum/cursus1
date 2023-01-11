@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 21:24:06 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/11 20:45:59 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/11 22:21:49 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ int	main(int argc, char **argv, char **envp)
 		result = parse_cmd(cmds, argv, envp);
 	}
 	else
-		write(2, "Invalid number of arguments.\n", 29);
+		ft_perror("Invalid number of arguments", EXIT_FAILURE);
 	return (result);
 }

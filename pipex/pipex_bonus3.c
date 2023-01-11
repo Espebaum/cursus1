@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 13:59:40 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/11 13:09:16 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/11 22:11:50 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	execute(t_struct cmds, char *arg, char **envp)
 
 char	*get_next_line(int fd)
 {
-	char	backup[10000];
+	char	backup[100000];
 	char	buf;
 	char	*str;
 	int		i;
