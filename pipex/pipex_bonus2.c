@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 19:20:48 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/10 20:11:45 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/11 15:01:38 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ void	last_child_proc(t_struct cmds, char **argv, char **envp)
 {
 	int		ofd;
 
-	if (is_heredoc(argv[1]))
-		ofd = open(argv[cmds.argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else
-		ofd = open(argv[cmds.argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	ofd = open_file(cmds, argv, argv[cmds.argc - 1], OUTFILE);
 	if (ofd == -1)
 		ft_perror("outfile error", EXIT_FAILURE);
 	dup2(ofd, STDOUT_FILENO);
@@ -83,5 +80,5 @@ int	parse_cmd(t_struct cmds, char **argv, char **envp)
 		}
 		parent_proc(cmds);
 	}
-	return (waitpid(pid, NULL, WNOHANG));
+	return (wait_all(pid));
 }

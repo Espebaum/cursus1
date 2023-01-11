@@ -6,85 +6,73 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 19:20:48 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/10 21:24:31 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/11 21:01:30 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+#include <stdlib.h>
 
-int	ft_strcmp(const char *s1, const char *s2)
+void	execute(t_struct cmds, char *arg, char **envp)
 {
-	unsigned int	i;
+	char	**arg_cmd;
+	char	*exec_cmd;
 
-	i = 0;
-	while (s1[i] || s2[i])
-	{
-		if (s1[i] != s2[i])
-			break ;
-		i++;
-	}
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	arg_cmd = check_commands(arg);
+	exec_cmd = get_cmd(cmds.path, arg_cmd[0]);
+	if (execve(exec_cmd, arg_cmd, envp) == -1)
+		ft_perror(exec_cmd, EXIT_FAILURE);
 }
 
-void	pipe_inter(int pid, t_struct cmds)
+void	first_child_proc(t_struct cmds, char **argv, char **envp)
 {
-	if (pid == 0)
-	{
-		close(cmds.fd[0]);
-		dup2(cmds.infile, STDIN_FILENO);
-		dup2(cmds.fd[1], STDOUT_FILENO);
-		close(cmds.infile);
-		close(cmds.fd[1]);
-	}
-	else if (pid > 0)
-	{
-		close(cmds.fd[1]);
-		dup2(cmds.fd[0], STDIN_FILENO);
-		dup2(cmds.outfile, STDOUT_FILENO);
-		close(cmds.outfile);
-		close(cmds.fd[0]);
-	}
+	close(cmds.fd[0]);
+	dup2(cmds.ifd, STDIN_FILENO);
+	dup2(cmds.fd[1], STDOUT_FILENO);
+	close(cmds.ifd);
+	execute(cmds, argv[2], envp);
 }
 
-void	open_pipe(t_struct cmds, char **arg_cmd1, char **arg_cmd2, char **envp)
+void	second_child_proc(t_struct cmds, char **argv, char **envp)
 {
-	pid_t	pid;
+	int		ofd;
 
-	pipe(cmds.fd);
-	pid = fork();
-	if (pid == 0)
-	{
-		pipe_inter(pid, cmds);
-		if (execve(cmds.cmd1, arg_cmd1, envp) == -1)
-			exit_err("execute error!");
-	}
-	else if (pid > 0)
-	{
-		pipe_inter(pid, cmds);
-		waitpid(pid, NULL, WNOHANG);
-		if (execve(cmds.cmd2, arg_cmd2, envp) == -1)
-			exit_err("execute error!");
-	}
-	else
-		exit_err("fork fail");
+	ofd = open_file(cmds, argv, argv[cmds.argc - 1], OUTFILE);
+	if (ofd == -1)
+		ft_perror("outfile error", EXIT_FAILURE);
+	dup2(ofd, STDOUT_FILENO);
+	close(ofd);
+	execute(cmds, argv[cmds.argc - 2], envp);
+}
+
+void	parent_proc(t_struct cmds)
+{
+	dup2(cmds.fd[0], STDIN_FILENO);
+	close(cmds.fd[0]);
+	close(cmds.fd[1]);
 }
 
 int	parse_cmd(t_struct cmds, char **argv, char **envp)
 {
-	char	**arg_cmd1;
-	char	**arg_cmd2;
-	int		result;
+	pid_t	pid;
+	int		i;
 
-	result = 0;
-	arg_cmd1 = check_commands(argv[2]);
-	arg_cmd2 = check_commands(argv[3]);
-	cmds.cmd1 = get_cmd(cmds.path, arg_cmd1[0]);
-	cmds.cmd2 = get_cmd(cmds.path, arg_cmd2[0]);
-	if (!cmds.cmd1 || !cmds.cmd2)
+	i = 1;
+	while (++i < 4)
 	{
-		result = 127;
-		perror("command not found");
+		if (pipe(cmds.fd) == -1)
+			ft_perror("pipe : ", EXIT_FAILURE);
+		pid = fork();
+		if (pid == -1)
+			ft_perror("fork : ", EXIT_FAILURE);
+		else if (pid == 0)
+		{
+			if (i == 2)
+				first_child_proc(cmds, argv, envp);
+			if (i == 3)
+				second_child_proc(cmds, argv, envp);
+		}
+		parent_proc(cmds);
 	}
-	open_pipe(cmds, arg_cmd1, arg_cmd2, envp);
-	return (result);
+	return (wait_all(pid));
 }

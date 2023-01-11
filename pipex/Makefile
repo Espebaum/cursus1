@@ -6,7 +6,7 @@
 #    By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/04 21:14:18 by gyopark           #+#    #+#              #
-#    Updated: 2023/01/10 16:30:34 by gyopark          ###   ########.fr        #
+#    Updated: 2023/01/11 20:13:31 by gyopark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ LIBFT		= libft
 LIBFT_LIB	= libft.a
 
 SRCS_MAN	= pipex1.c				\
-			  pipex2.c				
+			  pipex2.c				\
+			  pipex3.c
 
 SRCS_BONUS	= pipex_bonus1.c		\
 			  pipex_bonus2.c		\

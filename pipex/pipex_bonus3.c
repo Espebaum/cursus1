@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 13:59:40 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/10 21:04:07 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/11 13:09:16 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	go_heredoc(t_struct cmds, char **argv)
 
 int	is_heredoc(char *arg)
 {
-	if (strncmp(arg, "here_doc", ft_strlen(arg)) == 0)
+	if (ft_strncmp(arg, "here_doc", ft_strlen(arg)) == 0)
 		return (1);
 	return (0);
 }

@@ -6,19 +6,27 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 21:24:06 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/10 21:23:34 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/11 20:45:59 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	exit_err(const char *str)
+int	open_file(t_struct cmds, char **argv, char *filename, int mode)
 {
-	perror(str);
-	if (strcmp(str, "execute error!") == 0)
-		exit(127);
+	if (mode == INFILE)
+	{
+		if (access(filename, F_OK))
+		{
+			write(2, "pipex: ", 7);
+			write(2, filename, ft_strlen(filename));
+			write(2, ": No such file or directory\n", 28);
+			return (0);
+		}
+		return (open(filename, O_RDONLY));
+	}
 	else
-		exit(1);
+		return (open(argv[cmds.argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644));
 }
 
 char	*get_cmd(char **path, char *cmd)
@@ -73,20 +81,15 @@ int	main(int argc, char **argv, char **envp)
 	result = 0;
 	if (argc == 5)
 	{
-		cmds.infile = open(argv[1], O_RDONLY);
-		if (cmds.infile == -1)
-			perror("infile error!");
-		cmds.outfile = open(argv[argc - 1], O_RDWR | O_CREAT | O_TRUNC, 0644);
-		if (cmds.outfile == -1)
-		{
-			perror("outfile error!");
-			exit(1);
-		}
+		cmds.argc = argc;
+		cmds.ifd = open_file(cmds, argv, argv[1], INFILE);
+		if (cmds.ifd == -1)
+			ft_perror("infile error!", EXIT_FAILURE);
 		cmds.path = get_path(envp);
 		cmds.pipe_size = argc - 4;
 		result = parse_cmd(cmds, argv, envp);
 	}
 	else
-		exit_err("argument error!");
+		write(2, "Invalid number of arguments.\n", 29);
 	return (result);
 }
