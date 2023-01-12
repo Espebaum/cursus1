@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 19:20:48 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/11 22:07:20 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/12 22:03:49 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,13 @@ void	execute(t_struct cmds, char *arg, char **envp)
 void	first_child_proc(t_struct cmds, char **argv, char **envp)
 {
 	close(cmds.fd[0]);
+	cmds.ifd = open_file(cmds, argv, argv[1], INFILE);
+	if (cmds.ifd == -1)
+		ft_perror("infile error!", EXIT_FAILURE);
 	dup2(cmds.ifd, STDIN_FILENO);
 	dup2(cmds.fd[1], STDOUT_FILENO);
 	close(cmds.ifd);
+	close(cmds.fd[1]);
 	execute(cmds, argv[2], envp);
 }
 
@@ -43,6 +47,8 @@ void	second_child_proc(t_struct cmds, char **argv, char **envp)
 		ft_perror("outfile error", EXIT_FAILURE);
 	dup2(ofd, STDOUT_FILENO);
 	close(ofd);
+	close(cmds.fd[0]);
+	close(cmds.fd[1]);
 	execute(cmds, argv[cmds.argc - 2], envp);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 21:24:06 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/11 21:27:30 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/12 20:16:43 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,7 @@
 int	open_file(t_struct cmds, char **argv, char *filename, int mode)
 {
 	if (mode == INFILE)
-	{
-		if (access(filename, F_OK))
-		{
-			write(2, "pipex: ", 7);
-			write(2, filename, ft_strlen(filename));
-			write(2, ": No such file or directory\n", 28);
-			return (0);
-		}
 		return (open(filename, O_RDONLY));
-	}
 	else
 	{
 		if (is_heredoc(argv[1]))
@@ -90,15 +81,9 @@ int	main(int argc, char **argv, char **envp)
 		cmds.path = get_path(envp);
 		cmds.argc = argc;
 		cmds.pipe_size = argc - 4;
-		if (is_heredoc(argv[1]))
-			cmds.hfd = go_heredoc(cmds, argv);
-		else
-			cmds.ifd = open_file(cmds, argv, argv[1], INFILE);
-		if (cmds.ifd == -1)
-			error_handle("infile error", argv);
-		result = parse_cmd(cmds, argv, envp);
+		result = open_pipe(cmds, argv, envp);
 	}
 	else
-		write(2, "Invalid number of arguments.\n", 29);
+		ft_strerror(EINVAL);
 	return (result);
 }

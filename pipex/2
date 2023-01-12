@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 19:20:48 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/12 22:07:42 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/12 22:06:50 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void	last_child_proc(t_struct cmds, char **argv, char **envp)
 		ft_perror(argv[cmds.argc - 1], EXIT_FAILURE);
 	dup2(ofd, STDOUT_FILENO);
 	close(ofd);
-	close(cmds.fd[0]);
-	close(cmds.fd[1]);
 	execute(cmds, argv[cmds.argc - 2], envp);
 }
 
@@ -54,7 +52,6 @@ void	child_proc(t_struct cmds, char *arg, char **envp)
 {
 	dup2(cmds.fd[1], STDOUT_FILENO);
 	close(cmds.fd[0]);
-	close(cmds.fd[1]);
 	execute(cmds, arg, envp);
 }
 

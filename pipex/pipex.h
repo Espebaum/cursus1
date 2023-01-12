@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 16:51:30 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/11 22:21:38 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/12 17:28:17 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <stdio.h>
+# include <string.h>
+# include <errno.h>
 # include "libft/libft.h"
 
 # define INFILE 0
 # define OUTFILE 1 
-# define BUFFER_SIZE 1
 
 typedef struct s_struct
 {

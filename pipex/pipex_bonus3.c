@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 13:59:40 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/11 22:11:50 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/12 20:15:11 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,36 +19,10 @@ void	execute(t_struct cmds, char *arg, char **envp)
 
 	arg_cmd = check_commands(arg);
 	exec_cmd = get_cmd(cmds.path, arg_cmd[0]);
+	if (!exec_cmd)
+		ft_perror(arg_cmd[0], 127);
 	if (execve(exec_cmd, arg_cmd, envp) == -1)
-		cmd_error_handle(exec_cmd);
-}
-
-char	*get_next_line(int fd)
-{
-	char	backup[100000];
-	char	buf;
-	char	*str;
-	int		i;
-	int		read_size;
-
-	i = 0;
-	backup[0] = '\0';
-	while (1)
-	{
-		read_size = read(fd, &buf, 1);
-		if (read_size < 0 || (read_size == 0 && backup[0] == '\0'))
-			return (NULL);
-		if (read_size == 0)
-			break ;
-		backup[i++] = buf;
-		if (buf == '\n')
-			break ;
-	}
-	backup[i] = '\0';
-	str = (char *)malloc(sizeof(char) * ((i++) + 1));
-	while (--i >= 0)
-		str[i] = backup[i];
-	return (str);
+		ft_perror("execute error", 126);
 }
 
 int	here_doc(t_struct cmds, char *limiter)
@@ -57,7 +31,7 @@ int	here_doc(t_struct cmds, char *limiter)
 
 	cmds.hfd = open("/tmp/.here_doc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (cmds.hfd == -1)
-		perror("here_doc");
+		ft_perror("here_doc", EXIT_FAILURE);
 	while (1)
 	{
 		write(1, "heredoc> ", 9);

@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:29:12 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/11 14:31:40 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/12 21:00:32 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,35 +28,18 @@ int	wait_all(pid_t last_pid)
 	return (status >> 8);
 }
 
-void	command_not_found(char *cmd)
+void	ft_strerror(int errno)
 {
-	int	exit_code;
+	char	*message;
 
-	exit_code = 127;
-	ft_perror(cmd, exit_code);
+	message = strerror(errno);
+	write(2, message, ft_strlen(message));
+	write(2, "\n", 1);
+	exit(1);
 }
 
 int	ft_perror(char *str, int exit_code)
 {
 	perror(str);
 	exit(exit_code);
-}
-
-void	cmd_error_handle(char *cmd)
-{
-	int	exit_code;
-
-	exit_code = EXIT_FAILURE;
-	ft_perror(cmd, exit_code);
-}
-
-void	error_handle(char *message, char **argv)
-{
-	int	exit_code;
-
-	if (access(argv[1], X_OK) == -1)
-		exit_code = 13;
-	else
-		exit_code = EXIT_FAILURE;
-	perror(message);
 }
