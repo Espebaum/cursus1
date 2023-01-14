@@ -6,14 +6,14 @@
 #    By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/04 21:14:18 by gyopark           #+#    #+#              #
-#    Updated: 2023/01/12 15:02:12 by gyopark          ###   ########.fr        #
+#    Updated: 2023/01/13 16:30:10 by gyopark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= pipex
 
 CC			= cc
-CFLAGS		= -g3 -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror
 
 LIBFT		= libft
 LIBFT_LIB	= libft.a

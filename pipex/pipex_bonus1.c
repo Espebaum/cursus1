@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 21:24:06 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/12 20:16:43 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/14 17:57:17 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char	**get_path(char **envp)
 {
 	while (*envp && ft_strncmp(*envp, "PATH", 4))
 		envp++;
+	if (!*envp)
+		return (0);
 	return (ft_split(*envp + 5, ':'));
 }
 
@@ -50,10 +52,13 @@ char	*get_cmd(char **path, char *cmd)
 	char	*path_cmd;
 	char	*tmp;
 
+	if (access(cmd, X_OK) != -1)
+		return (cmd);
+	if (!path)
+		ft_perror("missing path", 1);
 	path_cmd = ft_strjoin("/", cmd);
-	fd = 0;
-	i = 0;
-	while (path[i])
+	i = -1;
+	while (path[++i])
 	{
 		tmp = ft_strjoin(path[i], path_cmd);
 		fd = access(tmp, X_OK);
@@ -64,7 +69,6 @@ char	*get_cmd(char **path, char *cmd)
 		}
 		close(fd);
 		free(tmp);
-		i++;
 	}
 	free(path_cmd);
 	return (NULL);
@@ -80,7 +84,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		cmds.path = get_path(envp);
 		cmds.argc = argc;
-		cmds.pipe_size = argc - 4;
+		if (is_heredoc(argv[1]) && argc == 5)
+			ft_strerror(EINVAL);
 		result = open_pipe(cmds, argv, envp);
 	}
 	else

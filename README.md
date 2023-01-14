@@ -10,4 +10,6 @@ Born2beroot 통과
 
 push_swap 통과
 
-pipex
+pipex 통과
+
+so_long
