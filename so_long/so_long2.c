@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:12:55 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/16 22:43:26 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/17 14:11:08 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,13 @@ void	draw_img(t_param *par, void *mlx, int r, int c)
 		mlx_put_image_to_window(mlx, par->win, par->img1, c * par->x,
 			r * par->y);
 	else if (par->map[r][c] == 'C')
-		mlx_put_image_to_window(mlx, par->win, par->imgC, c * par->x,
+		mlx_put_image_to_window(mlx, par->win, par->cimg, c * par->x,
 			r * par->y);
 	else if (par->map[r][c] == 'E')
-		mlx_put_image_to_window(mlx, par->win, par->imgE, c * par->x,
+		mlx_put_image_to_window(mlx, par->win, par->eimg, c * par->x,
 			r * par->y);
 	else if (par->map[r][c] == 'P')
-		mlx_put_image_to_window(mlx, par->win, par->imgP, c * par->x,
+		mlx_put_image_to_window(mlx, par->win, par->pimg, c * par->x,
 			r * par->y);
 }
 

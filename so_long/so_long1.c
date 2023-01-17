@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 11:13:13 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/17 13:44:07 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/17 14:14:26 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ void	param_init(char *argv1, t_param *par)
 	par->map_c = 0;		//map의 column
 	par->e_r = 0;
 	par->e_c = 0;
-	par->imgP = mlx_xpm_file_to_image(par->mlx, "imgs/P.xpm", &par->x, &par->y);
-	par->imgC = mlx_xpm_file_to_image(par->mlx, "imgs/C.xpm", &par->x, &par->y);
-	par->imgE = mlx_xpm_file_to_image(par->mlx, "imgs/E.xpm", &par->x, &par->y);
+	par->pimg = mlx_xpm_file_to_image(par->mlx, "imgs/P.xpm", &par->x, &par->y);
+	par->cimg = mlx_xpm_file_to_image(par->mlx, "imgs/C.xpm", &par->x, &par->y);
+	par->eimg = mlx_xpm_file_to_image(par->mlx, "imgs/E.xpm", &par->x, &par->y);
 	par->img0 = mlx_xpm_file_to_image(par->mlx, "imgs/0.xpm", &par->x, &par->y);
 	par->img1 = mlx_xpm_file_to_image(par->mlx, "imgs/1.xpm", &par->x, &par->y);
 	par->win = NULL;
@@ -119,7 +119,7 @@ int	check_map(t_param *par)
 	}
 	if (cnt['C'] == 0 || cnt['E'] == 0 || cnt['P'] == 0)
 		return (0);
-	return (1);
+	return (check_valid_path(par));
 }
 
 void	exitfunc(void)
@@ -140,7 +140,7 @@ int	main(int argc, char **argv)
 		return (write(1, "Invalid map file\n", 17) * 0);
 	map_read(&par);
 	mapstat = check_map(&par);
-	mapstat = check_valid_path(&par);
+	/** mapstat = check_valid_path(&par); */
 	if (!mapstat)
 	{
 		write(1, "map error!\n", 11);

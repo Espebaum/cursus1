@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 11:27:51 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/16 22:52:11 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/17 14:10:55 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ typedef struct s_param
 	int		map_r;
 	int		map_c;
 	void	*mlx;
-	void	*imgP;
-	void	*imgC;
-	void	*imgE;
+	void	*pimg;
+	void	*cimg;
+	void	*eimg;
 	void	*img0;
 	void	*img1;
 	void	*win;
