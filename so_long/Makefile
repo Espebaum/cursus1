@@ -6,7 +6,7 @@
 #    By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/16 19:45:58 by gyopark           #+#    #+#              #
-#    Updated: 2023/01/17 21:00:05 by gyopark          ###   ########.fr        #
+#    Updated: 2023/01/17 21:32:48 by gyopark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,11 @@ MLXDIR		= ./mlx
 FT_PRINTF	= ft_printf
 PRINTF_LIB	= libftprintf.a
 
-SRCS_MAN 	= so_long1.c							\
-			  so_long2.c							\
-			  so_long3.c							\
-			  gnl/get_next_line.c					\
+SRCS_MAN 	= so_long1.c				\
+			  so_long2.c				\
+			  so_long3.c				\
+			  so_long4.c				\
+			  gnl/get_next_line.c		\
 			  gnl/get_next_line_utils.c	
 
 SRCS_BONUS	= s_bonus/so_long1_bonus.c	\

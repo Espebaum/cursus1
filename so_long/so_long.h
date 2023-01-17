@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 11:27:51 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/17 20:42:59 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/17 21:31:54 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_check
 }	t_check;
 
 void	free_param(t_param *par);
+void	put_image(t_param *par);
 int		check_valid_path(t_param *par);
 void	drawmap(t_param *par, void *mlx);
 void	move_exit(t_param *par);
