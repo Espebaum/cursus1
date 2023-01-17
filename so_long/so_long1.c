@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 11:13:13 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/17 14:25:04 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/17 20:51:55 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,11 +132,11 @@ int	main(int argc, char **argv)
 	t_param		par;
 	int			mapstat;
 
-	if (argc != 2)
-		return (write(1, "Error!\n", 7) * 0);
+	if (argc != 2 || ft_strrncmp(argv[1], ".ber", 4))
+		return (write(1, "Invalid Argument!\n", 18) * 0);
 	param_init(argv[1], &par);
 	if (par.fd <= 0)
-		return (write(1, "Invalid map file\n", 17) * 0);
+		return (write(1, "Invalid Map File\n", 17) * 0);
 	map_read(&par);
 	mapstat = check_map(&par);
 	if (!mapstat)

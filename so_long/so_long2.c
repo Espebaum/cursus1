@@ -6,11 +6,10 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:12:55 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/17 14:11:08 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/17 21:10:03 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx/mlx.h"
 #include "so_long.h"
 
 void	free_param(t_param *par)
@@ -56,10 +55,7 @@ int	key_press(int keycode, t_param *par)
 	else if (keycode == KEY_D)
 		move_char(par, 0, 1);
 	else if (keycode == KEY_ESC)
-	{
-		free_param(par);
-		exit(0);
-	}
+		exit_game(par);
 	drawmap(par, par->mlx);
 	return (0);
 }
@@ -87,7 +83,6 @@ void	drawmap(t_param *par, void *mlx)
 {
 	int		r;
 	int		c;
-	char	*s;
 
 	r = -1;
 	mlx_clear_window(mlx, par->win);
@@ -97,7 +92,4 @@ void	drawmap(t_param *par, void *mlx)
 		while (++c < par->map_c)
 			draw_img(par, mlx, r, c);
 	}
-	s = ft_itoa(par->move);
-	mlx_string_put(mlx, par->win, 10, 10, 0xFFFFFF, s);
-	free(s);
 }

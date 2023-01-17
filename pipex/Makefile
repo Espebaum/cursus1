@@ -6,7 +6,7 @@
 #    By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/04 21:14:18 by gyopark           #+#    #+#              #
-#    Updated: 2023/01/13 16:30:10 by gyopark          ###   ########.fr        #
+#    Updated: 2023/01/17 17:49:37 by gyopark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,8 @@ SRCS_BONUS	= pipex_bonus1.c		\
 OBJS_MAN 	= ${SRCS_MAN:.c=.o}
 
 OBJS_BONUS	= ${SRCS_BONUS:.c=.o}
+
+$(NAME) : all
 
 all bonus:
 		rm -f all bonus $(NAME)

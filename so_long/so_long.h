@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 11:27:51 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/17 14:10:55 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/17 20:42:59 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,6 @@ void	drawmap(t_param *par, void *mlx);
 void	move_exit(t_param *par);
 int		key_press(int keycode, t_param *par);
 int		exit_game(t_param *par);
+int		ft_strrncmp(char *s1, char *s2, int n);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 20:11:06 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/17 14:14:29 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/17 21:07:25 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,56 @@
 
 int	exit_game(t_param *par)
 {
+	mlx_destroy_image(par->mlx, par->pimg);
+	mlx_destroy_image(par->mlx, par->cimg);
+	mlx_destroy_image(par->mlx, par->eimg);
+	mlx_destroy_image(par->mlx, par->img1);
+	mlx_destroy_image(par->mlx, par->img0);
+	mlx_destroy_window(par->mlx, par->win);
 	free_param(par);
 	exit(0);
 	return (0);
+}
+
+void	move_exit(t_param *par)
+{
+	if (par->i_num == 0)
+	{
+		ft_printf("%d\n", ++par->move);
+		mlx_destroy_image(par->mlx, par->pimg);
+		mlx_destroy_image(par->mlx, par->cimg);
+		mlx_destroy_image(par->mlx, par->eimg);
+		mlx_destroy_image(par->mlx, par->img1);
+		mlx_destroy_image(par->mlx, par->img0);
+		mlx_destroy_window(par->mlx, par->win);
+		free_param(par);
+		exit(0);
+	}
+	else
+		return ;
+}
+
+int	ft_strrncmp(char *s1, char *s2, int n)
+{
+	int	i;
+
+	i = ft_strlen(s1) - 1;
+	if (i < 4)
+		return (1);
+	n--;
+	while (s1[i] == s2[n])
+	{
+		if (i == 0 || n == 0)
+			break ;
+		i--;
+		n--;
+	}
+	if (i && s1[i - 1] == '/')
+		return (1);
+	if (s1[i] == s2[n])
+		return (0);
+	else
+		return (1);
 }
 
 void	check_valid_path_sub(t_param *par, int r, int c, t_check *t)
@@ -66,16 +113,4 @@ int	check_valid_path(t_param *par)
 		free(t.visited[i]);
 	free(t.visited);
 	return (is_valid);
-}
-
-void	move_exit(t_param *par)
-{
-	if (par->i_num == 0)
-	{
-		ft_printf("%d\n", ++par->move);
-		free_param(par);
-		exit(0);
-	}
-	else
-		return ;
 }
