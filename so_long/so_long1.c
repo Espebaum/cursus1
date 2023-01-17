@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 11:13:13 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/17 14:14:26 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/17 14:25:04 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,19 @@ void	param_init(char *argv1, t_param *par)
 	if (par->fd <= 0)
 		return ;
 	par->mlx = mlx_init();
-	par->map = NULL;	//map이 저장됨
-	par->en_num = 0;	//시작점
-	par->ex_num = 0;	//출구
-	par->i_num = 0;		//아이템
-	par->win_w = 0;		//윈도우 너비
-	par->win_h = 0;		//윈도우 높이
-	par->x = 64;		//이미지의 width
-	par->y = 64;		//이미지의y축
-	par->move = 0;		//이동횟수
-	par->p_c = 0;		//플레이어의 x좌표
-	par->p_r = 0;		//플레이어의 y좌표
-	par->map_r = 0;		//map의 row
-	par->map_c = 0;		//map의 column
+	par->map = NULL;
+	par->en_num = 0;
+	par->ex_num = 0;
+	par->i_num = 0;
+	par->win_w = 0;
+	par->win_h = 0;
+	par->x = 64;
+	par->y = 64;
+	par->move = 0;
+	par->p_c = 0;
+	par->p_r = 0;
+	par->map_r = 0;
+	par->map_c = 0;
 	par->e_r = 0;
 	par->e_c = 0;
 	par->pimg = mlx_xpm_file_to_image(par->mlx, "imgs/P.xpm", &par->x, &par->y);
@@ -122,17 +122,16 @@ int	check_map(t_param *par)
 	return (check_valid_path(par));
 }
 
-void	exitfunc(void)
-{
-	system("leaks so_long");
-}
+/** void	exitfunc(void) */
+/** { */
+/**     system("leaks so_long"); */
+/** } */
 
 int	main(int argc, char **argv)
 {
 	t_param		par;
 	int			mapstat;
 
-	/** atexit(exitfunc); */
 	if (argc != 2)
 		return (write(1, "Error!\n", 7) * 0);
 	param_init(argv[1], &par);
@@ -140,7 +139,6 @@ int	main(int argc, char **argv)
 		return (write(1, "Invalid map file\n", 17) * 0);
 	map_read(&par);
 	mapstat = check_map(&par);
-	/** mapstat = check_valid_path(&par); */
 	if (!mapstat)
 	{
 		write(1, "map error!\n", 11);
@@ -154,3 +152,17 @@ int	main(int argc, char **argv)
 	mlx_loop(par.mlx);
 	return (0);
 }
+	/** atexit(exitfunc); */
+	/** par->map = NULL;	map이 저장됨 */
+	/** par->en_num = 0;	시작점 */
+	/** par->ex_num = 0;	출구 */
+	/** par->i_num = 0;		아이템 */
+	/** par->win_w = 0;		윈도우 너비 */
+	/** par->win_h = 0;		윈도우 높이 */
+	/** par->x = 64;		이미지의 width */
+	/** par->y = 64;		이미지의y축 */
+	/** par->move = 0;		이동횟수 */
+	/** par->p_c = 0;		플레이어의 x좌표 */
+	/** par->p_r = 0;		플레이어의 y좌표 */
+	/** par->map_r = 0;		map의 row */
+	/** par->map_c = 0;		map의 column */
