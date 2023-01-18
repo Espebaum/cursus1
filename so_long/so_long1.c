@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 11:13:13 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/17 21:45:48 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/18 12:16:37 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ void	param_init(char *argv1, t_param *par)
 		return ;
 	par->mlx = mlx_init();
 	par->map = NULL;
-	par->en_num = 0;
-	par->ex_num = 0;
 	par->i_num = 0;
 	par->win_w = 0;
 	par->win_h = 0;
@@ -140,13 +138,11 @@ int	main(int argc, char **argv)
 	return (0);
 }
 	/** par->map = NULL;	map이 저장됨 */
-	/** par->en_num = 0;	시작점 */
-	/** par->ex_num = 0;	출구 */
 	/** par->i_num = 0;		아이템 */
 	/** par->win_w = 0;		윈도우 너비 */
 	/** par->win_h = 0;		윈도우 높이 */
-	/** par->x = 64;		이미지의 width */
-	/** par->y = 64;		이미지의y축 */
+	/** par->x = 64;		이미지의 width 비트*/
+	/** par->y = 64;		이미지의 height 비트*/
 	/** par->move = 0;		이동횟수 */
 	/** par->p_c = 0;		플레이어의 x좌표 */
 	/** par->p_r = 0;		플레이어의 y좌표 */

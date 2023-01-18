@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long1_bonus.c                                   :+:      :+:    :+:   */
+/*   so_long_bonus1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 11:13:13 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/17 17:43:26 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/18 14:41:17 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	read_map(t_param *par, int i, int j, int *cnt)
 {
 	if (par->map[i][j] != '0' && par->map[i][j] != '1'
 			&& par->map[i][j] != 'C' && par->map[i][j] != 'E'
-			&& par->map[i][j] != 'P')
+			&& par->map[i][j] != 'P' && par->map[i][j] != 'B')
 		return (0);
 	if ((i == 0 || i == par->map_r - 1 || j == 0
 			|| j == par->map_c - 1) && par->map[i][j] != '1')
@@ -25,16 +25,15 @@ int	read_map(t_param *par, int i, int j, int *cnt)
 	{
 		par->p_r = i;
 		par->p_c = j;
-		if (++par->en_num > 1)
-			return (0);
 	}
 	if (par->map[i][j] == 'E')
 	{
 		par->e_r = i;
 		par->e_c = j;
-		if (++par->ex_num > 1)
-			return (0);
 	}
+	if (par->map[i][j] == 'B')
+		if (place_b(par, i, j, cnt) == 0)
+			return (0);
 	if (par->map[i][j] == 'C')
 		par->i_num++;
 	cnt[(int) par->map[i][j]]++;
@@ -48,8 +47,6 @@ void	param_init(char *argv1, t_param *par)
 		return ;
 	par->mlx = mlx_init();
 	par->map = NULL;
-	par->en_num = 0;
-	par->ex_num = 0;
 	par->i_num = 0;
 	par->win_w = 0;
 	par->win_h = 0;
@@ -62,12 +59,12 @@ void	param_init(char *argv1, t_param *par)
 	par->map_c = 0;
 	par->e_r = 0;
 	par->e_c = 0;
-	par->pimg = mlx_xpm_file_to_image(par->mlx, "imgs/P.xpm", &par->x, &par->y);
-	par->cimg = mlx_xpm_file_to_image(par->mlx, "imgs/C.xpm", &par->x, &par->y);
-	par->eimg = mlx_xpm_file_to_image(par->mlx, "imgs/E.xpm", &par->x, &par->y);
-	par->img0 = mlx_xpm_file_to_image(par->mlx, "imgs/0.xpm", &par->x, &par->y);
-	par->img1 = mlx_xpm_file_to_image(par->mlx, "imgs/1.xpm", &par->x, &par->y);
 	par->win = NULL;
+	par->cnt = 0;
+	par->b_r[0] = 0;
+	par->b_r[1] = 0;
+	par->b_c[0] = 0;
+	par->b_c[1] = 0;
 }
 
 void	map_read(t_param *par)
@@ -117,50 +114,46 @@ int	check_map(t_param *par)
 			if (read_map(par, i, j, cnt) == 0)
 				return (0);
 	}
-	if (cnt['C'] == 0 || cnt['E'] == 0 || cnt['P'] == 0)
+	if (cnt['C'] == 0 || cnt['E'] != 1 || cnt['P'] != 1)
+		return (0);
+	if (cnt['B'] != 2)
 		return (0);
 	return (check_valid_path(par));
 }
-
-/** void	exitfunc(void) */
-/** { */
-/**     system("leaks so_long"); */
-/** } */
 
 int	main(int argc, char **argv)
 {
 	t_param		par;
 	int			mapstat;
 
-	if (argc != 2)
-		return (write(1, "Error!\n", 7) * 0);
+	if (argc != 2 || ft_strrncmp(argv[1], ".ber", 4))
+		return (write(2, "Invalid Argument!\n", 18) * 0 + 1);
 	param_init(argv[1], &par);
 	if (par.fd <= 0)
-		return (write(1, "Invalid map file\n", 17) * 0);
+		return (write(2, "Invalid Map File\n", 17) * 0 + 1);
 	map_read(&par);
 	mapstat = check_map(&par);
 	if (!mapstat)
 	{
-		write(1, "map error!\n", 11);
+		write(2, "map error!\n", 11);
 		free_param(&par);
-		return (0);
+		return (1);
 	}
+	put_image(&par);
 	par.win = mlx_new_window(par.mlx, par.win_w, par.win_h, "so_long");
 	drawmap(&par, par.mlx);
 	mlx_key_hook(par.win, &key_press, &par);
 	mlx_hook(par.win, BUTTON_X, 0, &exit_game, &par);
+	mlx_loop_hook(par.mlx, &frame_map, &par);
 	mlx_loop(par.mlx);
 	return (0);
 }
-	/** atexit(exitfunc); */
 	/** par->map = NULL;	map이 저장됨 */
-	/** par->en_num = 0;	시작점 */
-	/** par->ex_num = 0;	출구 */
 	/** par->i_num = 0;		아이템 */
 	/** par->win_w = 0;		윈도우 너비 */
 	/** par->win_h = 0;		윈도우 높이 */
-	/** par->x = 64;		이미지의 width */
-	/** par->y = 64;		이미지의y축 */
+	/** par->x = 64;		이미지의 width 비트*/
+	/** par->y = 64;		이미지의 height 비트*/
 	/** par->move = 0;		이동횟수 */
 	/** par->p_c = 0;		플레이어의 x좌표 */
 	/** par->p_r = 0;		플레이어의 y좌표 */

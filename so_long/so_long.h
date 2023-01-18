@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 11:27:51 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/17 21:31:54 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/18 12:07:55 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ typedef struct s_param
 {
 	int		fd;
 	char	**map;
-	int		en_num;
-	int		ex_num;
 	int		i_num;
 	int		win_w;
 	int		win_h;

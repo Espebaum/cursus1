@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 11:27:51 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/17 20:43:11 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/18 14:26:07 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ typedef struct s_param
 {
 	int		fd;
 	char	**map;
-	int		en_num;
-	int		ex_num;
 	int		i_num;
 	int		win_w;
 	int		win_h;
@@ -45,29 +43,39 @@ typedef struct s_param
 	int		p_r;
 	int		e_r;
 	int		e_c;
+	int		b_r[2];
+	int		b_c[2];
 	int		map_r;
 	int		map_c;
 	void	*mlx;
-	void	*pimg;
+	void	*pimg[5];
+	void	*bimg[5];
 	void	*cimg;
 	void	*eimg;
 	void	*img0;
 	void	*img1;
 	void	*win;
+	int		cnt;
 }	t_param;
 
 typedef struct s_check
 {
 	int		**visited;
+	int		**item_check;
 	int		cnt;
 }	t_check;
 
 void	free_param(t_param *par);
+void	put_image(t_param *par);
 int		check_valid_path(t_param *par);
 void	drawmap(t_param *par, void *mlx);
 void	move_exit(t_param *par);
 int		key_press(int keycode, t_param *par);
 int		exit_game(t_param *par);
 int		ft_strrncmp(char *s1, char *s2, int n);
+int		frame_map(t_param *par);
+void	check_valid_path_sub(t_param *par, int r, int c, t_check *t);
+int		check_valid_item(t_param *par, t_check *t, int i, int j);
+int		place_b(t_param *par, int i, int j, int *cnt);
 
 #endif

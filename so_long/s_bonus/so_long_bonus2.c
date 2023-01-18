@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long2_bonus.c                                   :+:      :+:    :+:   */
+/*   so_long_bonus2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:12:55 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/17 17:43:35 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/18 13:10:59 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	move_char(t_param *par, int dr, int dc)
 		move_exit(par);
 	else if (par->map[nr][nc] == 'C')
 		par->i_num--;
-	ft_printf("%d\n", ++par->move);
+	++par->move;
 	par->map[nr][nc] = 'P';
 	par->map[par->p_r][par->p_c] = '0';
 	if (par->p_r == par->e_r && par->p_c == par->e_c)
@@ -55,11 +55,7 @@ int	key_press(int keycode, t_param *par)
 	else if (keycode == KEY_D)
 		move_char(par, 0, 1);
 	else if (keycode == KEY_ESC)
-	{
-		free_param(par);
-		exit(0);
-	}
-	drawmap(par, par->mlx);
+		exit_game(par);
 	return (0);
 }
 
@@ -78,8 +74,11 @@ void	draw_img(t_param *par, void *mlx, int r, int c)
 		mlx_put_image_to_window(mlx, par->win, par->eimg, c * par->x,
 			r * par->y);
 	else if (par->map[r][c] == 'P')
-		mlx_put_image_to_window(mlx, par->win, par->pimg, c * par->x,
-			r * par->y);
+		mlx_put_image_to_window(mlx, par->win, par->pimg[par->cnt / 12],
+			c * par->x, r * par->y);
+	else if (par->map[r][c] == 'B')
+		mlx_put_image_to_window(mlx, par->win, par->bimg[par->cnt / 12],
+			c * par->x, r * par->y);
 }
 
 void	drawmap(t_param *par, void *mlx)
@@ -94,9 +93,13 @@ void	drawmap(t_param *par, void *mlx)
 	{
 		c = -1;
 		while (++c < par->map_c)
+		{
+			mlx_put_image_to_window(mlx, par->win, par->img0, c * par->x,
+				r * par->y);
 			draw_img(par, mlx, r, c);
+		}
 	}
 	s = ft_itoa(par->move);
-	mlx_string_put(mlx, par->win, 10, 10, 0xFFFFFF, s);
+	mlx_string_put(par->mlx, par->win, 10, 10, 0xFFFFFF, s);
 	free(s);
 }

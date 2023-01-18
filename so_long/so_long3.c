@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 20:11:06 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/17 21:07:25 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/18 12:07:27 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	check_valid_path(t_param *par)
 		while (++j < par->map_c)
 			t.visited[i][j] = 0;
 	}
-	t.cnt = par->i_num + par->ex_num;
+	t.cnt = par->i_num + 1;
 	check_valid_path_sub(par, par->p_r, par->p_c, &t);
 	is_valid = (t.cnt == 0);
 	i = -1;
