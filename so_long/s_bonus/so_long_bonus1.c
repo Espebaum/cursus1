@@ -6,11 +6,38 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 11:13:13 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/18 14:41:17 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/18 15:41:46 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
+
+void	param_init(char *argv1, t_param *par)
+{
+	par->fd = open(argv1, O_RDONLY);
+	if (par->fd <= 0)
+		return ;
+	par->mlx = mlx_init();
+	par->map = NULL;
+	par->i_num = 0;
+	par->win_w = 0;
+	par->win_h = 0;
+	par->x = 64;
+	par->y = 64;
+	par->move = 0;
+	par->p_c = 0;
+	par->p_r = 0;
+	par->map_r = 0;
+	par->map_c = 0;
+	par->e_r = 0;
+	par->e_c = 0;
+	par->win = NULL;
+	par->cnt = 0;
+	par->b_r[0] = 0;
+	par->b_r[1] = 0;
+	par->b_c[0] = 0;
+	par->b_c[1] = 0;
+}
 
 int	read_map(t_param *par, int i, int j, int *cnt)
 {
@@ -40,31 +67,30 @@ int	read_map(t_param *par, int i, int j, int *cnt)
 	return (1);
 }
 
-void	param_init(char *argv1, t_param *par)
+int	check_map(t_param *par)
 {
-	par->fd = open(argv1, O_RDONLY);
-	if (par->fd <= 0)
-		return ;
-	par->mlx = mlx_init();
-	par->map = NULL;
-	par->i_num = 0;
-	par->win_w = 0;
-	par->win_h = 0;
-	par->x = 64;
-	par->y = 64;
-	par->move = 0;
-	par->p_c = 0;
-	par->p_r = 0;
-	par->map_r = 0;
-	par->map_c = 0;
-	par->e_r = 0;
-	par->e_c = 0;
-	par->win = NULL;
-	par->cnt = 0;
-	par->b_r[0] = 0;
-	par->b_r[1] = 0;
-	par->b_c[0] = 0;
-	par->b_c[1] = 0;
+	int		i;
+	int		j;
+	int		cnt[128];
+
+	if (par->map == NULL)
+		return (0);
+	i = -1;
+	while (++i < 128)
+		cnt[i] = 0;
+	i = -1;
+	while (++i < par->map_r)
+	{
+		if (ft_strlen(par->map[i]) != (size_t) par->map_c + 1)
+			return (0);
+		j = -1;
+		while (++j < par->map_c)
+			if (read_map(par, i, j, cnt) == 0)
+				return (0);
+	}
+	if (cnt['C'] == 0 || cnt['E'] != 1 || cnt['P'] != 1 || cnt['B'] != 2)
+		return (0);
+	return (check_valid_path(par));
 }
 
 void	map_read(t_param *par)
@@ -89,36 +115,8 @@ void	map_read(t_param *par)
 			free(tmp_map);
 		par->map_r++;
 	}
-	par->win_h = par->x * par->map_r;
-	par->win_w = par->y * par->map_c;
-}
-
-int	check_map(t_param *par)
-{
-	int		i;
-	int		j;
-	int		cnt[128];
-
-	if (par->map == NULL)
-		return (0);
-	i = -1;
-	while (++i < 128)
-		cnt[i] = 0;
-	i = -1;
-	while (++i < par->map_r)
-	{
-		if (ft_strlen(par->map[i]) != (size_t) par->map_c + 1)
-			return (0);
-		j = -1;
-		while (++j < par->map_c)
-			if (read_map(par, i, j, cnt) == 0)
-				return (0);
-	}
-	if (cnt['C'] == 0 || cnt['E'] != 1 || cnt['P'] != 1)
-		return (0);
-	if (cnt['B'] != 2)
-		return (0);
-	return (check_valid_path(par));
+	par->win_h = par->y * par->map_r;
+	par->win_w = par->x * par->map_c;
 }
 
 int	main(int argc, char **argv)
@@ -141,21 +139,9 @@ int	main(int argc, char **argv)
 	}
 	put_image(&par);
 	par.win = mlx_new_window(par.mlx, par.win_w, par.win_h, "so_long");
-	drawmap(&par, par.mlx);
 	mlx_key_hook(par.win, &key_press, &par);
 	mlx_hook(par.win, BUTTON_X, 0, &exit_game, &par);
 	mlx_loop_hook(par.mlx, &frame_map, &par);
 	mlx_loop(par.mlx);
 	return (0);
 }
-	/** par->map = NULL;	map이 저장됨 */
-	/** par->i_num = 0;		아이템 */
-	/** par->win_w = 0;		윈도우 너비 */
-	/** par->win_h = 0;		윈도우 높이 */
-	/** par->x = 64;		이미지의 width 비트*/
-	/** par->y = 64;		이미지의 height 비트*/
-	/** par->move = 0;		이동횟수 */
-	/** par->p_c = 0;		플레이어의 x좌표 */
-	/** par->p_r = 0;		플레이어의 y좌표 */
-	/** par->map_r = 0;		map의 row */
-	/** par->map_c = 0;		map의 column */

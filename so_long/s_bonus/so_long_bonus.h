@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 11:27:51 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/18 14:26:07 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/18 15:43:05 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SO_LONG_BONUS_H
 
 # include "../mlx/mlx.h"
+# include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
 # include "../gnl/get_next_line.h"
@@ -77,5 +78,6 @@ int		frame_map(t_param *par);
 void	check_valid_path_sub(t_param *par, int r, int c, t_check *t);
 int		check_valid_item(t_param *par, t_check *t, int i, int j);
 int		place_b(t_param *par, int i, int j, int *cnt);
+void	free_check(t_param *par, t_check *t);
 
 #endif

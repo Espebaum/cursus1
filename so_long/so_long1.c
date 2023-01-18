@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 11:13:13 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/18 12:16:37 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/18 15:00:48 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ void	map_read(t_param *par)
 			free(tmp_map);
 		par->map_r++;
 	}
-	par->win_h = par->x * par->map_r;
-	par->win_w = par->y * par->map_c;
+	par->win_h = par->y * par->map_r;
+	par->win_w = par->x * par->map_c;
 }
 
 int	check_map(t_param *par)

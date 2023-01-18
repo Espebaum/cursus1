@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 21:30:49 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/18 14:41:07 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/18 15:21:19 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,28 +70,27 @@ int	place_b(t_param *par, int i, int j, int *cnt)
 	return (1);
 }
 
-int	check_valid_item(t_param *par, t_check *t, int i, int j)
+int	ft_strrncmp(char *s1, char *s2, int n)
 {
-	int		k;
-	int		is_valid;
+	int	i;
 
-	k = -1;
-	while (++k < 2)
+	i = ft_strlen(s1) - 1;
+	if (i < 4)
+		return (1);
+	n--;
+	while (s1[i] == s2[n])
 	{
-		par->map[par->b_r[k]][par->b_c[k]] = '1';
-		par->map[par->b_r[k ^ 1]][par->b_c[k ^ 1]] = '0';
-		i = -1;
-		while (++i < par->map_r)
-		{
-			j = -1;
-			while (++j < par->map_c)
-				t->visited[i][j] = 0;
-		}
-		check_valid_path_sub(par, par->p_r, par->p_c, t);
+		if (i == 0 || n == 0)
+			break ;
+		i--;
+		n--;
 	}
-	is_valid = (t->cnt == 0);
-	free_check(par, t);
-	return (is_valid);
+	if (i && s1[i - 1] == '/')
+		return (1);
+	if (s1[i] == s2[n])
+		return (0);
+	else
+		return (1);
 }
 
 int	frame_map(t_param *par)

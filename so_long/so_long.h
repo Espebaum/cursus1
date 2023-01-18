@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 11:27:51 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/18 12:07:55 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/18 15:43:21 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SO_LONG_H
 
 # include "./mlx/mlx.h"
+# include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
 # include "gnl/get_next_line.h"
