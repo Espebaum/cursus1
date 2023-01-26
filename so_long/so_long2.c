@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:12:55 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/17 21:10:03 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/18 16:19:38 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,10 @@ void	drawmap(t_param *par, void *mlx)
 	{
 		c = -1;
 		while (++c < par->map_c)
+		{
+			mlx_put_image_to_window(mlx, par->win, par->img0, c * par->x,
+				r * par->y);
 			draw_img(par, mlx, r, c);
+		}
 	}
 }

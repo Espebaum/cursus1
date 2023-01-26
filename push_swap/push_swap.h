@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 21:57:08 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/01 20:25:37 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/20 20:28:09 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,6 @@ typedef struct s_deque
 	int		size;
 	int		capacity;
 }			t_deque;
-
-typedef enum e_cmd {
-	SA,
-	SB,
-	RA,
-	RB,
-	RRA,
-	RRB,
-	PA,
-	PB,
-	RR,
-	RRR,
-	SS
-}	t_cmd;
 
 t_deque	*make_deque(void);
 int		isdigit(int c);

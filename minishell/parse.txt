@@ -1,0 +1,47 @@
+미 니 쉘
+
+대략적인 파싱 순서 참고
+
+1. readline 호출하여 line 읽기
+
+2. line을 적절하게 split 하기 (큰따옴표 작은따옴표 처리까지)
+
+3. split 된 문자열에게 의미(type)를 부여하여 토큰화 시키는 과정 구현
+
+4. 팀원과 함께 구문 (syntax) 문법 정의
+
+5. 구문(syntax) 문법이 맞는지 체크하는 기능 구현
+
+6. 구문(syntax) 문법에 맞추어 트리구조로 파싱 (재귀 하향 파서)
+
+7. 전위 순회 탐색으로 명령어 프로세스 실행하도록 하기
+
+8. 리다이렉션도 순차적으로 탐색하도록 구현
+
+9. 파이프도 순차적으로 탐색하도록 구현
+
+char	*ft_strip(const char *str)
+{
+	int			len;
+	int			i;
+	int			j;
+	char		*ret;
+
+	len = ft_strlen(str);
+	i = 0;
+	j = len;
+	while ((str[i]) && str[i] == ' ')
+		i++;
+	while ((str[j]) && str[j] == ' ')
+		j--;
+	len = j - i;
+	ret = (char *)malloc(sizeof(char) * (len + 1));
+	j = -1;
+	while (++j < (int) len + 1)
+	{
+		ret[j] = str[i];
+		i++;
+	}
+	return (ret);
+}
+
