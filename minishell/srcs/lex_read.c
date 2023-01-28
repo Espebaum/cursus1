@@ -6,17 +6,18 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/28 17:23:08 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/28 18:50:08 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	read_env(char **s, t_str *buf)
+void	read_env(char **s, t_str *buf, char **envp)
 {
 	t_str	*env;
 	char	*ret;
 
+	(void) envp;
 	env = make_str();
 	while (is_env_char(*(++(*s))))
 		push_str(env, **s);
@@ -39,13 +40,13 @@ int	read_word_squote(char **s, t_str *buf)
 	return (0);
 }
 
-int	read_word_dquote(char **s, t_str *buf)
+int	read_word_dquote(char **s, t_str *buf, char **envp)
 {
 	(*s)++;
 	while (!is_line_end(**s) && **s != '\"')
 	{
 		if (**s == '$')
-			read_env(s, buf);
+			read_env(s, buf, envp);
 		else
 			push_str(buf, *((*s)++));
 	}
@@ -56,7 +57,7 @@ int	read_word_dquote(char **s, t_str *buf)
 	return (0);
 }
 
-t_token	*read_word(char **s, t_token *cur, t_str *buf)
+t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 {
 	int		is_fail;
 
@@ -64,11 +65,11 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf)
 	while (!is_word_end(**s))
 	{
 		if (**s == '$')
-			read_env(s, buf);
+			read_env(s, buf, envp);
 		else if (**s == '\'')
 			is_fail |= read_word_squote(s, buf);
 		else if (**s == '\"')
-			is_fail |= read_word_dquote(s, buf);
+			is_fail |= read_word_dquote(s, buf, envp);
 		else
 			push_str(buf, *((*s)++));
 	}

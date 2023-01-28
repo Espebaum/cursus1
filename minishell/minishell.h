@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:55:59 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/28 17:50:35 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/28 18:44:51 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		is_line_end(char s);
 void	print_token(t_token *cur);
 void	free_token(t_token *cur);
 t_token	*read_pipe_redir(char **s, t_token *cur, t_str *buf);
-t_token	*read_word(char **s, t_token *cur, t_str *buf);
+t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp);
 char	*conv_env(char *name);
 int		is_env_char(char s);
 
