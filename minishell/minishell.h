@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:55:59 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/26 16:37:08 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/28 16:33:47 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,35 @@
 #include <termios.h>
 #include "./libft/libft.h"
 #include <string.h>
+
+typedef struct str
+{
+	int		len;
+	int		capacity;
+	char	*s;
+}	t_str;
+
+typedef struct  s_token
+{
+	int		type;
+	char	*str;
+	struct s_token  *prev;
+	struct s_token  *next;
+}   t_token;
+
+t_str	*make_str(void);
+t_token	*make_token(void);
+int		is_space(char c);
+void 	push_str(t_str *str, char val);
+void	resize_str(t_str *str);
+t_token	*push_token(int type, t_str *str, t_token *prev);
+void	clear_str(t_str *str);
+void	resize_str(t_str *str);
+void	free_str(t_str *str);
+void	clear_str(t_str *str);
+int		is_word_end(char s);
+int		is_line_end(char s);
+void	print_token(t_token *cur);
+void	free_token(t_token *cur);
 
 #endif
