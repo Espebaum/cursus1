@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/28 18:50:08 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/28 21:59:05 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,25 @@
 void	read_env(char **s, t_str *buf, char **envp)
 {
 	t_str	*env;
-	char	*ret;
+	int		i;
+	int		env_num;
 
-	(void) envp;
+	i = 0;
 	env = make_str();
-	while (is_env_char(*(++(*s))))
+	while (!is_word_end(*(++(*s))))
 		push_str(env, **s);
-	ret = conv_env(env->s);
-	if (ret)
-		while (*ret != '\0')
-			push_str(buf, *ret++);
+	while (envp[i])
+	{
+		env_num = get_env_num(envp[i]);
+		if (ft_strncmp(env->s, envp[i], env_num) == 0)
+		{
+			envp[i] += env_num + 1;
+			while (*(envp[i])++)
+				push_str(buf, *envp[i]);
+			break ;
+		}
+		i++;
+	}
 	free_str(env);
 }
 
