@@ -6,25 +6,22 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:14:14 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/28 17:46:43 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/28 17:51:32 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	g_env[100] = "home";
-// 전역변수 구조체 링크드리스트로 관리하는 환경변수 목록에서 확인해야함.
-
-char	*conv_env(char *name)
+int	is_word_end(char s)
 {
-	(void) name;
-	return (g_env);
+	if (s == '|' || s == ' ' || s == '\n' || s == 0 || s == '<' || s == '>')
+		return (1);
+	return (0);
 }
 
-int	is_env_char(char s)
+int	is_line_end(char s)
 {
-	if (('0' <= s && s <= '9') || ('a' <= s && s <= 'z')
-		|| ('A' <= s && s <= 'Z') || s == '_')
+	if (s == '\n' || s == '\0')
 		return (1);
 	return (0);
 }

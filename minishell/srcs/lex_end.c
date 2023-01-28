@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lex3.c                                             :+:      :+:    :+:   */
+/*   lex_end.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:25:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/28 16:25:40 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/28 17:50:09 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	is_word_end(char s)
+char	g_env[100] = "home";
+// 전역변수 구조체 링크드리스트로 관리하는 환경변수 목록에서 확인해야함.
+
+char	*conv_env(char *name)
 {
-	if (s == '|' || s == ' ' || s == '\n' || s == 0 || s == '<' || s == '>')
-		return (1);
-	return (0);
+	(void) name;
+	return (g_env);
 }
 
-int	is_line_end(char s)
+int	is_env_char(char s)
 {
-	if (s == '\n' || s == '\0')
+	if (('0' <= s && s <= '9') || ('a' <= s && s <= 'z')
+		|| ('A' <= s && s <= 'Z') || s == '_')
 		return (1);
 	return (0);
 }
