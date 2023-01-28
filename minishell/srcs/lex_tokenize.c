@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:14:14 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/28 22:26:29 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/28 22:29:40 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	main(__attribute__((unused))int argc,
 		__attribute__((unused))char **argv, char **envp)
 {
 	char	*cmd;
+	char	**temp;
 	t_token	*t;
 
 	while (1)
@@ -78,7 +79,8 @@ int	main(__attribute__((unused))int argc,
 		cmd = readline("inp> ");
 		if (!cmd || ft_strncmp(cmd, "EOF\n", ft_strlen(cmd)) == 0)
 			break ;
-		t = tokenize(cmd, envp);
+		temp = deep_copy_env(envp);
+		t = tokenize(cmd, temp);
 		print_token(t->next);
 		free(cmd);
 		free(t);
