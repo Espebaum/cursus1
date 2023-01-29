@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:31:38 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/24 16:35:44 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/29 21:13:58 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_memcpy(strjoin, s1, len1);
 	ft_memcpy(strjoin + len1, s2, len2);
 	strjoin[len1 + len2] = '\0';
+	free(s1);
 	return (strjoin);
 }

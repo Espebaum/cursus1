@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:55:59 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/29 17:49:52 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/29 21:37:22 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define DFL 11
 # define IGN 12
 
-# define T_ERROR		6
+# define T_ERROR	 6
 # define T_REDIRECT  0
 # define T_WORD      1
 # define T_PIPE      2
@@ -26,17 +26,19 @@
 
 # include <signal.h>
 # include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <termios.h>
-# include "./libft/libft.h"
 # include <errno.h>
 # include <string.h>
 # include <signal.h>
+# include <fcntl.h>
+# include <sys/wait.h>
+# include "./libft/libft.h"
+# include <readline/readline.h>
+# include <readline/history.h>
 
-typedef struct str
+typedef struct s_str
 {
 	int		len;
 	int		capacity;
@@ -50,6 +52,14 @@ typedef struct s_token
 	struct s_token	*prev;
 	struct s_token	*next;
 }	t_token;
+
+typedef struct s_data
+{
+	int		*pid;
+	int		*doc_fd;
+	char	**doc_name;
+	int		doc_count;
+}	t_data;
 
 int		go_tokenize(char *cmd, char **envp, int *count, t_token *t);
 void	set_signal(int sig_int, int sig_quit);
