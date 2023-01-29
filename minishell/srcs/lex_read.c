@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_read.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/28 21:59:05 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/29 17:44:18 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,20 +90,25 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 	return (cur);
 }
 
-t_token	*read_pipe_redir(char **s, t_token *cur, t_str *buf)
+t_token	*read_pipe_redir(char **s, t_token *cur, t_str *buf, int *count)
 {
 	if (buf->len != 0)
 		cur = push_token(T_WORD, buf, cur);
 	push_str(buf, *((*s)++));
-	if ((*(*(s - 1)) == '<' || *(*(s - 1)) == '>') && *(*(s - 1)) == **s)
+	if ((*(*(s)- 1) == '<' || *(*(s) - 1) == '>') && *(*(s) - 1) == **s)
 	{
 		push_str(buf, *((*s)++));
 		cur = push_token(T_REDIRECT, buf, cur);
+		if (*(*(s) - 1) == '<')
+			count[1]++;
 	}
 	else
 	{
-		if (*(*(s - 1)) == '|')
+		if (*(*(s) - 1) == '|')
+		{
 			cur = push_token(T_PIPE, buf, cur);
+			count[0]++;
+		}
 		else
 			cur = push_token(T_REDIRECT, buf, cur);
 	}

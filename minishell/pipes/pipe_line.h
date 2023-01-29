@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lex_env.c                                          :+:      :+:    :+:   */
+/*   pipe_line.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
+/*   By: youngski <youngski@student.42seoul.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/28 16:25:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/29 13:26:55 by gyopark          ###   ########.fr       */
+/*   Created: 2023/01/29 15:44:58 by youngski          #+#    #+#             */
+/*   Updated: 2023/01/29 16:41:21 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#ifndef PIPE_LINE_H
+# define PIPE_LINE_H
 
-int	get_env_num(char *envp)
+#include <stdlib.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+typedef struct	s_data
 {
-	int		cnt;
-	char	*temp;
+	int		*pid;
+	int		*doc_fd;
+	char	*doc_name;
+	int		doc_count;
+}				t_data;
 
-	temp = envp;
-	cnt = 0;
-	while (*temp++ != '=')
-		cnt++;
-	cnt--;
-	return (cnt);
-}
+#endif

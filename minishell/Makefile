@@ -6,7 +6,7 @@
 #    By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/20 18:54:22 by gyopark           #+#    #+#              #
-#    Updated: 2023/01/26 14:43:05 by gyopark          ###   ########.fr        #
+#    Updated: 2023/01/29 12:21:40 by gyopark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ LIBFT			= libft
 LIBFT_LIB		= libft.a
 
 RLFLAGS			= -lreadline
-LIBFLAGS			= -L/Users/gyopark/.brew/opt/readline/lib
+LIBFLAGS		= -L/Users/gyopark/.brew/opt/readline/lib
 INCFLAGS		= -I/Users/gyopark/.brew/opt/readline/include
 
 SRCS			= main.c 

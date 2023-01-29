@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_make_push.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:24:14 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/28 15:03:11 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/29 16:26:16 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,24 +59,9 @@ t_token	*push_token(int type, t_str *buf, t_token *prev)
 	return (next);
 }
 
-int	is_space(char c)
+int	is_char_space(char c)
 {
 	if (c == ' ' || (c >= 9 && c <= 13))
 		return (1);
 	return (0);
 }
-/** 문자열과 토큰 타입에 대한 구조체 */
-/** typedef struct str */
-/** { */
-/**     int		len; */
-/**     int		capacity; */
-/**     char	*s; */
-/** }	t_str; */
-/**  */
-/** typedef struct  s_token */
-/** { */
-/**     int		type; */
-/**     char	*str; */
-/**     struct s_token  *prev; */
-/**     struct s_token  *next; */
-/** }   t_token; */
