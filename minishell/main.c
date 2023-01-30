@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/29 20:14:59 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/30 22:02:39 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ int	exit_error(char *message, int signal, int exit_code)
 	write(2, error_str, ft_strlen(error_str));
 	exit (exit_code + signal);
 	return (1);
+}
+
+int	exit_zero(void)
+{
+	exit (0);
 }
 
 int	is_str_space(char *line)
@@ -65,17 +70,20 @@ int	main(int argc, char **argv, char **envp)
 			return (0);
 		count[0] = 0;
 		count[1] = 0;
-		line = readline("minishell \% ");
+		line = readline("minishell $ ");
+		//line = "<< <<";
 		if (!line)
 			break ;
 		if (*line != '\0')
 			add_history(line);
 		if (*line != '\0' && !is_str_space(line))
 		{
-			go_tokenize(line, envp, count, head);
+			head = go_tokenize(line, envp, count, head);
+			//check_builtins(head);
 			//printf("%d, %d\n", count[0], count[1]);
 			//pipe_line(count, head, envp);
 		}
+		//printf("is_valid = %d\n", is_valid_token(head));
 		free_token(head);
 		free(line);
 		free(count);

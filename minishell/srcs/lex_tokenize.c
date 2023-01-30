@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:14:14 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/29 21:37:32 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/30 17:41:41 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_token	*tokenize(char *s, char **envp, int *count)
 	return (cur);
 }
 
-int	go_tokenize(char *cmd, char **envp, int *count, t_token *t)
+t_token	*go_tokenize(char *cmd, char **envp, int *count, t_token *t)
 {
 	char	**temp;
 
@@ -75,5 +75,5 @@ int	go_tokenize(char *cmd, char **envp, int *count, t_token *t)
 	t = tokenize(cmd, temp, count);
 	print_token(t->next);
 	free(temp);
-	return (0);
+	return (t);
 }

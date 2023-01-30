@@ -6,5 +6,8 @@
         "errno.h": "c",
         "unistd.h": "c",
         "readline.h": "c"
-    }
+    },
+    "editor.definitionLinkOpensInPeek": true,
+    "editor.gotoLocation.alternativeDefinitionCommand": "editor.action.referenceSearch.trigger",
+    "editor.gotoLocation.alternativeTypeDefinitionCommand": "editor.action.referenceSearch.trigger"
 }

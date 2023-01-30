@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:55:59 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/29 21:37:22 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/30 22:00:18 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+int		g_exit_code;
+
 typedef struct s_str
 {
 	int		len;
@@ -59,9 +61,11 @@ typedef struct s_data
 	int		*doc_fd;
 	char	**doc_name;
 	int		doc_count;
+	char	**envp;
+	char	**path;
 }	t_data;
 
-int		go_tokenize(char *cmd, char **envp, int *count, t_token *t);
+t_token	*go_tokenize(char *cmd, char **envp, int *count, t_token *t);
 void	set_signal(int sig_int, int sig_quit);
 
 t_str	*make_str(void);
@@ -83,5 +87,9 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp);
 char	*conv_env(char *name);
 int		is_env_char(char s);
 int		get_env_num(char *envp);
+
+int 	check_func(int *cnt);
+int 	is_valid_token(t_token *t);
+
 
 #endif

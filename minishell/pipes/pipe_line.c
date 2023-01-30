@@ -6,32 +6,11 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/01/29 21:37:37 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/30 22:39:01 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	init_fork(t_token *head, char **envp, t_data data, int i)
-{
-	int	pipes[2];
-
-	pipe(pipes);
-	if (pipes[0] == -1 || pipes[1] == -1)
-		return (1);
-	data.pid[i] = fork();
-	if (data.pid[i] == -1)
-		return (1);
-	else if (data.pid[i] == 0)
-		child_work(head, pipes, envp);
-	else
-	{
-		dup2(pipes[0], 0);
-		close(pipes[0]);
-		close(pipes[1]);
-	}
-	return (0);
-}
 
 int	free_pid_docs(int *pid, int *doc_fd)
 {
@@ -41,10 +20,11 @@ int	free_pid_docs(int *pid, int *doc_fd)
 	return (0);
 }
 
-int	init_data(t_data *data, int *count)
+int	init_data(t_data *data, int *count, char **envp)
 {
+	data->path = get_path(envp);
+	data->envp = envp;
 	data->doc_count = 0;
-	data->pid = 0;
 	data->doc_fd = 0;
 	data->pid = (int *)malloc(sizeof(int) * count[0]);
 	if (!(data->pid))
@@ -57,40 +37,37 @@ int	init_data(t_data *data, int *count)
 	}
 	return (0);
 }
+// count[0] 파이프('|') 갯수, count[1] 리다이렉션('<<') 갯수
+// 구조제 t_data 일람
+// typedef struct s_data
+// {
+// 	int		*pid; -> pid 배열
+// 	int		*doc_fd; -> heredoc 파일 fd 배열
+// 	char	**doc_name; -> heredoc 파일 이름 배열
+// 	int		doc_count; -> heredoc 개수
+// }	t_data;
 
 //count 는 갯수를 1부터 세는것
 int	*pipe_line(int *count, t_token *head, char **envp)
 {
 	int		i;
 	t_data	data;
-	int		doc_count;
+	int		here_doc_count;
 
+	here_doc_count = 0;
 	i = -1;
-	doc_count = 0;
-	init_data(&data, count);
+	init_data(&data, count, envp);
 	if (count[1] != 0)
-		run_heredoc(count[1], head, &data);
-	while (++i < count[0])
+		get_heredoc(head, &data, count[1]);
+	while (++i < count[0] + 1)
 	{
-		//위에서 히어독을 하나씩 받아서 파일을 만들어두는 작업을 한번에 진행하였다
-		//아래에서 각각의 자식들이 히어독인지를 체크하여서 히어독일 경우 아까 만들어둔 파일명(data->doc_name)
-		//을 통해 오픈을 진행해서 각각 히어독을 통해 작업을 진행한다.
-		//1. 히어독일 때 포크를 만든다.
-		//2. 히어독이 아닐 때 포크를 만든다.
-		if (check_heredoc(head))
-		{
-			doc_count++;
-			data.doc_count = doc_count;
-		}
-		else
-		{
-			init_fork(head, envp, data, i);
-			//fd 파이프 안열렸을 때 문제 에러 처리 할것 todo
-		}
+		init_fork(head, data, i, &here_doc_count);
+		// fd 파이프 안열렸을 때 문제 에러 처리 할것 todo
 	}
 	i = -1;
 	waitpid(data.pid[count[0] - 1], NULL, 0);
-	while (++i < count[0] -1)
+	while (++i < count[0] - 1)
 		wait(0);
+	pid_free(data.pid);
 	return (free_pid_docs(data.pid, data.doc_fd));
 }

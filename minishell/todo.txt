@@ -14,5 +14,73 @@
 2. prev가 없어도 상관없지 않은지?
 
 --
-내가 넘겨줘야 할 부분
-int *count : 파이프 갯수, heredoc 개수
+Subject
+
+당신의 쉘은 :
+
+* 새로운 커맨드를 기다리는 동안 프롬프트를 띄워야 함
+* 커맨드 입력 내역을 가지고 있어야 함(working history)
+* 실행 가능한 명령어를 찾고 실행시켜야 함(PATH 변수에 기반하거나 혹은 절대/상대 경로를 사용해서)
+* 하나 이상(초과)의 전역 변수를 사용해서는 안 됨(오역으로 보임). 생각을 한 후, 그 목적에 대해 설명해야 함
+* \(backslash)나 ;(semicolon)과 같이 과제에 요구되지 않는 특수 문자나, 닫히지 않은 따옴표를 번역하지 않아야 함
+* 따옴표 안에 들어가 있는 메타 문자를 번역하지 않는 작은 따옴표(single quote)를 구현해야 함
+* 따옴표 안에 들어가 있는 메타 문자($, dollar sign 제외)를 번역하지 않는 큰 따옴표를(double quote)를 구현해야 함
+
+* 리다이렉션을 구현해야 함.
+    1) <는 input을 리다이렉션
+    2) >는 output을 리다이렉션
+    3) <<는 리미터를 줘야하며, 리미터가 나올 때까지 표준 입력을 받는다. 작업 내역을 업데이트 할 필요는 없음.
+    4) >>는 Append mode로 리다이렉션
+
+* 파이프를 구현해야 함. 파이프라인에 있는 각 명령어는 파이프를 경유하여 다음 명령어로 input값을 보냄.
+* 본래 값으로 변환되는 환경변수($ 뒤에 일련의 문자들이 따라옴)를 구현해야 함
+* 가장 최근에 실행된 맨 앞의 파이프라인의 exit code를 반환하는 명령어 $?를 구현해야 함.
+    => echo 123 | echo $?의 경우 $?는 echo 123의 exit code를 반환합니다(최종 반환값은 0).
+* bash처럼 행동하는, Ctrl-C Ctrl-D Ctrl-\를 구현하세요.
+* 대화형 모드에서
+    1) ctrl-c 는 새 라인에 새 프롬프트를 보여줌.
+    2) ctrl-d 는 쉘을 종료함.
+    3) ctrl-\ 는 아무런 행동도 하지 않음.
+
+* 당신의 쉘은 반드시 다음 빌트인(builtins)들 구현해야 함:
+    1) -n 옵션과 함께 주어지는 echo
+    2) 상대 경로와 절대 경로만을 사용하는 cd
+    3) 옵션이 없는 pwd
+    4) 옵션이 없는 export
+    5) 옵션이 없는 unset
+    6) 옵션과 인자가 없는 env
+    7) 옵션이 없는 exit
+
+** readline() 함수는 메모리 누수를 일으킬 수 있는데, 당신이 그것을 고칠 필요는 없습니다. 그러나 그것이 당신이 작성한
+코드에 메모리 누수가 있을 수 있다는 것을 의미하는 것은 아닙니다. 
+
+** subject에서 요구되지 않은 어떠한 것들도 처리하지 않을 것!! 요구에 의심이 든다면 bash를 참고할 것.
+
+--
+Syntax 문법 규칙 정의
+
+<pipeline>     ::= <cmd>
+               |   <pipeline> '|' <cmd>
+
+<cmd>          ::= <simple_cmd> 
+               |   <simple_cmd> <redirects>
+
+<simple_cmd>   ::= <file_path>
+               |   <argv>
+
+<argv>         ::= <file_path> <args>
+
+<redirects>    ::= <io_redirect>
+                |  <redirects> <io_redirect>
+
+<io_redirect>  ::= '<'   <filename>
+                |  '<<'  <filename>
+                |  '>'   <filename>
+                |  '>>'  <filename>
+
+<args>        ::= WORD 
+                | <args> WORD
+
+<filename>    ::= WORD
+
+<file_path>   ::= WORD
