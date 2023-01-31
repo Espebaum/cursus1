@@ -6,13 +6,13 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/01/31 16:38:41 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/31 22:34:52 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	dup_pipes(t_token **head, int *pipes, int input_fd, int output_fd)
+void	dup_pipes(t_token **head, int *pipes, t_data *data)
 {
 	if ((*head))
 	{
@@ -21,8 +21,8 @@ void	dup_pipes(t_token **head, int *pipes, int input_fd, int output_fd)
 	}
 	else
 	{
-		dup2(output_fd, STDOUT_FILENO);
-		dup2(input_fd, STDIN_FILENO);
+		dup2(data->original_fd[1], STDOUT_FILENO);
+		dup2(data->original_fd[0], STDIN_FILENO);
 	}
 }
 

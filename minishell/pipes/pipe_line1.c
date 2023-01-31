@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/01/31 16:32:37 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/31 22:57:03 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	parent_proc(int *pipes)
 int	init_fork(t_token **head, t_data *data, int i, int *heredoc_count)
 {
 	int	pipes[2];
-
+ 
 	if (pipe(pipes) == -1)
 		return (0);
 	set_signal(DFL, DFL);
@@ -85,11 +85,12 @@ int	init_data(t_data *data, int *count, char **envp)
 
 int	pipe_line(int *count, t_token *head, char **envp)
 {
-	pid_t	pid;
 	int		i;
 	t_data	data;
 	int		here_doc_count;
 
+	data.original_fd[0] = dup(0);
+	data.original_fd[1] = dup(1);
 	here_doc_count = 0;
 	i = -1;
 	init_data(&data, count, envp);
@@ -97,16 +98,15 @@ int	pipe_line(int *count, t_token *head, char **envp)
 		do_heredoc(head, &data, count[1]);
 	while (++i < count[0] + 1)
 	{
-		pid = init_fork(&head, &data, i, &here_doc_count);
+		data.pid[i] = init_fork(&head, &data, i, &here_doc_count);
 		// fd 파이프 안열렸을 때 문제 에러 처리 할것 todo
 	}
 	// i = -1;
 	// g_exit_code = waitpid(data.pid[count[0] - 1], NULL, 0);
 	// while (++i < count[0] - 1)
 	// 	wait(0);
-	free(data.pid);
 	//free_pid_docs(data.pid, data.doc_fd);
-	return (wait_all(pid));
+	return (wait_all(data, data.pid[i]));
 	//return (g_exit_code);
 }
 // count[0] 파이프('|') 갯수, count[1] 리다이렉션('<<') 갯수

@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:55:59 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/31 16:30:20 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/31 22:34:47 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_token
 
 typedef struct s_data
 {
+	int		original_fd[2];
 	int		*pid;
 	int		*doc_fd;
 	char	**doc_name;
@@ -109,9 +110,9 @@ int		output_redirection(int o_fd, t_token **head);
 int		input_redirection(int i_fd, t_token **head);
 int		append_redirection(int o_fd, t_token **head);
 int		heredoc_redirection(int i_fd, t_token **head, t_data *data, int *hc);
-void	dup_pipes(t_token **head, int *pipes, int input_fd, int output_fd);
+void	dup_pipes(t_token **head, int *pipes, t_data *data);
 int		exit_error(char *message, int signal, int exit_code);
-int		wait_all(pid_t last_pid);
+int		wait_all(t_data data, pid_t last_pid);
 
 int		ft_perror(char *str, int exit_code);
 
