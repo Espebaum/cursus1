@@ -5,7 +5,8 @@
         "libft.h": "c",
         "errno.h": "c",
         "unistd.h": "c",
-        "readline.h": "c"
+        "readline.h": "c",
+        "history.h": "c"
     },
     "editor.definitionLinkOpensInPeek": true,
     "editor.gotoLocation.alternativeDefinitionCommand": "editor.action.referenceSearch.trigger",

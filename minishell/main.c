@@ -6,11 +6,13 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/30 22:53:47 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/31 17:05:57 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_exit_code = 0;
 
 int	exit_error(char *message, int signal, int exit_code)
 {
@@ -59,7 +61,10 @@ int	main(int argc, char **argv, char **envp)
 	int					*count;
 	t_token				*head;
 	struct termios		term;
+	int					original[2];
 
+	original[0] = dup(0);
+	original[1] = dup(1);
 	head = NULL;
 	tcgetattr(STDIN_FILENO, &term);
 	main_init(argc, argv);
@@ -71,25 +76,25 @@ int	main(int argc, char **argv, char **envp)
 		count[0] = 0;
 		count[1] = 0;
 		line = readline("minishell $ ");
-		//line = "<< <<";
-		if (!line)
-			break ;
+		//line = "<< a";
 		if (*line != '\0')
 			add_history(line);
 		if (*line != '\0' && !is_str_space(line))
 		{
 			head = go_tokenize(line, envp, count, head);
-			//check_builtins(head);
 			//printf("%d, %d\n", count[0], count[1]);
-			//pipe_line(count, head, envp);
+			g_exit_code = pipe_line(count, head, envp);
 		}
 		//printf("is_valid = %d\n", is_valid_token(head));
 		free_token(head);
 		free(line);
-		free(count);
+		free(count); 
+		dup2(original[0], 0);
+		dup2(original[1], 1);
+
 		//system("leaks minishell | grep leaked"); //
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	return (0);
+	return (g_exit_code);
 }
 //main에서 head 포인터를 보관해야 함(free하기 위해서)

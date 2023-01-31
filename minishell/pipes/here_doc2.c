@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   here_doc2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/09 16:18:07 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/31 16:04:51 by gyopark          ###   ########.fr       */
+/*   Created: 2023/01/29 16:03:57 by youngski          #+#    #+#             */
+/*   Updated: 2023/01/31 15:32:30 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	free_pid_docs(int *pid, int *doc_fd)
 {
-	unsigned int	i;
+	free(pid);
+	if (doc_fd)
+		free(doc_fd);
+	return (0);
+}
 
-	i = 0;
-	if (!s1)
-		return (-1);
-	while ((s1[i] || s2[i]) && i < n)
-	{
-		if (s1[i] != s2[i])
-			break ;
-		i++;
-	}
-	if (i == n)
-		return (0);
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+void	open_doc_file(t_data *data, char *t, int *i, int *k)
+{
+	data->doc_fd[*i] = open(t, O_WRONLY | O_CREAT, 0644);
+	data->doc_name[(*k)++] = t;
 }

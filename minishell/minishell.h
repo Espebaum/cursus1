@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:55:59 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/30 22:00:18 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/01/31 16:30:20 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-int		g_exit_code;
+extern int	g_exit_code;
 
 typedef struct s_str
 {
@@ -88,8 +88,31 @@ char	*conv_env(char *name);
 int		is_env_char(char s);
 int		get_env_num(char *envp);
 
-int 	check_func(int *cnt);
+int		check_func(int *cnt);
 int 	is_valid_token(t_token *t);
 
+int		pipe_line(int *count, t_token *head, char **envp);
+int		init_fork(t_token **head, t_data *data, int i, int *heredoc_count);
+void	get_heredoc(t_token *head, t_data *data, int count);
+int		*find_heredoc_index(t_token *head, int count);
+char	**get_path(char **envp);
+int 	check_command(char **path, char *cmd);
+void	forked_child_work(t_data *data, t_token **head, int *pipes, int *hc);
+
+char	*get_limiter(t_token *head, int doc_index);
+void	heredoc_file_make(int doc_index, int doc_fd, char *limiter);
+void	close_all_opend_heredoc_fd(t_data *data, int count);
+int		free_pid_docs(int *pid, int *doc_fd);
+void	open_doc_file(t_data *data, char *t, int *i, int *k);
+
+int		output_redirection(int o_fd, t_token **head);
+int		input_redirection(int i_fd, t_token **head);
+int		append_redirection(int o_fd, t_token **head);
+int		heredoc_redirection(int i_fd, t_token **head, t_data *data, int *hc);
+void	dup_pipes(t_token **head, int *pipes, int input_fd, int output_fd);
+int		exit_error(char *message, int signal, int exit_code);
+int		wait_all(pid_t last_pid);
+
+int		ft_perror(char *str, int exit_code);
 
 #endif

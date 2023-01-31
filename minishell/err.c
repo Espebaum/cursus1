@@ -1,31 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   err.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/09 16:18:07 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/31 16:04:51 by gyopark          ###   ########.fr       */
+/*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
+/*   Updated: 2023/01/31 16:29:59 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_perror(char *str, int exit_code)
 {
-	unsigned int	i;
-
-	i = 0;
-	if (!s1)
-		return (-1);
-	while ((s1[i] || s2[i]) && i < n)
-	{
-		if (s1[i] != s2[i])
-			break ;
-		i++;
-	}
-	if (i == n)
-		return (0);
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	perror(str);
+	exit(exit_code);
 }
