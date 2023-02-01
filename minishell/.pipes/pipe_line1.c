@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_line1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/01/31 22:57:03 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/01 16:29:28 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,9 @@ int	pipe_line(int *count, t_token *head, char **envp)
 	t_data	data;
 	int		here_doc_count;
 
-	data.original_fd[0] = dup(0);
-	data.original_fd[1] = dup(1);
+	// data.original_fd[0] = dup(0);
+	// data.original_fd[1] = dup(1);
+
 	here_doc_count = 0;
 	i = -1;
 	init_data(&data, count, envp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_tokenize.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:14:14 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/30 22:53:44 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/01 20:33:44 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**deep_copy_env(char **envp)
 	return (cp_envp);
 }
 
-t_token	*tokenize(char *s, char **envp, int *count)
+t_token	*tokenize(char *s, char **envp)
 {
 	t_token	*cur;
 	t_str	*buf;
@@ -56,7 +56,7 @@ t_token	*tokenize(char *s, char **envp, int *count)
 	while (*s != '\n' && *s)
 	{
 		if (*s == '<' || *s == '>' || *s == '|')
-			cur = read_pipe_redir(&s, cur, buf, count);
+			cur = read_pipe_redir(&s, cur, buf);
 		else if (is_char_space(*s))
 			s++;
 		else
@@ -67,12 +67,12 @@ t_token	*tokenize(char *s, char **envp, int *count)
 	return (cur);
 }
 
-t_token	*go_tokenize(char *cmd, char **envp, int *count, t_token *t)
+t_token	*go_tokenize(char *cmd, char **envp, t_token *t)
 {
 	char	**temp;
 
 	temp = deep_copy_env(envp);
-	t = tokenize(cmd, temp, count);
+	t = tokenize(cmd, temp);
 	print_token(t->next);
 	free(temp);
 	return (t);

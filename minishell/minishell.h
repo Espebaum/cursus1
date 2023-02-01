@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/20 21:55:59 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/31 22:34:47 by gyopark          ###   ########.fr       */
+/*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
+/*   Updated: 2023/02/01 21:53:50 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-extern int	g_exit_code;
+int	g_exit_code;
 
 typedef struct s_str
 {
@@ -57,7 +57,6 @@ typedef struct s_token
 
 typedef struct s_data
 {
-	int		original_fd[2];
 	int		*pid;
 	int		*doc_fd;
 	char	**doc_name;
@@ -66,7 +65,7 @@ typedef struct s_data
 	char	**path;
 }	t_data;
 
-t_token	*go_tokenize(char *cmd, char **envp, int *count, t_token *t);
+t_token	*go_tokenize(char *cmd, char **envp, t_token *t);
 void	set_signal(int sig_int, int sig_quit);
 
 t_str	*make_str(void);
@@ -83,21 +82,22 @@ int		is_word_end(char s);
 int		is_line_end(char s);
 void	print_token(t_token *cur);
 void	free_token(t_token *cur);
-t_token	*read_pipe_redir(char **s, t_token *cur, t_str *buf, int *count);
+t_token	*read_pipe_redir(char **s, t_token *cur, t_str *buf);
 t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp);
 char	*conv_env(char *name);
 int		is_env_char(char s);
 int		get_env_num(char *envp);
 
 int		check_func(int *cnt);
-int 	is_valid_token(t_token *t);
+int		is_valid_token(t_token *t);
+int		check_syntax(t_token *head);
 
 int		pipe_line(int *count, t_token *head, char **envp);
 int		init_fork(t_token **head, t_data *data, int i, int *heredoc_count);
 void	get_heredoc(t_token *head, t_data *data, int count);
 int		*find_heredoc_index(t_token *head, int count);
 char	**get_path(char **envp);
-int 	check_command(char **path, char *cmd);
+char	*check_command(char **path, char *cmd);
 void	forked_child_work(t_data *data, t_token **head, int *pipes, int *hc);
 
 char	*get_limiter(t_token *head, int doc_index);

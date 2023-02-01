@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/01/31 22:33:08 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/01 21:54:04 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	g_exit_code = 0;
 
 int	exit_error(char *message, int signal, int exit_code)
 {
@@ -25,9 +23,17 @@ int	exit_error(char *message, int signal, int exit_code)
 	return (1);
 }
 
-int	exit_zero(void)
+char	*init_line(char *line)
 {
-	exit (0);
+	line = readline("minishell $ ");
+	if (!line)
+	{
+		printf("exit\n");
+		exit(0);
+	}
+	if (*line != '\0')
+		add_history(line);
+	return (line);
 }
 
 int	is_str_space(char *line)
@@ -58,41 +64,25 @@ void	main_init(int argc, __attribute__((unused)) char *argv[])
 int	main(int argc, char **argv, char **envp)
 {
 	char				*line;
-	int					*count;
 	t_token				*head;
 	struct termios		term;
-	int					original[2];
 
-	original[0] = dup(0);
-	original[1] = dup(1);
+	line = NULL;
 	head = NULL;
 	tcgetattr(STDIN_FILENO, &term);
 	main_init(argc, argv);
 	while (1)
 	{
-		count = (int *)malloc(sizeof(int) * 2);
-		if (!count)
-			return (0);
-		count[0] = 0;
-		count[1] = 0;
-		line = readline("minishell $ ");
-		//line = "<< a";
-		if (*line != '\0')
-			add_history(line);
+		line = init_line(line);
 		if (*line != '\0' && !is_str_space(line))
 		{
-			head = go_tokenize(line, envp, count, head);
-			//printf("%d, %d\n", count[0], count[1]);
-			g_exit_code = pipe_line(count, head, envp);
+			head = go_tokenize(line, envp, head);
+			if (check_syntax(head) == -1)
+				continue ;
+			printf("first : %s\n", head->next->str);
 		}
-		//printf("is_valid = %d\n", is_valid_token(head));
 		free_token(head);
 		free(line);
-		free(count); 
-		dup2(original[0], 0);
-		dup2(original[1], 1);
-
-		//system("leaks minishell | grep leaked"); //
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (g_exit_code);
