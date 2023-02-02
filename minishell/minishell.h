@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/01 21:53:50 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/02 16:35:48 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_str
 typedef struct s_token
 {
 	int				type;
+	int				cmds;
 	char			*str;
 	struct s_token	*prev;
 	struct s_token	*next;
@@ -91,6 +92,9 @@ int		get_env_num(char *envp);
 int		check_func(int *cnt);
 int		is_valid_token(t_token *t);
 int		check_syntax(t_token *head);
+int		rule_error(int *type_arr, int len);
+int	get_cmds_num(int *type_arr, int token_len);
+
 
 int		pipe_line(int *count, t_token *head, char **envp);
 int		init_fork(t_token **head, t_data *data, int i, int *heredoc_count);

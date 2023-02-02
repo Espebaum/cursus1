@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   here_doc2.c                                        :+:      :+:    :+:   */
+/*   syntax_check2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/29 16:03:57 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/01 14:13:08 by gyopark          ###   ########.fr       */
+/*   Created: 2023/02/01 21:48:45 by gyopark           #+#    #+#             */
+/*   Updated: 2023/02/02 16:42:11 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	free_pid_docs(int *pid, int *doc_fd)
+int	rule_error(int *type_arr, int len)
 {
-	free(pid);
-	if (doc_fd)
-		free(doc_fd);
+	int		i;
+
+	i = -1;
+	while (i < len)
+		if (type_arr[++i] == 6)
+			return (-1);
 	return (0);
 }
 
-void	open_doc_file(t_data *data, char *t, int *i, int *k)
+int	get_cmds_num(int *type_arr, int token_len)
 {
-	data->doc_fd[*i] = open(t, O_WRONLY | O_CREAT, 0644);
-	data->doc_name[(*k)++] = t;
+	int		i;
+	int		cmds_num;
+
+	i = -1;
+	cmds_num = 0;
+	while (++i < token_len)
+		if (type_arr[i] == 2)
+			cmds_num++;
+	return (cmds_num);
 }

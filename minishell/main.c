@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/01 21:54:04 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/02 16:46:58 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ int	main(int argc, char **argv, char **envp)
 	char				*line;
 	t_token				*head;
 	struct termios		term;
+	int					cp_stdin;
 
+	cp_stdin = dup(STDIN_FILENO);
 	line = NULL;
 	head = NULL;
 	tcgetattr(STDIN_FILENO, &term);
@@ -80,8 +82,9 @@ int	main(int argc, char **argv, char **envp)
 			if (check_syntax(head) == -1)
 				continue ;
 			printf("first : %s\n", head->next->str);
+			//g_exit_code = open_pipe(head, cp_stdin);
+			free_token(head);
 		}
-		free_token(head);
 		free(line);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);

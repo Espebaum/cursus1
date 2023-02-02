@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 15:52:55 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/01 14:12:52 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/02 16:53:29 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,3 +62,21 @@ void	print_token(t_token *cur)
 		cur = cur->next;
 	}
 }
+/*
+while (tmp && i < size) //몇번째 명령어인지 찾는 사이즈
+{
+	if (tmp->type == pipe)
+		i++;
+	tmp = tmp->next;
+}
+while (tmp && tmp->type != pipe)
+{
+	if (tmp->type == cmd)
+		add_back();
+	if (tmp->red)
+		tmp = tmp->next;
+	if (!tmp)
+
+	tmp = tmp->next;
+}
+*/
