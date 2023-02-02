@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/02 17:30:32 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/02 21:23:47 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	read_env(char **s, t_str *buf, char **envp)
 
 	i = 0;
 	env = make_str();
-	while (!is_word_end(*(++(*s))))
+	while (!is_word_end(*(++(*s))) && **s != '\"')
 		push_str(env, **s);
 	while (envp[i])
 	{
@@ -51,7 +51,7 @@ int	read_word_squote(char **s, t_str *buf)
 
 int	read_word_dquote(char **s, t_str *buf, char **envp)
 {
-	printf("s : %s\n", (*s)++);
+	(*s)++;
 	while (!is_line_end(**s) && **s != '\"')
 	{
 		if (**s == '$')
@@ -59,7 +59,6 @@ int	read_word_dquote(char **s, t_str *buf, char **envp)
 		else
 			push_str(buf, *((*s)++));
 	}
-	printf("**s : %c\n", *(*s)--);
 	if (**s != '\"')
 		return (1);
 	(*s)++;
@@ -83,7 +82,6 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 		else
 			push_str(buf, *((*s)++));
 	}
-	printf("%s\n", buf->s);
 	if (is_fail)
 		cur = push_token(T_ERROR, buf, cur);
 	else

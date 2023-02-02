@@ -6,36 +6,72 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:12:35 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/02 17:30:44 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/02 22:12:17 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-child_proc(t_token *head, int i)
+void	child_proc(int *fd, t_token *temp, char **envp)
 {
-	char	*cmd
+	int		idx;
+	char	**arg_cmd;
+
+	arg_cmd = NULL;
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[0]);
+	close(fd[1]);
+	idx = 0;
+	while (temp && temp->type != T_PIPE)
+	{
+		arg_cmd[idx++] = temp->str;
+		temp = temp->next;
+	}
+	arg_cmd[idx] = NULL;
+	execute(arg_cmd, envp);
 }
 
-int	open_pipe(t_token *head, int cp_stdin)
+void	parent_proc(int *fd)
 {
-	int	i;
-	int	fd[2];
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
+	close(fd[1]);
+}
+
+void	execute(char **arg_cmd, char **envp)
+{
+	char	*exec_cmd;
+	char	**path;
+
+	path = get_path(envp);
+	exec_cmd = get_cmd(path, arg_cmd[0]);
+	if (!exec_cmd)
+		return ;//ft_perror(arg_cmd[0], 127);
+	if (execve(exec_cmd, arg_cmd, envp) == -1)
+		return ;//ft_perror("execute error", 126);
+}
+
+int	open_pipe(t_token *head, char **envp, int cp_stdin)
+{
+	t_token	*temp;
+	int		i;
+	int		fd[2];
 	pid_t	pid;
 
 	i = -1;
+	temp = head->next;
 	while (++i < head->cmds)
 	{
+		if (i)
+			temp = get_next_tmp(temp);
 		if (pipe(fd) < 0)
-			return (exit_error("pipe error", NULL, 1));
+			return (exit_error("pipe error", 0, 1));
 		pid = fork();
 		if (pid == -1)
-			return (exit_error("fork error", NULL, 1));
-		if (pid == 0)
-			child_proc(head, i);
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
-		close(fd[1]);
+			return (exit_error("fork error", 0, 1));
+		else if (pid == 0)
+			child_proc(fd, temp, envp);
+		parent_proc(fd);
 	}
 	dup2(cp_stdin, STDIN_FILENO);
 	return (wait_all(pid));

@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 21:48:45 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/02 16:42:11 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/02 21:15:16 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	rule_error(int *type_arr, int len)
 
 	i = -1;
 	while (i < len)
-		if (type_arr[++i] == 6)
+		if (type_arr[++i] == T_ERROR)
 			return (-1);
 	return (0);
 }

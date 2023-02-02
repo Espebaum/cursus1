@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 15:52:55 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/02 16:53:29 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/02 21:26:02 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,20 @@ void	print_token(t_token *cur)
 {
 	while (cur)
 	{
-		printf("type: %d\n", cur->type);
-		printf("value: %s\n", cur->str);
+		printf("\n");
+		if (cur->type == 1)
+			printf("%s\n", "TYPE  : REDIRECTION");
+		else if (cur->type == 2)
+			printf("%s\n", "TYPE  : WORD");
+		else if (cur->type == 3)
+			printf("%s\n", "TYPE  : PIPE");
+		printf("VALUE : %s\n", cur->str);
+		printf("\n");
 		cur = cur->next;
 	}
 }
 /*
-while (tmp && i < size) //몇번째 명령어인지 찾는 사이즈
+while (tmp) //몇번째 명령어인지 찾는 사이즈
 {
 	if (tmp->type == pipe)
 		i++;
