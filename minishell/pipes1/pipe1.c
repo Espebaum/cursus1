@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:12:35 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/02 22:12:17 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/02 22:21:45 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@ void	child_proc(int *fd, t_token *temp, char **envp)
 	int		idx;
 	char	**arg_cmd;
 
-	arg_cmd = NULL;
-	dup2(fd[1], STDOUT_FILENO);
-	close(fd[0]);
-	close(fd[1]);
 	idx = 0;
+	arg_cmd = (char **)malloc(sizeof(char *) * 10);
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[1]);
 	while (temp && temp->type != T_PIPE)
 	{
 		arg_cmd[idx++] = temp->str;
