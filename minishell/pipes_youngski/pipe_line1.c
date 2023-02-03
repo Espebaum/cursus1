@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/03 21:11:27 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/03 22:20:28 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	pipe_line(t_data data, t_token *head, int cp_stdin)
 	temp = head->next;
 	here_doc_count = 0;
 	i = -1;
+	printf("cmds : %d\n\n", head->cmds);
 	while (++i < head->cmds)
 	{
 		pid = init_fork(&temp, &data, i, &here_doc_count);

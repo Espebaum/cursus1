@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 21:48:45 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/03 16:53:56 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/03 22:14:23 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	get_cmds_num(int *type_arr, int token_len)
 	int		cmds_num;
 
 	i = -1;
-	cmds_num = 0;
+	cmds_num = 1;
 	while (++i < token_len)
-		if (type_arr[i] == 2)
+		if (type_arr[i] == T_PIPE)
 			cmds_num++;
 	return (cmds_num);
 }

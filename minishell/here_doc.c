@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:28:36 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/03 20:58:08 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/03 21:51:01 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,16 @@ t_doc	*init_doc(t_doc *doc)
 char	**get_limiter(char **doc_str, t_doc *doc)
 {
 	int		idx;
+	int		j;
 	char	**limiters;
 
 	idx = 0;
 	limiters = doc->limiters;
+	j = 0;
 	while (doc_str[idx] && doc_str[idx + 1])
 	{
 		if (ft_strncmp(doc_str[idx], "<<", 3) == 0)
-			limiters[idx] = doc_str[idx + 1];
+			limiters[j++] = doc_str[idx + 1];
 		idx++;
 	}
 	return (limiters);
@@ -71,8 +73,7 @@ void	heredoc_file_make(int fd, char *limiter)
 
 	while (1)
 	{
-		write(1, "here_doc> ", 10);
-		line = readline("");
+		line = readline("here_doc> ");
 		if (ft_strncmp(line, limiter, ft_strlen(line)) == 0 || !line)
 		{
 			free(line);
@@ -96,7 +97,7 @@ void	make_doc_files(int count, t_doc *doc)
 	{
 		if (access(t, F_OK) == -1)
 		{
-			fd = open(t, O_WRONLY | O_CREAT, 0777);
+			fd = open(t, O_WRONLY | O_CREAT, 0644);
 			doc->name[i] = ft_strdup(t);
 		}
 		else
@@ -104,6 +105,7 @@ void	make_doc_files(int count, t_doc *doc)
 			t = ft_strjoin(t, "1");
 			continue ;
 		}
+		printf("i : %d, limiter : %s\n\n", i, doc->limiters[i]);
 		heredoc_file_make(fd, doc->limiters[i]);
 		i++;
 		close(fd);
@@ -127,3 +129,4 @@ int	open_heredoc(t_doc *doc, char *line)
 	make_doc_files(doc->count, doc);
 	return (0);
 }
+//리미터 쿼트 안에 있으면 쿼트 제거

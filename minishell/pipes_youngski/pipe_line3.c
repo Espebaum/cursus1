@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/03 21:19:53 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/03 22:37:16 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ void	dup_pipes(t_token **head, int *pipes, int input_fd, int output_fd)
 	{
 		dup2(pipes[0], STDIN_FILENO);
 		dup2(pipes[1], STDOUT_FILENO);
+		close(pipes[0]);
 	}
 	else
 	{
 		dup2(output_fd, STDOUT_FILENO);
 		dup2(input_fd, STDIN_FILENO);
+		close(input_fd);
 	}
 }
 
@@ -54,7 +56,7 @@ int	append_redirection(int output_fd, t_token **head)
 
 	close(output_fd);
 	(*head) = (*head)->next;
-	fd = open ((*head)->str, O_WRONLY | O_APPEND, 0644);
+	fd = open ((*head)->str, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	(*head) = (*head)->next;
 	return (fd);
 }

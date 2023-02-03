@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 19:57:00 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/03 16:52:42 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/03 22:12:39 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	check_syntax(t_token *head)
 	token_len = 0;
 	type_arr = make_type_arr(head, &token_len);
 	head->cmds = get_cmds_num(type_arr, token_len);
+	printf("cmd_num : %d\n", head->cmds);
 	if (check_rules(type_arr, token_len) == -1)
 		syntax_err();
 	return (0);
