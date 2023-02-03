@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:12:35 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/03 13:41:18 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/03 15:10:00 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	child_proc(int *fd, t_token *temp, char **envp, int i)
 
 	idx = 0;
 	arg_cmd = (char **)malloc(sizeof(char *) * 10); //일단 10쯤함
-	if (i < temp->cmds)
+	if (i < temp->cmds - 1)
 		dup2(fd[1], STDOUT_FILENO);
 	close(fd[1]);
 	while (temp && temp->type != T_PIPE)

@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 19:57:00 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/02 21:25:08 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/03 14:45:37 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	rule_pipe(int *type_arr, int len)
 	if (len > 2)
 		while (++i < len - 1)
 			if ((type_arr[i] == T_PIPE)
-				&& (type_arr[i - 1] != T_WORD || type_arr[i + 1] != T_WORD))
+				&& (type_arr[i - 1] != T_WORD || type_arr[i + 1] == T_PIPE)) // 파이프 앞뒤로 단어가 아니면 에러를 띄우려고 했는데... 파이프 뒤가 리다이렉션이어도 됨
 				return (-1);
 	return (0);
 }
