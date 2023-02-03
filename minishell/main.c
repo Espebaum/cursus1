@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/02 22:44:25 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/03 13:30:06 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	main(int argc, char **argv, char **envp)
 		line = init_line(line);
 		if (*line != '\0' && !is_str_space(line))
 		{
-			//히어독 인파일 열기;
+			//히어독 인파일 열기(환경변수 변환하기 전에);
 			head = go_tokenize(line, envp, head);
 			if (check_syntax(head) == -1)
 				continue ;

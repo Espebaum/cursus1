@@ -6,20 +6,21 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:12:35 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/02 22:46:09 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/03 13:41:18 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	child_proc(int *fd, t_token *temp, char **envp)
+void	child_proc(int *fd, t_token *temp, char **envp, int i)
 {
 	int		idx;
 	char	**arg_cmd;
 
 	idx = 0;
-	arg_cmd = (char **)malloc(sizeof(char *) * 10); //대충 10쯤함
-	dup2(fd[1], STDOUT_FILENO);
+	arg_cmd = (char **)malloc(sizeof(char *) * 10); //일단 10쯤함
+	if (i < temp->cmds)
+		dup2(fd[1], STDOUT_FILENO);
 	close(fd[1]);
 	while (temp && temp->type != T_PIPE)
 	{
@@ -69,7 +70,7 @@ int	open_pipe(t_token *head, char **envp, int cp_stdin)
 		if (pid == -1)
 			return (exit_error("fork error", 0, 1));
 		else if (pid == 0)
-			child_proc(fd, temp, envp);
+			child_proc(fd, temp, envp, i);
 		parent_proc(fd);
 	}
 	dup2(cp_stdin, STDIN_FILENO);
