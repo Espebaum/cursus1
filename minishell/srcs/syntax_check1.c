@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 19:57:00 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/03 14:45:37 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/03 16:52:42 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,6 @@ int	check_syntax(t_token *head)
 	type_arr = make_type_arr(head, &token_len);
 	head->cmds = get_cmds_num(type_arr, token_len);
 	if (check_rules(type_arr, token_len) == -1)
-	{
-		ft_putendl_fd("syntax error", 2);
-		return (-1);
-	}
+		syntax_err();
 	return (0);
 }

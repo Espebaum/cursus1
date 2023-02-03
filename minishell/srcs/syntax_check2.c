@@ -6,11 +6,17 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 21:48:45 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/02 21:15:16 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/03 16:53:56 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	syntax_err(void)
+{
+	ft_putendl_fd("syntax error", 2);
+	return (-1);
+}
 
 int	rule_error(int *type_arr, int len)
 {

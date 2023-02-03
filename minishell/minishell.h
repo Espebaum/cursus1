@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/03 14:32:21 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/03 19:45:02 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,12 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-typedef struct s_data
+typedef struct s_doc
 {
-	int		*pid;
-	int		*doc_fd;
-	char	**doc_name;
-	int		doc_count;
-	char	**envp;
-	char	**path;
-}	t_data;
+	char	**name;
+	int		count;
+	char	**limiters;
+}	t_doc;
 
 t_token	*go_tokenize(char *cmd, char **envp, t_token *t);
 void	set_signal(int sig_int, int sig_quit);
@@ -94,6 +91,7 @@ int		is_valid_token(t_token *t);
 int		check_syntax(t_token *head);
 int		rule_error(int *type_arr, int len);
 int		get_cmds_num(int *type_arr, int token_len);
+int		syntax_err(void);
 
 int		open_pipe(t_token *head, char **envp, int cp_stdin);
 char	**get_path(char **envp);
@@ -103,6 +101,8 @@ t_token	*get_next_tmp(t_token *temp);
 char	**get_path(char **envp);
 void	execute(char **arg_cmd, char **envp);
 char	*get_cmd(char **path, char *cmd);
+
+int		open_heredoc(t_doc *doc, char *line);
 
 // int		pipe_line(int *count, t_token *head, char **envp);
 // int		init_fork(t_token **head, t_data *data, int i, int *heredoc_count);

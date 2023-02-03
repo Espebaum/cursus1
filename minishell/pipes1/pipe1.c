@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:12:35 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/03 15:10:00 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/03 19:45:54 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	child_proc(int *fd, t_token *temp, char **envp, int i)
 
 	idx = 0;
 	arg_cmd = (char **)malloc(sizeof(char *) * 10); //일단 10쯤함
-	if (i < temp->cmds - 1)
+	if (i < temp->cmds - 1) //temp->cmds - 1인지 그냥 temp->cmd인지 체크해야함
 		dup2(fd[1], STDOUT_FILENO);
 	close(fd[1]);
 	while (temp && temp->type != T_PIPE)
@@ -66,11 +66,13 @@ int	open_pipe(t_token *head, char **envp, int cp_stdin)
 			temp = get_next_tmp(temp);
 		if (pipe(fd) < 0)
 			return (exit_error("pipe error", 0, 1));
+		set_signal(DFL, DFL);
 		pid = fork();
 		if (pid == -1)
 			return (exit_error("fork error", 0, 1));
 		else if (pid == 0)
 			child_proc(fd, temp, envp, i);
+		set_signal(IGN, IGN);
 		parent_proc(fd);
 	}
 	dup2(cp_stdin, STDIN_FILENO);

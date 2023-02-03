@@ -6,7 +6,9 @@
         "errno.h": "c",
         "unistd.h": "c",
         "readline.h": "c",
-        "history.h": "c"
+        "history.h": "c",
+        "chrono": "c",
+        "unordered_map": "c"
     },
     "editor.definitionLinkOpensInPeek": true,
     "editor.gotoLocation.alternativeDefinitionCommand": "editor.action.referenceSearch.trigger",
