@@ -6,13 +6,13 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:28:36 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/03 19:30:05 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/03 20:58:08 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_doc	*init_data(t_doc *doc)
+t_doc	*init_doc(t_doc *doc)
 {
 	doc->name = NULL;
 	doc->count = 0;
@@ -96,7 +96,7 @@ void	make_doc_files(int count, t_doc *doc)
 	{
 		if (access(t, F_OK) == -1)
 		{
-			fd = open(t, O_WRONLY | O_CREAT, 0644);
+			fd = open(t, O_WRONLY | O_CREAT, 0777);
 			doc->name[i] = ft_strdup(t);
 		}
 		else
@@ -115,7 +115,7 @@ int	open_heredoc(t_doc *doc, char *line)
 	char	**doc_str;
 	int		i;
 
-	doc = init_data(doc);
+	doc = init_doc(doc);
 	i = -1;
 	doc_str = ft_split(line, ' ');
 	doc->count = get_doc_count(doc_str);

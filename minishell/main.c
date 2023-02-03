@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/03 19:26:29 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/03 20:45:23 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	main(int argc, char **argv, char **envp)
 	t_doc				doc;
 	struct termios		term;
 	int					cp_stdin;
+	t_data				data;
 
 	cp_stdin = dup(STDIN_FILENO);
 	line = NULL;
@@ -79,13 +80,14 @@ int	main(int argc, char **argv, char **envp)
 		line = init_line(line);
 		if (*line != '\0' && !is_str_space(line))
 		{
-			//open_heredoc(doc, line); 히어독 인파일 열기(환경변수 변환하기 전에);
 			if (open_heredoc(&doc, line) == -1)
 				continue ;
 			head = go_tokenize(line, envp, head);
 			if (check_syntax(head) == -1)
 				continue ;
-			g_exit_code = open_pipe(head, envp, cp_stdin);
+			init_data(&data, doc, envp, head);
+			g_exit_code = pipe_line(data, head, cp_stdin);
+			//g_exit_code = open_pipe(head, envp, cp_stdin);
 			free_token(head);
 		}
 		free(line);

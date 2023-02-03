@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/03 16:23:03 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/03 21:29:38 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,16 @@ void	forked_child_work(t_data *data, t_token **head, int *pipes,
 	output_fd = dup(1);
 	while ((*head) && (*head)->str && ft_strncmp((*head)->str, "|", 1) != 0)
 	{
-		if (ft_strncmp((*head)->str, "<", 1) == 0) // 문장이 < 일때
+		if (ft_strncmp((*head)->str, ">>", 2) == 0)
+			input_fd = append_redirection(output_fd, head);
+
+		else if (ft_strncmp((*head)->str, "<<", 2) == 0)
+			input_fd = heredoc_redirection(input_fd, head, data, heredoc_count);
+		else if (ft_strncmp((*head)->str, "<", 1) == 0) // 문장이 < 일때
 			input_fd = input_redirection(input_fd, head);
+
 		else if (ft_strncmp((*head)->str, ">", 1) == 0) // 문장이 >일때
 			output_fd = output_redirection(output_fd, head);
-		else if (ft_strncmp((*head)->str, ">>", 2) == 0)
-			input_fd = append_redirection(output_fd, head);
-		else if (ft_strncmp((*head)->str, "<<", 2 == 0))
-			input_fd = heredoc_redirection(input_fd, head, data, heredoc_count);
 		else
 		{
 			t = keep_execve(*data, head, t, &check, &flag);
@@ -127,9 +129,6 @@ void	forked_child_work(t_data *data, t_token **head, int *pipes,
 	dup_pipes(head, pipes, input_fd, output_fd);
 	if ((*head) && (*head)->next)
 		(*head) = (*head)->next;
-	int zxcv = -1;
-	while (t[++zxcv])
-		printf("t = %s\n\n", t[zxcv]);
 	char *asdf = find_path(t, data->envp ,0);
 	execve(asdf, t, data->envp);
 }

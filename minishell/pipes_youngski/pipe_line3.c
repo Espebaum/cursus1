@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_line3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/03 15:53:50 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/03 21:19:53 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	output_redirection(int output_fd, t_token **head)
 
 	close(output_fd);
 	(*head) = (*head)->next;
-	fd = open((*head)->str, O_WRONLY | O_CREAT | O_TRUNC);
+	fd = open((*head)->str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	(*head) = (*head)->next;
 	return (fd);
 }
@@ -54,7 +54,7 @@ int	append_redirection(int output_fd, t_token **head)
 
 	close(output_fd);
 	(*head) = (*head)->next;
-	fd = open ((*head)->str, O_WRONLY, O_APPEND);
+	fd = open ((*head)->str, O_WRONLY | O_APPEND, 0644);
 	(*head) = (*head)->next;
 	return (fd);
 }
@@ -68,7 +68,7 @@ int	heredoc_redirection(int input_fd, t_token **head, t_data *data,
 	close(input_fd);
 	(*head) = (*head)->next;
 	t = data->doc_name[(*heredoc_count)++];
-	fd = open (t, O_RDONLY);
+	fd = open(t, O_RDONLY);
 	(*head) = (*head)->next;
 	return (fd);
 }

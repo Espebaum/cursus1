@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 16:03:57 by youngski          #+#    #+#             */
-/*   Updated: 2023/01/31 17:05:55 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/03 20:09:23 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**get_path(char **envp)
 	return (ft_split(*envp + 5, ':'));
 }
 
-int check_command(char **path, char *cmd)
+int	check_command(char **path, char *cmd)
 {
 	int		i;
 	int		fd;
