@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/03 22:39:12 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/03 22:44:33 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	forked_child_work(t_data *data, t_token **head, int *pipes,
 		int *heredoc_count)
 {
 	char	**t;
+	char	*cmd;
 	int		flag;
 	int		output_fd;
 	int		input_fd;
@@ -108,11 +109,7 @@ void	forked_child_work(t_data *data, t_token **head, int *pipes,
 	while ((*head) && (*head)->str && ft_strncmp((*head)->str, "|", 1) != 0)
 	{
 		if (ft_strncmp((*head)->str, ">>", 2) == 0)
-		{
-			//printf("append\n\n");
 			output_fd = append_redirection(output_fd, head);
-			//printf("make ifd : %d\n", input_fd);
-		}
 		else if (ft_strncmp((*head)->str, "<<", 2) == 0)
 			input_fd = heredoc_redirection(input_fd, head, data, heredoc_count);
 		else if (ft_strncmp((*head)->str, "<", 1) == 0) // 문장이 < 일때
@@ -128,14 +125,11 @@ void	forked_child_work(t_data *data, t_token **head, int *pipes,
 		if ((*head) && ft_strncmp((*head)->str, "|", 1) == 0)
 			break ;
 	}
-	//printf("fin ifd : %d\n", input_fd);
 	dup_pipes(head, pipes, input_fd, output_fd);
 	if ((*head) && (*head)->next)
 		(*head) = (*head)->next;
-	char *asdf = find_path(t, data->envp, 0);
-	//printf("cmd[0] : %s\n\n", asdf);
-	//printf("t[0] : %s, t[1] : %s, t[2] : %s\n\n", t[0], t[1], t[2]);
-	execve(asdf, t, data->envp);
+	cmd = find_path(t, data->envp, 0);
+	execve(cmd, t, data->envp);
 }
 // 만일 함수 내부에서 fd 로 묶었는데 모든 파일에 변경사항이 저장되는 현상이 발생할 경우
 // 각각의 fd 값을 클로즈 해주기 위해서 fd 배열값을 가지고 가야된다.
