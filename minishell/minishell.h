@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/04 15:49:22 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/04 19:53:57 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int		check_syntax(t_token *head);
 int		rule_error(int *type_arr, int len);
 int		get_cmds_num(int *type_arr, int token_len);
 int		syntax_err(void);
+int 	builtin_check(char *str);
 
 // int		open_pipe(t_token *head, char **envp, int cp_stdin);
 // char	**get_path(char **envp);
@@ -122,7 +123,7 @@ int		syntax_err(void);
 
 int		open_heredoc(t_doc *doc, char *line);
 int		init_data(t_data *data, t_doc doc, char **envp, t_token *head);
-int	pipe_line(t_data data, t_token *head, int cp_stdin);
+int		pipe_line(t_data data, t_token *head, int cp_stdin);
 
 int		init_fork(t_token **head, t_data *data, int i, int *heredoc_count);
 void	get_heredoc(t_token *head, t_data *data, int count);
@@ -149,5 +150,6 @@ int		exit_error(char *message, int signal, int exit_code);
 int		wait_all(pid_t last_pid);
 
 int		ft_perror(char *str, int exit_code);
+//char    **copy_orders1(char **t, char *str, int flag);
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/04 16:05:09 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/04 18:08:47 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	read_env(char **s, t_str *buf, char **envp)
+void	read_env(char **s, t_str *buf, char **envp, int *env_flag)
 {
 	t_str	*env;
 	int		i;
@@ -22,8 +22,8 @@ void	read_env(char **s, t_str *buf, char **envp)
 	env = make_str();
 	while (!is_word_end(*(++(*s))) && **s != '\"')
 	{
-		if (**s == '$')
-			break ;
+		if (**s == '$') //
+			break ;		//
 		push_str(env, **s);
 	}
 	while (envp[i])
@@ -38,6 +38,9 @@ void	read_env(char **s, t_str *buf, char **envp)
 		}
 		i++;
 	}
+	if ((buf->s[0]) == '\0')
+		push_str(buf, 'N');
+	(*env_flag)++;
 	free_str(env);
 }
 
@@ -55,11 +58,16 @@ int	read_word_squote(char **s, t_str *buf)
 
 int	read_word_dquote(char **s, t_str *buf, char **envp)
 {
+	int		env_flag;
+
 	(*s)++;
+	env_flag = 0;
 	while (!is_line_end(**s) && **s != '\"')
 	{
+		if (env_flag == 1) //
+			break ;	//
 		if (**s == '$')
-			read_env(s, buf, envp);
+			read_env(s, buf, envp, &env_flag);
 		else
 			push_str(buf, *((*s)++));
 	}
@@ -73,12 +81,16 @@ int	read_word_dquote(char **s, t_str *buf, char **envp)
 t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 {
 	int		is_fail;
+	int		env_flag;
 
 	is_fail = 0;
+	env_flag = 0;
 	while (!is_word_end(**s))
 	{
-		if (**s == '$')
-			read_env(s, buf, envp);
+		if (env_flag == 1)
+			break ;
+		if (**s == '$' && env_flag == 0)
+			read_env(s, buf, envp, &env_flag);
 		else if (**s == '\'')
 			is_fail |= read_word_squote(s, buf);
 		else if (**s == '\"')

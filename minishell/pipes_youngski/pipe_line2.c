@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/04 16:02:04 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/04 20:13:08 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,26 @@ int	wait_all(pid_t last_pid)
 
 char	**keep_execve(t_data data, t_token **head,char **t, int *check, int *flag)
 {
-	char **ret;
-	//첫번째 명령어를 쓸 때는 주소값 찾아서 넣어줘야된다 todo
-	//명령어 체킹 있는지 없는지(*head)->str
-	if (check_command(data.path, (*head)->str) && *flag == 0)
+	char	**ret;
+	int		i = -1;
+
+	if (!(check_command(data.path, (*head)->str)
+			|| !builtin_check((*head)->str)) && *flag == 0)
 	{
+		printf("not working\n\n");
 		*check = -1;
-		return NULL;
+		return (NULL);
 	}
 	ret = copy_orders(t);
 	ret = add_order(ret, (*head)->str, *flag);
 	(*head) = (*head)->next;
 	*flag = 1;
 	*check = 0;
+	i = -1;
+	printf("Ret : ");
+	while (ret[++i])
+		printf("%s ", ret[i]);
+	printf("\n");
 	return (ret);
 }
 
@@ -101,6 +108,7 @@ void	forked_child_work(t_data *data, t_token **head, int *pipes,
 	int		check;
 	int		flag;
 
+	flag = 0;
 	data->i_flag = 0;
 	data->o_flag = 0;
 	t = (char **)malloc(sizeof(char *));
@@ -121,15 +129,17 @@ void	forked_child_work(t_data *data, t_token **head, int *pipes,
 		{
 			t = keep_execve(*data, head, t, &check, &flag);
 			if (check == -1)
-				return ;
+				exit(1) ;
 		}
-		if ((*head) && ft_strncmp((*head)->str, "|", 1) == 0)
-			break ;
 	}
+	printf("keep_exec -> t[0] : %s, t[1] : %s\n\n", t[0], t[1]);
 	dup_pipes(head, pipes, input_fd, output_fd, data);
 	if ((*head) && (*head)->next)
 		(*head) = (*head)->next;
 	cmd = find_path(t, data->envp, 0);
+	printf("find_path -> cmd : %s t[0] : %s, t[1] : %s\n\n", cmd, t[0], t[1]);
+	//if (check_builtin() == -1)
+	//	exit(1);
 	if (execve(cmd, t, data->envp) == -1)
 		exit(126);
 }
