@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/03 20:45:52 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/04 15:49:22 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_token
 	char			*str;
 	struct s_token	*prev;
 	struct s_token	*next;
+	int				flag;
 }	t_token;
 
 typedef struct s_doc
@@ -66,16 +67,25 @@ typedef struct s_doc
 typedef struct s_data
 {
 	int		*pid;
+	int		i_flag;
+	int		o_flag;
 	char	**doc_name;
 	char	**envp;
 	char	**path;
 }	t_data;
+
+typedef struct s_cover
+{
+	t_data	data;
+	t_token	*head;
+}	t_cover;
 
 t_token	*go_tokenize(char *cmd, char **envp, t_token *t);
 void	set_signal(int sig_int, int sig_quit);
 
 t_str	*make_str(void);
 t_token	*make_token(void);
+char	**deep_copy_env(char **envp);
 int		is_char_space(char c);
 void	push_str(t_str *str, char val);
 void	resize_str(t_str *str);
@@ -129,12 +139,12 @@ void	close_all_opend_heredoc_fd(t_data *data, int count);
 int		free_pid_docs(int *pid, int *doc_fd);
 void	open_doc_file(t_data *data, char *t, int *i, int *k);
 
-int		output_redirection(int o_fd, t_token **head);
-int		input_redirection(int i_fd, t_token **head);
-int		append_redirection(int o_fd, t_token **head);
+int		output_redirection(int o_fd, t_token **head, t_data *data);
+int		input_redirection(int i_fd, t_token **head, t_data *data);
+int		append_redirection(int o_fd, t_token **head, t_data *data);
 int		heredoc_redirection(int input_fd, t_token **head, t_data *data, \
 		int *heredoc_count);
-void	dup_pipes(t_token **head, int *pipes, int input_fd, int output_fd);
+void	dup_pipes(t_token **head, int *pipes, int input_fd, int output_fd, t_data *data);
 int		exit_error(char *message, int signal, int exit_code);
 int		wait_all(pid_t last_pid);
 

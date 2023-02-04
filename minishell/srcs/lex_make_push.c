@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:24:14 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/02 16:26:06 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/04 13:18:45 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_token	*make_token(void)
 	t->str = 0;
 	t->prev = 0;
 	t->next = 0;
+	t->flag = 0;
 	return (t);
 }
 

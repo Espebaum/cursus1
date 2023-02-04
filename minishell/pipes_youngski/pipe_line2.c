@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/03 22:45:03 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/04 16:02:04 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,31 +64,31 @@ char	**keep_execve(t_data data, t_token **head,char **t, int *check, int *flag)
 
 char	*find_path(char *argv[], char **envp, int i)
 {
-    int		k;
-    char	**str;
-    char	*sp_path;
-    char		**temp;
+	int		k;
+	char	**str;
+	char	*sp_path;
+	char	**temp;
 
-    k = -1;
-    while (envp[++k])
-    {
-        if (!ft_strncmp("PATH", envp[k], 4))
-            break ;
-    }
+	k = -1;
+	while (envp[++k])
+	{
+		if (!ft_strncmp("PATH", envp[k], 4))
+			break ;
+	}
     str = ft_split(envp[k] + 5, ':');
     argv[i] = ft_strjoin("/", argv[i]);
     k = -1;
-    while (str[++k])
-    {
-        temp = ft_split(argv[i], ' ');
-        sp_path = ft_strjoin(str[k], temp[0]);
-        if (access(sp_path, X_OK) == 0)
-            break ;
-    }
-    if (access(sp_path, X_OK) == 0)
-        return (sp_path);
-    else
-        return (0);
+	while (str[++k])
+	{
+		temp = ft_split(argv[i], ' ');
+		sp_path = ft_strjoin(str[k], temp[0]);
+		if (access(sp_path, X_OK) == 0)
+			break ;
+	}
+	if (access(sp_path, X_OK) == 0)
+		return (sp_path);
+	else
+		return (0);
 }
 
 void	forked_child_work(t_data *data, t_token **head, int *pipes,
@@ -96,26 +96,27 @@ void	forked_child_work(t_data *data, t_token **head, int *pipes,
 {
 	char	**t;
 	char	*cmd;
-	int		flag;
 	int		output_fd;
 	int		input_fd;
 	int		check;
+	int		flag;
 
+	data->i_flag = 0;
+	data->o_flag = 0;
 	t = (char **)malloc(sizeof(char *));
 	t[0] = 0;
-	flag = 0; // 함수 내부에서 플래그 값 1로 바꿔주고 활용할것
 	input_fd = dup(0);
 	output_fd = dup(1);
-	while ((*head) && (*head)->str && ft_strncmp((*head)->str, "|", 1) != 0)
+	while ((*head) && (*head)->str && ft_strncmp((*head)->str, "|", 1))
 	{
 		if (ft_strncmp((*head)->str, ">>", 2) == 0)
-			output_fd = append_redirection(output_fd, head);
+			output_fd = append_redirection(output_fd, head, data);
 		else if (ft_strncmp((*head)->str, "<<", 2) == 0)
 			input_fd = heredoc_redirection(input_fd, head, data, heredoc_count);
 		else if (ft_strncmp((*head)->str, "<", 1) == 0) // 문장이 < 일때
-			input_fd = input_redirection(input_fd, head);
+			input_fd = input_redirection(input_fd, head, data);
 		else if (ft_strncmp((*head)->str, ">", 1) == 0) // 문장이 >일때
-			output_fd = output_redirection(output_fd, head);
+			output_fd = output_redirection(output_fd, head, data);
 		else
 		{
 			t = keep_execve(*data, head, t, &check, &flag);
@@ -125,11 +126,12 @@ void	forked_child_work(t_data *data, t_token **head, int *pipes,
 		if ((*head) && ft_strncmp((*head)->str, "|", 1) == 0)
 			break ;
 	}
-	dup_pipes(head, pipes, input_fd, output_fd);
+	dup_pipes(head, pipes, input_fd, output_fd, data);
 	if ((*head) && (*head)->next)
 		(*head) = (*head)->next;
 	cmd = find_path(t, data->envp, 0);
-	execve(cmd, t, data->envp);
+	if (execve(cmd, t, data->envp) == -1)
+		exit(126);
 }
 // 만일 함수 내부에서 fd 로 묶었는데 모든 파일에 변경사항이 저장되는 현상이 발생할 경우
 // 각각의 fd 값을 클로즈 해주기 위해서 fd 배열값을 가지고 가야된다.

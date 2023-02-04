@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 15:52:55 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/02 21:26:02 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/04 13:29:49 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	print_token(t_token *cur)
 			printf("%s\n", "TYPE  : WORD");
 		else if (cur->type == 3)
 			printf("%s\n", "TYPE  : PIPE");
+		printf("FLAG : %d\n", cur->flag);
 		printf("VALUE : %s\n", cur->str);
 		printf("\n");
 		cur = cur->next;

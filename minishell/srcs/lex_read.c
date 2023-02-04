@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/02 21:23:47 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/04 15:50:50 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,14 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 	if (is_fail)
 		cur = push_token(T_ERROR, buf, cur);
 	else
+	{
 		cur = push_token(T_WORD, buf, cur);
+		if (cur->flag == 1)
+		{
+			cur->flag = 0;
+			//go_heredoc()
+		}
+	}
 	return (cur);
 }
 
@@ -98,6 +105,8 @@ t_token	*read_pipe_redir(char **s, t_token *cur, t_str *buf)
 	{
 		push_str(buf, *((*s)++));
 		cur = push_token(T_REDIRECT, buf, cur);
+		if (*(*(s) - 1) == '<')
+			cur->flag = 1;
 	}
 	else
 	{

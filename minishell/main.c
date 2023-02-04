@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/03 20:45:23 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/04 13:16:54 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,16 @@ void	main_init(int argc, __attribute__((unused)) char *argv[])
 int	main(int argc, char **argv, char **envp)
 {
 	char				*line;
-	t_token				*head;
+	t_cover				cover;
 	t_doc				doc;
 	struct termios		term;
 	int					cp_stdin;
-	t_data				data;
+	//t_token				*head;
+	//t_data				data;
 
 	cp_stdin = dup(STDIN_FILENO);
 	line = NULL;
-	head = NULL;
+	//head = NULL;
 	tcgetattr(STDIN_FILENO, &term);
 	main_init(argc, argv);
 	while (1)
@@ -82,13 +83,13 @@ int	main(int argc, char **argv, char **envp)
 		{
 			if (open_heredoc(&doc, line) == -1)
 				continue ;
-			head = go_tokenize(line, envp, head);
-			if (check_syntax(head) == -1)
+			cover.head = go_tokenize(line, envp, cover.head);
+			if (check_syntax(cover.head) == -1)
 				continue ;
-			init_data(&data, doc, envp, head);
-			g_exit_code = pipe_line(data, head, cp_stdin);
+			init_data(&(cover.data), doc, envp, cover.head);
+			g_exit_code = pipe_line(cover.data, cover.head, cp_stdin);
 			//g_exit_code = open_pipe(head, envp, cp_stdin);
-			free_token(head);
+			free_token(cover.head);
 		}
 		free(line);
 	}
