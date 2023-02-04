@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/04 15:50:50 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/04 16:05:09 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ void	read_env(char **s, t_str *buf, char **envp)
 	i = 0;
 	env = make_str();
 	while (!is_word_end(*(++(*s))) && **s != '\"')
+	{
+		if (**s == '$')
+			break ;
 		push_str(env, **s);
+	}
 	while (envp[i])
 	{
 		env_num = get_env_num(envp[i]);
