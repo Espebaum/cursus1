@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/04 13:16:54 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/05 14:03:43 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ int	main(int argc, char **argv, char **envp)
 				continue ;
 			cover.head = go_tokenize(line, envp, cover.head);
 			if (check_syntax(cover.head) == -1)
+			{
+				syntax_err();
 				continue ;
+			}
 			init_data(&(cover.data), doc, envp, cover.head);
 			g_exit_code = pipe_line(cover.data, cover.head, cp_stdin);
 			//g_exit_code = open_pipe(head, envp, cp_stdin);
@@ -97,3 +100,4 @@ int	main(int argc, char **argv, char **envp)
 	return (g_exit_code);
 }
 //main에서 head 포인터를 보관해야 함(free하기 위해서)
+// >>> lldb

@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/04 21:20:37 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/05 13:50:35 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,13 +117,13 @@ void	forked_child_work(t_data *data, t_token **head, int *pipes,
 	output_fd = dup(1);
 	while ((*head) && (*head)->str && ft_strncmp((*head)->str, "|", 1))
 	{
-		if (ft_strncmp((*head)->str, ">>", 2) == 0)
+		if (ft_strncmp((*head)->str, ">>", 2) == 0 && (*head)->type == T_REDIRECT)
 			output_fd = append_redirection(output_fd, head, data);
-		else if (ft_strncmp((*head)->str, "<<", 2) == 0)
+		else if (ft_strncmp((*head)->str, "<<", 2) == 0 && (*head)->type == T_REDIRECT)
 			input_fd = heredoc_redirection(input_fd, head, data, heredoc_count);
-		else if (ft_strncmp((*head)->str, "<", 1) == 0) // 문장이 < 일때
+		else if (ft_strncmp((*head)->str, "<", 1) == 0 && (*head)->type == T_REDIRECT) // 문장이 < 일때
 			input_fd = input_redirection(input_fd, head, data);
-		else if (ft_strncmp((*head)->str, ">", 1) == 0) // 문장이 >일때
+		else if (ft_strncmp((*head)->str, ">", 1) == 0 && (*head)->type == T_REDIRECT) // 문장이 >일때
 			output_fd = output_redirection(output_fd, head, data);
 		else
 		{

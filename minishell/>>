@@ -1,0 +1,2 @@
+find_path -> cmd : /bin/rm t[0] : /rm, t[1] : (null)
+
