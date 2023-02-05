@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 18:19:51 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/04 21:39:01 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/05 18:40:00 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,14 @@ char	**add_order(char **t, char *str, int flag)
 	if (flag != 0)
 	{
 		temp[i] = (char *)malloc(sizeof(char) * k + 1);
-		k = 0;
 		ft_memcpy(temp[i], str, ft_strlen(str));
 		temp[i][ft_strlen(str)] = 0;
-		return (temp);
 	}
 	else
 	{
 		temp[0] = (char *)malloc(sizeof(char) * k + 1);
-		k = 0;
 		ft_memcpy(temp[0], str, ft_strlen(str));
 		temp[0][ft_strlen(str)] = 0;
-		return (temp);
 	}
+	return (temp);
 }

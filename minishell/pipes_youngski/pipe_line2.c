@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/05 13:50:35 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/05 20:57:43 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,28 +44,20 @@ int	wait_all(pid_t last_pid)
 	return (g_exit_code);
 }
 
-char	**keep_execve(t_data data, t_token **head,char **t, int *check, int *flag)
+char	**keep_execve(t_data data, t_token **head, char **t, int *flag)
 {
 	char	**ret;
-	int		i = -1;
 
 	if (!(check_command(data.path, (*head)->str)
 			|| !builtin_check((*head)->str)) && *flag == 0)
 	{
 		printf("not working\n\n");
-		*check = -1;
-		return (NULL);
+		exit(126);
 	}
 	ret = copy_orders(t);
 	ret = add_order(ret, (*head)->str, *flag);
 	(*head) = (*head)->next;
 	*flag = 1;
-	*check = 0;
-	i = -1;
-	printf("Ret : ");
-	while (ret[++i])
-		printf("%s ", ret[i]);
-	printf("\n");
 	return (ret);
 }
 
@@ -98,48 +90,46 @@ char	*find_path(char *argv[], char **envp, int i)
 		return (0);
 }
 
+
+void	init_fd(t_data *data, int *io_fd)
+{
+	data->i_flag = 0;
+	data->o_flag = 0;
+	io_fd[0] = dup(0);
+	io_fd[1] = dup(1);
+}
+
 void	forked_child_work(t_data *data, t_token **head, int *pipes,
 		int *heredoc_count)
 {
 	char	**t;
 	char	*cmd;
-	int		output_fd;
-	int		input_fd;
-	int		check;
+	int		io_fd[2];
 	int		flag;
 
 	flag = 0;
-	data->i_flag = 0;
-	data->o_flag = 0;
 	t = (char **)malloc(sizeof(char *));
 	t[0] = 0;
-	input_fd = dup(0);
-	output_fd = dup(1);
+	init_fd(data, io_fd);
 	while ((*head) && (*head)->str && ft_strncmp((*head)->str, "|", 1))
 	{
 		if (ft_strncmp((*head)->str, ">>", 2) == 0 && (*head)->type == T_REDIRECT)
-			output_fd = append_redirection(output_fd, head, data);
+			io_fd[1] = append_redirection(io_fd[1], head, data);
 		else if (ft_strncmp((*head)->str, "<<", 2) == 0 && (*head)->type == T_REDIRECT)
-			input_fd = heredoc_redirection(input_fd, head, data, heredoc_count);
-		else if (ft_strncmp((*head)->str, "<", 1) == 0 && (*head)->type == T_REDIRECT) // 문장이 < 일때
-			input_fd = input_redirection(input_fd, head, data);
-		else if (ft_strncmp((*head)->str, ">", 1) == 0 && (*head)->type == T_REDIRECT) // 문장이 >일때
-			output_fd = output_redirection(output_fd, head, data);
+			io_fd[0] = heredoc_redirection(io_fd[0], head, data, heredoc_count);
+		else if (ft_strncmp((*head)->str, "<", 1) == 0 && (*head)->type == T_REDIRECT)
+			io_fd[0] = input_redirection(io_fd[0], head, data);
+		else if (ft_strncmp((*head)->str, ">", 1) == 0 && (*head)->type == T_REDIRECT)
+			io_fd[1] = output_redirection(io_fd[1], head, data);
 		else
-		{
-			t = keep_execve(*data, head, t, &check, &flag);
-			if (check == -1)
-				exit(1) ;
-		}
+			t = keep_execve(*data, head, t, &flag);
 	}
-	printf("keep_exec -> t[0] : %s, t[1] : %s\n\n", t[0], t[1]);
-	dup_pipes(head, pipes, input_fd, output_fd, data);
+	dup_pipes(head, pipes, io_fd[0], io_fd[1], data);
 	if ((*head) && (*head)->next)
 		(*head) = (*head)->next;
 	cmd = find_path(t, data->envp, 0);
-	printf("find_path -> cmd : %s t[0] : %s, t[1] : %s\n\n", cmd, t[0], t[1]);
-	//if (check_builtin() == -1)
-	//	exit(1);
+	if (check_builtin(t, *data, cmd) == -1)
+		exit(1);
 	if (execve(cmd, t, data->envp) == -1)
 		exit(126);
 }

@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/05 14:03:43 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/05 19:14:37 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,9 @@ int	main(int argc, char **argv, char **envp)
 				continue ;
 			}
 			init_data(&(cover.data), doc, envp, cover.head);
+			//printf("head->next->str : %s\n", cover.head->next->str);
+			//if (cover.head->cmds == 1 && builtin_check(cover.head->next->str))
 			g_exit_code = pipe_line(cover.data, cover.head, cp_stdin);
-			//g_exit_code = open_pipe(head, envp, cp_stdin);
 			free_token(cover.head);
 		}
 		free(line);

@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/05 15:34:58 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/05 17:08:46 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,6 @@ int		exit_error(char *message, int signal, int exit_code);
 int		wait_all(pid_t last_pid);
 
 int		ft_perror(char *str, int exit_code);
+int		check_builtin(char **t, t_data data, char *str);
 
 #endif
