@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/04 18:08:47 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/04 22:23:08 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	read_env(char **s, t_str *buf, char **envp, int *env_flag)
 		i++;
 	}
 	if ((buf->s[0]) == '\0')
-		push_str(buf, 'N');
+		push_str(buf, '\n');
 	(*env_flag)++;
 	free_str(env);
 }
@@ -59,15 +59,17 @@ int	read_word_squote(char **s, t_str *buf)
 int	read_word_dquote(char **s, t_str *buf, char **envp)
 {
 	int		env_flag;
+	char	**temp;
 
 	(*s)++;
-	env_flag = 0;
+	//env_flag = 0;
 	while (!is_line_end(**s) && **s != '\"')
 	{
-		if (env_flag == 1) //
-			break ;	//
+		temp = deep_copy_env(envp);
+		//if (env_flag == 1)
+		//	break ;
 		if (**s == '$')
-			read_env(s, buf, envp, &env_flag);
+			read_dquote_env(s, buf, temp, &env_flag);
 		else
 			push_str(buf, *((*s)++));
 	}
