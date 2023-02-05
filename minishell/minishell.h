@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/05 17:08:46 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/05 22:14:50 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,14 @@ typedef struct s_data
 	char	**doc_name;
 	char	**envp;
 	char	**path;
+	int		io_fd[2];
 }	t_data;
 
 typedef struct s_cover
 {
 	t_data	data;
 	t_token	*head;
+	int		cp_stdin;
 }	t_cover;
 
 t_token	*go_tokenize(char *cmd, char **envp, t_token *t);
@@ -123,7 +125,7 @@ int 	builtin_check(char *str);
 
 int		open_heredoc(t_doc *doc, char *line);
 int		init_data(t_data *data, t_doc doc, char **envp, t_token *head);
-int		pipe_line(t_data data, t_token *head, int cp_stdin);
+int		pipe_line(t_data data, t_token *head, t_cover cover);
 
 int		init_fork(t_token **head, t_data *data, int i, int *heredoc_count);
 void	get_heredoc(t_token *head, t_data *data, int count);
@@ -146,11 +148,14 @@ int		input_redirection(int i_fd, t_token **head, t_data *data);
 int		append_redirection(int o_fd, t_token **head, t_data *data);
 int		heredoc_redirection(int input_fd, t_token **head, t_data *data, \
 		int *heredoc_count);
-void	dup_pipes(t_token **head, int *pipes, int input_fd, int output_fd, t_data *data);
+void	dup_pipes(t_token **head, int *pipes, t_data *data);
 int		exit_error(char *message, int signal, int exit_code);
 int		wait_all(pid_t last_pid);
 
 int		ft_perror(char *str, int exit_code);
 int		check_builtin(char **t, t_data data, char *str);
+char	**read_cmd(t_data *data, t_token **head, int flag, int *heredoc_count);
+char	**keep_execve(t_data data, t_token **head, char **t, int *flag);
+void	init_fd(t_data *data);
 
 #endif

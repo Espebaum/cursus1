@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/04 15:30:18 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/05 21:27:11 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	init_data(t_data *data, t_doc doc, char **envp, t_token *head)
 	return (0);
 }
 
-int	pipe_line(t_data data, t_token *head, int cp_stdin)
+int	pipe_line(t_data data, t_token *head, t_cover cover)
 {
 	t_token	*temp;
 	pid_t	pid;
@@ -67,6 +67,6 @@ int	pipe_line(t_data data, t_token *head, int cp_stdin)
 		pid = init_fork(&temp, &data, i, &here_doc_count);
 	}
 	free(data.pid);
-	dup2(cp_stdin, STDIN_FILENO);
+	dup2(cover.cp_stdin, STDIN_FILENO);
 	return (wait_all(pid));
 }

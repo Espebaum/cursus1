@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/05 20:57:43 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/05 22:36:15 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	**keep_execve(t_data data, t_token **head, char **t, int *flag)
 char	*find_path(char *argv[], char **envp, int i)
 {
 	int		k;
-	char	**str;
+	char	**path;
 	char	*sp_path;
 	char	**temp;
 
@@ -74,29 +74,28 @@ char	*find_path(char *argv[], char **envp, int i)
 		if (!ft_strncmp("PATH", envp[k], 4))
 			break ;
 	}
-    str = ft_split(envp[k] + 5, ':');
-    argv[i] = ft_strjoin("/", argv[i]);
+	path = ft_split(envp[k] + 5, ':');
+    if (access(argv[0], X_OK) == 0)
+		return (argv[0]);
+	argv[i] = ft_strjoin("/", argv[i]);
     k = -1;
-	while (str[++k])
+	while (path[++k])
 	{
 		temp = ft_split(argv[i], ' ');
-		sp_path = ft_strjoin(str[k], temp[0]);
+		sp_path = ft_strjoin(path[k], temp[0]);
 		if (access(sp_path, X_OK) == 0)
-			break ;
-	}
-	if (access(sp_path, X_OK) == 0)
-		return (sp_path);
-	else
-		return (0);
+			return (sp_path);
+	}	
+	return (0);
 }
 
 
-void	init_fd(t_data *data, int *io_fd)
+void	init_fd(t_data *data)
 {
 	data->i_flag = 0;
 	data->o_flag = 0;
-	io_fd[0] = dup(0);
-	io_fd[1] = dup(1);
+	data->io_fd[0] = dup(0);
+	data->io_fd[1] = dup(1);
 }
 
 void	forked_child_work(t_data *data, t_token **head, int *pipes,
@@ -104,27 +103,9 @@ void	forked_child_work(t_data *data, t_token **head, int *pipes,
 {
 	char	**t;
 	char	*cmd;
-	int		io_fd[2];
-	int		flag;
 
-	flag = 0;
-	t = (char **)malloc(sizeof(char *));
-	t[0] = 0;
-	init_fd(data, io_fd);
-	while ((*head) && (*head)->str && ft_strncmp((*head)->str, "|", 1))
-	{
-		if (ft_strncmp((*head)->str, ">>", 2) == 0 && (*head)->type == T_REDIRECT)
-			io_fd[1] = append_redirection(io_fd[1], head, data);
-		else if (ft_strncmp((*head)->str, "<<", 2) == 0 && (*head)->type == T_REDIRECT)
-			io_fd[0] = heredoc_redirection(io_fd[0], head, data, heredoc_count);
-		else if (ft_strncmp((*head)->str, "<", 1) == 0 && (*head)->type == T_REDIRECT)
-			io_fd[0] = input_redirection(io_fd[0], head, data);
-		else if (ft_strncmp((*head)->str, ">", 1) == 0 && (*head)->type == T_REDIRECT)
-			io_fd[1] = output_redirection(io_fd[1], head, data);
-		else
-			t = keep_execve(*data, head, t, &flag);
-	}
-	dup_pipes(head, pipes, io_fd[0], io_fd[1], data);
+	t = read_cmd(data, head, 0, heredoc_count);
+	dup_pipes(head, pipes, data);
 	if ((*head) && (*head)->next)
 		(*head) = (*head)->next;
 	cmd = find_path(t, data->envp, 0);

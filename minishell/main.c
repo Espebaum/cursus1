@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/05 19:14:37 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/05 22:29:47 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,18 @@ int	main(int argc, char **argv, char **envp)
 	t_cover				cover;
 	t_doc				doc;
 	struct termios		term;
-	int					cp_stdin;
-	//t_token				*head;
-	//t_data				data;
+	char				**builtin;
 
-	cp_stdin = dup(STDIN_FILENO);
+	builtin = (char **)malloc(sizeof(char *));
+	builtin[0] = 0;
+	cover.cp_stdin = dup(STDIN_FILENO);
 	line = NULL;
-	//head = NULL;
+
 	tcgetattr(STDIN_FILENO, &term);
 	main_init(argc, argv);
 	while (1)
 	{
+		init_fd(&(cover.data));
 		line = init_line(line);
 		if (*line != '\0' && !is_str_space(line))
 		{
@@ -90,9 +91,12 @@ int	main(int argc, char **argv, char **envp)
 				continue ;
 			}
 			init_data(&(cover.data), doc, envp, cover.head);
-			//printf("head->next->str : %s\n", cover.head->next->str);
-			//if (cover.head->cmds == 1 && builtin_check(cover.head->next->str))
-			g_exit_code = pipe_line(cover.data, cover.head, cp_stdin);
+			if (cover.head->cmds == 1)
+			{
+				builtin = read_cmd(&(cover.data), &(cover.head), 0, NULL);
+				//run_builtin(builtin, cover.data);
+			}
+			g_exit_code = pipe_line(cover.data, cover.head, cover);
 			free_token(cover.head);
 		}
 		free(line);
@@ -101,4 +105,3 @@ int	main(int argc, char **argv, char **envp)
 	return (g_exit_code);
 }
 //main에서 head 포인터를 보관해야 함(free하기 위해서)
-// >>> lldb
