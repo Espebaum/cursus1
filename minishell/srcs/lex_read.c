@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/05 19:12:02 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/06 20:37:34 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,28 @@ void	read_env(char **s, t_str *buf, char **envp, int *r_env)
 	t_str	*env;
 	int		i;
 	int		env_num;
+	char	*g_str;
 
-	i = 0;
+	i = -1;
 	env = make_str();
+	g_str = ft_itoa(g_exit_code);
 	while (!is_word_end(*(++(*s))) && **s != '\"')
 	{
 		if (**s == '$')
 			break ;
 		push_str(env, **s);
 	}		
-	while (envp[i])
+	if (ft_strlen(env->s) == 1 && env->s[0] == '?')
+	{
+		while (g_str[++i])
+			push_str(buf, g_str[i]);
+		free_str(env);
+		return ;
+	}
+	while (envp[++i])
 	{
 		env_num = get_env_num(envp[i]);
-		if (ft_strncmp(env->s, envp[i], ft_strlen(env->s)) == 0)
+		if (ft_strncmp(env->s, envp[i], ft_max(ft_strlen(env->s), env_num)) == 0)
 		{
 			envp[i] += env_num + 1;
 			while (*(envp[i])++)
@@ -37,10 +46,7 @@ void	read_env(char **s, t_str *buf, char **envp, int *r_env)
 			buf->len -= 1;
 			break ;
 		}
-		i++;
 	}
-	if ((buf->s[0]) == '\0')
-		push_str(buf, '\n');
 	(*r_env)++;
 	free_str(env);
 }

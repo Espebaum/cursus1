@@ -6,11 +6,11 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 20:53:24 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/05 22:17:50 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/06 20:32:17 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 char	**read_cmd(t_data *data, t_token **head, int flag, int *heredoc_count)
 {
@@ -55,7 +55,5 @@ void	dup_builtin_pipes(t_data *data)
 void	run_builtin(char **cmd, t_data data)
 {
 	check_builtin(cmd, data, )
-
-
 }
 */

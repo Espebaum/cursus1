@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/05 22:36:15 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/06 21:26:46 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,20 @@ int	wait_all(pid_t last_pid)
 	int		temp;
 	int		signo;
 	int		status;
+	int		i;
 
 	pid = 1;
+	i = 0;
 	while (pid != -1)
 	{
 		pid = wait(&temp);
 		if (WIFSIGNALED(temp))
 		{
 			signo = WTERMSIG(temp);
-			if (signo == SIGINT)
-				ft_putstr_fd("^C\n", STDERR_FILENO);
-			else if (signo == SIGQUIT)
-				ft_putstr_fd("^\\Quit: 3\n", STDERR_FILENO);
+			if (signo == SIGINT && i++ == 0)
+				printf("\n");
+			if (signo == SIGQUIT && i++ == 0)
+				printf("Quit: 3\n");
 			g_exit_code = 128 + signo;
 		}
 		else
@@ -47,15 +49,13 @@ int	wait_all(pid_t last_pid)
 char	**keep_execve(t_data data, t_token **head, char **t, int *flag)
 {
 	char	**ret;
+	char	*cmd;
 
-	if (!(check_command(data.path, (*head)->str)
-			|| !builtin_check((*head)->str)) && *flag == 0)
-	{
-		printf("not working\n\n");
-		exit(126);
-	}
+	cmd = (*head)->str;
+	if (cmd[0] == '\0' || (!(check_command(data.path, cmd) || !builtin_check(cmd)) && *flag == 0))
+		exit_error(cmd, 0, 127);
 	ret = copy_orders(t);
-	ret = add_order(ret, (*head)->str, *flag);
+	ret = add_order(ret, cmd, *flag);
 	(*head) = (*head)->next;
 	*flag = 1;
 	return (ret);
@@ -88,7 +88,6 @@ char	*find_path(char *argv[], char **envp, int i)
 	}	
 	return (0);
 }
-
 
 void	init_fd(t_data *data)
 {

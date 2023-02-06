@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	builtin_check(char *str)
 {
@@ -27,36 +27,52 @@ int	builtin_check(char *str)
 // 모든 토큰에서 헤드를 향해 갈 수 있도록 만들어주자
 // 헤드 (str이 널인곳)에서만 envp원본을 가지고 있도록 만들어주고
 // 여기서 수정하
+
+// int	check_echo_option(char *str)
+// {
+// 	int	i;
+// 	// - 로  시작  하는   것것
+// }
+
+char	**cutting_t(char **t, int *flag)
+{
+	int	i;
+	int	j;
+
+	t++;
+	*flag = 0;
+	i = 0;
+	j = 0;
+	while (t)
+	{
+		if (t[0][0] == '-')
+		{
+			i = 0;
+			while (t[i])
+			{
+				if (t[i][j] != 'n')
+					return t ;
+				i++;
+			}
+			*flag = 0;
+		}
+		t++;
+	}
+	return t;
+}
+
 void	built_echo(char **t)
 {
-	int		i;
 	int		flag;
 
-	i = 1;
 	flag = 0;
-	t = 0;
-	while (t[i])
+	cutting_t(t, &flag);
+	while (t++)
 	{
-		if (!ft_strncmp(t[1], "-n", 2))
-		{
-			flag = 1;
-			i++;
-			continue ;
-		}
-		if (!ft_strncmp(t[1], "$?", 2))
-		{
-			printf("%d", g_exit_code);
-			printf("%s", &t[1][0] + 2);
-			i++;
-		}
-		if (flag == 1)
-			printf("%s", t[i]);
-		else
-			printf("%s\n", t[i]);
-		i++;
+		printf("%s", t[0]);
+		if (flag == 0)
+			printf("\n");
 	}
-	printf("working\n");
-	exit(1);
 }
 
 void	built_cd(char **t)

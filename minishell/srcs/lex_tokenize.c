@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:14:14 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/05 13:12:27 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/06 21:26:21 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_token	*tokenize(char *s, char **envp)
 t_token	*go_tokenize(char *cmd, char **envp, t_token *t)
 {
 	t = tokenize(cmd, envp);
-	print_token(t->next);
+	//print_token(t->next);
 	return (t);
 }
 //1. 파싱할때 앞 토큰이 echo일때 따옴표 없으면 역슬래시 없애고 있으면 역슬래시 남겨서 보내기

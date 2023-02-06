@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/05 21:27:11 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/06 21:58:01 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@ int	init_fork(t_token **head, t_data *data, int i, int *heredoc_count)
 	int	pipes[2];
 
 	if (pipe(pipes) == -1)
-		return (0);
+		exit_error("pipe error", 0, 1);
 	set_signal(DFL, DFL);
 	data->pid[i] = fork();
 	if (data->pid[i] == -1)
-		return (0);
+		exit_error("fork error", 0, 1);
 	else if (data->pid[i] == 0)
 		forked_child_work(data, head, pipes, heredoc_count);
+	set_signal(IGN, IGN);
 	while ((*head) && (*head)->type != T_PIPE)
 		(*head) = (*head)->next;
 	if ((*head))
 		(*head) = (*head)->next;
-	set_signal(IGN, IGN);
 	parent_proc(pipes);
 	return (data->pid[i]);
 }
@@ -61,7 +61,6 @@ int	pipe_line(t_data data, t_token *head, t_cover cover)
 	temp = head->next;
 	here_doc_count = 0;
 	i = -1;
-	printf("cmds : %d\n\n", head->cmds);
 	while (++i < head->cmds)
 	{
 		pid = init_fork(&temp, &data, i, &here_doc_count);

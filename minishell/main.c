@@ -6,26 +6,15 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/05 22:29:47 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/06 20:49:40 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exit_error(char *message, int signal, int exit_code)
-{
-	char	*error_str;
-
-	error_str = strerror(errno);
-	write(2, message, ft_strlen(message));
-	write(2, error_str, ft_strlen(error_str));
-	exit (exit_code + signal);
-	return (1);
-}
-
 char	*init_line(char *line)
 {
-	line = readline("minishell $ ");
+	line = readline("YOUNGSHELL $ ");
 	if (!line)
 	{
 		printf("exit\n");
@@ -73,7 +62,6 @@ int	main(int argc, char **argv, char **envp)
 	builtin[0] = 0;
 	cover.cp_stdin = dup(STDIN_FILENO);
 	line = NULL;
-
 	tcgetattr(STDIN_FILENO, &term);
 	main_init(argc, argv);
 	while (1)
@@ -82,6 +70,11 @@ int	main(int argc, char **argv, char **envp)
 		line = init_line(line);
 		if (*line != '\0' && !is_str_space(line))
 		{
+			if (doc_syntax(line) == -1)
+			{
+				syntax_err();
+				continue ;
+			}
 			if (open_heredoc(&doc, line) == -1)
 				continue ;
 			cover.head = go_tokenize(line, envp, cover.head);
@@ -98,10 +91,10 @@ int	main(int argc, char **argv, char **envp)
 			}
 			g_exit_code = pipe_line(cover.data, cover.head, cover);
 			free_token(cover.head);
+			set_signal(SHE, SHE);
 		}
 		free(line);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (g_exit_code);
 }
-//main에서 head 포인터를 보관해야 함(free하기 위해서)

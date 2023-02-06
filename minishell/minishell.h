@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/05 22:14:50 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/06 21:00:45 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_cover
 
 t_token	*go_tokenize(char *cmd, char **envp, t_token *t);
 void	set_signal(int sig_int, int sig_quit);
+int		doc_syntax(char *str);
 
 t_str	*make_str(void);
 t_token	*make_token(void);
@@ -114,10 +115,11 @@ int		get_cmds_num(int *type_arr, int token_len);
 int		syntax_err(void);
 int 	builtin_check(char *str);
 
+int		exit_error(char *message, int signal, int exit_code);
+int		ft_perror(char *str, int signal, int exit_code);
 // int		open_pipe(t_token *head, char **envp, int cp_stdin);
 // char	**get_path(char **envp);
 // int		wait_all(pid_t last_pid);
-// int		exit_error(char *message, int signal, int exit_code);
 // t_token	*get_next_tmp(t_token *temp);
 // char	**get_path(char **envp);
 // void	execute(char **arg_cmd, char **envp);
@@ -151,11 +153,10 @@ int		heredoc_redirection(int input_fd, t_token **head, t_data *data, \
 void	dup_pipes(t_token **head, int *pipes, t_data *data);
 int		exit_error(char *message, int signal, int exit_code);
 int		wait_all(pid_t last_pid);
-
-int		ft_perror(char *str, int exit_code);
 int		check_builtin(char **t, t_data data, char *str);
 char	**read_cmd(t_data *data, t_token **head, int flag, int *heredoc_count);
 char	**keep_execve(t_data data, t_token **head, char **t, int *flag);
 void	init_fd(t_data *data);
+int		ft_max(int a, int b);
 
 #endif
