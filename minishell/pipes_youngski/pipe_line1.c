@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/06 21:58:01 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/07 20:50:31 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	pipe_line(t_data data, t_token *head, t_cover cover)
 	int		i;
 	int		here_doc_count;
 
-	temp = head->next;
+	temp = head->next; //다시 head를 한칸 민다
 	here_doc_count = 0;
 	i = -1;
 	while (++i < head->cmds)

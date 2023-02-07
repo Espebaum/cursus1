@@ -102,28 +102,32 @@ int	built_cd(char **t)
 	return (1);
 }
 
-int	built_pwd()
+int	built_pwd(char **builtin)
 {
 	char	t[2048];
 
+	(void) builtin;
 	getcwd(t, 2048);
 	printf("%s\n", t);
-	free(t);
+	//free(t);
 	return (1);
 }
 
-int	built_export()
+int	built_export(char **builtin)
 {
+	(void) builtin;
 	return (1);
 }
 
-int	built_unset()
+int	built_unset(char **builtin)
 {
+	(void) builtin;
 	return (1);
 }
 
-int	built_env()
+int	built_env(char **builtin)
 {
+	(void) builtin;
 	return (1);
 }
 
@@ -131,20 +135,20 @@ int	check_builtin(char **builtin)
 {
 	int		result;
 
-	result = 0;
-	if (ft_strnstr(builtin[0], "echo", ft_strlen(builtin[0])))
+	result = -1;
+	if (!ft_strncmp(builtin[0], "echo", 5) || (ft_strnstr(builtin[0], "echo", ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_echo(builtin);
-	if (ft_strnstr(builtin[0], "cd", ft_strlen(builtin[0])))
+	if (!ft_strncmp(builtin[0], "cd", 3) || (ft_strnstr(builtin[0], "cd", ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_cd(builtin);
-	if (ft_strnstr(builtin[0], "pwd", ft_strlen(builtin[0])))
+	if (!ft_strncmp(builtin[0], "pwd", 4) || (ft_strnstr(builtin[0], "pwd", ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_pwd(builtin);
-	if (ft_strnstr(builtin[0], "export", ft_strlen(builtin[0])))
+	if (!ft_strncmp(builtin[0], "export", 7)|| (ft_strnstr(builtin[0], "export", ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_export(builtin);
-	if (ft_strnstr(builtin[0], "unset", ft_strlen(builtin[0])))
+	if (!ft_strncmp(builtin[0], "unset", 6) || (ft_strnstr(builtin[0], "unset", ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_unset(builtin);
-	if (ft_strnstr(builtin[0], "pwd", ft_strlen(builtin[0])))
-		result = built_pwd(builtin);
-	if (ft_strnstr(builtin[0], "exit", ft_strlen(builtin[0])))
+	if (!ft_strncmp(builtin[0], "env", 4) || (ft_strnstr(builtin[0], "env", ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
+		result = built_env(builtin);
+	if (!ft_strncmp(builtin[0], "exit", 5) || (ft_strnstr(builtin[0], "exit", ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		exit(0);
 	return (result);
 }

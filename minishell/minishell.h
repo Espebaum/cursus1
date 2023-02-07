@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/07 16:49:29 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/07 21:56:08 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_doc
 	char	**name;
 	int		count;
 	char	**limiters;
+	int		zero;
 }	t_doc;
 
 typedef struct s_data
@@ -79,6 +80,7 @@ typedef struct s_cover
 {
 	t_data	data;
 	t_token	*head;
+	t_token	*temp;
 	int		cp_stdin;
 }	t_cover;
 
@@ -154,7 +156,7 @@ void	dup_pipes(t_token **head, int *pipes, t_data *data);
 int		exit_error(char *message, int signal, int exit_code);
 int		wait_all(pid_t last_pid);
 int		check_builtin(char **t);
-char	**read_cmd(t_data *data, t_token **head, int flag, int *heredoc_count);
+char	**read_cmd(t_data *data, t_token **head, int *heredoc_count);
 char	**keep_execve(t_data data, t_token **head, char **t, int *flag);
 void	init_fd(t_data *data);
 int		ft_max(int a, int b);

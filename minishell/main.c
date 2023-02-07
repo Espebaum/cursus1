@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/07 16:49:46 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/07 22:34:11 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,9 @@ int	main(int argc, char **argv, char **envp)
 			init_data(&(cover.data), doc, envp, cover.head);
 			if (cover.head->cmds == 1)
 			{
-				builtin = read_cmd(&(cover.data), &(cover.head), 0, NULL); //head를 순회하면서 t를 만든다.
-				if (check_builtin(builtin)) //builtin[0] == ft_strnstr(builtin)
+				cover.temp = cover.head;
+				builtin = read_cmd(&(cover.data), &(cover.temp), &(doc.zero));
+				if (check_builtin(builtin) >= 0)
 					continue ;
 			}
 			g_exit_code = pipe_line(cover.data, cover.head, cover);
@@ -99,3 +100,5 @@ int	main(int argc, char **argv, char **envp)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (g_exit_code);
 }
+// (1) 부모 echo 실행시 출력 리다이렉션으로 안바뀌고 표준출력된
+// (2) ech"o hio" 세그폴트

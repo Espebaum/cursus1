@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:28:36 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/06 15:19:59 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/07 21:56:43 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_doc	*init_doc(t_doc *doc)
 	doc->name = NULL;
 	doc->count = 0;
 	doc->limiters = NULL;
+	doc->zero = 0;
 	return (doc);
 }
 
