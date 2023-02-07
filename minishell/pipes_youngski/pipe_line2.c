@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/06 23:21:23 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/07 15:14:51 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,11 @@ char	**keep_execve(t_data data, t_token **head, char **t, int *flag)
 	char	*cmd;
 
 	cmd = (*head)->str;
-	if (cmd[0] == '\0' || (!(check_command(data.path, cmd) || !builtin_check(cmd)) && *flag == 0))
+	if (cmd[0] == '\0' || (!(check_command(data.path, cmd) \
+		&& !builtin_check(cmd)) && *flag == 0))
+		exit_error(cmd, 0, 127);
+	if ((*head)->cmds == 1 && (!(check_command(data.path, cmd) \
+		&& !builtin_check(cmd))))
 		exit_error(cmd, 0, 127);
 	ret = copy_orders(t);
 	ret = add_order(ret, cmd, *flag);
