@@ -1,0 +1,196 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+CC	Makefile	/^CC				= cc$/;"	m
+CC	libft/Makefile	/^CC = cc$/;"	m
+CFLAGS	Makefile	/^CFLAGS			= -wall -wextra -werror$/;"	m
+CFLAGS	libft/Makefile	/^CFLAGS = -Wall -Werror -Wextra$/;"	m
+DFL	minishell.h	/^# define DFL /;"	d
+IGN	minishell.h	/^# define IGN /;"	d
+INCFLAGS	Makefile	/^INCFLAGS		= -I\/Users\/gyopark\/.brew\/opt\/readline\/include$/;"	m
+LIBFLAGS	Makefile	/^LIBFLAGS		= -L\/Users\/gyopark\/.brew\/opt\/readline\/lib$/;"	m
+LIBFT	Makefile	/^LIBFT			= libft$/;"	m
+LIBFT_H	libft/libft.h	/^# define LIBFT_H$/;"	d
+LIBFT_LIB	Makefile	/^LIBFT_LIB		= libft.a$/;"	m
+MINISHELL_H	minishell.h	/^# define MINISHELL_H$/;"	d
+NAME	Makefile	/^NAME			= minishell$/;"	m
+NAME	libft/Makefile	/^NAME = libft.a$/;"	m
+OBJS	Makefile	/^OBJS			= $(SRCS:.c=.o)$/;"	m
+OBJS_BONUS	libft/Makefile	/^OBJS_BONUS = $(SRCS_BONUS:.c=.o)$/;"	m
+OBJS_MAN	libft/Makefile	/^OBJS_MAN = $(SRCS_MAN:.c=.o)$/;"	m
+RLFLAGS	Makefile	/^RLFLAGS			= -lreadline$/;"	m
+SHE	minishell.h	/^# define SHE /;"	d
+SRCS	Makefile	/^SRCS			= main.c $/;"	m
+SRCS_BONUS	libft/Makefile	/^SRCS_BONUS = ft_lstnew.c		\\$/;"	m
+SRCS_MAN	libft/Makefile	/^SRCS_MAN = ft_atoi.c		\\$/;"	m
+T_DQUOTE	minishell.h	/^# define T_DQUOTE /;"	d
+T_ERROR	minishell.h	/^# define T_ERROR	/;"	d
+T_PIPE	minishell.h	/^# define T_PIPE /;"	d
+T_REDIRECT	minishell.h	/^# define T_REDIRECT /;"	d
+T_SQUOTE	minishell.h	/^# define T_SQUOTE /;"	d
+T_WORD	minishell.h	/^# define T_WORD /;"	d
+add_order	pipes_youngski/pipe_line4.c	/^char	**add_order(char **t, char *str, int flag)$/;"	f
+append_redirection	pipes_youngski/pipe_line3.c	/^int	append_redirection(int output_fd, t_token **head, t_data *data)$/;"	f
+built_cd	srcs/built_in1.c	/^void	built_cd(char **t)$/;"	f
+built_echo	srcs/built_in1.c	/^void	built_echo(char **t)$/;"	f
+built_env	srcs/built_in1.c	/^void	built_env()$/;"	f
+built_export	srcs/built_in1.c	/^void	built_export()$/;"	f
+built_pwd	srcs/built_in1.c	/^void	built_pwd()$/;"	f
+built_unset	srcs/built_in1.c	/^void	built_unset()$/;"	f
+builtin_check	srcs/built_in1.c	/^int	builtin_check(char *str)$/;"	f
+capacity	minishell.h	/^	int		capacity;$/;"	m	struct:s_str
+check_builtin	srcs/built_in1.c	/^int	check_builtin(char **t, t_data data, char *str)$/;"	f
+check_command	pipes_youngski/check_cmd.c	/^int	check_command(char **path, char *cmd)$/;"	f
+check_rules	srcs/syntax_check1.c	/^int	check_rules(int *type_arr, int len)$/;"	f
+check_syntax	srcs/syntax_check1.c	/^int	check_syntax(t_token *head)$/;"	f
+clear_str	srcs/lex_free.c	/^void	clear_str(t_str *str)$/;"	f
+cmds	minishell.h	/^	int				cmds;$/;"	m	struct:s_token
+content	libft/libft.h	/^	void			*content;$/;"	m	struct:s_list
+copy_orders	pipes_youngski/pipe_line4.c	/^char	**copy_orders(char **t)$/;"	f
+count	minishell.h	/^	int		count;$/;"	m	struct:s_doc
+count_size	libft/ft_split.c	/^static int	count_size(char const *s, char c)$/;"	f	file:
+cp_stdin	minishell.h	/^	int		cp_stdin;$/;"	m	struct:s_cover
+cutting_t	srcs/built_in1.c	/^char    **cutting_t(char **t, int *flag)$/;"	f
+data	minishell.h	/^	t_data	data;$/;"	m	struct:s_cover
+deep_copy_env	srcs/lex_tokenize.c	/^char	**deep_copy_env(char **envp)$/;"	f
+doc_name	minishell.h	/^	char	**doc_name;$/;"	m	struct:s_data
+doc_syntax	srcs/doc_syntax.c	/^int	doc_syntax(char *str)$/;"	f
+doc_syntax_check	srcs/doc_syntax.c	/^int	doc_syntax_check(char *str, const int len)$/;"	f
+dup_pipes	pipes_youngski/pipe_line3.c	/^void	dup_pipes(t_token **head, int *pipes, t_data *data)$/;"	f
+envp	minishell.h	/^	char	**envp;$/;"	m	struct:s_data
+exit_error	srcs/err_exit.c	/^int	exit_error(char *message, int signal, int exit_code)$/;"	f
+find_path	pipes_youngski/pipe_line2.c	/^char	*find_path(char *argv[], char **envp, int i)$/;"	f
+flag	minishell.h	/^	int				flag;$/;"	m	struct:s_token
+forked_child_work	pipes_youngski/pipe_line2.c	/^void	forked_child_work(t_data *data, t_token **head, int *pipes,$/;"	f
+free_str	srcs/lex_free.c	/^void	free_str(t_str *str)$/;"	f
+free_token	srcs/lex_free.c	/^void	free_token(t_token *cur)$/;"	f
+ft_atoi	libft/ft_atoi.c	/^int	ft_atoi(const char *str)$/;"	f
+ft_bzero	libft/ft_bzero.c	/^void	*ft_bzero(void *s, size_t n)$/;"	f
+ft_calloc	libft/ft_calloc.c	/^void	*ft_calloc(size_t count, size_t size)$/;"	f
+ft_freeall	libft/ft_split.c	/^static void	ft_freeall(char **spl)$/;"	f	file:
+ft_isalnum	libft/ft_isalnum.c	/^int	ft_isalnum(int c)$/;"	f
+ft_isalpha	libft/ft_isalpha.c	/^int	ft_isalpha(int c)$/;"	f
+ft_isascii	libft/ft_isascii.c	/^int	ft_isascii(int c)$/;"	f
+ft_isdigit	libft/ft_isdigit.c	/^int	ft_isdigit(int c)$/;"	f
+ft_isprint	libft/ft_isprint.c	/^int	ft_isprint(int c)$/;"	f
+ft_itoa	libft/ft_itoa.c	/^char	*ft_itoa(int n)$/;"	f
+ft_len	libft/ft_itoa.c	/^static size_t	ft_len(long long *num)$/;"	f	file:
+ft_lstadd_back	libft/ft_lstadd_back.c	/^void	ft_lstadd_back(t_list **lst, t_list *new)$/;"	f
+ft_lstadd_front	libft/ft_lstadd_front.c	/^void	ft_lstadd_front(t_list **lst, t_list *new)$/;"	f
+ft_lstclear	libft/ft_lstclear.c	/^void	ft_lstclear(t_list **lst, void (*del)(void *))$/;"	f
+ft_lstdelone	libft/ft_lstdelone.c	/^void	ft_lstdelone(t_list *lst, void (*del)(void *))$/;"	f
+ft_lstiter	libft/ft_lstiter.c	/^void	ft_lstiter(t_list *lst, void (*f)(void *))$/;"	f
+ft_lstlast	libft/ft_lstlast.c	/^t_list	*ft_lstlast(t_list *lst)$/;"	f
+ft_lstmap	libft/ft_lstmap.c	/^t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))$/;"	f
+ft_lstnew	libft/ft_lstnew.c	/^t_list	*ft_lstnew(void	*content)$/;"	f
+ft_lstsize	libft/ft_lstsize.c	/^int	ft_lstsize(t_list *lst)$/;"	f
+ft_max	utils.c	/^int	ft_max(int a, int b)$/;"	f
+ft_memchr	libft/ft_memchr.c	/^void	*ft_memchr(const void *s, int c, size_t n)$/;"	f
+ft_memcmp	libft/ft_memcmp.c	/^int	ft_memcmp(const void *s1, const void *s2, size_t n)$/;"	f
+ft_memcpy	libft/ft_memcpy.c	/^void	*ft_memcpy(void *dest, const void *src, size_t n)$/;"	f
+ft_memmove	libft/ft_memmove.c	/^void	*ft_memmove(void *dest, const void *src, size_t n)$/;"	f
+ft_memset	libft/ft_memset.c	/^void	*ft_memset(void *dest, int c, size_t n)$/;"	f
+ft_perror	srcs/err_exit.c	/^int	ft_perror(char *str, int signal, int exit_code)$/;"	f
+ft_putchar_fd	libft/ft_putchar_fd.c	/^void	ft_putchar_fd(char c, int fd)$/;"	f
+ft_putendl_fd	libft/ft_putendl_fd.c	/^void	ft_putendl_fd(char *s, int fd)$/;"	f
+ft_putnbr_fd	libft/ft_putnbr_fd.c	/^void	ft_putnbr_fd(int n, int fd)$/;"	f
+ft_putstr_fd	libft/ft_putstr_fd.c	/^void	ft_putstr_fd(char *s, int fd)$/;"	f
+ft_split	libft/ft_split.c	/^char	**ft_split(char const *s, char c)$/;"	f
+ft_strchr	libft/ft_strchr.c	/^char	*ft_strchr(const char *s, int c)$/;"	f
+ft_strdup	libft/ft_strdup.c	/^char	*ft_strdup(const char *s1)$/;"	f
+ft_striteri	libft/ft_striteri.c	/^void	ft_striteri(char *s, void (*f)(unsigned int, char*))$/;"	f
+ft_strjoin	libft/ft_strjoin.c	/^char	*ft_strjoin(char const *s1, char const *s2)$/;"	f
+ft_strlcat	libft/ft_strlcat.c	/^size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)$/;"	f
+ft_strlcpy	libft/ft_strlcpy.c	/^size_t	ft_strlcpy(char *dest, const char *src, size_t size)$/;"	f
+ft_strlen	libft/ft_strlen.c	/^size_t	ft_strlen(const char *s)$/;"	f
+ft_strmapi	libft/ft_strmapi.c	/^char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))$/;"	f
+ft_strncmp	libft/ft_strncmp.c	/^int	ft_strncmp(const char *s1, const char *s2, size_t n)$/;"	f
+ft_strnstr	libft/ft_strnstr.c	/^char	*ft_strnstr(const char *haystack, const char *needle, size_t len)$/;"	f
+ft_strrchr	libft/ft_strrchr.c	/^char	*ft_strrchr(const char *s, int c)$/;"	f
+ft_strtrim	libft/ft_strtrim.c	/^char	*ft_strtrim(char const *s1, char const *set)$/;"	f
+ft_substr	libft/ft_substr.c	/^char	*ft_substr(char const *s, unsigned int start, size_t len)$/;"	f
+ft_tolower	libft/ft_tolower.c	/^int	ft_tolower(int c)$/;"	f
+ft_toupper	libft/ft_toupper.c	/^int	ft_toupper(int c)$/;"	f
+g_exit_code	minishell.h	/^int	g_exit_code;$/;"	v
+get_cmds_num	srcs/syntax_check2.c	/^int	get_cmds_num(int *type_arr, int token_len)$/;"	f
+get_doc_count	srcs/doc_open.c	/^int	get_doc_count(char **doc_str)$/;"	f
+get_env_num	srcs/lex_env.c	/^int	get_env_num(char *envp)$/;"	f
+get_limiter	srcs/doc_open.c	/^char	**get_limiter(char **doc_str, t_doc *doc)$/;"	f
+get_path	pipes_youngski/check_cmd.c	/^char	**get_path(char **envp)$/;"	f
+get_rid_str	srcs/doc_open.c	/^char	*get_rid_str(int left, int right, char *doc_str)$/;"	f
+go_tokenize	srcs/lex_tokenize.c	/^t_token	*go_tokenize(char *cmd, char **envp, t_token *t)$/;"	f
+head	minishell.h	/^	t_token	*head;$/;"	m	struct:s_cover
+heredoc_file_make	srcs/doc_open.c	/^void	heredoc_file_make(int fd, char *limiter)$/;"	f
+heredoc_redirection	pipes_youngski/pipe_line3.c	/^int	heredoc_redirection(int input_fd, t_token **head, t_data *data,$/;"	f
+i_flag	minishell.h	/^	int		i_flag;$/;"	m	struct:s_data
+init_data	pipes_youngski/pipe_line1.c	/^int	init_data(t_data *data, t_doc doc, char **envp, t_token *head)$/;"	f
+init_doc	srcs/doc_open.c	/^t_doc	*init_doc(t_doc *doc)$/;"	f
+init_fd	pipes_youngski/pipe_line2.c	/^void	init_fd(t_data *data)$/;"	f
+init_fork	pipes_youngski/pipe_line1.c	/^int	init_fork(t_token **head, t_data *data, int i, int *heredoc_count)$/;"	f
+init_line	main.c	/^char	*init_line(char *line)$/;"	f
+input_redirection	pipes_youngski/pipe_line3.c	/^int	input_redirection(int input_fd, t_token **head, t_data *data)$/;"	f
+io_fd	minishell.h	/^	int		io_fd[2];$/;"	m	struct:s_data
+is_char_space	srcs/lex_make_push.c	/^int	is_char_space(char c)$/;"	f
+is_line_end	srcs/lex_tokenize.c	/^int	is_line_end(char s)$/;"	f
+is_sep	libft/ft_split.c	/^static int	is_sep(char s, char c)$/;"	f	file:
+is_space	libft/ft_atoi.c	/^static int	is_space(char c)$/;"	f	file:
+is_str_space	main.c	/^int	is_str_space(char *line)$/;"	f
+is_word_end	srcs/lex_tokenize.c	/^int	is_word_end(char s)$/;"	f
+keep_execve	pipes_youngski/pipe_line2.c	/^char	**keep_execve(t_data data, t_token **head, char **t, int *flag)$/;"	f
+len	minishell.h	/^	int		len;$/;"	m	struct:s_str
+limiters	minishell.h	/^	char	**limiters;$/;"	m	struct:s_doc
+main	main.c	/^int	main(int argc, char **argv, char **envp)$/;"	f
+main_init	main.c	/^void	main_init(int argc, __attribute__((unused)) char *argv[])$/;"	f
+make_doc_files	srcs/doc_open.c	/^void	make_doc_files(int count, t_doc *doc)$/;"	f
+make_str	srcs/lex_make_push.c	/^t_str	*make_str(void)$/;"	f
+make_token	srcs/lex_make_push.c	/^t_token	*make_token(void)$/;"	f
+make_type_arr	srcs/syntax_check1.c	/^int	*make_type_arr(t_token *head, int *token_len)$/;"	f
+name	minishell.h	/^	char	**name;$/;"	m	struct:s_doc
+next	libft/libft.h	/^	struct s_list	*next;$/;"	m	struct:s_list	typeref:struct:s_list::s_list
+next	minishell.h	/^	struct s_token	*next;$/;"	m	struct:s_token	typeref:struct:s_token::s_token
+o_flag	minishell.h	/^	int		o_flag;$/;"	m	struct:s_data
+open_heredoc	srcs/doc_open.c	/^int	open_heredoc(t_doc *doc, char *line)$/;"	f
+output_redirection	pipes_youngski/pipe_line3.c	/^int	output_redirection(int output_fd, t_token **head, t_data *data)$/;"	f
+parent_proc	pipes_youngski/pipe_line1.c	/^void	parent_proc(int *pipes)$/;"	f
+path	minishell.h	/^	char	**path;$/;"	m	struct:s_data
+pid	minishell.h	/^	int		*pid;$/;"	m	struct:s_data
+pipe_line	pipes_youngski/pipe_line1.c	/^int	pipe_line(t_data data, t_token *head, t_cover cover)$/;"	f
+place_word	libft/ft_split.c	/^static void	place_word(char **spl, char const *s, char c, int *flag)$/;"	f	file:
+prev	minishell.h	/^	struct s_token	*prev;$/;"	m	struct:s_token	typeref:struct:s_token::s_token
+print_token	srcs/lex_free.c	/^void	print_token(t_token *cur)$/;"	f
+push_str	srcs/lex_make_push.c	/^void	push_str(t_str *str, char val)$/;"	f
+push_token	srcs/lex_make_push.c	/^t_token	*push_token(int type, t_str *buf, t_token *prev)$/;"	f
+read_cmd	srcs/built_in2.c	/^char	**read_cmd(t_data *data, t_token **head, int flag, int *heredoc_count)$/;"	f
+read_env	srcs/lex_read.c	/^void	read_env(char **s, t_str *buf, char **envp, int *r_env)$/;"	f
+read_pipe_redir	srcs/lex_read.c	/^t_token	*read_pipe_redir(char **s, t_token *cur, t_str *buf)$/;"	f
+read_word	srcs/lex_read.c	/^t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)$/;"	f
+read_word_dquote	srcs/lex_read.c	/^int	read_word_dquote(char **s, t_str *buf, char **envp, int *r_env)$/;"	f
+read_word_squote	srcs/lex_read.c	/^int	read_word_squote(char **s, t_str *buf)$/;"	f
+resize_str	srcs/lex_free.c	/^void	resize_str(t_str *str)$/;"	f
+rid_quotes	srcs/doc_open.c	/^char	*rid_quotes(char *doc_str)$/;"	f
+rule_error	srcs/syntax_check2.c	/^int	rule_error(int *type_arr, int len)$/;"	f
+rule_pipe	srcs/syntax_check1.c	/^int	rule_pipe(int *type_arr, int len)$/;"	f
+rule_redirection	srcs/syntax_check1.c	/^int	rule_redirection(int *type_arr, int len)$/;"	f
+s	minishell.h	/^	char	*s;$/;"	m	struct:s_str
+s_cover	minishell.h	/^typedef struct s_cover$/;"	s
+s_data	minishell.h	/^typedef struct s_data$/;"	s
+s_doc	minishell.h	/^typedef struct s_doc$/;"	s
+s_list	libft/libft.h	/^typedef struct s_list$/;"	s
+s_str	minishell.h	/^typedef struct s_str$/;"	s
+s_token	minishell.h	/^typedef struct s_token$/;"	s
+set_signal	srcs/sig_handle.c	/^void	set_signal(int sig_int, int sig_quit)$/;"	f
+signal_handler	srcs/sig_handle.c	/^void	signal_handler(int signo)$/;"	f
+str	minishell.h	/^	char			*str;$/;"	m	struct:s_token
+syntax_err	srcs/syntax_check2.c	/^int	syntax_err(void)$/;"	f
+t_cover	minishell.h	/^}	t_cover;$/;"	t	typeref:struct:s_cover
+t_data	minishell.h	/^}	t_data;$/;"	t	typeref:struct:s_data
+t_doc	minishell.h	/^}	t_doc;$/;"	t	typeref:struct:s_doc
+t_list	libft/libft.h	/^}					t_list;$/;"	t	typeref:struct:s_list
+t_str	minishell.h	/^}	t_str;$/;"	t	typeref:struct:s_str
+t_token	minishell.h	/^}	t_token;$/;"	t	typeref:struct:s_token
+tokenize	srcs/lex_tokenize.c	/^t_token	*tokenize(char *s, char **envp)$/;"	f
+type	minishell.h	/^	int				type;$/;"	m	struct:s_token
+wait_all	pipes_youngski/pipe_line2.c	/^int	wait_all(pid_t last_pid)$/;"	f

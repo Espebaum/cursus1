@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 16:22:56 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/05 17:08:08 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/07 13:21:09 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,14 @@ void	built_echo(char **t)
 
 	flag = 0;
 	t = cutting_t(t, &flag);
-	while (t++)
+	while (*t)
 	{
 		printf("%s", t[0]);
 		if (flag == 0)
 			printf("\n");
+		else if (*(t + 1) != 0)
+			printf(" ");
+		t++;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/06 23:23:18 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/07 13:08:02 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,21 +83,21 @@ int	main(int argc, char **argv, char **envp)
 				syntax_err();
 				continue ;
 			}
-			//int flagg = 0;
+			int flagg = 0;
 			init_data(&(cover.data), doc, envp, cover.head);
-			// if (cover.head->cmds == 1 && builtin_check(cover.head->next->str))
-			// {
-			// 	cover.head = cover.head->next;
-			// 	if (ft_strncmp(cover.head->str, "echo", 4) == 0)
-			// 		flagg = 1;
-			// 	builtin = read_cmd(&(cover.data), &(cover.head), 0, NULL);
-			// 	if (flagg == 1)
-			// 		builtin[0] = "echo";
-			// 	check_builtin(builtin, cover.data, builtin[0]);
-			// 	free_token(cover.head);
-			// 	set_signal(SHE, SHE);
-			// 	continue ;
-			// }
+			 if (cover.head->cmds == 1 && builtin_check(cover.head->next->str))
+			 {
+			 	cover.head = cover.head->next;
+			 	if (ft_strncmp(cover.head->str, "echo", 4) == 0)
+			 		flagg = 1;
+			 	builtin = read_cmd(&(cover.data), &(cover.head), 0, NULL);
+			 	if (flagg == 1)
+			 		builtin[0] = "echo";
+			 	check_builtin(builtin, cover.data, builtin[0]);
+			 	free_token(cover.head);
+			 	set_signal(SHE, SHE);
+			 	continue ;
+			 }
 			g_exit_code = pipe_line(cover.data, cover.head, cover);
 			free_token(cover.head);
 			set_signal(SHE, SHE);
