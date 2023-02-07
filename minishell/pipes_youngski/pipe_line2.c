@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/06 21:26:46 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/06 23:21:23 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,28 @@
 int	wait_all(pid_t last_pid)
 {
 	pid_t	pid;
-	int		temp;
 	int		signo;
 	int		status;
 	int		i;
 
-	pid = 1;
 	i = 0;
+	pid = 1;
 	while (pid != -1)
 	{
-		pid = wait(&temp);
-		if (WIFSIGNALED(temp))
+		pid = wait(&status);
+		if (pid == last_pid)
 		{
-			signo = WTERMSIG(temp);
-			if (signo == SIGINT && i++ == 0)
-				printf("\n");
-			if (signo == SIGQUIT && i++ == 0)
-				printf("Quit: 3\n");
-			g_exit_code = 128 + signo;
-		}
-		else
-		{
-			if (pid == last_pid)
+			if (WIFSIGNALED(status))
 			{
-				status = temp;
-				g_exit_code = WEXITSTATUS(status);
+				signo = WTERMSIG(status);
+				if (signo == SIGINT && i++ == 0)
+					printf("\n");
+				if (signo == SIGQUIT && i++ == 0)
+					printf("Quit: 3\n");
+				g_exit_code = 128 + signo;
 			}
+			else
+				g_exit_code = WEXITSTATUS(status);
 		}
 	}
 	return (g_exit_code);
@@ -115,3 +111,36 @@ void	forked_child_work(t_data *data, t_token **head, int *pipes,
 }
 // 만일 함수 내부에서 fd 로 묶었는데 모든 파일에 변경사항이 저장되는 현상이 발생할 경우
 // 각각의 fd 값을 클로즈 해주기 위해서 fd 배열값을 가지고 가야된다.
+// int	wait_all(pid_t last_pid)
+// {
+// 	pid_t	pid;
+// 	int		temp;
+// 	int		signo;
+// 	int		status;
+// 	int		i;
+
+// 	i = 0;
+// 	pid = 1;
+// 	while (pid != -1)
+// 	{
+// 		pid = wait(&temp);
+// 		if (WIFSIGNALED(temp))
+// 		{
+// 			signo = WTERMSIG(temp);
+// 			if (signo == SIGINT && i++ == 0)
+// 				printf("\n");
+// 			if (signo == SIGQUIT && i++ == 0)
+// 				printf("Quit: 3\n");
+// 			g_exit_code = 128 + signo;
+// 		}
+// 		else
+// 		{
+// 			if (pid == last_pid)
+// 			{
+// 				status = temp;
+// 				g_exit_code = WEXITSTATUS(status);
+// 			}
+// 		}
+// 	}
+// 	return (g_exit_code);
+// }

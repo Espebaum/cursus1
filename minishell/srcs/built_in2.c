@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 20:53:24 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/06 20:32:17 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/06 22:48:15 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,5 @@ void	dup_builtin_pipes(t_data *data)
 			dup2(input_fd, STDIN_FILENO);
 		close(output_fd);
 		close(input_fd);
-}
-*/
-
-/*
-void	run_builtin(char **cmd, t_data data)
-{
-	check_builtin(cmd, data, )
 }
 */

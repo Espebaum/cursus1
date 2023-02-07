@@ -14,13 +14,21 @@
 
 int	builtin_check(char *str)
 {
-	return (ft_strncmp("cd", str, ft_strlen("cd")) == 0 || \
-	ft_strncmp("echo", str, ft_strlen("echo")) == 0 || \
-	ft_strncmp("pwd", str, ft_strlen("pwd")) == 0 || \
-	ft_strncmp("export", str, ft_strlen("export")) == 0 || \
-	ft_strncmp("unset", str, ft_strlen("unset")) == 0 || \
-	ft_strncmp("env", str, ft_strlen("env")) == 0 || \
-	ft_strncmp("exit", str, ft_strlen("exit")));
+	if (!ft_strncmp("echo", str, 4) && str[4] == 0)
+	return 1;
+	if (!ft_strncmp("cd", str, 2) && str[2] == 2)
+	return 1;
+	if (!ft_strncmp("pwd", str, 4) && str[4] == 0)
+	return 1;
+	if (!ft_strncmp("export", str, 7) && str[7] == 0)
+	return 1;
+	if (!ft_strncmp("unset", str, 6) && str[6] == 0)
+	return 1;
+	if (!ft_strncmp("env", str, 4) && str[4] == 0)
+	return 1;
+	if (!ft_strncmp("exit", str, 5) && str[5] == 0)
+	return 1;
+	return (0);
 }
 
 // t_token 의 구조체 안에 헤드를 가리키는 token *head를 추가해서
@@ -34,31 +42,35 @@ int	builtin_check(char *str)
 // 	// - 로  시작  하는   것것
 // }
 
-char	**cutting_t(char **t, int *flag)
+char    **cutting_t(char **t, int *flag)
 {
-	int	i;
-	int	j;
+    int i;
+    int j;
+    char **temp;
 
-	t++;
-	*flag = 0;
-	i = 0;
-	j = 0;
-	while (t)
-	{
-		if (t[0][0] == '-')
-		{
-			i = 0;
-			while (t[i])
-			{
-				if (t[i][j] != 'n')
-					return t ;
-				i++;
-			}
-			*flag = 0;
-		}
-		t++;
-	}
-	return t;
+    i = 0;
+    (t)++;
+    while (t[i])
+    {
+        temp = &t[i];
+        j = 0;
+        if (t[i][j] == '-')
+        {
+            j++;
+            while (t[i][j] != 0)
+            {
+                if (t[i][j] != 'n' && t[i][j] != 0)
+                    return (temp);
+                j++;
+            }
+            if (t[i][j] == 0)
+                *flag = 1;
+        }
+        else
+            return (temp);
+        i++;
+    }
+    return (&t[--i]);
 }
 
 void	built_echo(char **t)
@@ -66,7 +78,7 @@ void	built_echo(char **t)
 	int		flag;
 
 	flag = 0;
-	cutting_t(t, &flag);
+	t = cutting_t(t, &flag);
 	while (t++)
 	{
 		printf("%s", t[0]);
@@ -113,20 +125,20 @@ int	check_builtin(char **t, t_data data, char *str)
 
 	if (!ft_strncmp("echo", str, 4) && str[4] == 0)
 		built_echo(t);
-	if (!ft_strncmp("cd", str, 2))
+	if (!ft_strncmp("cd", str, 2) && str[2] == 2)
 	{
 		printf("check if word\n\n");
 		built_cd(t);
 	}
-	if (!ft_strncmp("pwd", str, 4))
+	if (!ft_strncmp("pwd", str, 4) && str[4] == 0)
 		built_pwd();
-	if (!ft_strncmp("export", str, 7))
+	if (!ft_strncmp("export", str, 7) && str[7] == 0)
 		built_export();
-	if (!ft_strncmp("unset", str, 6))
+	if (!ft_strncmp("unset", str, 6) && str[6] == 0)
 		built_unset();
-	if (!ft_strncmp("env", str, 4))
+	if (!ft_strncmp("env", str, 4) && str[4] == 0)
 		built_env();
-	if (!ft_strncmp("exit", str, 5))
+	if (!ft_strncmp("exit", str, 5) && str[5] == 0)
 		exit(1);
 	return (0);
 }
