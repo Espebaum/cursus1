@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/06 21:00:45 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/07 16:49:29 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ int		heredoc_redirection(int input_fd, t_token **head, t_data *data, \
 void	dup_pipes(t_token **head, int *pipes, t_data *data);
 int		exit_error(char *message, int signal, int exit_code);
 int		wait_all(pid_t last_pid);
-int		check_builtin(char **t, t_data data, char *str);
+int		check_builtin(char **t);
 char	**read_cmd(t_data *data, t_token **head, int flag, int *heredoc_count);
 char	**keep_execve(t_data data, t_token **head, char **t, int *flag);
 void	init_fd(t_data *data);

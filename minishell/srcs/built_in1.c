@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 16:22:56 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/07 13:43:03 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/07 15:59:01 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 int	builtin_check(char *str)
 {
 	if (!ft_strncmp("echo", str, 4) && str[4] == 0)
-	return 1;
+		return 1;
 	if (!ft_strncmp("cd", str, 2) && str[2] == 2)
-	return 1;
+		return 1;
 	if (!ft_strncmp("pwd", str, 4) && str[4] == 0)
-	return 1;
+		return 1;
 	if (!ft_strncmp("export", str, 7) && str[7] == 0)
-	return 1;
+		return 1;
 	if (!ft_strncmp("unset", str, 6) && str[6] == 0)
-	return 1;
+		return 1;
 	if (!ft_strncmp("env", str, 4) && str[4] == 0)
-	return 1;
+		return 1;
 	if (!ft_strncmp("exit", str, 5) && str[5] == 0)
-	return 1;
+		return 1;
 	return (0);
 }
 
@@ -44,106 +44,107 @@ int	builtin_check(char *str)
 
 char    **cutting_t(char **t, int *flag)
 {
-    int i;
-    int j;
-    char **temp;
+	int i;
+	int j;
+	char **temp;
 
-    i = 0;
-    (t)++;
-    while (t[i])
-    {
-        temp = &t[i];
-        j = 0;
-        if (t[i][j] == '-')
-        {
-            j++;
-            while (t[i][j] != 0)
-            {
-                if (t[i][j] != 'n' && t[i][j] != 0)
-                    return (temp);
-                j++;
-            }
-            if (t[i][j] == 0)
-                *flag = 1;
-        }
-        else
-            return (temp);
-        i++;
-    }
+	i = 0;
+	(t)++;
+	while (t[i])
+	{
+		temp = &t[i];
+		j = 0;
+		if (t[i][j] == '-')
+		{
+			j++;
+			while (t[i][j] != 0)
+			{
+				if (t[i][j] != 'n' && t[i][j] != 0)
+					return (temp);
+				j++;
+			}
+			if (t[i][j - 1] == '-')
+				return (temp);
+			if (t[i][j] == 0)
+				*flag = 1;
+		}
+		else
+			return (temp);
+		i++;
+	}
 	if (i == 0)
-		return (&t[i]);
-    return (&t[--i]);
+		return (temp);
+	return (&t[i]);
 }
 
-void	built_echo(char **t)
+int	built_echo(char **t)
 {
-	int		flag;
+	int     flag;
 
 	flag = 0;
 	t = cutting_t(t, &flag);
 	while (*t)
 	{
 		printf("%s", t[0]);
-		if (flag == 0)
-			printf("\n");
-		else if (*(t + 1) != 0)
+		if (*(t + 1) != 0)
 			printf(" ");
 		t++;
 	}
+	if (flag == 0)
+		printf("\n");
+	return (1);
 }
 
-void	built_cd(char **t)
+int	built_cd(char **t)
 {
 	printf("cd : working : %s\n", t[1]);
 	chdir(t[1]);
-	exit(1);
+	return (1);
 }
 
-void	built_pwd()
+int	built_pwd()
 {
 	char	t[2048];
 
 	getcwd(t, 2048);
 	printf("%s\n", t);
 	free(t);
-	exit(1);
+	return (1);
 }
 
-void	built_export()
+int	built_export()
 {
-	exit(1);
+	return (1);
 }
 
-void	built_unset()
+int	built_unset()
 {
-	exit(1);
+	return (1);
 }
 
-void	built_env()
+int	built_env()
 {
-	exit(1);
+	return (1);
 }
 
-int	check_builtin(char **t, t_data data, char *str)
+int	check_builtin(char **builtin)
 {
-	(void)data;
+	int		result;
 
-	if (!ft_strncmp("echo", str, 4) && str[4] == 0)
-		built_echo(t);
-	if (!ft_strncmp("cd", str, 2) && str[2] == 2)
-	{
-		printf("check if word\n\n");
-		built_cd(t);
-	}
-	if (!ft_strncmp("pwd", str, 4) && str[4] == 0)
-		built_pwd();
-	if (!ft_strncmp("export", str, 7) && str[7] == 0)
-		built_export();
-	if (!ft_strncmp("unset", str, 6) && str[6] == 0)
-		built_unset();
-	if (!ft_strncmp("env", str, 4) && str[4] == 0)
-		built_env();
-	if (!ft_strncmp("exit", str, 5) && str[5] == 0)
-		exit(1);
-	return (0);
+	result = 0;
+	if (ft_strnstr(builtin[0], "echo", ft_strlen(builtin[0])))
+		result = built_echo(builtin);
+	if (ft_strnstr(builtin[0], "cd", ft_strlen(builtin[0])))
+		result = built_cd(builtin);
+	if (ft_strnstr(builtin[0], "pwd", ft_strlen(builtin[0])))
+		result = built_pwd(builtin);
+	if (ft_strnstr(builtin[0], "export", ft_strlen(builtin[0])))
+		result = built_export(builtin);
+	if (ft_strnstr(builtin[0], "unset", ft_strlen(builtin[0])))
+		result = built_unset(builtin);
+	if (ft_strnstr(builtin[0], "pwd", ft_strlen(builtin[0])))
+		result = built_pwd(builtin);
+	if (ft_strnstr(builtin[0], "exit", ft_strlen(builtin[0])))
+		exit(0);
+	return (result);
 }
