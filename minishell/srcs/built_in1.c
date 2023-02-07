@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 16:22:56 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/07 13:21:09 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:43:03 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ char    **cutting_t(char **t, int *flag)
             return (temp);
         i++;
     }
+	if (i == 0)
+		return (&t[i]);
     return (&t[--i]);
 }
 
