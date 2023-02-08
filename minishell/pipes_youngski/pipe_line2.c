@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/07 22:34:04 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/08 21:37:44 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,27 +57,20 @@ char	**keep_execve_par(t_token **head, char **builtin, int *cmd_flag)
 
 char	**keep_execve_chd(t_data data, t_token **head, char **t, int *cmd_flag)
 {
-	char	**ret;
-	char	*cmd;
+	char		**ret;
+	char		*cmd;
+	struct stat	file_info;
 
 	cmd = (*head)->str;
+	lstat(cmd, &file_info);
 	if (cmd != NULL) //명령어가 NULL이 아니면 판단
 	{
-		if (cmd_flag[0] == 0) //첫번째 명령어일 때 -> 확인해야함 //첫번째 명령어 아니면 그냥 박음
+		if (cmd_flag[0] == '\0') //첫번째 명령어일 때 -> 확인해야함 //첫번째 명령어 아니면 그냥 박음
 		{
 			if (builtin_check(cmd) == 0) //일치하는 builtin이 있다면 1, 없다면 0을 리턴, 빌트인이 없다면 명령어 검사
-				if (check_command(data.path, cmd) == 0) //일치하는 command가 있다면 1, 없다면 0을 리턴, 명령어가 없다면 부모/자식에 따라 반환/종료
-					exit_error(cmd, 0, 127);
-			if (cmd[0] == '/')
 			{
-				if (access(cmd, X_OK) == -1)
-				{
-					ft_putstr_fd(cmd, 2);
-					write(2, ": ", 2);
-					ft_putstr_fd("is a directory\n", 2);
-					exit (126);
-				}
-
+				if (check_command(data.path, cmd) == 0 || S_ISDIR(file_info.st_mode)) //일치하는 command가 있다면 1, 없다면 0을 리턴, 명령어가 없다면 부모/자식에 따라 반환/종료
+					exit_error(cmd, 0, 127);
 			}
 		}
 	}
@@ -110,17 +103,17 @@ char	**read_cmd(t_data *data, t_token **head, int *heredoc_count)
 	{
 		if (ft_strncmp((*head)->str, ">>", 2) == 0
 			&& (*head)->type == T_REDIRECT)
-			data->io_fd[1] = append_redirection(data->io_fd[1], head, data);
+			data->io_fd[1] = append_redirection(data->io_fd[1], head, data, cmd_flag[1]);
 		else if (ft_strncmp((*head)->str, "<<", 2) == 0
 			&& (*head)->type == T_REDIRECT)
 			data->io_fd[0] = heredoc_redirection(data->io_fd[0], head, data, \
-			heredoc_count);
+			heredoc_count, cmd_flag[1]);
 		else if (ft_strncmp((*head)->str, "<", 1) == 0
 			&& (*head)->type == T_REDIRECT)
-			data->io_fd[0] = input_redirection(data->io_fd[0], head, data);
+			data->io_fd[0] = input_redirection(data->io_fd[0], head, data, cmd_flag[1]);
 		else if (ft_strncmp((*head)->str, ">", 1) == 0
 			&& (*head)->type == T_REDIRECT)
-			data->io_fd[1] = output_redirection(data->io_fd[1], head, data);
+			data->io_fd[1] = output_redirection(data->io_fd[1], head, data, cmd_flag[1]);
 		else
 		{
 			if (cmd_flag[1] == 1)

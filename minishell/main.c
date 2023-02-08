@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/07 22:34:11 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/08 22:05:11 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	is_str_space(char *line)
 	return (1);
 }
 
-void	main_init(int argc, __attribute__((unused)) char *argv[])
+void	init_prompt_sig(int argc, __attribute__((unused)) char *argv[])
 {
 	struct termios		term;
 
@@ -50,51 +50,80 @@ void	main_init(int argc, __attribute__((unused)) char *argv[])
 	set_signal(SHE, SHE);
 }
 
+t_cover	*init_cover(t_cover *cover)
+{
+	cover->data = (t_data *) malloc(sizeof(t_data));
+	cover->head = (t_token *) malloc(sizeof(t_token));
+	cover->doc = (t_doc *) malloc(sizeof(t_doc));
+	cover->cp_stdin = dup(STDIN_FILENO);
+	cover->builtin = (char **)malloc(sizeof(char *));
+	cover->builtin[0] = 0;
+	return (cover);
+}
+
+int	doc_check(t_cover *cover, char *line, int *check)
+{
+	if (doc_syntax(line) == -1)
+	{
+		*check = 1;
+		return (syntax_err());
+	}
+	if (open_heredoc(cover->doc, line) == -1)
+	{
+		*check = 1;
+		return (syntax_err());
+	}
+	return (0);
+}
+
+int	do_builtin(t_cover *cover)
+{
+	cover->temp = cover->head;
+	cover->builtin = read_cmd(cover->data, &(cover->temp), \
+	&(cover->doc->zero));
+	if (check_builtin(cover->builtin) >= 0)
+		return (-1);
+	return (0);
+}
+
+int	handle_line(char *line, t_cover *cover, char **envp)
+{
+	int	check;
+
+	check = 0;
+	if (doc_check(cover, line, &check) == -1)
+		return (-1);
+	cover->head = go_tokenize(line, envp, cover->head);
+	if (check_syntax(cover->head, check) == -1)
+		return (-1);
+	init_data(cover->data, *(cover->doc), envp, cover->head);
+	if (cover->head->cmds == 1)
+		if (do_builtin(cover) == -1)
+			return (-1);
+	g_exit_code = pipe_line(*(cover->data), cover->head, *cover);
+	free_token(cover->head);
+	set_signal(SHE, SHE);
+	return (g_exit_code);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char				*line;
-	t_cover				cover;
-	t_doc				doc;
+	t_cover				*cover;
 	struct termios		term;
-	char				**builtin;
 
-	builtin = (char **)malloc(sizeof(char *));
-	builtin[0] = 0;
-	cover.cp_stdin = dup(STDIN_FILENO);
+	cover = (t_cover *)malloc(sizeof(t_cover));
+	cover = init_cover(cover);
 	line = NULL;
 	tcgetattr(STDIN_FILENO, &term);
-	main_init(argc, argv);
+	init_prompt_sig(argc, argv);
 	while (1)
 	{
-		init_fd(&(cover.data));
+		init_fd(cover->data);
 		line = init_line(line);
 		if (*line != '\0' && !is_str_space(line))
-		{
-			if (doc_syntax(line) == -1)
-			{
-				syntax_err();
+			if (handle_line(line, cover, envp) == -1)
 				continue ;
-			}
-			if (open_heredoc(&doc, line) == -1)
-				continue ;
-			cover.head = go_tokenize(line, envp, cover.head);
-			if (check_syntax(cover.head) == -1)
-			{
-				syntax_err();
-				continue ;
-			}
-			init_data(&(cover.data), doc, envp, cover.head);
-			if (cover.head->cmds == 1)
-			{
-				cover.temp = cover.head;
-				builtin = read_cmd(&(cover.data), &(cover.temp), &(doc.zero));
-				if (check_builtin(builtin) >= 0)
-					continue ;
-			}
-			g_exit_code = pipe_line(cover.data, cover.head, cover);
-			free_token(cover.head);
-			set_signal(SHE, SHE);
-		}
 		free(line);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);

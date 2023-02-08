@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:28:36 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/07 21:56:43 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/08 23:01:58 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,61 +21,63 @@ t_doc	*init_doc(t_doc *doc)
 	return (doc);
 }
 
-char	*get_rid_str(int left, int right, char *doc_str)
+int	have_quotes(char *doc_str)
 {
 	const int	len = ft_strlen(doc_str);
-	char		*limiter;
-	int			str_idx;
-	int			lim_idx;
+	int			i;
 
-	str_idx = -1;
+	i = -1;
+	while (++i < len)
+		if (doc_str[i] == '\'' || doc_str[i] == '\"')
+			return (1);
+	return (0);
+}
+
+char	*get_rid_str(char *doc_str, char *limiter)
+{
+	int		i;
+	int		lim_idx;
+
+	i = -1;
 	lim_idx = 0;
-	limiter = (char *) malloc(sizeof(char) * (len - 1));
-	limiter[len - 2] = '\0';
-	while (++str_idx < len)
+	while (doc_str[++i])
 	{
-		if (str_idx == left || str_idx == right)
-		{
-			str_idx++;
-			if (str_idx == right)
-				str_idx++;
-		}
-		limiter[lim_idx++] = doc_str[str_idx];
+		if (doc_str[i] == '\'')
+			while (doc_str[++i] != '\'')
+				limiter[lim_idx++] = doc_str[i];
+		else if (doc_str[i] == '\"')
+			while (doc_str[++i] != '\"')
+				limiter[lim_idx++] = doc_str[i];
+		else
+			limiter[lim_idx++] = doc_str[i];
 	}
 	return (limiter);
 }
 
 char	*rid_quotes(char *doc_str)
 {
-	char		*limiter;
-	int			i;
-	int			left;
-	int			right;
+	int		i;
+	char	*limiter;
+	int		limiter_len;
 
 	i = -1;
-	left = 0;
-	right = 0;
+	limiter_len = 0;
 	while (doc_str[++i])
 	{
-		if ((doc_str[0] == '\"' && doc_str[1] == '\"')
-			|| (doc_str[0] == '\'' && doc_str[1] == '\''))
+		if (doc_str[i] == '\'')
+			while (doc_str[++i] != '\'')
+				limiter_len++;
+		else if (doc_str[i] == '\"')
 		{
-			left = 0;
-			right = 1;
-			break ;
+			while (doc_str[++i] != '\"')
+				limiter_len++;
 		}
-		if (doc_str[i] == '\"' || doc_str[i] == '\'')
-		{
-			if (left == 0)
-				left = i;
-			else
-				right = i;
-		}
+		else
+			limiter_len++;
 	}
-	if ((left == 0 && right == 1) || left != 0)
-		limiter = get_rid_str(left, right, doc_str);
-	else
-		return (doc_str);
+	limiter = (char *) malloc(sizeof(char) * (limiter_len + 1));
+	limiter[limiter_len] = '\0';
+	limiter = get_rid_str(doc_str, limiter);
 	return (limiter);
 }
 
@@ -179,6 +181,106 @@ void	make_doc_files(int count, t_doc *doc)
 	}
 }
 
+int	count_heredoc(char *line)
+{
+	const int	len = ft_strlen(line);
+	int			cnt;
+	int			i;
+
+	i = -1;
+	cnt = 0;
+	while (++i < len - 1)
+	{
+		if (line[i] == '<' && line[i + 1] == '<')
+		{
+			cnt++;
+			i++;
+		}	
+	}
+	return (cnt);
+}
+
+// char	**myfunc_split(char *line)
+// {
+// 	char	**ret;
+// 	char	*line_temp;
+// 	int		flag[3];
+// 	int		i;
+// 	int		j;
+// 	int		count[2];
+
+// 	i = 0;
+// 	count[0] = count_heredoc(line);// make ret**
+// 	count[1] = 0;// for spilted char * count
+// 	flag[0] = 0;// for "  started
+// 	flag[1] = 0;// for ' started
+// 	flag[2] = 1;//middle while stop
+// 	ret = (char **)malloc(sizeof(char *) * (count[0] + 1));	
+// 	ret[count[0]] = 0;
+// 	while (line_temp[i])
+// 	{
+// 		line_temp = ft_strnstr(line, "<<", ft_strlen(line));
+// 		while (line_temp[i] && flag[2])
+// 		{
+// 			if (!line_temp)
+// 				return 0;
+// 			while (line_temp[i] == ' ')
+// 				i++;
+// 			if (line_temp == '\'' && flag[1] != 1)
+// 			{
+// 				flag[0] = 1;
+// 				i++;
+// 			}
+// 			else if (line_temp == '\"' && flag[0] != 1)
+// 			{
+// 				flag[1] = 1;
+// 				i++;
+// 			}
+// 			else if (flag[0] == 0 && flag[1] == 0 && line_temp == ' ')
+// 				flag[2] = 0;
+// 			else
+// 			{
+// 				count[2] += 1;
+// 				i++;
+// 			}
+// 		}
+// 		ret[j] = (char *)malloc(sizeof(char) * (count[2] + 1));
+// 		ret[j][count[2]] = 0;
+// 		j++;
+// 	}
+// 	while (line_temp[i])
+// 	{
+// 		line_temp = ft_strnstr(line, "<<", ft_strlen(line));
+// 		j = 0;
+// 		while (line_temp[i] && flag[3])
+// 		{
+// 			if (!line_temp)
+// 				return 0;
+// 			while (line_temp[i] == ' ')
+// 				i++;
+// 			if (line_temp == '\'' && flag[1] != 1)
+// 			{
+// 				flag[0] = 1;
+// 				i++;
+// 			}
+// 			else if (line_temp == '\"' && flag[0] != 1)
+// 			{
+// 				flag[1] = 1;
+// 				i++;
+// 			}
+// 			else if (flag[0] == 0 && flag[1] == 0 && line_temp == ' ')
+// 				flag[2] = 0;
+// 			else
+// 			{
+// 				count[2] += 1;
+// 				ret[j][i] = line_temp[i];
+// 				i++;
+// 				j++;
+// 			}
+// 		}
+// 	}
+// }
+
 int	open_heredoc(t_doc *doc, char *line)
 {
 	char	**doc_str;
@@ -194,4 +296,3 @@ int	open_heredoc(t_doc *doc, char *line)
 	make_doc_files(doc->count, doc);
 	return (0);
 }
-//리미터 쿼트 안에 있으면 쿼트 제거

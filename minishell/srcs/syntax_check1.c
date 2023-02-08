@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 19:57:00 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/07 14:41:05 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/08 22:04:52 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	*make_type_arr(t_token *head, int *token_len)
 	return (type_arr);
 }
 
-int	check_syntax(t_token *head)
+int	check_syntax(t_token *head, int check)
 {
 	int		token_len;
 	int		*type_arr;
@@ -90,6 +90,11 @@ int	check_syntax(t_token *head)
 		temp = temp->next;
 	}
 	if (check_rules(type_arr, token_len) == -1)
-		return (-1);
+	{
+		if (check == 0)
+			return (syntax_err());
+		else
+			return (-1);
+	}
 	return (0);
 }

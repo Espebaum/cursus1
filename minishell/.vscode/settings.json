@@ -9,7 +9,11 @@
         "history.h": "c",
         "chrono": "c",
         "unordered_map": "c",
-        "sstream": "c"
+        "sstream": "c",
+        "array": "c",
+        "string": "c",
+        "string_view": "c",
+        "vector": "c"
     },
     "editor.definitionLinkOpensInPeek": true,
     "editor.gotoLocation.alternativeDefinitionCommand": "editor.action.referenceSearch.trigger",

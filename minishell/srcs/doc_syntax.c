@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 12:28:04 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/06 15:32:47 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/08 23:01:13 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	doc_syntax_check(char *str, const int len)
 		return (-1);
 	return (0);
 }
+//"b'c"는 b'c가 리미터, 'b"c'는 b"c가 리미터이므로 단순히 홀짝 비교만 하면 안된다.
 
 int	doc_syntax(char *str)
 {

@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/07 21:56:08 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/08 22:07:23 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@
 # include <stdlib.h>
 # include <termios.h>
 # include <errno.h>
-# include <string.h>
+//# include <string.h>
 # include <signal.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include "./libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -78,10 +79,12 @@ typedef struct s_data
 
 typedef struct s_cover
 {
-	t_data	data;
+	t_data	*data;
+	t_doc	*doc;
 	t_token	*head;
 	t_token	*temp;
 	int		cp_stdin;
+	char	**builtin;
 }	t_cover;
 
 t_token	*go_tokenize(char *cmd, char **envp, t_token *t);
@@ -111,7 +114,7 @@ int		get_env_num(char *envp);
 
 int		check_func(int *cnt);
 int		is_valid_token(t_token *t);
-int		check_syntax(t_token *head);
+int		check_syntax(t_token *head, int check);
 int		rule_error(int *type_arr, int len);
 int		get_cmds_num(int *type_arr, int token_len);
 int		syntax_err(void);
@@ -147,11 +150,11 @@ int		free_pid_docs(int *pid, int *doc_fd);
 void	open_doc_file(t_data *data, char *t, int *i, int *k);
 void	read_dquote_env(char **s, t_str *buf, char **envp);
 
-int		output_redirection(int o_fd, t_token **head, t_data *data);
-int		input_redirection(int i_fd, t_token **head, t_data *data);
-int		append_redirection(int o_fd, t_token **head, t_data *data);
+int		output_redirection(int o_fd, t_token **head, t_data *data, int cmd_flag);
+int		input_redirection(int i_fd, t_token **head, t_data *data, int cmd_flag);
+int		append_redirection(int o_fd, t_token **head, t_data *data, int cmd_flag);
 int		heredoc_redirection(int input_fd, t_token **head, t_data *data, \
-		int *heredoc_count);
+		int *heredoc_count, int cmd_flag);
 void	dup_pipes(t_token **head, int *pipes, t_data *data);
 int		exit_error(char *message, int signal, int exit_code);
 int		wait_all(pid_t last_pid);

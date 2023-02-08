@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/06 22:08:15 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/08 20:25:25 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	dup_pipes(t_token **head, int *pipes, t_data *data)
 	}
 }
 
-int	output_redirection(int output_fd, t_token **head, t_data *data)
+int	output_redirection(int output_fd, t_token **head, t_data *data, int cmd_flag)
 {
 	int		fd;
 	char	*filename;
@@ -46,14 +46,16 @@ int	output_redirection(int output_fd, t_token **head, t_data *data)
 	(*head) = (*head)->next;
 	filename = (*head)->str;
 	fd = open((*head)->str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd == -1)
+	if (fd == -1 && cmd_flag == 0)
 		exit_error((*head)->str, 0, 1);
+	else if (fd == -1 && cmd_flag == 1)
+		return (-1);
 	(*head) = (*head)->next;
 	data->o_flag = 1;
 	return (fd);
 }
 
-int	input_redirection(int input_fd, t_token **head, t_data *data)
+int	input_redirection(int input_fd, t_token **head, t_data *data, int cmd_flag)
 {
 	int		fd;
 	char	*filename;
@@ -62,14 +64,16 @@ int	input_redirection(int input_fd, t_token **head, t_data *data)
 	(*head) = (*head)->next;
 	filename = (*head)->str;
 	fd = open (filename, O_RDONLY);
-	if (fd == -1)
-		exit_error(filename, 0, 1);
+	if (fd == -1 && cmd_flag == 0)
+		exit_error((*head)->str, 0, 1);
+	else if (fd == -1 && cmd_flag == 1)
+		return (-1);
 	(*head) = (*head)->next;
 	data->i_flag = 1;
 	return (fd);
 }
 
-int	append_redirection(int output_fd, t_token **head, t_data *data)
+int	append_redirection(int output_fd, t_token **head, t_data *data, int cmd_flag)
 {
 	int		fd;
 	char	*filename;
@@ -78,15 +82,17 @@ int	append_redirection(int output_fd, t_token **head, t_data *data)
 	(*head) = (*head)->next;
 	filename = (*head)->str;
 	fd = open ((*head)->str, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd == -1)
-		exit_error(filename, 0, 1);
+	if (fd == -1 && cmd_flag == 0)
+		exit_error((*head)->str, 0, 1);
+	else if (fd == -1 && cmd_flag == 1)
+		return (-1);
 	(*head) = (*head)->next;
 	data->o_flag = 1;
 	return (fd);
 }
 
 int	heredoc_redirection(int input_fd, t_token **head, t_data *data,
-		int *heredoc_count)
+		int *heredoc_count, int cmd_flag)
 {
 	char	*filename;
 	int		fd;
@@ -95,8 +101,10 @@ int	heredoc_redirection(int input_fd, t_token **head, t_data *data,
 	(*head) = (*head)->next;
 	filename = data->doc_name[(*heredoc_count)++];
 	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		exit_error(filename, 0, 1);
+	if (fd == -1 && cmd_flag == 0)
+		exit_error((*head)->str, 0, 1);
+	else if (fd == -1 && cmd_flag == 1)
+		return (-1);
 	(*head) = (*head)->next;
 	data->i_flag = 1;
 	return (fd);
