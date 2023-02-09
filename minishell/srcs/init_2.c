@@ -1,44 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_check2.c                                    :+:      :+:    :+:   */
+/*   init_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/01 21:48:45 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/09 15:47:21 by gyopark          ###   ########.fr       */
+/*   Created: 2023/02/09 13:48:47 by gyopark           #+#    #+#             */
+/*   Updated: 2023/02/09 15:10:35 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	syntax_err(void)
+t_doc	*init_doc(t_doc *doc)
 {
-	ft_putendl_fd("syntax error", 2);
-	g_exit_code = 258;
-	return (-1);
-}
-
-int	rule_error(int *type_arr, int len)
-{
-	int		i;
-
-	i = -1;
-	while (i < len)
-		if (type_arr[++i] == T_ERROR)
-			return (-1);
-	return (0);
-}
-
-int	get_cmds_num(int *type_arr, int token_len)
-{
-	int		i;
-	int		cmds_num;
-
-	i = -1;
-	cmds_num = 1;
-	while (++i < token_len)
-		if (type_arr[i] == T_PIPE)
-			cmds_num++;
-	return (cmds_num);
+	doc->name = NULL;
+	doc->count = 0;
+	doc->limiters = NULL;
+	doc->zero = 0;
+	return (doc);
 }

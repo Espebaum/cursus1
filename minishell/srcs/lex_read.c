@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/08 20:01:17 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/09 15:21:46 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ void	read_env(char **s, t_str *buf, char **envp, int *r_env)
 	(*r_env)++;
 	free_str(env);
 }
+// 들어오는게 $$일때 처리, ($, $$, $$$, $$$$ ...)
+// $일때는 str에 $, $$일때는 $$, 문자열 그대로 넣어주면 됨
+// ~는 HOME으로 치환
 
 int	read_word_squote(char **s, t_str *buf)
 {
@@ -106,14 +109,7 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 	if (is_fail)
 		cur = push_token(T_ERROR, buf, cur);
 	else
-	{
 		cur = push_token(T_WORD, buf, cur);
-		if (cur->flag == 1)
-		{
-			cur->flag = 0;
-			//go_heredoc()
-		}
-	}
 	return (cur);
 }
 

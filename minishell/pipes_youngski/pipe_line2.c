@@ -6,11 +6,22 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/08 21:37:44 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/09 17:06:45 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	with_signal_exit(int *signo, int *status, int *i)
+{
+	*signo = WTERMSIG(*status);
+	if (*signo == SIGINT && (*i)++ == 0)
+		printf("\n");
+	if (*signo == SIGQUIT && (*i)++ == 0)
+		printf("Quit: 3\n");
+	g_exit_code = 128 + *signo;
+	return (g_exit_code);
+}
 
 int	wait_all(pid_t last_pid)
 {
@@ -27,14 +38,7 @@ int	wait_all(pid_t last_pid)
 		if (pid == last_pid)
 		{
 			if (WIFSIGNALED(status))
-			{
-				signo = WTERMSIG(status);
-				if (signo == SIGINT && i++ == 0)
-					printf("\n");
-				if (signo == SIGQUIT && i++ == 0)
-					printf("Quit: 3\n");
-				g_exit_code = 128 + signo;
-			}
+				g_exit_code = with_signal_exit(&signo, &status, &i);
 			else
 				g_exit_code = WEXITSTATUS(status);
 		}
@@ -63,24 +67,42 @@ char	**keep_execve_chd(t_data data, t_token **head, char **t, int *cmd_flag)
 
 	cmd = (*head)->str;
 	lstat(cmd, &file_info);
-	if (cmd != NULL) //명령어가 NULL이 아니면 판단
+	if (cmd != NULL && cmd[0] != '\0')
 	{
-		if (cmd_flag[0] == '\0') //첫번째 명령어일 때 -> 확인해야함 //첫번째 명령어 아니면 그냥 박음
-		{
-			if (builtin_check(cmd) == 0) //일치하는 builtin이 있다면 1, 없다면 0을 리턴, 빌트인이 없다면 명령어 검사
-			{
-				if (check_command(data.path, cmd) == 0 || S_ISDIR(file_info.st_mode)) //일치하는 command가 있다면 1, 없다면 0을 리턴, 명령어가 없다면 부모/자식에 따라 반환/종료
+		if (cmd_flag[0] == '\0')
+			if (builtin_check(cmd) == 0)
+				if (check_command(data.path, cmd) == 0
+					|| S_ISDIR(file_info.st_mode))
 					exit_error(cmd, 0, 127);
-			}
-		}
 	}
-	else //명령어가 NULL이면 종료
+	else
 		exit_error(cmd, 0, 127);
 	ret = copy_orders(t);
 	ret = add_order(ret, cmd, cmd_flag[0]);
 	(*head) = (*head)->next;
 	cmd_flag[0] = 1;
 	return (ret);
+}
+
+void	change_stream(t_token **head, t_data *data, int *cmd_flag, \
+						int *heredoc_count)
+{
+	if (ft_strncmp((*head)->str, ">>", 2) == 0 \
+		&& (*head)->type == T_REDIRECT)
+		data->io_fd[1] = append_redirection(data->io_fd[1], \
+							head, data, cmd_flag[1]);
+	else if (ft_strncmp((*head)->str, "<<", 2) == 0
+		&& (*head)->type == T_REDIRECT)
+		data->io_fd[0] = heredoc_redirection(data->io_fd[0], \
+							head, data, heredoc_count, cmd_flag[1]);
+	else if (ft_strncmp((*head)->str, "<", 1) == 0
+		&& (*head)->type == T_REDIRECT)
+		data->io_fd[0] = input_redirection(data->io_fd[0], \
+							head, data, cmd_flag[1]);
+	else if (ft_strncmp((*head)->str, ">", 1) == 0
+		&& (*head)->type == T_REDIRECT)
+		data->io_fd[1] = output_redirection(data->io_fd[1], \
+							head, data, cmd_flag[1]);
 }
 
 char	**read_cmd(t_data *data, t_token **head, int *heredoc_count)
@@ -91,7 +113,7 @@ char	**read_cmd(t_data *data, t_token **head, int *heredoc_count)
 	cmd_flag = (int *)malloc(sizeof(int) * 2);
 	cmd_flag[0] = 0;
 	cmd_flag[1] = 0;
- 	if ((*head)->str == NULL)
+	if ((*head)->str == NULL)
 	{
 		cmd_flag[1] = 1;
 		(*head) = (*head)->next;
@@ -101,19 +123,11 @@ char	**read_cmd(t_data *data, t_token **head, int *heredoc_count)
 	init_fd(data);
 	while ((*head) && (*head)->str && ft_strncmp((*head)->str, "|", 1))
 	{
-		if (ft_strncmp((*head)->str, ">>", 2) == 0
-			&& (*head)->type == T_REDIRECT)
-			data->io_fd[1] = append_redirection(data->io_fd[1], head, data, cmd_flag[1]);
-		else if (ft_strncmp((*head)->str, "<<", 2) == 0
-			&& (*head)->type == T_REDIRECT)
-			data->io_fd[0] = heredoc_redirection(data->io_fd[0], head, data, \
-			heredoc_count, cmd_flag[1]);
-		else if (ft_strncmp((*head)->str, "<", 1) == 0
-			&& (*head)->type == T_REDIRECT)
-			data->io_fd[0] = input_redirection(data->io_fd[0], head, data, cmd_flag[1]);
-		else if (ft_strncmp((*head)->str, ">", 1) == 0
-			&& (*head)->type == T_REDIRECT)
-			data->io_fd[1] = output_redirection(data->io_fd[1], head, data, cmd_flag[1]);
+		if ((*head)->type == T_REDIRECT && (!ft_strncmp((*head)->str, ">>", 2)
+				|| !ft_strncmp((*head)->str, "<<", 2)
+				|| !ft_strncmp((*head)->str, "<", 1)
+				|| !ft_strncmp((*head)->str, ">", 1)))
+			change_stream(head, data, cmd_flag, heredoc_count);
 		else
 		{
 			if (cmd_flag[1] == 1)
@@ -122,6 +136,7 @@ char	**read_cmd(t_data *data, t_token **head, int *heredoc_count)
 				t = keep_execve_chd(*data, head, t, cmd_flag);
 		}
 	}
+	free(cmd_flag);
 	return (t);
 }
 
@@ -139,7 +154,7 @@ char	*find_path(char *argv[], char **envp, int i)
 			break ;
 	}
 	path = ft_split(envp[k] + 5, ':');
-    if (access(argv[0], X_OK) == 0)
+	if (access(argv[0], X_OK) != -1)
 		return (argv[0]);
 	argv[i] = ft_strjoin("/", argv[i]);
     k = -1;
@@ -151,14 +166,6 @@ char	*find_path(char *argv[], char **envp, int i)
 			return (sp_path);
 	}	
 	return (0);
-}
-
-void	init_fd(t_data *data)
-{
-	data->i_flag = 0;
-	data->o_flag = 0;
-	data->io_fd[0] = dup(0);
-	data->io_fd[1] = dup(1);
 }
 
 void	forked_child_work(t_data *data, t_token **head, int *pipes,

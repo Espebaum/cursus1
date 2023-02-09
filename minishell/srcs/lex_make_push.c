@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:24:14 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/05 16:14:52 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/09 15:47:15 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_token	*push_token(int type, t_str *buf, t_token *prev)
 
 	next = make_token();
 	next->type = type;
-	next->str = strdup(buf->s);
+	next->str = ft_strdup(buf->s);
 	clear_str(buf);
 	prev->next = next;
 	next->prev = prev;

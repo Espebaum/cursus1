@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/08 13:42:14 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/09 15:16:46 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,6 @@ int	init_fork(t_token **head, t_data *data, int i, int *heredoc_count)
 	return (data->pid[i]);
 }
 
-int	init_data(t_data *data, t_doc doc, char **envp, t_token *head)
-{
-	data->path = get_path(envp);
-	data->envp = envp;
-	data->pid = (int *)malloc(sizeof(int) * head->cmds);
-	if (!(data->pid))
-		return (1);
-	data->doc_name = doc.name;
-	return (0);
-}
-
 int	pipe_line(t_data data, t_token *head, t_cover cover)
 {
 	t_token	*temp;
@@ -58,7 +47,7 @@ int	pipe_line(t_data data, t_token *head, t_cover cover)
 	int		i;
 	int		here_doc_count;
 
-	temp = head->next; //다시 head를 한칸 민다
+	temp = head->next;
 	here_doc_count = 0;
 	i = -1;
 	while (++i < head->cmds)

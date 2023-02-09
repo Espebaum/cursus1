@@ -6,12 +6,11 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 20:53:24 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/07 16:08:13 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/09 15:07:48 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 /*
 void	dup_builtin_pipes(t_data *data)
 {

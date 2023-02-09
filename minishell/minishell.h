@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/08 22:07:23 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/09 15:02:49 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,20 @@ t_token	*go_tokenize(char *cmd, char **envp, t_token *t);
 void	set_signal(int sig_int, int sig_quit);
 int		doc_syntax(char *str);
 
+//
+
+//init functions
+t_cover	*init_cover(t_cover *cover);
+void	init_prompt_sig(int argc, __attribute__((unused)) char *argv[]);
+char	*init_line(char *line);
+void	init_fd(t_data *data);
+int		init_data(t_data *data, t_doc doc, char **envp, t_token *head);
+t_doc	*init_doc(t_doc *doc);
+
+//heredoc functions
+int		get_doc_count(char **doc_str);
+
+//tokenize functions
 t_str	*make_str(void);
 t_token	*make_token(void);
 char	**deep_copy_env(char **envp);
@@ -112,9 +126,9 @@ char	*conv_env(char *name);
 int		is_env_char(char s);
 int		get_env_num(char *envp);
 
+
 int		check_func(int *cnt);
-int		is_valid_token(t_token *t);
-int		check_syntax(t_token *head, int check);
+int		check_syntax(t_token *head);
 int		rule_error(int *type_arr, int len);
 int		get_cmds_num(int *type_arr, int token_len);
 int		syntax_err(void);
@@ -122,16 +136,8 @@ int 	builtin_check(char *str);
 
 int		exit_error(char *message, int signal, int exit_code);
 int		ft_perror(char *str, int signal, int exit_code);
-// int		open_pipe(t_token *head, char **envp, int cp_stdin);
-// char	**get_path(char **envp);
-// int		wait_all(pid_t last_pid);
-// t_token	*get_next_tmp(t_token *temp);
-// char	**get_path(char **envp);
-// void	execute(char **arg_cmd, char **envp);
-// char	*get_cmd(char **path, char *cmd);
 
 int		open_heredoc(t_doc *doc, char *line);
-int		init_data(t_data *data, t_doc doc, char **envp, t_token *head);
 int		pipe_line(t_data data, t_token *head, t_cover cover);
 
 int		init_fork(t_token **head, t_data *data, int i, int *heredoc_count);
