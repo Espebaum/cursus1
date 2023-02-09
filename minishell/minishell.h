@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/09 15:02:49 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/09 17:24:57 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int		init_data(t_data *data, t_doc doc, char **envp, t_token *head);
 t_doc	*init_doc(t_doc *doc);
 
 //heredoc functions
-int		get_doc_count(char **doc_str);
+int	get_doc_count(char **doc_str);
 
 //tokenize functions
 t_str	*make_str(void);
@@ -159,7 +159,7 @@ void	read_dquote_env(char **s, t_str *buf, char **envp);
 int		output_redirection(int o_fd, t_token **head, t_data *data, int cmd_flag);
 int		input_redirection(int i_fd, t_token **head, t_data *data, int cmd_flag);
 int		append_redirection(int o_fd, t_token **head, t_data *data, int cmd_flag);
-int		heredoc_redirection(int input_fd, t_token **head, t_data *data, \
+int		heredoc_redirection(t_token **head, t_data *data, \
 		int *heredoc_count, int cmd_flag);
 void	dup_pipes(t_token **head, int *pipes, t_data *data);
 int		exit_error(char *message, int signal, int exit_code);

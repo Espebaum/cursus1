@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/09 17:06:45 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/09 17:24:34 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	change_stream(t_token **head, t_data *data, int *cmd_flag, \
 							head, data, cmd_flag[1]);
 	else if (ft_strncmp((*head)->str, "<<", 2) == 0
 		&& (*head)->type == T_REDIRECT)
-		data->io_fd[0] = heredoc_redirection(data->io_fd[0], \
+		data->io_fd[0] = heredoc_redirection( \
 							head, data, heredoc_count, cmd_flag[1]);
 	else if (ft_strncmp((*head)->str, "<", 1) == 0
 		&& (*head)->type == T_REDIRECT)
@@ -103,6 +103,30 @@ void	change_stream(t_token **head, t_data *data, int *cmd_flag, \
 		&& (*head)->type == T_REDIRECT)
 		data->io_fd[1] = output_redirection(data->io_fd[1], \
 							head, data, cmd_flag[1]);
+}
+
+char	**push_cmd(t_data *data, t_token **head, int *cmd_flag, int *hdoc_count)
+{
+	char	**t;
+
+	t = (char **)malloc(sizeof(char *));
+	t[0] = 0;
+	while ((*head) && (*head)->str && ft_strncmp((*head)->str, "|", 1))
+	{
+		if ((*head)->type == T_REDIRECT && (!ft_strncmp((*head)->str, ">>", 2)
+				|| !ft_strncmp((*head)->str, "<<", 2)
+				|| !ft_strncmp((*head)->str, "<", 1)
+				|| !ft_strncmp((*head)->str, ">", 1)))
+			change_stream(head, data, cmd_flag, hdoc_count);
+		else
+		{
+			if (cmd_flag[1] == 1)
+				t = keep_execve_par(head, t, cmd_flag);
+			else if (cmd_flag[1] == 0)
+				t = keep_execve_chd(*data, head, t, cmd_flag);
+		}
+	}
+	return (t);
 }
 
 char	**read_cmd(t_data *data, t_token **head, int *heredoc_count)
@@ -118,24 +142,8 @@ char	**read_cmd(t_data *data, t_token **head, int *heredoc_count)
 		cmd_flag[1] = 1;
 		(*head) = (*head)->next;
 	}
-	t = (char **)malloc(sizeof(char *));
-	t[0] = 0;
 	init_fd(data);
-	while ((*head) && (*head)->str && ft_strncmp((*head)->str, "|", 1))
-	{
-		if ((*head)->type == T_REDIRECT && (!ft_strncmp((*head)->str, ">>", 2)
-				|| !ft_strncmp((*head)->str, "<<", 2)
-				|| !ft_strncmp((*head)->str, "<", 1)
-				|| !ft_strncmp((*head)->str, ">", 1)))
-			change_stream(head, data, cmd_flag, heredoc_count);
-		else
-		{
-			if (cmd_flag[1] == 1)
-				t = keep_execve_par(head, t, cmd_flag);
-			else if (cmd_flag[1] == 0)
-				t = keep_execve_chd(*data, head, t, cmd_flag);
-		}
-	}
+	t = push_cmd(data, head, cmd_flag, heredoc_count);
 	free(cmd_flag);
 	return (t);
 }

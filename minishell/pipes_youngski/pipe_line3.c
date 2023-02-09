@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/08 20:25:25 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/09 17:24:49 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ void	dup_pipes(t_token **head, int *pipes, t_data *data)
 	}
 }
 
-int	output_redirection(int output_fd, t_token **head, t_data *data, int cmd_flag)
+int	output_redirection(int o_fd, t_token **head, t_data *data, int cmd_flag)
 {
 	int		fd;
 	char	*filename;
 
-	close(output_fd);
+	close(o_fd);
 	(*head) = (*head)->next;
 	filename = (*head)->str;
 	fd = open((*head)->str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -73,12 +73,12 @@ int	input_redirection(int input_fd, t_token **head, t_data *data, int cmd_flag)
 	return (fd);
 }
 
-int	append_redirection(int output_fd, t_token **head, t_data *data, int cmd_flag)
+int	append_redirection(int o_fd, t_token **head, t_data *data, int cmd_flag)
 {
 	int		fd;
 	char	*filename;
 
-	close(output_fd);
+	close(o_fd);
 	(*head) = (*head)->next;
 	filename = (*head)->str;
 	fd = open ((*head)->str, O_WRONLY | O_CREAT | O_APPEND, 0644);
@@ -91,13 +91,13 @@ int	append_redirection(int output_fd, t_token **head, t_data *data, int cmd_flag
 	return (fd);
 }
 
-int	heredoc_redirection(int input_fd, t_token **head, t_data *data,
+int	heredoc_redirection(t_token **head, t_data *data,
 		int *heredoc_count, int cmd_flag)
 {
 	char	*filename;
 	int		fd;
 
-	close(input_fd);
+	close(data->io_fd[0]);
 	(*head) = (*head)->next;
 	filename = data->doc_name[(*heredoc_count)++];
 	fd = open(filename, O_RDONLY);
