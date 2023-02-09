@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/09 17:24:57 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/09 21:47:07 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int		init_data(t_data *data, t_doc doc, char **envp, t_token *head);
 t_doc	*init_doc(t_doc *doc);
 
 //heredoc functions
-int	get_doc_count(char **doc_str);
+int		get_doc_count(char **doc_str);
 
 //tokenize functions
 t_str	*make_str(void);
@@ -125,14 +125,19 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp);
 char	*conv_env(char *name);
 int		is_env_char(char s);
 int		get_env_num(char *envp);
+int		check_all_dollar(t_str **buf, char **str);
+int		env_read(t_str **buf, t_str **env, char *g_str);
+void	make_env_buf(t_str **buf, t_str **env, char **envp);
 
-
+//execute function
+char	**keep_execve_par(t_token **head, char **builtin, int *cmd_flag);
+char	**keep_execve_chd(t_data data, t_token **head, char **t, int *cmd_flag);
 int		check_func(int *cnt);
 int		check_syntax(t_token *head);
 int		rule_error(int *type_arr, int len);
 int		get_cmds_num(int *type_arr, int token_len);
 int		syntax_err(void);
-int 	builtin_check(char *str);
+int		builtin_check(char *str);
 
 int		exit_error(char *message, int signal, int exit_code);
 int		ft_perror(char *str, int signal, int exit_code);
@@ -146,8 +151,8 @@ int		*find_heredoc_index(t_token *head, int count);
 char	**get_path(char **envp);
 int		check_command(char **path, char *cmd);
 void	forked_child_work(t_data *data, t_token **head, int *pipes, int *hc);
-char    **copy_orders(char **t);
-char    **add_order(char **t, char *str, int flag);
+char	**copy_orders(char **t);
+char	**add_order(char **t, char *str, int flag);
 
 char	**get_limiter(char **doc_str, t_doc *doc);
 void	heredoc_file_make(int fd, char *limiter);
@@ -156,9 +161,11 @@ int		free_pid_docs(int *pid, int *doc_fd);
 void	open_doc_file(t_data *data, char *t, int *i, int *k);
 void	read_dquote_env(char **s, t_str *buf, char **envp);
 
-int		output_redirection(int o_fd, t_token **head, t_data *data, int cmd_flag);
+int		output_redirection(int o_fd, t_token **head, \
+							t_data *data, int cmd_flag);
 int		input_redirection(int i_fd, t_token **head, t_data *data, int cmd_flag);
-int		append_redirection(int o_fd, t_token **head, t_data *data, int cmd_flag);
+int		append_redirection(int o_fd, t_token **head, \
+							t_data *data, int cmd_flag);
 int		heredoc_redirection(t_token **head, t_data *data, \
 		int *heredoc_count, int cmd_flag);
 void	dup_pipes(t_token **head, int *pipes, t_data *data);

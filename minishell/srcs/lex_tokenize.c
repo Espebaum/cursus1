@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_tokenize.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:14:14 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/09 14:14:35 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/09 21:01:52 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,6 @@ t_token	*tokenize(char *s, char **envp)
 t_token	*go_tokenize(char *cmd, char **envp, t_token *t)
 {
 	t = tokenize(cmd, envp);
-	//print_token(t->next);
+	print_token(t->next);
 	return (t);
 }

@@ -1,0 +1,8 @@
+{
+	"recommendations": [
+		"evilcat.norminette-42"
+	]
+    "42norminette.command": string,
+    "42norminette.showErrors": string,
+    "42norminette.trace.server": string,
+}

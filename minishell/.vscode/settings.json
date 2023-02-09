@@ -1,21 +1,29 @@
 {
-    "files.associations": {
-        "minishell.h": "c",
-        "signal.h": "c",
-        "libft.h": "c",
-        "errno.h": "c",
-        "unistd.h": "c",
-        "readline.h": "c",
-        "history.h": "c",
-        "chrono": "c",
-        "unordered_map": "c",
-        "sstream": "c",
-        "array": "c",
-        "string": "c",
-        "string_view": "c",
-        "vector": "c"
-    },
-    "editor.definitionLinkOpensInPeek": true,
-    "editor.gotoLocation.alternativeDefinitionCommand": "editor.action.referenceSearch.trigger",
-    "editor.gotoLocation.alternativeTypeDefinitionCommand": "editor.action.referenceSearch.trigger"
+  "files.associations": {
+    "minishell.h": "c",
+    "signal.h": "c",
+    "libft.h": "c",
+    "errno.h": "c",
+    "unistd.h": "c",
+    "readline.h": "c",
+    "history.h": "c",
+    "chrono": "c",
+    "unordered_map": "c",
+    "sstream": "c",
+    "array": "c",
+    "string": "c",
+    "string_view": "c",
+    "vector": "c"
+  },
+  "editor.tabSize": 4,
+  "editor.definitionLinkOpensInPeek": true,
+  "editor.gotoLocation.alternativeDefinitionCommand": "editor.action.referenceSearch.trigger",
+  "editor.gotoLocation.alternativeTypeDefinitionCommand": "editor.action.referenceSearch.trigger",
+  "editor.insertSpaces": false,
+  // "editor.renderWhitespace": "all",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "editor.tokenColorCustomizations": {
+    "comments": "#009000"
+  }
 }

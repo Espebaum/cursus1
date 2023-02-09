@@ -31,7 +31,7 @@ int	builtin_check(char *str)
 	return (0);
 }
 
-char    **cutting_t(char **t, int *flag)
+char	**cutting_t(char **t, int *flag)
 {
 	int		i;
 	int		j;
@@ -134,7 +134,7 @@ int	check_builtin(char **builtin)
 	if (!ft_strncmp(builtin[0], "pwd", 4) || (ft_strnstr(builtin[0], "pwd", \
 		ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_pwd(builtin);
-	if (!ft_strncmp(builtin[0], "export", 7)|| (ft_strnstr(builtin[0], \
+	if (!ft_strncmp(builtin[0], "export", 7) || (ft_strnstr(builtin[0], \
 		"export", ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_export(builtin);
 	if (!ft_strncmp(builtin[0], "unset", 6) || (ft_strnstr(builtin[0], "unset", \

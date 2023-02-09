@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   doc_open1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:28:36 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/09 14:52:20 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/09 19:44:47 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 void	heredoc_file_make(int fd, char *limiter)
-{	
+{
 	char	*feed_line;
 	char	*line;
 
@@ -38,7 +38,7 @@ int	open_file(char *filename, int idx, t_doc **doc)
 
 	fd = open(filename, O_WRONLY | O_CREAT, 0644);
 	if (fd == -1)
-	{		
+	{
 		filename = ft_strjoin(filename, ": ");
 		exit_error(filename, 0, 1);
 		free(filename);
@@ -85,7 +85,7 @@ int	count_heredoc(char *line)
 		{
 			cnt++;
 			i++;
-		}	
+		}
 	}
 	return (cnt);
 }
