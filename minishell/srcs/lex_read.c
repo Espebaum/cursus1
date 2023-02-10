@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/09 22:11:00 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/10 15:56:14 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void	read_env(char **s, t_str *buf, char **envp)
 {
-	t_str	*env;
-	int		i;
-	char	*g_str;
+	t_str		*env;
+	int			i;
+	char		*g_str;
+	char		*meta_str;
 
 	i = -1;
 	env = make_str();
@@ -30,9 +31,17 @@ void	read_env(char **s, t_str *buf, char **envp)
 			break ;
 		push_str(env, **s);
 	}
+	meta_str = check_meta_chr(&env);
+	printf("env->s : %s\n\n", env->s);
 	if (env_read(&buf, &env, g_str) == 0)
 		return ;
 	make_env_buf(&buf, &env, envp);
+	i = -1;
+	printf("meta : %s\n\n", meta_str);
+	if (meta_str[0] != '\0')
+		while (meta_str[++i])
+			push_str(buf, meta_str[i]);
+	free(meta_str);
 	free_str(env);
 }
 
@@ -44,7 +53,6 @@ int	read_word_squote(char **s, t_str *buf)
 	if (**s != '\'')
 		return (1);
 	(*s)++;
-	printf("in squote: [%s]\n", buf->s);
 	return (0);
 }
 
@@ -64,7 +72,6 @@ int	read_word_dquote(char **s, t_str *buf, char **envp)
 	if (**s != '\"')
 		return (1);
 	(*s)++;
-	printf("in dquote: [%s]\n", buf->s);
 	return (0);
 }
 

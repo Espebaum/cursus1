@@ -1,16 +1,80 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lex_env.c                                          :+:      :+:    :+:   */
+/*   lex_env1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:25:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/09 22:08:43 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/10 15:56:14 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*flip_meta_chr(char *ret)
+{
+	int		len;
+	int		r_len;
+	int		i;
+	char	*temp;
+
+	i = -1;
+	len = ft_strlen(ret);
+	r_len = len;
+	temp = (char *)malloc(sizeof(char) * (len + 1));
+	temp[len] = '\0';
+	while (++i < len)
+	{
+		temp[i] = ret[--r_len];
+	}
+	free(ret);
+	return (temp);
+}
+
+char	*make_meta_chr(char *ret, int *size, char meta_chr)
+{
+	int		i;
+	char	*temp_ret;
+
+	i = -1;
+	temp_ret = ret;
+	ret = (char *)malloc(sizeof(char) * ++(*size));
+	ret[(*size) - 1] = '\0';
+	while (temp_ret[++i])
+		ret[i] = temp_ret[i];
+	ret[i] = meta_chr;
+	return (ret);
+}
+
+char	*check_meta_chr(t_str **env)
+{
+	char		*str;
+	int			len;
+	int			i;
+	char		*ret;
+	int			size;
+
+	size = 1;
+	ret = ft_strdup("");
+	i = -1;
+	len = ft_strlen((*env)->s);
+	while (is_meta_chr((*env)->s[--len]) == 1)
+		ret = make_meta_chr(ret, &size, (*env)->s[len]);
+	ret = flip_meta_chr(ret);
+	str = (char *) malloc(sizeof(char) * (len + 1));
+	str[len] = '\0';
+	while (++i < len + 1)
+		str[i] = (*env)->s[i];
+	clear_str(*env);
+	i = -1;
+	printf("str : %s\n\n", str);
+	while (str[++i])
+		push_str(*env, str[i]);
+	free(str);
+	return (ret);
+}
+//USER..
 
 int	get_env_num(char *envp)
 {

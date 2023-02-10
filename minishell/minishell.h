@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/09 21:47:07 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/10 14:34:52 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ int		get_env_num(char *envp);
 int		check_all_dollar(t_str **buf, char **str);
 int		env_read(t_str **buf, t_str **env, char *g_str);
 void	make_env_buf(t_str **buf, t_str **env, char **envp);
+char	*check_meta_chr(t_str **env);
+int		is_meta_chr(char c);
 
 //execute function
 char	**keep_execve_par(t_token **head, char **builtin, int *cmd_flag);
