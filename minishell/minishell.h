@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/10 14:34:52 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/10 16:49:42 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,22 @@ t_doc	*init_doc(t_doc *doc);
 
 //heredoc functions
 int		get_doc_count(char **doc_str);
+void	make_inside_char_double(int *i, int *count, char *line_temp, char *ret);
+void	make_inside_char_single(int *i, int *count, char *line_temp, char *ret);
+void	make_pure_word(int *i, int *count, char *line_temp, char *ret);
+char	**myfunc_split(char *line, int i, int j, int count);
+void	count_inside_char(int *i, int *count, char *line_temp, char my_char);
+void	count_pure_word(int *i, int *count, char *line_temp);
+int		count_space(char *line);
+void	make_pure_word(int *i, int *count, char *line_temp, char *ret);
+void	make_inside_char(int *i, int *count, char *line_temp, \
+							char my_char, char *ret);
+char	**myfunc_split(char *line, int i, int j, int count);
+void	init_split(int *i, int *j, char *line, char **line_temp);
+int		skip_space(int *i, char **line_temp);
+char	**call_next(char *line_temp, char **ret, char *line, int i);
+void	part_make_line(int *i, int *j, int *count, char **line_temp);
+
 
 //tokenize functions
 t_str	*make_str(void);

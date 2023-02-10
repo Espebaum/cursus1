@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 14:41:07 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/09 19:33:34 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/10 16:48:47 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ char	*get_rid_str(char *doc_str, char *limiter)
 	lim_idx = 0;
 	while (doc_str[++i])
 	{
-		if (doc_str[i] == '\'')
-			while (doc_str[++i] != '\'')
-				limiter[lim_idx++] = doc_str[i];
-		else if (doc_str[i] == '\"')
-			while (doc_str[++i] != '\"')
-				limiter[lim_idx++] = doc_str[i];
-		else
+		// if (doc_str[i] == '\'')
+		// 	while (doc_str[++i] != '\'')
+		// 		limiter[lim_idx++] = doc_str[i];
+		// else if (doc_str[i] == '\"')
+		// 	while (doc_str[++i] != '\"')
+		// 		limiter[lim_idx++] = doc_str[i];
+		// else
 			limiter[lim_idx++] = doc_str[i];
 	}
 	return (limiter);
@@ -81,15 +81,15 @@ char	*rid_quotes(char *doc_str)
 	limiter_len = 0;
 	while (doc_str[++i])
 	{
-		if (doc_str[i] == '\'')
-			while (doc_str[++i] != '\'')
-				limiter_len++;
-		else if (doc_str[i] == '\"')
-		{
-			while (doc_str[++i] != '\"')
-				limiter_len++;
-		}
-		else
+		// if (doc_str[i] == '\'')
+		// 	while (doc_str[++i] != '\'')
+		// 		limiter_len++;
+		// else if (doc_str[i] == '\"')
+		// {
+			// while (doc_str[++i] != '\"')
+				// limiter_len++;
+		// }
+		// else
 			limiter_len++;
 	}
 	limiter = (char *) malloc(sizeof(char) * (limiter_len + 1));
