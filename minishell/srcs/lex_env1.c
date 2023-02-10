@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:25:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/10 15:56:14 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/10 16:34:01 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,13 @@ char	*check_meta_chr(t_str **env)
 	ret = ft_strdup("");
 	i = -1;
 	len = ft_strlen((*env)->s);
-	while (is_meta_chr((*env)->s[--len]) == 1)
-		ret = make_meta_chr(ret, &size, (*env)->s[len]);
+	if (is_meta_chr((*env)->s[len - 1]) == 1)
+	{
+		while (is_meta_chr((*env)->s[--len]) == 1)
+			ret = make_meta_chr(ret, &size, (*env)->s[len]);
+	}
+	else
+		return (NULL);
 	ret = flip_meta_chr(ret);
 	str = (char *) malloc(sizeof(char) * (len + 1));
 	str[len] = '\0';
@@ -68,8 +73,7 @@ char	*check_meta_chr(t_str **env)
 		str[i] = (*env)->s[i];
 	clear_str(*env);
 	i = -1;
-	printf("str : %s\n\n", str);
-	while (str[++i])
+	while (++i < len + 1)
 		push_str(*env, str[i]);
 	free(str);
 	return (ret);

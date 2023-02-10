@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/10 15:56:14 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/10 16:34:00 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,15 @@ void	read_env(char **s, t_str *buf, char **envp)
 		push_str(env, **s);
 	}
 	meta_str = check_meta_chr(&env);
-	printf("env->s : %s\n\n", env->s);
 	if (env_read(&buf, &env, g_str) == 0)
 		return ;
 	make_env_buf(&buf, &env, envp);
 	i = -1;
-	printf("meta : %s\n\n", meta_str);
-	if (meta_str[0] != '\0')
+	if (meta_str)
 		while (meta_str[++i])
 			push_str(buf, meta_str[i]);
-	free(meta_str);
+	if (meta_str)
+		free(meta_str);
 	free_str(env);
 }
 
