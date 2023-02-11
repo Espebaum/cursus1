@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 19:15:04 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/10 16:40:01 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 13:01:31 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	count_space(char *line)
 		while (line[i] == ' ')
 			i++;
 	}
-	return (cnt);
+	return (cnt + 2);
 }
 
 void	count_inside_char(int *i, int *count, \

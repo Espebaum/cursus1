@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/10 16:49:42 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/10 17:27:04 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define SHE 10
 # define DFL 11
 # define IGN 12
+# define DOC 13
 
 # define T_ERROR	 6
 # define T_REDIRECT  1

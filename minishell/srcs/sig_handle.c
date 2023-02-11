@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:55:59 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/09 19:43:13 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 13:03:18 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@ void	signal_handler(int signo)
 		rl_redisplay();
 	}
 }
+
+// void	doc_handler(int signo)
+// {
+// 	if (signo == SIGINT)
+// 	{
+// 		write(1, "\n", 1);
+// 		exit(3) ;
+// 	}
 
 void	set_signal(int sig_int, int sig_quit)
 {
