@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/11 18:37:33 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 19:30:45 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,14 +164,14 @@ int		exit_error(char *message, int signal, int exit_code);
 int		ft_perror(char *str, int signal, int exit_code);
 
 int		open_heredoc(t_doc *doc, char *line);
-int		pipe_line(t_data data, t_token *head, t_cover cover);
+int		pipe_line(t_data data, t_token *head, t_cover cover, t_list *env_head);
 
-int		init_fork(t_token **head, t_data *data, int i, int *heredoc_count);
+int		init_fork(t_token **head, t_data *data, int i, int *heredoc_count, t_list *env_head);
 void	get_heredoc(t_token *head, t_data *data, int count);
 int		*find_heredoc_index(t_token *head, int count);
 char	**get_path(char **envp);
 int		check_command(char **path, char *cmd);
-void	forked_child_work(t_data *data, t_token **head, int *pipes, int *hc);
+void	forked_child_work(t_data *data, t_token **head, int *pipes, int *hc, t_list *env_head);
 char	**copy_orders(char **t);
 char	**add_order(char **t, char *str, int flag);
 
@@ -192,10 +192,16 @@ int		heredoc_redirection(t_token **head, t_data *data, \
 void	dup_pipes(t_token **head, int *pipes, t_data *data);
 int		exit_error(char *message, int signal, int exit_code);
 int		wait_all(pid_t last_pid);
-int		check_builtin(char **t);
+int		check_builtin(char **t, t_list *head);
 char	**read_cmd(t_data *data, t_token **head, int *heredoc_count);
 char	**keep_execve(t_data data, t_token **head, char **t, int *flag);
 void	init_fd(t_data *data);
 int		ft_max(int a, int b);
+
+//env and export func
+t_list  *init_env_list(char **env, t_list **head);
+void    make_envp_arr(t_list *head, char ***envp);
+void    print_env(t_list *head);
+void    print_export(t_list *head);
 
 #endif

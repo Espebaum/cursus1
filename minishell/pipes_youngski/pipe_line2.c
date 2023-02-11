@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/09 19:59:21 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 19:33:31 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	*find_path(char *argv[], char **envp, int i)
 }
 
 void	forked_child_work(t_data *data, t_token **head, int *pipes,
-		int *heredoc_count)
+		int *heredoc_count, t_list *env_head)
 {
 	char	**t;
 	char	*cmd;
@@ -116,7 +116,7 @@ void	forked_child_work(t_data *data, t_token **head, int *pipes,
 	if ((*head) && (*head)->next)
 		(*head) = (*head)->next;
 	cmd = find_path(t, data->envp, 0);
-	ret = check_builtin(t);
+	ret = check_builtin(t, env_head);
 	if (ret >= 0)
 		exit(ret);
 	if (execve(cmd, t, data->envp) == -1)

@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/11 13:52:39 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 19:31:16 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,17 @@ int	doc_check(t_cover *cover, char *line)
 	return (0);
 }
 
-int	do_builtin(t_cover *cover)
+int	do_builtin(t_cover *cover, t_list *head)
 {
 	cover->temp = cover->head;
 	cover->builtin = read_cmd(cover->data, &(cover->temp), \
 	&(cover->doc->zero));
-	if (check_builtin(cover->builtin) >= 0)
+	if (check_builtin(cover->builtin, head) >= 0)
 		return (-1);
 	return (0);
 }
 
-int	handle_line(char *line, t_cover *cover, char **envp)
+int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 {
 	if (doc_check(cover, line) == -1)
 		return (-1);
@@ -51,9 +51,9 @@ int	handle_line(char *line, t_cover *cover, char **envp)
 		return (-1);
 	init_data(cover->data, *(cover->doc), envp, cover->head);
 	if (cover->head->cmds == 1)
-		if (do_builtin(cover) == -1)
+		if (do_builtin(cover, head) == -1)
 			return (-1);
-	g_exit_code = pipe_line(*(cover->data), cover->head, *cover);
+	g_exit_code = pipe_line(*(cover->data), cover->head, *cover, head);
 	free_token(cover->head);
 	set_signal(SHE, SHE);
 	return (g_exit_code);
@@ -64,7 +64,9 @@ int	main(int argc, char **argv, char **envp)
 	char				*line;
 	t_cover				*cover;
 	struct termios		term;
+	t_list				*head;
 
+	init_env_list(envp, &head);
 	cover = (t_cover *)malloc(sizeof(t_cover));
 	cover = init_cover(cover);
 	line = NULL;
@@ -75,9 +77,10 @@ int	main(int argc, char **argv, char **envp)
 		init_fd(cover->data);
 		line = init_line(line);
 		if (*line != '\0' && !is_str_space(line))
-			if (handle_line(line, cover, envp) == -1)
+			if (handle_line(line, cover, envp, head) == -1)
 				continue ;
 		free(line);
+		make_envp_arr(head, &envp);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (g_exit_code);

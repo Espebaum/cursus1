@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 16:22:56 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/07 15:59:01 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 19:35:59 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	built_pwd(char **builtin)
 	return (1);
 }
 
-int	built_export(char **builtin)
+int	built_export(char **builtin, t_list *head)
 {
 	(void) builtin;
 	return (1);
@@ -124,13 +124,15 @@ int	built_unset(char **builtin)
 	return (1);
 }
 
-int	built_env(char **builtin)
+int	built_env(char **builtin, t_list *head)
 {
-	(void) builtin;
+	if (builtin[1])
+		return (0);
+	print_env(head);
 	return (1);
 }
 
-int	check_builtin(char **builtin)
+int	check_builtin(char **builtin, t_list *head)
 {
 	int		result;
 
@@ -146,13 +148,13 @@ int	check_builtin(char **builtin)
 		result = built_pwd(builtin);
 	else if (!ft_strncmp(builtin[0], "export", 7) || (ft_strnstr(builtin[0], \
 		"export", ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
-		result = built_export(builtin);
+		result = built_export(builtin, head);
 	else if (!ft_strncmp(builtin[0], "unset", 6) || (ft_strnstr(builtin[0], "unset", \
 		ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_unset(builtin);
 	else if (!ft_strncmp(builtin[0], "env", 4) || (ft_strnstr(builtin[0], "env", \
 		ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
-		result = built_env(builtin);
+		result = built_env(builtin, head);
 	else if (!ft_strncmp(builtin[0], "exit", 5) || (ft_strnstr(builtin[0], "exit", \
 		ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		exit(0);

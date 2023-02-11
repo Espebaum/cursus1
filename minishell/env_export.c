@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 22:56:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/11 18:48:56 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 19:18:31 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,27 +174,15 @@ void	print_export(t_list *head)
 	}
 }
 
+/*
 //메인에서 반복문안에서 init_env_list, make_envp_arr 를 계속해준다.
 int	main(int argc, char **argv, char **env)
 {
 	t_list	*head;
 
 	head = init_env_list(env, &head);
-	/*
-	while (head != 0)
-	{
-		printf("%s=%s\n", head->key, head->value);
-		head = head->next;
-	}
-	*/
 	new_value(&head, argv[1], argv[2]);
-	/*while (head != 0)
-	{
-		printf("%s=%s\n", head->key, head->value);
-		head = head->next;
-	}
-	*/
 	make_envp_arr(head, &env);
 	print_env(head);
-	//	print_export(head);
 }
+*/
