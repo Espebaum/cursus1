@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/11 21:36:08 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 22:42:06 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	read_word_dquote(char **s, t_str *buf, char **envp)
 	{
 		temp = deep_copy_env(envp);
 		if (**s == '$')
-			read_env(s, buf, temp);
+			read_env(s, buf, temp, NULL);
 		else
 			push_str(buf, *((*s)++));
 	}
@@ -42,7 +42,7 @@ int	read_word_dquote(char **s, t_str *buf, char **envp)
 	return (0);
 }
 
-void	read_env(char **s, t_str *buf, char **envp)
+int	read_env(char **s, t_str *buf, char **envp, int *num)
 {
 	t_str	*env;
 	int		i;
@@ -54,6 +54,12 @@ void	read_env(char **s, t_str *buf, char **envp)
 	i = -1;
 	env = make_str();
 	g_str = ft_itoa(g_exit_code);
+	if (*((*s) + 1) == '\0')
+	{
+		push_str(buf, '$');
+		(*s)++;
+		return (1);
+	}
 	if (*((*s) + 1) != '\0' && is_meta_chr(*((*s) + 1)) == 1)
 	{
 		if (*((*s) + 1) == '?')
@@ -71,7 +77,7 @@ void	read_env(char **s, t_str *buf, char **envp)
 		while (1)
 		{
 			if (**s == '$' || **s == '\0')
-				return ;
+				return (1);
 			push_str(buf, (*(*s)++));
 		}
 	}
@@ -81,32 +87,38 @@ void	read_env(char **s, t_str *buf, char **envp)
 			break ;
 		push_str(env, **s);
 	}
-	// if (env_read(&buf, &env, g_str) == 0)
-	// 	return ;
 	meta_str = check_meta_chr(&env);
 	temp = deep_copy_env(envp);
-	make_env_buf(&buf, &env, temp);
+	if (make_env_buf(&buf, &env, temp) == 0 && *num == 0)
+		return (0);
 	i = -1;
 	if (meta_str)
 		while (meta_str[++i])
 			push_str(buf, meta_str[i]);
 	if (meta_str)
 		free(meta_str);
+	(*num)++;
+	if (env->s)
+		free_str(env);
+	free(g_str);
 	free(temp);
-	free_str(env);
+	return (1);
 }
 
 t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 {
 	int		is_fail;
-	char	**temp;
+	int		num;
 
 	is_fail = 0;
+	num = 0;
 	while (!is_word_end(**s))
 	{
-		temp = deep_copy_env(envp);
 		if (**s == '$')
-			read_env(s, buf, temp);
+		{
+			if (read_env(s, buf, envp, &num) == 0)
+				return (cur);
+		}
 		else if (**s == '\'')
 			is_fail |= read_word_squote(s, buf);
 		else if (**s == '\"')
@@ -118,7 +130,6 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 		cur = push_token(T_ERROR, buf, cur);
 	else
 		cur = push_token(T_WORD, buf, cur);
-	free(temp);
 	return (cur);
 }
 

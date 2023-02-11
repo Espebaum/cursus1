@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 22:56:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/11 21:22:25 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 22:06:12 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,11 +123,14 @@ char	**make_envp_arr(t_list *head)
 		i++;
 		temp = temp->next;
 	}
-	ret = (char **)malloc(sizeof(char *) * i);
+	ret = (char **)malloc(sizeof(char *) * i + 1);
+	ret[i] = 0;
 	i = 0;
 	while (head)
 	{
-		t = ft_strjoin(head->key, head->value);
+		t = ft_strjoin(head->key, "=");
+		t = ft_strjoin(t, head->value);
+
 		ret[i++] = t;
 		head = head->next;
 	}
