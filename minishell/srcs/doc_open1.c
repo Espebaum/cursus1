@@ -6,13 +6,14 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:28:36 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/11 14:42:21 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 17:15:40 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include "../get_next_line.h"
 
-void	heredoc_file_make(int fd, char *limiter)
+void	heredoc_file_make(int fd, char *limiter, int *pipe_fd)
 {
 	char	*feed_line;
 	char	*line;
@@ -34,18 +35,23 @@ void	heredoc_file_make(int fd, char *limiter)
 	}
 }
 
-int	open_file(char *filename, int idx, t_doc **doc)
+int	open_file(char *filename, int idx, t_doc **doc, int *pipe_fd)
 {
 	int		fd;
+	char	*t;
 
 	fd = open(filename, O_WRONLY | O_CREAT, 0644);
 	if (fd == -1)
 	{
-		filename = ft_strjoin(filename, ": ");
+		filename = ft_strjoin(filename, ": \n");
 		exit_error(filename, 0, 1);
 		free(filename);
 	}
-	(*doc)->name[idx] = ft_strdup(filename);
+	else
+		filename = ft_strjoin(filename, "\n");
+	t = ft_strdup(filename);
+	(*doc)->name[idx] = t;
+	write(pipe_fd[1], t, ft_strlen(t));
 	return (fd);
 }
 
@@ -54,23 +60,52 @@ void	make_doc_files(int count, t_doc *doc)
 	int		idx;
 	char	*filename;
 	int		fd;
+	int		pid;
+	int		pipe_fd[2];
+	char	**temp;
+	char	*str;
 
 	filename = "/tmp/.here_doc";
 	idx = 0;
-	while (idx < count)
+	pipe(pipe_fd);
+	pid = fork();
+	if (pid == 0)
 	{
-		if (access(filename, F_OK) == -1)
-			fd = open_file(filename, idx, &doc);
-		else
+		while (idx < count)
 		{
-			filename = ft_strjoin(filename, "1");
-			continue ;
+			if (access(filename, F_OK) == -1)
+				fd = open_file(filename, idx, &doc, pipe_fd);
+			else
+			{
+				filename = ft_strjoin(filename, "1");
+				continue ;
+			}
+			//printf("i : %d, limiter : %s\n\n", idx, doc->limiters[idx]);
+			heredoc_file_make(fd, doc->limiters[idx], pipe_fd);
+			idx++;
+			close(fd);
 		}
-		printf("i : %d, limiter : %s\n\n", idx, doc->limiters[idx]);
-		heredoc_file_make(fd, doc->limiters[idx]);
-		idx++;
-		close(fd);
+		close(pipe_fd[1]);
+		close(pipe_fd[0]);
+		exit(0);//종료 처리할것
 	}
+	else
+	{
+		close(pipe_fd[1]);
+		waitpid(pid,NULL,0);
+		while (idx <= doc->count)
+		{
+			str = get_next_line(pipe_fd[0]);
+			if (!str)
+				break;
+			int asdf = ft_strlen(str);
+			str[asdf - 1] = 0;
+			printf("s : %s\n", str);
+			doc->name[idx++] = str;
+		}
+			close(pipe_fd[0]);
+	}
+
 }
 
 int	count_heredoc(char *line)
@@ -106,6 +141,7 @@ int	open_heredoc(t_doc *doc, char *line)
 	doc->name = (char **)malloc(sizeof(char *) * doc->count);
 	doc->limiters = (char **)malloc(sizeof(char *) * doc->count);
 	doc->limiters = get_limiter(doc_str, doc);
-	make_doc_files(doc->count, doc);
+	if (doc->count > 0)
+		make_doc_files(doc->count, doc);
 	return (0);
 }

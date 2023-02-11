@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/11 14:10:38 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 15:26:50 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ char	**copy_orders(char **t);
 char	**add_order(char **t, char *str, int flag);
 
 char	**get_limiter(char **doc_str, t_doc *doc);
-void	heredoc_file_make(int fd, char *limiter);
+void	heredoc_file_make(int fd, char *limiter, int *pipe_fd);
 void	close_all_opend_heredoc_fd(t_data *data, int count);
 int		free_pid_docs(int *pid, int *doc_fd);
 void	open_doc_file(t_data *data, char *t, int *i, int *k);
