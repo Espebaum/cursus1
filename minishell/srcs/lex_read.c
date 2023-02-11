@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_read.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/10 16:34:00 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 14:50:00 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,41 @@ void	read_env(char **s, t_str *buf, char **envp)
 			break ;
 		push_str(env, **s);
 	}
-	meta_str = check_meta_chr(&env);
 	if (env_read(&buf, &env, g_str) == 0)
 		return ;
+	meta_str = check_meta_chr(&env);
+	make_env_buf(&buf, &env, envp);
+	i = -1;
+	if (meta_str)
+		while (meta_str[++i])
+			push_str(buf, meta_str[i]);
+	if (meta_str)
+		free(meta_str);
+	free_str(env);
+}
+
+void	read_d_env(char **s, t_str *buf, char **envp)
+{
+	t_str		*env;
+	int			i;
+	char		*g_str;
+	char		*meta_str;
+
+	i = -1;
+	env = make_str();
+	g_str = ft_itoa(g_exit_code);
+	if (*((*s) + 1) == '\0' || *((*s) + 1) == '$')
+		if (check_all_dollar(&buf, s) == 0)
+			return ;
+	while (!is_word_end(*(++(*s))) && **s != '\"')
+	{
+		if (**s == '$')
+			break ;
+		push_str(env, **s);
+	}
+	if (env_read(&buf, &env, g_str) == 0)
+		return ;
+	meta_str = check_meta_chr(&env);
 	make_env_buf(&buf, &env, envp);
 	i = -1;
 	if (meta_str)
@@ -64,7 +96,7 @@ int	read_word_dquote(char **s, t_str *buf, char **envp)
 	{
 		temp = deep_copy_env(envp);
 		if (**s == '$')
-			read_env(s, buf, temp);
+			read_d_env(s, buf, temp);
 		else
 			push_str(buf, *((*s)++));
 	}

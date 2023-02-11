@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 19:15:04 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/11 13:01:31 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 14:12:44 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,31 @@ int	count_space(char *line)
 void	count_inside_char(int *i, int *count, \
 		char *line_temp, char my_char)
 {
-	int	temp;
+	int		temp;
+	int		flag;
+	char	t;
 
+	if (my_char == '\"')
+		t = '\'';
+	else
+		t = '\"';
+		
+	flag = 0;
 	(*i)++;
 	while (line_temp && line_temp[*i])
 	{
+		if (line_temp[*i + 1] != ' ' && line_temp[*i] == my_char)
+		{
+			if (line_temp[*i + 1] == t && flag == 1)
+			{
+				count_inside_char(i, count, line_temp, t);
+				flag = 0;
+			}
+			else if (flag == 0)
+				flag = 1;
+			(*i)++;
+			(*count)++;
+		}
 		if (line_temp[*i] != my_char)
 		{
 			(*i)++;
@@ -62,11 +82,59 @@ void	count_inside_char(int *i, int *count, \
 void	make_inside_char_double(int *i, int *count, char *line_temp, char *ret)
 {
 	int	temp;
+	int	check_close;
+
+	(*i)++;
+	check_close = 0;
+	while (line_temp && line_temp[*i])
+	{
+		if (line_temp[*i + 1] != ' ' && line_temp[*i] == '\"')
+		{
+			(*i)++;
+			if (line_temp[*i] == '\'')
+				make_inside_char_single(i, count, line_temp, ret);
+			if (check_close == 0)
+				check_close = 1;
+			else if(check_close == 1)
+				check_close = 0;
+		}
+		if (line_temp[*i] != '\"' || check_close == 0)
+		{
+			ret[*count] = line_temp[*i];
+			ret[(*count) + 1] = 0;
+			(*i)++;
+			(*count)++;
+		}
+		else if (line_temp[*i] == '\"' && check_close == 1)
+		{
+			(*i)++;
+			ret[*count] = line_temp[*i];
+			ret[(*count) + 1] = 0;
+			(*count)++;
+			(*i)++;
+			check_close = 0;
+
+		}
+		else
+		{
+			(*i)++;
+			temp = (*i);
+			return ;
+		}
+	}
+	/*
+	int	temp;
 
 	(*i)++;
 	while (line_temp && line_temp[*i])
 	{
-		if (line_temp[*i] != '\"')
+		if (line_temp[*i + 1] != ' ' && line_temp[*i] == '\"')
+		{
+			(*i)++;
+			if (line_temp[*i] == '\'')
+				make_inside_char_single(i, count, line_temp, ret);
+		}
+		else if (line_temp[*i] != '\"')
 		{
 			ret[*count] = line_temp[*i];
 			ret[(*count) + 1] = 0;
@@ -80,21 +148,44 @@ void	make_inside_char_double(int *i, int *count, char *line_temp, char *ret)
 			return ;
 		}
 	}
+	*/
 }
 
 void	make_inside_char_single(int *i, int *count, char *line_temp, char *ret)
 {
 	int	temp;
+	int	check_close;
 
 	(*i)++;
+	check_close = 0;
 	while (line_temp && line_temp[*i])
 	{
-		if (line_temp[*i] != '\'')
+		if (line_temp[*i + 1] != ' ' && line_temp[*i] == '\'')
+		{
+			(*i)++;
+			if (line_temp[*i] == '\"')
+				make_inside_char_double(i, count, line_temp, ret);
+			if (check_close == 0)
+				check_close = 1;
+			else if(check_close == 1)
+				check_close = 0;
+		}
+		if (line_temp[*i] != '\'' || check_close == 0)
 		{
 			ret[*count] = line_temp[*i];
 			ret[(*count) + 1] = 0;
 			(*i)++;
 			(*count)++;
+		}
+		else if (line_temp[*i] == '\'' && check_close == 1)
+		{
+			(*i)++;
+			ret[*count] = line_temp[*i];
+			ret[(*count) + 1] = 0;
+			(*count)++;
+			(*i)++;
+			check_close = 0;
+
 		}
 		else
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_env1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:25:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/10 16:35:06 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 14:47:38 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,15 +123,6 @@ int	env_read(t_str **buf, t_str **env, char *g_str)
 			push_str(*buf, g_str[i]);
 		free_str(*env);
 		return (0);
-	}
-	else if (ft_strlen((*env)->s) == 1 && (*env)->s[0] == '~')
-	{
-		clear_str(*env);
-		push_str(*env, 'H');
-		push_str(*env, 'O');
-		push_str(*env, 'M');
-		push_str(*env, 'E');
-		return (1);
 	}
 	return (1);
 }
