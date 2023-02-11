@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:25:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/11 19:11:25 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 21:35:14 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,11 @@ int	get_env_num(char *envp)
 
 	temp = envp;
 	cnt = 0;
-	while (*temp++ != '=')
+	while (*temp != '=')
+	{
 		cnt++;
+		temp++;
+	}
 	if (cnt > 1)
 		cnt--;
 	return (cnt);
@@ -129,13 +132,15 @@ int	env_read(t_str **buf, t_str **env, char *g_str)
 
 void	make_env_buf(t_str **buf, t_str **env, char **envp)
 {
-	int	i;
-	int	env_num;
+	int		i;
+	int		env_num;
+	char	**temp;
 
 	i = -1;
 	while (envp[++i])
 	{
-		env_num = get_env_num(envp[i]);
+		temp = deep_copy_env(envp);
+		env_num = get_env_num(temp[i]);
 		if (ft_strncmp((*env)->s, envp[i], ft_max(ft_strlen((*env)->s),
 					env_num)) == 0)
 		{

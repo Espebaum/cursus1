@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:28:56 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/05 19:20:30 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 21:06:04 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ size_t	ft_strlen(const char *s)
 	size_t	cnt;
 
 	cnt = 0;
-	if (!s)
+	if (!s || s[0] == '\0')
 		return (0);
-	while (*s)
+	while (s && *s)
 	{
 		cnt++;
 		s++;

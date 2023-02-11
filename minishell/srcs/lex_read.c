@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/11 19:11:34 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 21:36:08 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,25 @@ void	read_env(char **s, t_str *buf, char **envp)
 	char	*g_str;
 	char	*meta_str;
 	char	*t;
+	char	**temp;
 
 	i = -1;
 	env = make_str();
 	g_str = ft_itoa(g_exit_code);
-	if (is_meta_chr(*((*s) + 1)) == 1)
+	if (*((*s) + 1) != '\0' && is_meta_chr(*((*s) + 1)) == 1)
 	{
-		push_str(buf, (*(*s)++));
+		if (*((*s) + 1) == '?')
+		{
+			while (g_str[++i])
+				push_str(buf, g_str[i]);
+			(*s)++;
+			(*s)++;
+		}
+		else
+		{
+			push_str(buf, *(*s)++);
+			push_str(buf, *(*s)++);
+		}
 		while (1)
 		{
 			if (**s == '$' || **s == '\0')
@@ -69,16 +81,18 @@ void	read_env(char **s, t_str *buf, char **envp)
 			break ;
 		push_str(env, **s);
 	}
-	if (env_read(&buf, &env, g_str) == 0)
-		return ;
+	// if (env_read(&buf, &env, g_str) == 0)
+	// 	return ;
 	meta_str = check_meta_chr(&env);
-	make_env_buf(&buf, &env, envp);
+	temp = deep_copy_env(envp);
+	make_env_buf(&buf, &env, temp);
 	i = -1;
 	if (meta_str)
 		while (meta_str[++i])
 			push_str(buf, meta_str[i]);
 	if (meta_str)
 		free(meta_str);
+	free(temp);
 	free_str(env);
 }
 
@@ -104,6 +118,7 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 		cur = push_token(T_ERROR, buf, cur);
 	else
 		cur = push_token(T_WORD, buf, cur);
+	free(temp);
 	return (cur);
 }
 

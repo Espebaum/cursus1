@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/11 19:31:16 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/11 21:24:24 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ int	main(int argc, char **argv, char **envp)
 			if (handle_line(line, cover, envp, head) == -1)
 				continue ;
 		free(line);
-		make_envp_arr(head, &envp);
+		envp = 0;
+		envp = make_envp_arr(head);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (g_exit_code);

@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 22:56:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/11 19:18:31 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/11 21:22:25 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	new_value(t_list **head, void *key, void *value)
 	ft_lstadd_back(head, ft_lstnew(key, value));
 }
 
-void	make_envp_arr(t_list *head, char ***envp)
+char	**make_envp_arr(t_list *head)
 {
 	int		i;
 	char	*t;
@@ -131,7 +131,7 @@ void	make_envp_arr(t_list *head, char ***envp)
 		ret[i++] = t;
 		head = head->next;
 	}
-	*envp = ret;
+	return (ret);
 }
 
 void	print_env(t_list *head)
