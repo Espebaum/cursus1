@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doc_open2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 14:41:07 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/10 16:48:47 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 18:48:31 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	check_doc_next(char **doc_str, int idx)
 
 int	get_doc_count(char **doc_str)
 {
-	int		cnt;
-	int		idx;
+	int	cnt;
+	int	idx;
 
 	if (doc_str[0][0] == '\0')
 		return (1);
@@ -52,8 +52,8 @@ int	get_doc_count(char **doc_str)
 
 char	*get_rid_str(char *doc_str, char *limiter)
 {
-	int		i;
-	int		lim_idx;
+	int	i;
+	int	lim_idx;
 
 	i = -1;
 	lim_idx = 0;
@@ -66,7 +66,7 @@ char	*get_rid_str(char *doc_str, char *limiter)
 		// 	while (doc_str[++i] != '\"')
 		// 		limiter[lim_idx++] = doc_str[i];
 		// else
-			limiter[lim_idx++] = doc_str[i];
+		limiter[lim_idx++] = doc_str[i];
 	}
 	return (limiter);
 }
@@ -86,13 +86,13 @@ char	*rid_quotes(char *doc_str)
 		// 		limiter_len++;
 		// else if (doc_str[i] == '\"')
 		// {
-			// while (doc_str[++i] != '\"')
-				// limiter_len++;
+		// while (doc_str[++i] != '\"')
+		// limiter_len++;
 		// }
 		// else
-			limiter_len++;
+		limiter_len++;
 	}
-	limiter = (char *) malloc(sizeof(char) * (limiter_len + 1));
+	limiter = (char *)malloc(sizeof(char) * (limiter_len + 1));
 	limiter[limiter_len] = '\0';
 	limiter = get_rid_str(doc_str, limiter);
 	return (limiter);

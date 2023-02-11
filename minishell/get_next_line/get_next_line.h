@@ -3,38 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youngski <youngski@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/30 20:31:18 by youngski          #+#    #+#             */
-/*   Updated: 2022/11/30 20:31:23 by youngski         ###   ########.fr       */
+/*   Created: 2022/12/02 19:38:55 by gyopark           #+#    #+#             */
+/*   Updated: 2023/02/11 18:53:13 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include <unistd.h>
 # include <stdlib.h>
+# include <unistd.h>
+# include "../libft/libft.h"
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 4
 # endif
 
-typedef struct s_mynode
-{
-	char				*content;
-	int					fd;
-	struct s_mynode		*next;
-	ssize_t				size;
-}						t_mynode;
+# ifndef OPEN_MAX
+#  define OPEN_MAX 10240
+# endif
 
-char		*get_next_line(int fd);
-char		*appending_save(char *dest, t_mynode *temp_n);
-char		*make_return(t_mynode *temp, t_mynode **root);
-char		*get_next_line(int fd);
-char		*free_node(t_mynode **root, int fd);
-int			read_line(t_mynode *temp, t_mynode **root);
-t_mynode	*create_node(int fd);
-t_mynode	*find_node(t_mynode **root, int fd);
+char	*get_next_line(int fd);
+void	str_free(char **str);
 
 #endif

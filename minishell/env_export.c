@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   env_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youngski <youngski@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 22:56:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/07 22:56:37 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/11 18:48:56 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,51 +14,51 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-char **ft_split(char *t, char k);
-int	ft_isalpha(int c);
-char	*ft_strjoin(char const *s1, char const *s2);
+char				**ft_split(char *t, char k);
+int					ft_isalpha(int c);
+char				*ft_strjoin(char const *s1, char const *s2);
 
 typedef struct s_list
 {
-	char *key;
-	char *value;
+	char			*key;
+	char			*value;
 	struct s_list	*next;
 
-}			t_list;
+}					t_list;
 
-t_list  *ft_lstlast(t_list *lst)
+t_list	*ft_lstlast(t_list *lst)
 {
-    if (!lst)
-        return (0);
-    while (lst->next)
-        lst = lst->next;
-    return (lst);
+	if (!lst)
+		return (0);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
 }
 
-void    ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-    t_list  *temp;
+	t_list	*temp;
 
-    if (*lst == NULL)
-    {
-        *lst = new;
-        return ;
-    }
-    temp = ft_lstlast(*lst);
-    temp->next = new;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	temp = ft_lstlast(*lst);
+	temp->next = new;
 }
 
-t_list  *ft_lstnew(void *key, void *value)
+t_list	*ft_lstnew(void *key, void *value)
 {
-    t_list  *newlist;
+	t_list	*newlist;
 
-    newlist = (t_list *)malloc(sizeof(t_list));
-    if (!newlist)
-        return (0);
-    newlist->key = key;
+	newlist = (t_list *)malloc(sizeof(t_list));
+	if (!newlist)
+		return (0);
+	newlist->key = key;
 	newlist->value = value;
-    newlist->next = NULL;
-    return (newlist);
+	newlist->next = NULL;
+	return (newlist);
 }
 
 t_list	*init_env_list(char **env, t_list **head)
@@ -72,18 +72,17 @@ t_list	*init_env_list(char **env, t_list **head)
 	{
 		str = ft_split(*t, '=');
 		if (str == 0)
-			break;
+			break ;
 		temp = ft_lstnew(str[0], str[1]);
 		ft_lstadd_back(head, temp);
 		t++;
 	}
-	return *head;
-
+	return (*head);
 }
 
 int	error_check(void *key)
 {
-	char	*temp ;
+	char	*temp;
 	int		i;
 
 	i = 0;
@@ -99,7 +98,6 @@ int	error_check(void *key)
 
 void	new_value(t_list **head, void *key, void *value)
 {
-
 	if (key)
 	{
 		if (error_check(key))
@@ -138,10 +136,10 @@ void	make_envp_arr(t_list *head, char ***envp)
 
 void	print_env(t_list *head)
 {
-	t_list *temp;
-	char *key;
-	char *value;
-	
+	t_list	*temp;
+	char	*key;
+	char	*value;
+
 	temp = head;
 	while (temp)
 	{
@@ -150,36 +148,36 @@ void	print_env(t_list *head)
 		if (value == 0)
 		{
 			temp = temp->next;
-			continue;
+			continue ;
 		}
-		printf("%s=%s\n",key,value);
+		printf("%s=%s\n", key, value);
 		temp = temp->next;
 	}
 }
 
 void	print_export(t_list *head)
 {
-	t_list *temp;
-	char *key;
-	char *value;
-	
+	t_list	*temp;
+	char	*key;
+	char	*value;
+
 	temp = head;
 	while (temp)
 	{
 		key = temp->key;
 		value = temp->value;
 		if (value == 0)
-			printf("declar -x %s\n",key);
+			printf("declar -x %s\n", key);
 		else
-		printf("declar -x %s=\"%s\"\n",key,value);
+			printf("declar -x %s=\"%s\"\n", key, value);
 		temp = temp->next;
 	}
 }
 
 //메인에서 반복문안에서 init_env_list, make_envp_arr 를 계속해준다.
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
-	t_list *head;
+	t_list	*head;
 
 	head = init_env_list(env, &head);
 	/*
@@ -198,6 +196,5 @@ int main(int argc, char **argv, char **env)
 	*/
 	make_envp_arr(head, &env);
 	print_env(head);
-//	print_export(head);
-
+	//	print_export(head);
 }

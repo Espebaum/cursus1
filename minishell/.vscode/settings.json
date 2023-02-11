@@ -13,7 +13,8 @@
     "array": "c",
     "string": "c",
     "string_view": "c",
-    "vector": "c"
+    "vector": "c",
+    "get_next_line.h": "c"
   },
   "editor.tabSize": 4,
   "editor.definitionLinkOpensInPeek": true,
@@ -25,5 +26,9 @@
   "files.insertFinalNewline": true,
   "editor.tokenColorCustomizations": {
     "comments": "#009000"
-  }
+  },
+  // "editor.formatOnSave": true,
+  // "[c]": {
+  //   "editor.defaultFormatter": "keyhr.42-c-format"
+  // } <- 가끔 대량으로 수정할때 열기
 }

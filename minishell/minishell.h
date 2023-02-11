@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/11 15:26:50 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/11 18:37:33 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # include "./libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "./get_next_line/get_next_line.h"
 
 int	g_exit_code;
 
@@ -140,6 +141,7 @@ void	free_token(t_token *cur);
 t_token	*read_pipe_redir(char **s, t_token *cur, t_str *buf);
 t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp);
 char	*conv_env(char *name);
+void	read_env(char **s, t_str *buf, char **envp);
 int		is_env_char(char s);
 int		get_env_num(char *envp);
 int		check_all_dollar(t_str **buf, char **str);

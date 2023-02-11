@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:25:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/11 14:47:38 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 19:11:25 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ char	*make_meta_chr(char *ret, int *size, char meta_chr)
 
 char	*check_meta_chr(t_str **env)
 {
-	char		*str;
-	int			len;
-	int			i;
-	char		*ret;
-	int			size;
+	char	*str;
+	int		len;
+	int		i;
+	char	*ret;
+	int		size;
 
 	size = 1;
 	ret = ft_strdup("");
@@ -67,7 +67,7 @@ char	*check_meta_chr(t_str **env)
 	else
 		return (NULL);
 	ret = flip_meta_chr(ret);
-	str = (char *) malloc(sizeof(char) * (len + 1));
+	str = (char *)malloc(sizeof(char) * (len + 1));
 	str[len] = '\0';
 	while (++i < len + 1)
 		str[i] = (*env)->s[i];
@@ -96,7 +96,7 @@ int	get_env_num(char *envp)
 
 int	check_all_dollar(t_str **buf, char **str)
 {
-	int		i;
+	int	i;
 
 	i = -1;
 	if (**str == '\0')
@@ -114,7 +114,7 @@ int	check_all_dollar(t_str **buf, char **str)
 
 int	env_read(t_str **buf, t_str **env, char *g_str)
 {
-	int			i;
+	int	i;
 
 	i = -1;
 	if (ft_strlen((*env)->s) == 1 && (*env)->s[0] == '?')
@@ -129,15 +129,15 @@ int	env_read(t_str **buf, t_str **env, char *g_str)
 
 void	make_env_buf(t_str **buf, t_str **env, char **envp)
 {
-	int		i;
-	int		env_num;
+	int	i;
+	int	env_num;
 
 	i = -1;
 	while (envp[++i])
 	{
 		env_num = get_env_num(envp[i]);
-		if (ft_strncmp((*env)->s, envp[i], \
-						ft_max(ft_strlen((*env)->s), env_num)) == 0)
+		if (ft_strncmp((*env)->s, envp[i], ft_max(ft_strlen((*env)->s),
+					env_num)) == 0)
 		{
 			envp[i] += env_num + 1;
 			while (*(envp[i])++)

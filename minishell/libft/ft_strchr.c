@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:21:58 by gyopark           #+#    #+#             */
-/*   Updated: 2022/11/24 16:14:03 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 18:21:21 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strchr(const char *s, int c)
 	char	src;
 	int		len;
 
+	if (!s)
+		return (NULL);
 	len = ft_strlen(s);
 	src = c;
 	while (len-- >= 0)

@@ -6,12 +6,11 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:28:36 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/11 17:15:40 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/11 18:52:28 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include "../get_next_line.h"
 
 void	heredoc_file_make(int fd, char *limiter, int *pipe_fd)
 {
@@ -64,6 +63,7 @@ void	make_doc_files(int count, t_doc *doc)
 	int		pipe_fd[2];
 	char	**temp;
 	char	*str;
+	int		asdf;
 
 	filename = "/tmp/.here_doc";
 	idx = 0;
@@ -87,33 +87,33 @@ void	make_doc_files(int count, t_doc *doc)
 		}
 		close(pipe_fd[1]);
 		close(pipe_fd[0]);
-		exit(0);//종료 처리할것
+		exit(0); //종료 처리할것
 	}
 	else
 	{
 		close(pipe_fd[1]);
-		waitpid(pid,NULL,0);
+		waitpid(pid, NULL, 0);
 		while (idx <= doc->count)
 		{
 			str = get_next_line(pipe_fd[0]);
 			if (!str)
-				break;
-			int asdf = ft_strlen(str);
+				break ;
+			asdf = ft_strlen(str);
 			str[asdf - 1] = 0;
 			printf("s : %s\n", str);
 			doc->name[idx++] = str;
 		}
-			close(pipe_fd[0]);
+		close(pipe_fd[0]);
 	}
-
 }
 
 int	count_heredoc(char *line)
 {
-	const int	len = ft_strlen(line);
-	int			cnt;
-	int			i;
+	int	len;
+	int	cnt;
+	int	i;
 
+	len = ft_strlen(line);
 	i = -1;
 	cnt = 0;
 	while (++i < len - 1)

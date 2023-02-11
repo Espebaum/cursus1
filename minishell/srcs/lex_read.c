@@ -6,75 +6,11 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/11 14:50:00 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/11 19:11:34 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	read_env(char **s, t_str *buf, char **envp)
-{
-	t_str		*env;
-	int			i;
-	char		*g_str;
-	char		*meta_str;
-
-	i = -1;
-	env = make_str();
-	g_str = ft_itoa(g_exit_code);
-	if (*((*s) + 1) == '\0' || *((*s) + 1) == '$')
-		if (check_all_dollar(&buf, s) == 0)
-			return ;
-	while (!is_word_end(*(++(*s))) && **s != '\"')
-	{
-		if (**s == '$')
-			break ;
-		push_str(env, **s);
-	}
-	if (env_read(&buf, &env, g_str) == 0)
-		return ;
-	meta_str = check_meta_chr(&env);
-	make_env_buf(&buf, &env, envp);
-	i = -1;
-	if (meta_str)
-		while (meta_str[++i])
-			push_str(buf, meta_str[i]);
-	if (meta_str)
-		free(meta_str);
-	free_str(env);
-}
-
-void	read_d_env(char **s, t_str *buf, char **envp)
-{
-	t_str		*env;
-	int			i;
-	char		*g_str;
-	char		*meta_str;
-
-	i = -1;
-	env = make_str();
-	g_str = ft_itoa(g_exit_code);
-	if (*((*s) + 1) == '\0' || *((*s) + 1) == '$')
-		if (check_all_dollar(&buf, s) == 0)
-			return ;
-	while (!is_word_end(*(++(*s))) && **s != '\"')
-	{
-		if (**s == '$')
-			break ;
-		push_str(env, **s);
-	}
-	if (env_read(&buf, &env, g_str) == 0)
-		return ;
-	meta_str = check_meta_chr(&env);
-	make_env_buf(&buf, &env, envp);
-	i = -1;
-	if (meta_str)
-		while (meta_str[++i])
-			push_str(buf, meta_str[i]);
-	if (meta_str)
-		free(meta_str);
-	free_str(env);
-}
 
 int	read_word_squote(char **s, t_str *buf)
 {
@@ -96,7 +32,7 @@ int	read_word_dquote(char **s, t_str *buf, char **envp)
 	{
 		temp = deep_copy_env(envp);
 		if (**s == '$')
-			read_d_env(s, buf, temp);
+			read_env(s, buf, temp);
 		else
 			push_str(buf, *((*s)++));
 	}
@@ -104,6 +40,46 @@ int	read_word_dquote(char **s, t_str *buf, char **envp)
 		return (1);
 	(*s)++;
 	return (0);
+}
+
+void	read_env(char **s, t_str *buf, char **envp)
+{
+	t_str	*env;
+	int		i;
+	char	*g_str;
+	char	*meta_str;
+	char	*t;
+
+	i = -1;
+	env = make_str();
+	g_str = ft_itoa(g_exit_code);
+	if (is_meta_chr(*((*s) + 1)) == 1)
+	{
+		push_str(buf, (*(*s)++));
+		while (1)
+		{
+			if (**s == '$' || **s == '\0')
+				return ;
+			push_str(buf, (*(*s)++));
+		}
+	}
+	while (!is_word_end(*(++(*s))) && **s != '\"')
+	{
+		if (**s == '$')
+			break ;
+		push_str(env, **s);
+	}
+	if (env_read(&buf, &env, g_str) == 0)
+		return ;
+	meta_str = check_meta_chr(&env);
+	make_env_buf(&buf, &env, envp);
+	i = -1;
+	if (meta_str)
+		while (meta_str[++i])
+			push_str(buf, meta_str[i]);
+	if (meta_str)
+		free(meta_str);
+	free_str(env);
 }
 
 t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
@@ -136,7 +112,7 @@ t_token	*read_pipe_redir(char **s, t_token *cur, t_str *buf)
 	if (buf->len != 0)
 		cur = push_token(T_WORD, buf, cur);
 	push_str(buf, *((*s)++));
-	if ((*(*(s)- 1) == '<' || *(*(s) - 1) == '>') && *(*(s) - 1) == **s)
+	if ((*(*(s)-1) == '<' || *(*(s)-1) == '>') && *(*(s)-1) == **s)
 	{
 		push_str(buf, *((*s)++));
 		cur = push_token(T_REDIRECT, buf, cur);
