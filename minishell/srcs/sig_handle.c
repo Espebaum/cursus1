@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 21:55:59 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/11 14:15:59 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/12 17:27:42 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,15 @@ void	signal_handler(int signo)
 	}
 }
 
-// void	doc_handler(int signo)
-// {
-// 	if (signo == SIGINT)
-// 	{
-// 		write(1, "\n", 1);
-// 		exit(1);
-// 	}
-// }
+void	doc_handler(int signo)
+{
+	if (signo == SIGINT)
+	{
+		write(1, "\n", 1);
+		g_exit_code = 1;
+		exit(g_exit_code);
+	}
+}
 
 void	set_signal(int sig_int, int sig_quit)
 {
@@ -45,8 +46,8 @@ void	set_signal(int sig_int, int sig_quit)
 		signal(SIGINT, SIG_DFL);
 	if (sig_int == SHE)
 		signal(SIGINT, signal_handler);
-	// if (sig_int == DOC)
-	// 	signal(SIGINT, doc_handler);
+	if (sig_int == DOC)
+		signal(SIGINT, doc_handler);
 	if (sig_quit == IGN)
 		signal(SIGQUIT, SIG_IGN);
 	if (sig_quit == DFL)

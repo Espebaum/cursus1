@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/11 22:09:30 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/12 16:39:19 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,24 @@ int	is_str_space(char *line)
 
 int	doc_check(t_cover *cover, char *line)
 {
-	if (doc_syntax(line) == -1)
+	int	doc;
+
+	doc = doc_syntax(line);
+	if (doc == -1)
 		return (syntax_err());
-	if (open_heredoc(cover->doc, line) == -1)
-		return (-1);
-	return (0);
+	if (doc == 1)
+	{
+		doc = open_heredoc(cover->doc, line);
+		if (doc == -1)
+			return (-1);
+		return (doc);
+	}
+	return (doc);
 }
+//리턴값 -1 : syntax 오류
+//doc -> 0 히어독 아님
+//doc -> 1 히어독인데 정상 종료
+//doc -> 2 히어독인데 Ctrl C
 
 int	do_builtin(t_cover *cover, t_list *head)
 {
@@ -44,7 +56,12 @@ int	do_builtin(t_cover *cover, t_list *head)
 
 int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 {
-	if (doc_check(cover, line) == -1)
+	int	doc;
+
+	doc = doc_check(cover, line);
+	if (doc == -1)
+		return (-1);
+	else if (doc == 2)
 		return (-1);
 	cover->head = go_tokenize(line, envp, cover->head);
 	if (check_syntax(cover->head) == -1)
@@ -58,6 +75,9 @@ int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 	set_signal(SHE, SHE);
 	return (g_exit_code);
 }
+//heredoc인데 오류 -> 반환값 g_exit_code 1;
+//heredoc인데 정상종료 -> g_exit_code 건들지 않음
+//heredoc아님 ->
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -74,6 +94,7 @@ int	main(int argc, char **argv, char **envp)
 	init_prompt_sig(argc, argv);
 	while (1)
 	{
+		printf("g_exit_code : %d\n", g_exit_code);
 		init_fd(cover->data);
 		line = init_line(line);
 		if (*line != '\0' && !is_str_space(line))

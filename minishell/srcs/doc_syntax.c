@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doc_syntax.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 12:28:04 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/09 19:40:50 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/12 16:09:45 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,19 @@ int	doc_syntax(char *str)
 {
 	const int	len = ft_strlen(str);
 	int			i;
+	int			is_doc;
 
+	is_doc = 0;
 	i = -1;
 	while (++i < len - 1)
 	{
 		if (str[i] == '<' && str[i + 1])
+		{
+			is_doc = 1;
 			if (doc_syntax_check(str, len) == -1)
 				return (-1);
+			return (is_doc);
+		}
 	}
-	return (0);
+	return (is_doc);
 }

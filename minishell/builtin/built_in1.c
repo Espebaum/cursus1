@@ -2,7 +2,8 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   built_in1.c                                        :+:      :+:    :+:   */
-/*          	                                          +:+ +:+         +:+ */
+/*          		                                       +:+ +:+
+			+:+ */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 16:22:56 by youngski          #+#    #+#             */
@@ -91,6 +92,7 @@ int	built_echo(char **t)
 	}
 	if (flag == 0)
 		printf("\n");
+	g_exit_code = 0;
 	return (1);
 }
 
@@ -105,22 +107,60 @@ int	built_pwd(char **builtin)
 {
 	char	t[2048];
 
-	(void) builtin;
+	(void)builtin;
 	getcwd(t, 2048);
 	printf("%s\n", t);
 	//free(t);
+	g_exit_code = 0;
 	return (1);
+}
+
+char	**export_parsing(char **t)
+{
+	char	*key;
+	char	*value;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (t[i])
+	{
+		while (t[i][j])
+		{
+			if (!error_check(t[i][j]))
+			{
+				key = ft_strjoin(key, &t[i][j]);
+			}
+			else if (t[i][j] == '=')
+			{
+
+			}
+			else
+				t++;
+		}
+	}
 }
 
 int	built_export(char **builtin, t_list *head)
 {
-	(void) builtin;
+	char	**t;
+
+	(void)builtin;
+	t = export_parsing(builtin[1]);
+	if (!t)
+		if (!builtin[1])
+			print_export(head);
+		else
+			export_parsing(&head, builtin);
+	g_exit_code = 0;
 	return (1);
 }
 
-int	built_unset(char **builtin)
+int	built_unset(char **builtin, t_list *head)
 {
-	(void) builtin;
+	(void)builtin;
+	g_exit_code = 0;
 	return (1);
 }
 
@@ -129,34 +169,38 @@ int	built_env(char **builtin, t_list *head)
 	if (builtin[1])
 		return (0);
 	print_env(head);
+	g_exit_code = 0;
 	return (1);
 }
 
 int	check_builtin(char **builtin, t_list *head)
 {
-	int		result;
+	int	result;
 
 	result = -1;
-	if (!ft_strncmp(builtin[0], "echo", 5) || (ft_strnstr(builtin[0], \
-		"echo", ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
+	if (!ft_strncmp(builtin[0], "echo", 5) || (ft_strnstr(builtin[0], "echo",
+				ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_echo(builtin);
-	else if (!ft_strncmp(builtin[0], "cd", 3) || (ft_strnstr(builtin[0], "cd", \
-		ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
+	else if (!ft_strncmp(builtin[0], "cd", 3) || (ft_strnstr(builtin[0], "cd",
+					ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_cd(builtin);
-	else if (!ft_strncmp(builtin[0], "pwd", 4) || (ft_strnstr(builtin[0], "pwd", \
-		ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
+	else if (!ft_strncmp(builtin[0], "pwd", 4) || (ft_strnstr(builtin[0], "pwd",
+					ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_pwd(builtin);
-	else if (!ft_strncmp(builtin[0], "export", 7) || (ft_strnstr(builtin[0], \
-		"export", ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
+	else if (!ft_strncmp(builtin[0], "export", 7) || (ft_strnstr(builtin[0],
+					"export", ft_strlen(builtin[0])) && access(builtin[0],
+					X_OK) != -1))
 		result = built_export(builtin, head);
-	else if (!ft_strncmp(builtin[0], "unset", 6) || (ft_strnstr(builtin[0], "unset", \
-		ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
-		result = built_unset(builtin);
-	else if (!ft_strncmp(builtin[0], "env", 4) || (ft_strnstr(builtin[0], "env", \
-		ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
+	else if (!ft_strncmp(builtin[0], "unset", 6) || (ft_strnstr(builtin[0],
+					"unset", ft_strlen(builtin[0])) && access(builtin[0],
+					X_OK) != -1))
+		result = built_unset(builtin, head);
+	else if (!ft_strncmp(builtin[0], "env", 4) || (ft_strnstr(builtin[0], "env",
+					ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_env(builtin, head);
-	else if (!ft_strncmp(builtin[0], "exit", 5) || (ft_strnstr(builtin[0], "exit", \
-		ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
+	else if (!ft_strncmp(builtin[0], "exit", 5) || (ft_strnstr(builtin[0],
+					"exit", ft_strlen(builtin[0])) && access(builtin[0],
+					X_OK) != -1))
 		exit(0);
 	return (result);
 }

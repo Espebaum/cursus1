@@ -6,25 +6,11 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 22:56:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/11 22:06:12 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/12 17:27:39 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-
-char				**ft_split(char *t, char k);
-int					ft_isalpha(int c);
-char				*ft_strjoin(char const *s1, char const *s2);
-
-typedef struct s_list
-{
-	char			*key;
-	char			*value;
-	struct s_list	*next;
-
-}					t_list;
+#include "../minishell.h"
 
 t_list	*ft_lstlast(t_list *lst)
 {
@@ -85,6 +71,8 @@ int	error_check(void *key)
 	char	*temp;
 	int		i;
 
+	if (!(key))
+		return (1);
 	i = 0;
 	temp = (char *)key;
 	while (temp[i])
@@ -148,14 +136,17 @@ void	print_env(t_list *head)
 	{
 		key = temp->key;
 		value = temp->value;
-		if (value == 0)
-		{
-			temp = temp->next;
-			continue ;
-		}
-		printf("%s=%s\n", key, value);
+		// if (value == 0)
+		// {
+		// 	temp = temp->next;
+		// 	printf("skip a!!!!\n\n");
+		// 	continue ;
+		// }
+		//else
+			printf("%s=\"%s\"\n", key, value);
 		temp = temp->next;
 	}
+
 }
 
 void	print_export(t_list *head)

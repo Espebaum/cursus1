@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 14:41:07 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/11 18:48:31 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/12 17:28:21 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,7 @@ char	*get_rid_str(char *doc_str, char *limiter)
 	i = -1;
 	lim_idx = 0;
 	while (doc_str[++i])
-	{
-		// if (doc_str[i] == '\'')
-		// 	while (doc_str[++i] != '\'')
-		// 		limiter[lim_idx++] = doc_str[i];
-		// else if (doc_str[i] == '\"')
-		// 	while (doc_str[++i] != '\"')
-		// 		limiter[lim_idx++] = doc_str[i];
-		// else
 		limiter[lim_idx++] = doc_str[i];
-	}
 	return (limiter);
 }
 
@@ -80,18 +71,7 @@ char	*rid_quotes(char *doc_str)
 	i = -1;
 	limiter_len = 0;
 	while (doc_str[++i])
-	{
-		// if (doc_str[i] == '\'')
-		// 	while (doc_str[++i] != '\'')
-		// 		limiter_len++;
-		// else if (doc_str[i] == '\"')
-		// {
-		// while (doc_str[++i] != '\"')
-		// limiter_len++;
-		// }
-		// else
 		limiter_len++;
-	}
 	limiter = (char *)malloc(sizeof(char) * (limiter_len + 1));
 	limiter[limiter_len] = '\0';
 	limiter = get_rid_str(doc_str, limiter);

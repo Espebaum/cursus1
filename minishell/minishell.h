@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/11 22:22:50 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/12 16:49:16 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,14 @@ typedef struct s_cover
 	int		cp_stdin;
 	char	**builtin;
 }	t_cover;
+
+typedef struct s_list
+{
+	char			*key;
+	char			*value;
+	struct s_list	*next;
+}	t_list;
+
 
 t_token	*go_tokenize(char *cmd, char **envp, t_token *t);
 void	set_signal(int sig_int, int sig_quit);
@@ -203,5 +211,6 @@ t_list	*init_env_list(char **env, t_list **head);
 char	**make_envp_arr(t_list *head);
 void	print_env(t_list *head);
 void	print_export(t_list *head);
+void	new_value(t_list **head, void *key, void *value);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_line2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/11 19:33:31 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/12 16:00:00 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ char	*find_path(char *argv[], char **envp, int i)
 	char	*sp_path;
 	char	**temp;
 
+	if (access(argv[0], X_OK) != -1)
+		return (argv[0]);
 	k = -1;
 	while (envp[++k])
 	{
@@ -90,8 +92,6 @@ char	*find_path(char *argv[], char **envp, int i)
 			break ;
 	}
 	path = ft_split(envp[k] + 5, ':');
-	if (access(argv[0], X_OK) != -1)
-		return (argv[0]);
 	argv[i] = ft_strjoin("/", argv[i]);
 	k = -1;
 	while (path[++k])

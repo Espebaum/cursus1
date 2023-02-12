@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_y.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 19:15:04 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/11 14:12:44 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/12 17:27:53 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	count_inside_char(int *i, int *count, \
 		t = '\'';
 	else
 		t = '\"';
-		
 	flag = 0;
 	(*i)++;
 	while (line_temp && line_temp[*i])
@@ -95,7 +94,7 @@ void	make_inside_char_double(int *i, int *count, char *line_temp, char *ret)
 				make_inside_char_single(i, count, line_temp, ret);
 			if (check_close == 0)
 				check_close = 1;
-			else if(check_close == 1)
+			else if (check_close == 1)
 				check_close = 0;
 		}
 		if (line_temp[*i] != '\"' || check_close == 0)
@@ -113,7 +112,6 @@ void	make_inside_char_double(int *i, int *count, char *line_temp, char *ret)
 			(*count)++;
 			(*i)++;
 			check_close = 0;
-
 		}
 		else
 		{
@@ -167,7 +165,7 @@ void	make_inside_char_single(int *i, int *count, char *line_temp, char *ret)
 				make_inside_char_double(i, count, line_temp, ret);
 			if (check_close == 0)
 				check_close = 1;
-			else if(check_close == 1)
+			else if (check_close == 1)
 				check_close = 0;
 		}
 		if (line_temp[*i] != '\'' || check_close == 0)
@@ -185,7 +183,6 @@ void	make_inside_char_single(int *i, int *count, char *line_temp, char *ret)
 			(*count)++;
 			(*i)++;
 			check_close = 0;
-
 		}
 		else
 		{
