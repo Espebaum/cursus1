@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:28:36 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/12 17:27:44 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/12 18:29:08 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,89 +56,6 @@ int	open_file(char *filename, int idx, t_doc **doc, int *pipe_fd)
 	return (fd);
 }
 
-// int	doc_parent(int idx, int count, )
-// {
-// 	int		fd;
-
-// 	set_signal(DOC, SHE);
-// 	while (idx < count)
-// 	{
-// 		if (access(filename, F_OK) == -1)
-// 			fd = open_file(filename, idx, &doc, pipe_fd);
-// 		else
-// 		{
-// 			filename = ft_strjoin(filename, "1");
-// 			continue ;
-// 		}
-// 		//printf("i : %d, limiter : %s\n\n", idx, doc->limiters[idx]);
-// 		heredoc_file_make(fd, doc->limiters[idx], pipe_fd);
-// 		idx++;
-// 		close(fd);
-// 	}
-// 	close(pipe_fd[1]);
-// 	close(pipe_fd[0]);
-// 	g_exit_code = 0;
-// 	exit(g_exit_code);
-// }
-
-void	make_doc_files(int count, t_doc *doc)
-{
-	char	*filename;
-	int		idx;
-	int		pid;
-	int		pipe_fd[2];
-	int		status;
-	char	**temp;
-	char	*str;
-	int		asdf;
-
-	idx = 0;
-	filename = "/tmp/.here_doc";
-	pipe(pipe_fd);
-	pid = fork();
-	set_signal(IGN, SHE);
-		// doc_parent(0, count, filename, )
-	if (pid == 0)
-	{
-		set_signal(DOC, SHE);
-		while (idx < count)
-		{
-			if (access(filename, F_OK) == -1)
-				fd = open_file(filename, idx, &doc, pipe_fd);
-			else
-			{
-				filename = ft_strjoin(filename, "1");
-				continue ;
-			}
-			//printf("i : %d, limiter : %s\n\n", idx, doc->limiters[idx]);
-			heredoc_file_make(fd, doc->limiters[idx], pipe_fd);
-			idx++;
-			close(fd);
-		}
-		close(pipe_fd[1]);
-		close(pipe_fd[0]);
-		g_exit_code = 0;
-		exit(g_exit_code);
-	}
-	else
-	{
-		close(pipe_fd[1]);
-		waitpid(pid, &status, 0);
-		while (idx <= doc->count)
-		{
-			str = get_next_line(pipe_fd[0]);
-			if (!str)
-				break ;
-			asdf = ft_strlen(str);
-			str[asdf - 1] = 0;
-			doc->name[idx++] = str;
-		}
-		close(pipe_fd[0]);
-		g_exit_code = WEXITSTATUS(status);
-		printf("exit_code : %d\n", g_exit_code);
-	}
-}
-
 int	count_heredoc(char *line)
 {
 	int	len;
@@ -164,7 +81,6 @@ int	open_heredoc(t_doc *doc, char *line)
 	char	**doc_str;
 
 	doc = init_doc(doc);
-	// doc_str = ft_split(line, ' ');
 	doc_str = myfunc_split(line, 0, 0, 0);
 	printf("\n\ndoc_str : %s, %s\n\n", doc_str[0], doc_str[1]);
 	doc->count = get_doc_count(doc_str);
@@ -180,3 +96,4 @@ int	open_heredoc(t_doc *doc, char *line)
 	else
 		return (2);
 }
+//83 doc_str = ft_split(line, ' ');

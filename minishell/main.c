@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/12 16:39:19 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/12 18:58:49 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	main(int argc, char **argv, char **envp)
 	init_prompt_sig(argc, argv);
 	while (1)
 	{
-		printf("g_exit_code : %d\n", g_exit_code);
+		// printf("g_exit_code : %d\n", g_exit_code);
 		init_fd(cover->data);
 		line = init_line(line);
 		if (*line != '\0' && !is_str_space(line))

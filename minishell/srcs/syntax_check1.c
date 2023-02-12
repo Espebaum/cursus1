@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_check1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 19:57:00 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/09 14:14:57 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/12 18:29:44 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	check_syntax(t_token *head)
 	token_len = 0;
 	type_arr = make_type_arr(head, &token_len);
 	while (temp)
-	{		
+	{
 		temp->cmds = get_cmds_num(type_arr, token_len);
 		temp = temp->next;
 	}

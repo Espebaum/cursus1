@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 22:56:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/12 17:27:39 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/12 19:00:30 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_list	*init_env_list(char **env, t_list **head)
 	return (*head);
 }
 
-int	error_check(void *key)
+int	error_check(char *key)
 {
 	char	*temp;
 	int		i;
@@ -84,7 +84,7 @@ int	error_check(void *key)
 	return (1);
 }
 
-void	new_value(t_list **head, void *key, void *value)
+void	new_value(t_list **head, char *key, char *value)
 {
 	if (key)
 	{
@@ -143,7 +143,7 @@ void	print_env(t_list *head)
 		// 	continue ;
 		// }
 		//else
-			printf("%s=\"%s\"\n", key, value);
+			printf("%s=%s\n", key, value);
 		temp = temp->next;
 	}
 

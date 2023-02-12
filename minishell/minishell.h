@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/12 16:49:16 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/12 19:29:37 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,10 @@ void	init_split(int *i, int *j, char *line, char **line_temp);
 int		skip_space(int *i, char **line_temp);
 char	**call_next(char *line_temp, char **ret, char *line, int i);
 void	part_make_line(int *i, int *j, int *count, char **line_temp);
-
+int		doc_parent(int idx, int count, t_doc **doc, int *pipe_fd);
+void	doc_child(int idx, int count, t_doc **doc, int *pipe_fd);
+void	make_doc_files(int count, t_doc *doc);
+int		open_file(char *filename, int idx, t_doc **doc, int *pipe_fd);
 
 //tokenize functions
 t_str	*make_str(void);
@@ -211,6 +214,6 @@ t_list	*init_env_list(char **env, t_list **head);
 char	**make_envp_arr(t_list *head);
 void	print_env(t_list *head);
 void	print_export(t_list *head);
-void	new_value(t_list **head, void *key, void *value);
+void	new_value(t_list **head, char *key, char *value);
 
 #endif

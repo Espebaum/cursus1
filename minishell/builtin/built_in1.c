@@ -2,7 +2,7 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   built_in1.c                                        :+:      :+:    :+:   */
-/*          		                                       +:+ +:+
+/*          				                                 +:+ +:+
 			+:+ */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -115,45 +115,52 @@ int	built_pwd(char **builtin)
 	return (1);
 }
 
-char	**export_parsing(char **t)
-{
-	char	*key;
-	char	*value;
-	int		i;
-	int		j;
+// char	**export_parsing(char **t)
+// {
+// 	char	*key;
+// 	char	*value;
+// 	int		j;
+// 	int		flag;
 
-	i = 0;
-	j = 0;
-	while (t[i])
-	{
-		while (t[i][j])
-		{
-			if (!error_check(t[i][j]))
-			{
-				key = ft_strjoin(key, &t[i][j]);
-			}
-			else if (t[i][j] == '=')
-			{
-
-			}
-			else
-				t++;
-		}
-	}
-}
+// 	j = 0;
+// 	flag = 0;
+// 	while (*t[j])
+// 	{
+// 		if (!error_check(t[j]))
+// 		{
+// 			while (t[j] && !error_check(t[j]))
+// 			{
+// 				key = ft_strjoin(key, &t[j]);
+// 				j++;
+// 				flag = 1;
+// 			}
+// 		}
+// 		else if (t[j] == '=' && flag == 1)
+// 		{
+// 			if (t[j + 1] == 0)
+// 				t++;
+// 			flag = 0;
+// 		}
+// 		else
+// 		{
+// 			t++;
+// 			printf("error");
+// 		}
+// 	}
+// }
 
 int	built_export(char **builtin, t_list *head)
 {
 	char	**t;
 
 	(void)builtin;
-	t = export_parsing(builtin[1]);
-	if (!t)
-		if (!builtin[1])
-			print_export(head);
-		else
-			export_parsing(&head, builtin);
-	g_exit_code = 0;
+	// t = export_parsing(builtin[1]);
+	// if (!t)
+	// 	if (!builtin[1])
+	// 		print_export(head);
+	// 	else
+	// 		export_parsing(&head, builtin);
+	// g_exit_code = 0;
 	return (1);
 }
 

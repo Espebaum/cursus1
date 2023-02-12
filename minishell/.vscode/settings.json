@@ -14,7 +14,8 @@
     "string": "c",
     "string_view": "c",
     "vector": "c",
-    "get_next_line.h": "c"
+    "get_next_line.h": "c",
+    "iterator": "c"
   },
   "editor.tabSize": 4,
   "editor.definitionLinkOpensInPeek": true,
