@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/13 19:26:20 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/13 22:32:46 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,7 @@ int	pipe_line(t_data data, t_token *head, t_cover cover, t_list *env_head)
 	}
 	free(data.pid);
 	dup2(cover.cp_stdin, STDIN_FILENO);
+	close(data.io_fd[0]);
+	close(data.io_fd[1]);
 	return (wait_all(pid));
 }
