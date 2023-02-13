@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 16:03:57 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/13 19:07:44 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/13 19:26:21 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,12 @@ int	is_file_directory(char *cmd)
 	return (0);
 }
 
-int	check_command(char **path, char *cmd)
+int	find_cmd(char **path, char *path_cmd)
 {
-	int			i;
-	int			fd;
-	char		*path_cmd;
-	char		*tmp;
-	struct stat	file_info;
+	int		i;
+	char	*tmp;
+	int		fd;
 
-	is_file_directory(cmd);
-	if (access(cmd, X_OK) != -1)
-		return (1);
-	if (!path)
-		exit_error("missing path!", 0, 1);
-	path_cmd = ft_strjoin("/", cmd);
 	i = -1;
 	while (path[++i])
 	{
@@ -68,5 +60,21 @@ int	check_command(char **path, char *cmd)
 		free(tmp);
 	}
 	free(path_cmd);
+	return (0);
+}
+
+int	check_command(char **path, char *cmd)
+{
+	char		*path_cmd;
+	struct stat	file_info;
+
+	is_file_directory(cmd);
+	if (access(cmd, X_OK) != -1)
+		return (1);
+	if (!path)
+		exit_error("missing path!", 0, 1);
+	path_cmd = ft_strjoin("/", cmd);
+	if (find_cmd(path, path_cmd) == 1)
+		return (1);
 	return (0);
 }

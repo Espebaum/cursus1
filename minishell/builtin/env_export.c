@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 22:56:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/13 19:07:41 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/13 19:26:22 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,38 @@ t_list	*ft_lstnew(void *key, void *value)
 	return (newlist);
 }
 
+int	first_eq_ck(char c, int i)
+{
+	if (c == '=' && i == 0)
+		return (0);
+	if (c == '=' && i != 0)
+		return (1);
+	else
+		return (0);
+}
+
+int	env_error_check(char *key)
+{
+	char	*temp;
+	int		i;
+
+	if (!(key))
+		return (1);
+	i = 0;
+	temp = (char *)key;
+	while (temp[i])
+	{
+		if (ft_isalpha(temp[i]) || temp[i] == '_' || first_eq_ck(temp[i], i))
+		{
+			return (0);
+		}
+		else
+			return (1);
+		i++;
+	}
+	return (1);
+}
+
 t_list	*init_env_list(char **env, t_list **head)
 {
 	char	**t;
@@ -66,31 +98,11 @@ t_list	*init_env_list(char **env, t_list **head)
 	return (*head);
 }
 
-int	env_error_check(char *key)
-{
-	char	*temp;
-	int		i;
-
-	if (!(key))
-		return (1);
-	i = 0;
-	temp = (char *)key;
-	while (temp[i])
-	{
-		if (ft_isalpha(temp[i]) || temp[i] == '_' || temp[i] == '=')
-		{
-			return (0);
-		}
-		i++;
-	}
-	return (1);
-}
-
 void	new_value(t_list **head, char *key, char *value)
 {
-	//중복체크
 	t_list	*temp;
 
+	//중복체크
 	temp = *head;
 	while (temp)
 	{
@@ -125,7 +137,6 @@ char	**make_envp_arr(t_list *head)
 	{
 		t = ft_strjoin(head->key, "=");
 		t = ft_strjoin(t, head->value);
-
 		ret[i++] = t;
 		head = head->next;
 	}
@@ -150,10 +161,9 @@ void	print_env(t_list *head)
 		// 	continue ;
 		// }
 		//else
-			printf("%s=%s\n", key, value);
+		printf("%s=%s\n", key, value);
 		temp = temp->next;
 	}
-
 }
 
 void	print_export(t_list *head)
