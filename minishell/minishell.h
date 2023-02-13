@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/13 16:47:56 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/13 17:35:16 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,12 +155,12 @@ void	free_token(t_token *cur);
 t_token	*read_pipe_redir(char **s, t_token *cur, t_str *buf);
 t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp);
 char	*conv_env(char *name);
-int		read_env(char **s, t_str *buf, char **envp, int *num);
+int		read_env(char **s, t_str *buf, char **envp);
 int		is_env_char(char s);
 int		get_env_num(char *envp);
 int		check_all_dollar(t_str **buf, char **str);
 int		env_read(t_str **buf, t_str **env, char *g_str);
-int		make_env_buf(t_str **buf, t_str **env, char **envp);
+int		make_env_buf(t_str **buf, t_str **env, char **envp, char *meta_str);
 char	*check_meta_chr(t_str **env);
 int		is_meta_chr(char c);
 

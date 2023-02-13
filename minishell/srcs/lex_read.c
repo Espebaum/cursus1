@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/12 19:21:24 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/13 17:35:43 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	read_word_dquote(char **s, t_str *buf, char **envp)
 	{
 		temp = deep_copy_env(envp);
 		if (**s == '$')
-			read_env(s, buf, temp, NULL);
+			read_env(s, buf, temp);
 		else
 			push_str(buf, *((*s)++));
 	}
@@ -42,7 +42,7 @@ int	read_word_dquote(char **s, t_str *buf, char **envp)
 	return (0);
 }
 
-int	read_env(char **s, t_str *buf, char **envp, int *num)
+int	read_env(char **s, t_str *buf, char **envp)
 {
 	t_str	*env;
 	int		i;
@@ -89,7 +89,7 @@ int	read_env(char **s, t_str *buf, char **envp, int *num)
 	}
 	meta_str = check_meta_chr(&env);
 	temp = deep_copy_env(envp);
-	if (make_env_buf(&buf, &env, temp) == 0 && *num == 0)
+	if (make_env_buf(&buf, &env, temp, meta_str) == 0)
 		return (0);
 	i = -1;
 	if (meta_str)
@@ -97,7 +97,6 @@ int	read_env(char **s, t_str *buf, char **envp, int *num)
 			push_str(buf, meta_str[i]);
 	if (meta_str)
 		free(meta_str);
-	(*num)++;
 	if (env->s)
 		free_str(env);
 	free(g_str);
@@ -116,7 +115,7 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 	{
 		if (**s == '$')
 		{
-			if (read_env(s, buf, envp, &num) == 0)
+			if (read_env(s, buf, envp) == 0)
 				return (cur);
 		}
 		else if (**s == '\'')
@@ -138,7 +137,7 @@ t_token	*read_pipe_redir(char **s, t_token *cur, t_str *buf)
 	if (buf->len != 0)
 		cur = push_token(T_WORD, buf, cur);
 	push_str(buf, *((*s)++));
-	if ((*(*(s)-1) == '<' || *(*(s)-1) == '>') && *(*(s)-1) == **s)
+	if ((*(*(s)-1) == '<' || *(*(s)-1) == '>') && *(*(s) - 1) == **s)
 	{
 		push_str(buf, *((*s)++));
 		cur = push_token(T_REDIRECT, buf, cur);
