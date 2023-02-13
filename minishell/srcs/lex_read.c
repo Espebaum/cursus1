@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/13 19:36:16 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/13 23:20:44 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,47 @@ int	read_word_dquote(char **s, t_str *buf, char **envp)
 	return (0);
 }
 
+int	see_next_word_null(char **s, t_str **buf)
+{
+	if (*((*s) + 1) == '\0')
+	{
+		push_str(*buf, '$');
+		(*s)++;
+		return (1);
+	}
+	else
+		return (0);
+}
+
+int	see_next_word_meta(char **s, t_str **buf, char *g_str)
+{
+	int		i;
+
+	i = -1;
+	if (*((*s) + 1) != '\0' && is_meta_chr(*((*s) + 1)) == 1)
+	{
+		if (*((*s) + 1) == '?')
+		{
+			while (g_str[++i])
+				push_str(*buf, g_str[i]);
+			(*s)++;
+			(*s)++;
+		}
+		else
+		{
+			push_str(*buf, *(*s)++);
+			push_str(*buf, *(*s)++);
+		}
+		while (1)
+		{
+			if (**s == '$' || **s == '\0')
+				return (1);
+			push_str(*buf, (*(*s)++));
+		}
+	}
+	return (0);
+}
+
 int	read_env(char **s, t_str *buf, char **envp)
 {
 	t_str	*env;
@@ -54,33 +95,10 @@ int	read_env(char **s, t_str *buf, char **envp)
 	i = -1;
 	env = make_str();
 	g_str = ft_itoa(g_exit_code);
-	if (*((*s) + 1) == '\0')
-	{
-		push_str(buf, '$');
-		(*s)++;
+	if (see_next_word_null(s, &buf) == 1)
 		return (1);
-	}
-	if (*((*s) + 1) != '\0' && is_meta_chr(*((*s) + 1)) == 1)
-	{
-		if (*((*s) + 1) == '?')
-		{
-			while (g_str[++i])
-				push_str(buf, g_str[i]);
-			(*s)++;
-			(*s)++;
-		}
-		else
-		{
-			push_str(buf, *(*s)++);
-			push_str(buf, *(*s)++);
-		}
-		while (1)
-		{
-			if (**s == '$' || **s == '\0')
-				return (1);
-			push_str(buf, (*(*s)++));
-		}
-	}
+	if (see_next_word_meta(s, &buf, g_str) == 1)
+		return (1);
 	while (!is_word_end(*(++(*s))) && **s != '\"')
 	{
 		if (**s == '$')
@@ -103,6 +121,7 @@ int	read_env(char **s, t_str *buf, char **envp)
 	free(temp);
 	return (1);
 }
+//	발렌타인 데이에는
 
 t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 {
