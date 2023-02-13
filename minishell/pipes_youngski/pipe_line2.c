@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/13 16:41:09 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/13 18:02:29 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	forked_child_work(t_tuple tup, int *pipes,
 	if ((*head) && (*head)->next)
 		(*head) = (*head)->next;
 	cmd = find_path(t, data->envp, 0);
-	ret = check_builtin(t, env_head);
+	ret = check_builtin(t, env_head, data->envp);
 	if (ret >= 0)
 		exit(ret);
 	if (execve(cmd, t, data->envp) == -1)

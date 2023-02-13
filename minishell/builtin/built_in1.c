@@ -2,12 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   built_in1.c                                        :+:      :+:    :+:   */
-/*          				                                 +:+ +:+
-			+:+ */
-/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/04 16:22:56 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/11 19:35:59 by youngski         ###   ########.fr       */
+/*   Created: 2023/02/13 17:43:57 by gyopark           #+#    #+#             */
+/*   Updated: 2023/02/13 18:26:31 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +95,44 @@ int	built_echo(char **t)
 	return (1);
 }
 
-int	built_cd(char **t)
+char	*get_home(char **envp)
 {
-	printf("cd : working : %s\n", t[1]);
-	chdir(t[1]);
+	while (*envp && ft_strncmp(*envp, "HOME", 4))
+		envp++;
+	if (!*envp)
+		return (0);
+	return (*envp + 5);
+}
+
+int	built_cd(char **t, char **envp)
+{
+	char	**temp;
+	char	*home;
+
+	temp = deep_copy_env(envp);
+	home = get_home(temp);
+	if (t[1] == 0)
+	{
+		if (!home)
+		{
+			printf("cd: HOME not set\n");
+			g_exit_code = 1;
+			return (1);
+		}
+		else
+			chdir(home);
+	}
+	else
+	{
+		if (chdir(t[1]) != 0)
+		{
+			g_exit_code = 1;
+			printf("cd: %s: No such file or directory\n", t[1]);
+			return (1);
+		}
+	}
+	g_exit_code = 0;
+	free(temp);
 	return (1);
 }
 
@@ -180,7 +213,7 @@ int	built_env(char **builtin, t_list *head)
 	return (1);
 }
 
-int	check_builtin(char **builtin, t_list *head)
+int	check_builtin(char **builtin, t_list *head, char **envp)
 {
 	int	result;
 
@@ -190,7 +223,7 @@ int	check_builtin(char **builtin, t_list *head)
 		result = built_echo(builtin);
 	else if (!ft_strncmp(builtin[0], "cd", 3) || (ft_strnstr(builtin[0], "cd",
 					ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
-		result = built_cd(builtin);
+		result = built_cd(builtin, envp);
 	else if (!ft_strncmp(builtin[0], "pwd", 4) || (ft_strnstr(builtin[0], "pwd",
 					ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_pwd(builtin);

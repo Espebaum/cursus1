@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/12 18:58:49 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/13 17:57:56 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ int	doc_check(t_cover *cover, char *line)
 //doc -> 1 히어독인데 정상 종료
 //doc -> 2 히어독인데 Ctrl C
 
-int	do_builtin(t_cover *cover, t_list *head)
+int	do_builtin(t_cover *cover, t_list *head, char **envp)
 {
 	cover->temp = cover->head;
 	cover->builtin = read_cmd(cover->data, &(cover->temp), \
 	&(cover->doc->zero));
-	if (check_builtin(cover->builtin, head) >= 0)
+	if (check_builtin(cover->builtin, head, envp) >= 0)
 		return (-1);
 	return (0);
 }
@@ -68,7 +68,7 @@ int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 		return (-1);
 	init_data(cover->data, *(cover->doc), envp, cover->head);
 	if (cover->head->cmds == 1)
-		if (do_builtin(cover, head) == -1)
+		if (do_builtin(cover, head, envp) == -1)
 			return (-1);
 	g_exit_code = pipe_line(*(cover->data), cover->head, *cover, head);
 	free_token(cover->head);

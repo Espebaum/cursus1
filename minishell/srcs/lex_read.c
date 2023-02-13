@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/13 17:35:43 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/13 17:49:50 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,15 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 		if (**s == '$')
 		{
 			if (read_env(s, buf, envp) == 0)
-				return (cur);
+			{
+				if (buf->s[0] != '\0')
+				{
+					push_token(T_WORD, buf, cur);
+					return (cur);
+				}
+				else
+					return (cur);
+			}
 		}
 		else if (**s == '\'')
 			is_fail |= read_word_squote(s, buf);
