@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/12 19:27:41 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/13 16:40:32 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,14 @@ void	parent_proc(int *pipes)
 	close(pipes[1]);
 }
 
-int	init_fork(t_token **head, t_data *data, int i, int *heredoc_count, t_list *env_head)
+int	init_fork(t_tuple tup, int i, int *heredoc_count, t_list *env_head)
 {
-	int	pipes[2];
+	int		pipes[2];
+	t_token	**head;
+	t_data	*data;
 
+	head = tup.head;
+	data = tup.data;
 	if (pipe(pipes) == -1)
 		exit_error("pipe error", 0, 1);
 	set_signal(DFL, DFL);
@@ -30,7 +34,7 @@ int	init_fork(t_token **head, t_data *data, int i, int *heredoc_count, t_list *e
 	if (data->pid[i] == -1)
 		exit_error("fork error", 0, 1);
 	else if (data->pid[i] == 0)
-		forked_child_work(data, head, pipes, heredoc_count, env_head);
+		forked_child_work(tup, pipes, heredoc_count, env_head);
 	set_signal(IGN, IGN);
 	while ((*head) && (*head)->type != T_PIPE)
 		(*head) = (*head)->next;
@@ -46,13 +50,16 @@ int	pipe_line(t_data data, t_token *head, t_cover cover, t_list *env_head)
 	pid_t	pid;
 	int		i;
 	int		here_doc_count;
+	t_tuple tuple_td;
 
 	temp = head->next;
+	tuple_td.head = &temp;
+	tuple_td.data = &data;
 	here_doc_count = 0;
 	i = -1;
 	while (++i < head->cmds)
 	{
-		pid = init_fork(&temp, &data, i, &here_doc_count, env_head);
+		pid = init_fork(tuple_td, i, &here_doc_count, env_head);
 	}
 	free(data.pid);
 	dup2(cover.cp_stdin, STDIN_FILENO);

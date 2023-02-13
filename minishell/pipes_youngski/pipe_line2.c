@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/12 19:27:13 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/13 16:41:09 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,13 +104,17 @@ char	*find_path(char *argv[], char **envp, int i)
 	return (0);
 }
 
-void	forked_child_work(t_data *data, t_token **head, int *pipes,
+void	forked_child_work(t_tuple tup, int *pipes,
 		int *heredoc_count, t_list *env_head)
 {
 	char	**t;
 	char	*cmd;
 	int		ret;
+	t_data	*data;
+	t_token	**head;
 
+	data = tup.data;
+	head = tup.head;
 	t = read_cmd(data, head, heredoc_count);
 	dup_pipes(head, pipes, data);
 	if ((*head) && (*head)->next)

@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/12 19:29:37 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/13 16:47:56 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,11 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
+typedef struct s_tuple
+{
+	t_token	**head;
+	t_data	*data;
+}	t_tuple;
 
 t_token	*go_tokenize(char *cmd, char **envp, t_token *t);
 void	set_signal(int sig_int, int sig_quit);
@@ -121,8 +126,6 @@ void	count_inside_char(int *i, int *count, char *line_temp, char my_char);
 void	count_pure_word(int *i, int *count, char *line_temp);
 int		count_space(char *line);
 void	make_pure_word(int *i, int *count, char *line_temp, char *ret);
-void	make_inside_char(int *i, int *count, char *line_temp, \
-							char my_char, char *ret);
 char	**myfunc_split(char *line, int i, int j, int count);
 void	init_split(int *i, int *j, char *line, char **line_temp);
 int		skip_space(int *i, char **line_temp);
@@ -177,12 +180,12 @@ int		ft_perror(char *str, int signal, int exit_code);
 int		open_heredoc(t_doc *doc, char *line);
 int		pipe_line(t_data data, t_token *head, t_cover cover, t_list *env_head);
 
-int		init_fork(t_token **head, t_data *data, int i, int *heredoc_count, t_list *env_head);
+int		init_fork(t_tuple tup, int i, int *heredoc_count, t_list *env_head);
 void	get_heredoc(t_token *head, t_data *data, int count);
 int		*find_heredoc_index(t_token *head, int count);
 char	**get_path(char **envp);
 int		check_command(char **path, char *cmd);
-void	forked_child_work(t_data *data, t_token **head, int *pipes, int *hc, t_list *env_head);
+void	forked_child_work(t_tuple tup, int *pipes, int *hc, t_list *env_head);
 char	**copy_orders(char **t);
 char	**add_order(char **t, char *str, int flag);
 
