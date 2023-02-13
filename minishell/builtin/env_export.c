@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 22:56:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/13 19:04:13 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/13 19:07:41 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ int	env_error_check(char *key)
 		}
 		i++;
 	}
-	printf("export: `%s': not a valid identifier\n", temp);
 	return (1);
 }
 
