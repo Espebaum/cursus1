@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 22:56:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/13 19:26:22 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/13 21:59:56 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,6 @@ t_list	*ft_lstnew(void *key, void *value)
 	return (newlist);
 }
 
-int	first_eq_ck(char c, int i)
-{
-	if (c == '=' && i == 0)
-		return (0);
-	if (c == '=' && i != 0)
-		return (1);
-	else
-		return (0);
-}
-
 int	env_error_check(char *key)
 {
 	char	*temp;
@@ -66,17 +56,15 @@ int	env_error_check(char *key)
 		return (1);
 	i = 0;
 	temp = (char *)key;
-	while (temp[i])
+	while (temp[i] && temp[i] != '=')
 	{
-		if (ft_isalpha(temp[i]) || temp[i] == '_' || first_eq_ck(temp[i], i))
-		{
-			return (0);
-		}
+		if (ft_isalpha(temp[i]) || temp[i] == '_')
+			;
 		else
 			return (1);
 		i++;
 	}
-	return (1);
+	return (0);
 }
 
 t_list	*init_env_list(char **env, t_list **head)
