@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/13 17:57:56 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/13 20:32:09 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,21 @@ int	doc_check(t_cover *cover, char *line)
 
 int	do_builtin(t_cover *cover, t_list *head, char **envp)
 {
+	int		o_fd;
+
+	o_fd = dup(1);
 	cover->temp = cover->head;
 	cover->builtin = read_cmd(cover->data, &(cover->temp), \
 	&(cover->doc->zero));
+	dup_pipes(NULL, cover->data->io_fd, cover->data);
 	if (check_builtin(cover->builtin, head, envp) >= 0)
+	{
+		dup2((*cover).cp_stdin, 0);
+		dup2(o_fd, 1);
 		return (-1);
+	}
+	dup2((*cover).cp_stdin, 0);
+	dup2(o_fd, 1);
 	return (0);
 }
 
@@ -67,6 +77,7 @@ int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 	if (check_syntax(cover->head) == -1)
 		return (-1);
 	init_data(cover->data, *(cover->doc), envp, cover->head);
+	printf("s : %s\n", cover->head->str);
 	if (cover->head->cmds == 1)
 		if (do_builtin(cover, head, envp) == -1)
 			return (-1);

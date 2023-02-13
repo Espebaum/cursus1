@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/13 18:02:29 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/13 19:52:21 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	**read_cmd(t_data *data, t_token **head, int *heredoc_count)
 	cmd_flag[1] = 0;
 	if ((*head)->str == NULL)
 	{
-		cmd_flag[1] = 1;
+		cmd_flag[1] = 1; //부모라는 뜻
 		(*head) = (*head)->next;
 	}
 	init_fd(data);

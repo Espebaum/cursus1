@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_line3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/09 17:24:49 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/13 20:11:02 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	dup_pipes(t_token **head, int *pipes, t_data *data)
 {
-	if ((*head))
+	if (head && (*head))
 	{
 		if (data->o_flag == 0)
 			dup2(pipes[1], STDOUT_FILENO);

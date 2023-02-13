@@ -213,7 +213,7 @@ int	export_parsing(t_list **head, char **t)
 				ret = 1;
 				continue ;
 			}
-			make_env(*t, head);//make key, value and upload it
+			make_env(*t, head); //make key, value and upload it
 			t++;
 		}
 	}
