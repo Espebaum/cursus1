@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/13 16:40:32 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/13 18:34:01 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	pipe_line(t_data data, t_token *head, t_cover cover, t_list *env_head)
 	pid_t	pid;
 	int		i;
 	int		here_doc_count;
-	t_tuple tuple_td;
+	t_tuple	tuple_td;
 
 	temp = head->next;
 	tuple_td.head = &temp;

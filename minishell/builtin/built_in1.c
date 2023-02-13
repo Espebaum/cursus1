@@ -2,11 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   built_in1.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
+/*          				                                 +:+ +:+
+			+:+ */
+/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/13 17:43:57 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/13 18:26:31 by gyopark          ###   ########.fr       */
+/*   Created: 2023/02/04 16:22:56 by youngski          #+#    #+#             */
+/*   Updated: 2023/02/11 19:35:59 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,52 +149,97 @@ int	built_pwd(char **builtin)
 	return (1);
 }
 
-// char	**export_parsing(char **t)
-// {
-// 	char	*key;
-// 	char	*value;
-// 	int		j;
-// 	int		flag;
+void	init_make_env(int *i, char **key, char **value, char *t)
+{
+	int	len;
 
-// 	j = 0;
-// 	flag = 0;
-// 	while (*t[j])
-// 	{
-// 		if (!error_check(t[j]))
-// 		{
-// 			while (t[j] && !error_check(t[j]))
-// 			{
-// 				key = ft_strjoin(key, &t[j]);
-// 				j++;
-// 				flag = 1;
-// 			}
-// 		}
-// 		else if (t[j] == '=' && flag == 1)
-// 		{
-// 			if (t[j + 1] == 0)
-// 				t++;
-// 			flag = 0;
-// 		}
-// 		else
-// 		{
-// 			t++;
-// 			printf("error");
-// 		}
-// 	}
-// }
+	len = ft_strlen(t);
+	*i = 0;
+	*key = (char *)malloc(sizeof(char) * (len + 1));
+	*value = (char *)malloc(sizeof(char) * (len + 1));
+	*key[0] = 0;
+	*value[0] = 0;
+}
+
+void	make_env(char *t, t_list **head)
+{
+	int		flag;
+	char	*key;
+	char	*value;
+	int		i;
+
+	flag = 0;
+	init_make_env(&i, &key, &value, t);
+	while (t && *t)
+	{
+		if (*t == '=' && flag == 0)
+		{
+			t++;
+			i = 0;
+			flag = 1;
+			continue ;
+		}
+		else if (*t != '=' && flag == 0)
+		{
+			key[i++] = *t;
+		}
+		else if (flag == 1)
+			value[i++] = *t;
+		t++;
+	}
+	new_value(head, key, value);
+}
+
+int	export_parsing(t_list **head, char **t)
+{
+	int		ret;
+
+	ret = 0;
+	t++;
+	while (*t)
+	{
+		if (env_error_check(*t))
+		{
+			printf("export: `%s': not a valid identifier\n", *t);
+			t++;
+			ret = 1;
+			continue ;
+		}
+		while (*t && **t)
+		{
+			if (*t[0] == '=')
+			{
+				t++;
+				ret = 1;
+				continue ;
+			}
+			make_env(*t, head);//make key, value and upload it
+			t++;
+		}
+	}
+	return (ret);
+}
 
 int	built_export(char **builtin, t_list *head)
 {
 	char	**t;
 
 	(void)builtin;
-	// t = export_parsing(builtin[1]);
-	// if (!t)
-	// 	if (!builtin[1])
-	// 		print_export(head);
-	// 	else
-	// 		export_parsing(&head, builtin);
-	// g_exit_code = 0;
+	if (!t)
+		return (0);
+	if (!builtin[1])
+	{
+		print_export(head);
+		g_exit_code = 0;
+		return (1);
+	}
+	else
+	{
+		if (!export_parsing(&head, builtin))
+			g_exit_code = 0;
+		else
+			g_exit_code = 1;
+	}
 	return (1);
 }
 

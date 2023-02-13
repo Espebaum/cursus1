@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 16:03:57 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/09 23:00:25 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/13 18:43:58 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,8 @@ char	**get_path(char **envp)
 	return (ft_split(*envp + 5, ':'));
 }
 
-int	check_command(char **path, char *cmd)
+int	is_file_directory(char *cmd)
 {
-	int			i;
-	int			fd;
-	char		*path_cmd;
-	char		*tmp;
 	struct stat	file_info;
 
 	if (ft_strncmp(cmd, "./", 2) == 0 || ft_strncmp(cmd, "/", 1) == 0)
@@ -41,6 +37,18 @@ int	check_command(char **path, char *cmd)
 			exit (126);
 		}
 	}
+	return (0);
+}
+
+int	check_command(char **path, char *cmd)
+{
+	int			i;
+	int			fd;
+	char		*path_cmd;
+	char		*tmp;
+	struct stat	file_info;
+
+	is_file_directory(cmd);
 	if (access(cmd, X_OK) != -1)
 		return (1);
 	if (!path)

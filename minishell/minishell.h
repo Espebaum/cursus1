@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/13 18:01:52 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/13 18:49:14 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,5 +218,6 @@ char	**make_envp_arr(t_list *head);
 void	print_env(t_list *head);
 void	print_export(t_list *head);
 void	new_value(t_list **head, char *key, char *value);
+int		env_error_check(char *key);
 
 #endif

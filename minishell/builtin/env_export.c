@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 22:56:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/12 19:00:30 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/13 19:04:13 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_list	*init_env_list(char **env, t_list **head)
 	return (*head);
 }
 
-int	error_check(char *key)
+int	env_error_check(char *key)
 {
 	char	*temp;
 	int		i;
@@ -77,22 +77,30 @@ int	error_check(char *key)
 	temp = (char *)key;
 	while (temp[i])
 	{
-		if (ft_isalpha(temp[i]))
+		if (ft_isalpha(temp[i]) || temp[i] == '_' || temp[i] == '=')
+		{
 			return (0);
+		}
 		i++;
 	}
+	printf("export: `%s': not a valid identifier\n", temp);
 	return (1);
 }
 
 void	new_value(t_list **head, char *key, char *value)
 {
-	if (key)
+	//중복체크
+	t_list	*temp;
+
+	temp = *head;
+	while (temp)
 	{
-		if (error_check(key))
+		if (!strncmp(temp->key, key, ft_strlen(temp->key) + 1))
 		{
-			printf("error _ key must be char\n");
+			temp->value = value;
 			return ;
 		}
+		temp = temp->next;
 	}
 	ft_lstadd_back(head, ft_lstnew(key, value));
 }
