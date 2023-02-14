@@ -156,7 +156,7 @@ void	init_make_env(int *i, char **key, char **value, char *t)
 	len = ft_strlen(t);
 	*i = 0;
 	*key = (char *)malloc(sizeof(char) * (len + 1));
-	if (ft_strchr(t, '='))	
+	if (ft_strchr(t, '='))
 	{
 		*value = (char *)malloc(sizeof(char) * (len + 1));
 		*value[0] = 0;
@@ -274,7 +274,7 @@ void	del_one(char *t, t_list *head_first)
 
 int	built_unset(char **builtin, t_list *head)
 {
-	int	i;	
+	int	i;
 
 	i = 1;
 	if (!builtin[1])
@@ -285,7 +285,7 @@ int	built_unset(char **builtin, t_list *head)
 	while ((builtin)[i])
 	{
 		if (builtin[i])
-			del_one(builtin[i], head);	
+			del_one(builtin[i], head);
 		i++;
 	}
 	g_exit_code = 0;
@@ -298,6 +298,12 @@ int	built_env(char **builtin, t_list *head)
 		return (0);
 	print_env(head);
 	g_exit_code = 0;
+	return (1);
+}
+
+int	call_exit(char **builtin, t_list *head)
+{
+	printf("builtin[1] : %s\n\n", builtin[1]);
 	return (1);
 }
 
@@ -329,6 +335,6 @@ int	check_builtin(char **builtin, t_list *head, char **envp)
 	else if (!ft_strncmp(builtin[0], "exit", 5) || (ft_strnstr(builtin[0],
 					"exit", ft_strlen(builtin[0])) && access(builtin[0],
 					X_OK) != -1))
-		exit(0);
+		result = call_exit(builtin, head);
 	return (result);
 }
