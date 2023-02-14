@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 12:28:04 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 14:46:15 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/14 16:59:43 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	doc_syntax_check(char *str, const int len)
 		else if (str[i] == '\'')
 			count_s_flag(&in_squote, &in_dquote, &s_flag);
 	}
-	printf("s_flag : %d d_flag : %d\n", s_flag, d_flag);
 	if ((s_flag % 2 == 1) || (d_flag % 2 == 1))
 		return (-1);
 	return (0);

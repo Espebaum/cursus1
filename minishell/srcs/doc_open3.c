@@ -6,13 +6,13 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 18:19:56 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 12:32:13 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/14 16:57:50 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	doc_parent(int idx, int count, t_doc **doc, int *pipe_fd)
+int	doc_child(int idx, int count, t_doc **doc, int *pipe_fd)
 {
 	int		fd;
 	char	*filename;
@@ -28,6 +28,7 @@ int	doc_parent(int idx, int count, t_doc **doc, int *pipe_fd)
 			filename = ft_strjoin(filename, "1");
 			continue ;
 		}
+		printf("limiter : %s\n", (*doc)->limiters[idx]);
 		heredoc_file_make(fd, (*doc)->limiters[idx], pipe_fd);
 		idx++;
 		close(fd);
@@ -39,7 +40,7 @@ int	doc_parent(int idx, int count, t_doc **doc, int *pipe_fd)
 }
 //31 printf("i : %d, limiter : %s\n\n", idx, doc->limiters[idx]);
 
-void	doc_child(int idx, int count, t_doc **doc, int *pipe_fd)
+void	doc_parent(int idx, int count, t_doc **doc, int *pipe_fd)
 {
 	char	*str;
 	int		len;
@@ -68,12 +69,12 @@ void	make_doc_files(int count, t_doc *doc)
 	pid = fork();
 	set_signal(IGN, IGN);
 	if (pid == 0)
-		doc_parent(0, count, &doc, pipe_fd);
+		doc_child(0, count, &doc, pipe_fd);
 	else
 	{
 		close(pipe_fd[1]);
 		waitpid(pid, &status, 0);
-		doc_child(0, count, &doc, pipe_fd);
+		doc_parent(0, count, &doc, pipe_fd);
 		close(pipe_fd[0]);
 		g_exit_code = WEXITSTATUS(status);
 	}

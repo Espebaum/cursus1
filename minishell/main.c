@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 12:00:36 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/14 17:08:34 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 	if (check_syntax(cover->head) == -1)
 		return (-1);
 	init_data(cover->data, *(cover->doc), envp, cover->head);
-	// printf("s : %s\n", cover->head->str);
 	if (cover->head->cmds == 1)
 		if (do_builtin(cover, head, envp) == -1)
 			return (-1);

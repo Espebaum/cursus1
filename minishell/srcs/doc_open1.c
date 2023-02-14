@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:28:36 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 16:30:51 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/14 17:17:05 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@ void	heredoc_file_make(int fd, char *limiter, int *pipe_fd)
 	while (1)
 	{
 		line = readline("here_doc> ");
-		if (line[0] == '\0')
-			;
-		else if (!line || ft_strncmp(line, limiter, ft_strlen(limiter) + 1) == 0)
+		if ((!line || ft_strncmp(line, limiter, ft_strlen(limiter) + 1) == 0) \
+				&& line[0] != 0)
 		{
 			free(line);
 			break ;
@@ -82,6 +81,7 @@ int	open_heredoc(t_doc *doc, char *line)
 
 	doc = init_doc(doc);
 	doc_str = myfunc_split(line, 0, 0, 0);
+	printf("doc_str[0] : %s doc_str[1] : %s\n", doc_str[0], doc_str[1]);
 	doc->count = get_doc_count(doc_str);
 	if (doc->count == -1)
 		return (-1);

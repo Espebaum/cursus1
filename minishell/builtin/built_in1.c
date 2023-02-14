@@ -2,12 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   built_in1.c                                        :+:      :+:    :+:   */
-/*          				                                 +:+ +:+
-			+:+ */
-/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/04 16:22:56 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/11 19:35:59 by youngski         ###   ########.fr       */
+/*   Created: 2023/02/14 16:43:30 by gyopark           #+#    #+#             */
+/*   Updated: 2023/02/14 17:08:55 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,11 +324,66 @@ int	is_exit_code_num(char *str)
 	return (1);
 }
 
-int	non_exit_many_arg()
+int	non_exit_many_arg(void)
 {
 	printf("exit: too many arguments\n");
 	g_exit_code = 1;
-	return (g_exit_code);
+	return (1);
+}
+
+int	is_long_min_max(char *str, int is_minus)
+{
+	const char	mx[19] = "9223372036854775807";
+	const char	mn[19] = "9223372036854775808";
+	int			idx;
+
+	idx = -1;
+	if (is_minus == 1)
+	{
+		while (str[++idx])
+		{
+			if (str[idx] > mn[idx])
+				return (1);
+			else if (str[idx] < mn[idx])
+				return (0);
+			if (idx == 19 && str[idx] > mn[idx])
+				return (1);
+		}
+	}
+	else
+	{
+		while (str[++idx])
+		{
+			if (str[idx] > mx[idx])
+				return (1);
+			else if (str[idx] < mx[idx])
+				return (0);
+			if (idx == 19 && str[idx] > mx[idx])
+				return (1);
+		}
+	}
+	return (0);
+}
+
+int	check_code_long(char *str)
+{
+	int	i;
+	int	is_minus;
+	int	ret;
+
+	i = -1;
+	is_minus = 0;
+	ret = 0;
+	if (*str == '-')
+	{
+		str++;
+		is_minus = 1;
+	}
+	if (ft_strlen(str) == 19)
+		ret = is_long_min_max(str, is_minus);
+	else if (ft_strlen(str) > 19)
+		ret = 1;
+	return (ret);
 }
 
 int	call_exit(char **builtin, t_list *head)
@@ -344,7 +398,9 @@ int	call_exit(char **builtin, t_list *head)
 	if (is_first_arg_num == 0)
 		exit_num_arg_req(builtin[1]);
 	if (builtin[2] != NULL)
-		non_exit_many_arg();
+		return (non_exit_many_arg());
+	if (check_code_long(builtin[1]) == 1)
+		exit_num_arg_req(builtin[1]);
 	exit_code = ft_atoi(builtin[1]);
 	exit(exit_code);
 	return (0);
@@ -356,7 +412,6 @@ int	call_exit(char **builtin, t_list *head)
 // exit 1 a -> 이하 동문
 // exit	a -> 종료함(?) -> exit: a: numeric argument required, exit(255)
 // exit a 1 -> 종료함(?) -> exit: a: numeric argument required, exit(255)
-
 
 int	check_builtin(char **builtin, t_list *head, char **envp)
 {

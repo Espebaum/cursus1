@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 13:01:57 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/14 16:58:44 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,8 @@ void	init_split(int *i, int *j, char *line, char **line_temp);
 int		skip_space(int *i, char **line_temp);
 char	**call_next(char *line_temp, char **ret, char *line, int i);
 void	part_make_line(int *i, int *j, int *count, char **line_temp);
-int		doc_parent(int idx, int count, t_doc **doc, int *pipe_fd);
-void	doc_child(int idx, int count, t_doc **doc, int *pipe_fd);
+void	doc_parent(int idx, int count, t_doc **doc, int *pipe_fd);
+int		doc_child(int idx, int count, t_doc **doc, int *pipe_fd);
 void	make_doc_files(int count, t_doc *doc);
 int		open_file(char *filename, int idx, t_doc **doc, int *pipe_fd);
 
