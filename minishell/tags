@@ -54,7 +54,7 @@ check_all_dollar	srcs/lex_env1.c	/^int	check_all_dollar(t_str **buf, char **str)
 check_builtin	builtin/built_in1.c	/^int	check_builtin(char **builtin, t_list *head, char **envp)$/;"	f
 check_command	pipes_youngski/check_cmd.c	/^int	check_command(char **path, char *cmd)$/;"	f
 check_doc_next	srcs/doc_open2.c	/^int	check_doc_next(char **doc_str, int idx)$/;"	f
-check_meta_chr	srcs/lex_env1.c	/^char	*check_meta_chr(t_str **env)$/;"	f
+check_meta_chr	srcs/lex_env1.c	/^char	*check_meta_chr(t_str **env, int i, int len, int size)$/;"	f
 check_rules	srcs/syntax_check1.c	/^int	check_rules(int *type_arr, int len)$/;"	f
 check_syntax	srcs/syntax_check1.c	/^int	check_syntax(t_token *head)$/;"	f
 clear_str	srcs/lex_free.c	/^void	clear_str(t_str *str)$/;"	f
@@ -90,12 +90,14 @@ env_error_check	builtin/env_export.c	/^int	env_error_check(char *key)$/;"	f
 env_read	srcs/lex_env1.c	/^int	env_read(t_str **buf, t_str **env, char *g_str)$/;"	f
 envp	minishell.h	/^	char	**envp;$/;"	m	struct:s_data
 exit_error	srcs/err_exit.c	/^int	exit_error(char *message, int signal, int exit_code)$/;"	f
+exit_num_arg_req	builtin/built_in1.c	/^int	exit_num_arg_req(char *str)$/;"	f
 export_parsing	builtin/built_in1.c	/^int	export_parsing(t_list **head, char **t)$/;"	f
 find_cmd	pipes_youngski/check_cmd.c	/^int	find_cmd(char **path, char *path_cmd)$/;"	f
 find_path	pipes_youngski/pipe_line2.c	/^char	*find_path(char *argv[], char **envp, int i)$/;"	f
 flag	minishell.h	/^	int				flag;$/;"	m	struct:s_token
 flip_meta_chr	srcs/lex_env1.c	/^char	*flip_meta_chr(char *ret)$/;"	f
 forked_child_work	pipes_youngski/pipe_line2.c	/^void	forked_child_work(t_tuple tup, int *pipes,$/;"	f
+free_meta_str	srcs/lex_read.c	/^void	free_meta_str(char *meta_str, t_str *env, t_str *buf)$/;"	f
 free_str	srcs/lex_free.c	/^void	free_str(t_str *str)$/;"	f
 free_token	srcs/lex_free.c	/^void	free_token(t_token *cur)$/;"	f
 ft_atoi	libft/ft_atoi.c	/^int	ft_atoi(const char *str)$/;"	f
@@ -160,6 +162,7 @@ init_cover	srcs/init_1.c	/^t_cover	*init_cover(t_cover *cover)$/;"	f
 init_data	srcs/init_1.c	/^int	init_data(t_data *data, t_doc doc, char **envp, t_token *head)$/;"	f
 init_doc	srcs/init_2.c	/^t_doc	*init_doc(t_doc *doc)$/;"	f
 init_env_list	builtin/env_export.c	/^t_list	*init_env_list(char **env, t_list **head)$/;"	f
+init_fail_and_num	srcs/lex_read.c	/^void	init_fail_and_num(int *is_fail, int *num)$/;"	f
 init_fd	srcs/init_1.c	/^void	init_fd(t_data *data)$/;"	f
 init_fork	pipes_youngski/pipe_line1.c	/^int	init_fork(t_tuple tup, int i, int *heredoc_count, t_list *env_head)$/;"	f
 init_line	srcs/init_1.c	/^char	*init_line(char *line)$/;"	f
@@ -170,6 +173,7 @@ init_syntax_check	srcs/doc_syntax.c	/^int	init_syntax_check(int *s_flag, int *d_
 input_redirection	pipes_youngski/pipe_line3.c	/^int	input_redirection(int input_fd, t_token **head, t_data *data, int cmd_flag)$/;"	f
 io_fd	minishell.h	/^	int		io_fd[2];$/;"	m	struct:s_data
 is_char_space	srcs/lex_make_push.c	/^int	is_char_space(char c)$/;"	f
+is_exit_code_num	builtin/built_in1.c	/^int	is_exit_code_num(char *str)$/;"	f
 is_file_directory	pipes_youngski/check_cmd.c	/^int	is_file_directory(char *cmd)$/;"	f
 is_line_end	srcs/lex_tokenize.c	/^int	is_line_end(char s)$/;"	f
 is_meta_chr	srcs/lex_env2.c	/^int	is_meta_chr(char c)$/;"	f
@@ -185,13 +189,14 @@ limiters	minishell.h	/^	char	**limiters;$/;"	m	struct:s_doc
 main	main.c	/^int	main(int argc, char **argv, char **envp)$/;"	f
 make_doc_files	srcs/doc_open3.c	/^void	make_doc_files(int count, t_doc *doc)$/;"	f
 make_env	builtin/built_in1.c	/^void	make_env(char *t, t_list **head)$/;"	f
-make_env_buf	srcs/lex_env1.c	/^int	make_env_buf(t_str **buf, t_str **env, char **envp, char *meta_str)\/\/환경변수 없으면 메타문자 buf에 가져다붙여야함$/;"	f
+make_env_buf	srcs/lex_env1.c	/^int	make_env_buf(t_str **buf, t_str **env, char **envp, char *meta_str)$/;"	f
 make_envp_arr	builtin/env_export.c	/^char	**make_envp_arr(t_list *head)$/;"	f
 make_inside_char_double	doc_parse/parsing_y.c	/^void	make_inside_char_double(int *i, int *count, char *line_temp, char *ret)$/;"	f
 make_inside_char_single	doc_parse/parsing_y.c	/^void	make_inside_char_single(int *i, int *count, char *line_temp, char *ret)$/;"	f
 make_line	get_next_line/get_next_line.c	/^char	*make_line(char *backup, int i)$/;"	f
 make_meta_chr	srcs/lex_env1.c	/^char	*make_meta_chr(char *ret, int *size, char meta_chr)$/;"	f
 make_pure_word	doc_parse/parsing_y2.c	/^void	make_pure_word(int *i, int *count, char *line_temp, char *ret)$/;"	f
+make_retcur	srcs/lex_read.c	/^t_token *make_retcur(t_str *buf, t_token *cur, int is_fail)$/;"	f
 make_str	srcs/lex_make_push.c	/^t_str	*make_str(void)$/;"	f
 make_token	srcs/lex_make_push.c	/^t_token	*make_token(void)$/;"	f
 make_type_arr	srcs/syntax_check1.c	/^int	*make_type_arr(t_token *head, int *token_len)$/;"	f
@@ -201,6 +206,7 @@ name	minishell.h	/^	char	**name;$/;"	m	struct:s_doc
 new_value	builtin/env_export.c	/^void	new_value(t_list **head, char *key, char *value)$/;"	f
 next	minishell.h	/^	struct s_list	*next;$/;"	m	struct:s_list	typeref:struct:s_list::s_list
 next	minishell.h	/^	struct s_token	*next;$/;"	m	struct:s_token	typeref:struct:s_token::s_token
+non_exit_many_arg	builtin/built_in1.c	/^int	non_exit_many_arg()$/;"	f
 o_flag	minishell.h	/^	int		o_flag;$/;"	m	struct:s_data
 open_file	srcs/doc_open1.c	/^int	open_file(char *filename, int idx, t_doc **doc, int *pipe_fd)$/;"	f
 open_heredoc	srcs/doc_open1.c	/^int	open_heredoc(t_doc *doc, char *line)$/;"	f
@@ -220,7 +226,7 @@ push_cmd	pipes_youngski/pipe_line2.c	/^char	**push_cmd(t_data *data, t_token **h
 push_str	srcs/lex_make_push.c	/^void	push_str(t_str *str, char val)$/;"	f
 push_token	srcs/lex_make_push.c	/^t_token	*push_token(int type, t_str *buf, t_token *prev)$/;"	f
 read_cmd	pipes_youngski/pipe_line2.c	/^char	**read_cmd(t_data *data, t_token **head, int *heredoc_count)$/;"	f
-read_env	srcs/lex_read.c	/^int	read_env(char **s, t_str *buf, char **envp)$/;"	f
+read_env	srcs/lex_read.c	/^int	read_env(char **s, t_str *buf, char **envp, char **temp)$/;"	f
 read_pipe_redir	srcs/lex_read.c	/^t_token	*read_pipe_redir(char **s, t_token *cur, t_str *buf)$/;"	f
 read_word	srcs/lex_read.c	/^t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)$/;"	f
 read_word_dquote	srcs/lex_read.c	/^int	read_word_dquote(char **s, t_str *buf, char **envp)$/;"	f
@@ -240,7 +246,7 @@ s_list	minishell.h	/^typedef struct s_list$/;"	s
 s_str	minishell.h	/^typedef struct s_str$/;"	s
 s_token	minishell.h	/^typedef struct s_token$/;"	s
 s_tuple	minishell.h	/^typedef struct s_tuple$/;"	s
-see_next_word_meta	srcs/lex_read.c	/^int	see_next_word_meta(char **s, t_str **buf, char *g_str)$/;"	f
+see_next_word_meta	srcs/lex_read.c	/^int	see_next_word_meta(char **s, t_str **buf, t_str **env, char *g_str)$/;"	f
 see_next_word_null	srcs/lex_read.c	/^int	see_next_word_null(char **s, t_str **buf)$/;"	f
 set_signal	srcs/sig_handle.c	/^void	set_signal(int sig_int, int sig_quit)$/;"	f
 signal_handler	srcs/sig_handle.c	/^void	signal_handler(int signo)$/;"	f
