@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 13:02:26 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/14 13:14:47 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,15 @@ void	init_fail_and_num(int *is_fail, int *num)
 	*num = 0;
 }
 
+t_token *make_retcur(t_str *buf, t_token *cur, int is_fail)
+{
+	if (is_fail)
+		cur = push_token(T_ERROR, buf, cur);
+	else
+		cur = push_token(T_WORD, buf, cur);
+	return (cur);
+}
+
 t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 {
 	int		is_fail;
@@ -145,12 +154,8 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 			if (read_env(s, buf, envp, 0) == 0)
 			{
 				if (buf->s[0] != '\0')
-				{
 					push_token(T_WORD, buf, cur);
-					return (cur);
-				}
-				else
-					return (cur);
+				return (cur);
 			}
 		}
 		else if (**s == '\'')
@@ -160,11 +165,7 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 		else
 			push_str(buf, *((*s)++));
 	}
-	if (is_fail)
-		cur = push_token(T_ERROR, buf, cur);
-	else
-		cur = push_token(T_WORD, buf, cur);
-	return (cur);
+	return (make_retcur(buf, cur, is_fail));
 }
 
 t_token	*read_pipe_redir(char **s, t_token *cur, t_str *buf)

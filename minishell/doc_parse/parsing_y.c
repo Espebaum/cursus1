@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 19:15:04 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/12 18:27:16 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/14 13:07:32 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,33 +120,6 @@ void	make_inside_char_double(int *i, int *count, char *line_temp, char *ret)
 			return ;
 		}
 	}
-	/*
-	int	temp;
-
-	(*i)++;
-	while (line_temp && line_temp[*i])
-	{
-		if (line_temp[*i + 1] != ' ' && line_temp[*i] == '\"')
-		{
-			(*i)++;
-			if (line_temp[*i] == '\'')
-				make_inside_char_single(i, count, line_temp, ret);
-		}
-		else if (line_temp[*i] != '\"')
-		{
-			ret[*count] = line_temp[*i];
-			ret[(*count) + 1] = 0;
-			(*i)++;
-			(*count)++;
-		}
-		else
-		{
-			(*i)++;
-			temp = (*i);
-			return ;
-		}
-	}
-	*/
 }
 
 void	make_inside_char_single(int *i, int *count, char *line_temp, char *ret)
