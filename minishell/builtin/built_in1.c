@@ -301,11 +301,56 @@ int	built_env(char **builtin, t_list *head)
 	return (1);
 }
 
-int	call_exit(char **builtin, t_list *head)
+int	exit_num_arg_req(char *str)
 {
-	printf("builtin[1] : %s\n\n", builtin[1]);
+	printf("exit: ");
+	printf("%s: ", str);
+	printf("numeric argument required\n");
+	exit(255);
+	return (0);
+}
+
+int	is_exit_code_num(char *str)
+{
+	while (*str)
+	{
+		if (ft_isdigit(*str) == 0)
+			return (0);
+		str++;
+	}
 	return (1);
 }
+
+int	non_exit_many_arg()
+{
+	printf("exit: too many arguments\n");
+	g_exit_code = 1;
+	return (g_exit_code);
+}
+
+int	call_exit(char **builtin, t_list *head)
+{
+	int	is_num;
+
+	printf("exit\n");
+	if (builtin[1] == NULL)
+		exit(0);
+	is_num = is_exit_code_num(builtin[1]);
+	if (is_num == 0)
+		exit_num_arg_req(builtin[1]);
+	if (builtin[2] != NULL)
+		non_exit_many_arg();
+	// if (is_num)
+	return (0);
+}
+// exit -> 정상 종료 -> exit(0)
+// exit (long min ~ long max) -> 종료 -> exit(long min ~ long max)
+// exit (long min보다 작거나 long max보다 큼) -> exit: a: numeric argument required, exit(255)
+// exit 1 1 -> 종료 안함 -> exit: too many arguments
+// exit 1 a -> 이하 동문
+// exit	a -> 종료함(?) -> exit: a: numeric argument required, exit(255)
+// exit a 1 -> 종료함(?) -> exit: a: numeric argument required, exit(255)
+
 
 int	check_builtin(char **builtin, t_list *head, char **envp)
 {
