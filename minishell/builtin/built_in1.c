@@ -156,9 +156,14 @@ void	init_make_env(int *i, char **key, char **value, char *t)
 	len = ft_strlen(t);
 	*i = 0;
 	*key = (char *)malloc(sizeof(char) * (len + 1));
-	*value = (char *)malloc(sizeof(char) * (len + 1));
+	if (ft_strchr(t, '='))	
+	{
+		*value = (char *)malloc(sizeof(char) * (len + 1));
+		*value[0] = 0;
+	}
+	else
+		*value = 0;
 	*key[0] = 0;
-	*value[0] = 0;
 }
 
 void	make_env(char *t, t_list **head)
@@ -180,9 +185,7 @@ void	make_env(char *t, t_list **head)
 			continue ;
 		}
 		else if (*t != '=' && flag == 0)
-		{
 			key[i++] = *t;
-		}
 		else if (flag == 1)
 			value[i++] = *t;
 		t++;
@@ -243,9 +246,48 @@ int	built_export(char **builtin, t_list *head)
 	return (1);
 }
 
+void	del_one(char *t, t_list *head_first)
+{
+	t_list	*head;
+	t_list	*prev;
+
+	head = head_first;
+	prev = 0;
+	while (head)
+	{
+		if (!ft_strncmp(head->key, t, ft_strlen(t) + 1))
+		{
+			if (prev)
+				prev->next = head->next;
+			else
+				head_first = head_first->next;
+			free(head->key);
+			if (head->value)
+				free(head->value);
+			free(head);
+			break;
+		}
+		prev = head;
+		head = head->next;
+	}
+}
+
 int	built_unset(char **builtin, t_list *head)
 {
-	(void)builtin;
+	int	i;	
+
+	i = 1;
+	if (!builtin[1])
+	{
+		g_exit_code = 0;
+		return (1);
+	}
+	while ((builtin)[i])
+	{
+		if (builtin[i])
+			del_one(builtin[i], head);	
+		i++;
+	}
 	g_exit_code = 0;
 	return (1);
 }

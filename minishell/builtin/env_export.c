@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 22:56:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/13 21:59:56 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/13 22:54:24 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int	env_error_check(char *key)
 	if (!(key))
 		return (1);
 	i = 0;
-	temp = (char *)key;
+	if (key && key[0] == '=')
+		return (1);
 	while (temp[i] && temp[i] != '=')
 	{
 		if (ft_isalpha(temp[i]) || temp[i] == '_')
@@ -90,13 +91,17 @@ void	new_value(t_list **head, char *key, char *value)
 {
 	t_list	*temp;
 
-	//중복체크
 	temp = *head;
 	while (temp)
 	{
 		if (!strncmp(temp->key, key, ft_strlen(temp->key) + 1))
 		{
-			temp->value = value;
+			if (value)
+			{
+				if (temp->value)
+					free(temp->value);
+				temp->value = value;
+			}
 			return ;
 		}
 		temp = temp->next;
@@ -142,14 +147,8 @@ void	print_env(t_list *head)
 	{
 		key = temp->key;
 		value = temp->value;
-		// if (value == 0)
-		// {
-		// 	temp = temp->next;
-		// 	printf("skip a!!!!\n\n");
-		// 	continue ;
-		// }
-		//else
-		printf("%s=%s\n", key, value);
+		if (value)
+			printf("%s=%s\n", key, value);
 		temp = temp->next;
 	}
 }
