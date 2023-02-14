@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:28:36 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 12:30:05 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/14 13:05:07 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int	open_heredoc(t_doc *doc, char *line)
 
 	doc = init_doc(doc);
 	doc_str = myfunc_split(line, 0, 0, 0);
-	// printf("\n\ndoc_str : %s, %s\n\n", doc_str[0], doc_str[1]);
 	doc->count = get_doc_count(doc_str);
 	if (doc->count == -1)
 		return (-1);
@@ -96,4 +95,3 @@ int	open_heredoc(t_doc *doc, char *line)
 	else
 		return (2);
 }
-//83 doc_str = ft_split(line, ' ');

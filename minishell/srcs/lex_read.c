@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 12:36:07 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/14 13:02:26 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	read_word_dquote(char **s, t_str *buf, char **envp)
 	{
 		temp = deep_copy_env(envp);
 		if (**s == '$')
-			read_env(s, buf, temp);
+			read_env(s, buf, temp, 0);
 		else
 			push_str(buf, *((*s)++));
 	}
@@ -83,16 +83,27 @@ int	see_next_word_meta(char **s, t_str **buf, char *g_str)
 	return (0);
 }
 
-int	read_env(char **s, t_str *buf, char **envp)
+void	free_meta_str(char *meta_str, t_str *env, t_str *buf)
+{
+	int	i;
+
+	i = -1;
+	if (meta_str)
+		while (meta_str[++i])
+			push_str(buf, meta_str[i]);
+	if (meta_str)
+		free(meta_str);
+	if (env->s)
+		free_str(env);
+}
+
+int	read_env(char **s, t_str *buf, char **envp, char **temp)
 {
 	t_str	*env;
-	int		i;
 	char	*g_str;
 	char	*meta_str;
 	char	*t;
-	char	**temp;
 
-	i = -1;
 	env = make_str();
 	g_str = ft_itoa(g_exit_code);
 	if (see_next_word_null(s, &buf) == 1)
@@ -105,36 +116,33 @@ int	read_env(char **s, t_str *buf, char **envp)
 			break ;
 		push_str(env, **s);
 	}
-	meta_str = check_meta_chr(&env);
+	meta_str = check_meta_chr(&env, 0, 0, 0);
 	temp = deep_copy_env(envp);
 	if (make_env_buf(&buf, &env, temp, meta_str) == 0)
 		return (0);
-	i = -1;
-	if (meta_str)
-		while (meta_str[++i])
-			push_str(buf, meta_str[i]);
-	if (meta_str)
-		free(meta_str);
-	if (env->s)
-		free_str(env);
+	free_meta_str(meta_str, env, buf);
 	free(g_str);
 	free(temp);
 	return (1);
 }
-//	발렌타인 데이에는
+
+void	init_fail_and_num(int *is_fail, int *num)
+{
+	*is_fail = 0;
+	*num = 0;
+}
 
 t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 {
 	int		is_fail;
 	int		num;
 
-	is_fail = 0;
-	num = 0;
+	init_fail_and_num(&is_fail, &num);
 	while (!is_word_end(**s))
 	{
 		if (**s == '$')
 		{
-			if (read_env(s, buf, envp) == 0)
+			if (read_env(s, buf, envp, 0) == 0)
 			{
 				if (buf->s[0] != '\0')
 				{

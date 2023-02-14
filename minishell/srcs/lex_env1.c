@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:25:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 12:06:11 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/14 13:03:15 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,10 @@ char	*make_meta_chr(char *ret, int *size, char meta_chr)
 	return (ret);
 }
 
-char	*check_meta_chr(t_str **env)
+char	*check_meta_chr(t_str **env, int i, int len, int size)
 {
 	char	*str;
-	int		len;
-	int		i;
 	char	*ret;
-	int		size;
 
 	size = 1;
 	ret = ft_strdup("");
@@ -130,7 +127,7 @@ int	env_read(t_str **buf, t_str **env, char *g_str)
 	return (1);
 }
 
-int	make_env_buf(t_str **buf, t_str **env, char **envp, char *meta_str)//환경변수 없으면 메타문자 buf에 가져다붙여야함
+int	make_env_buf(t_str **buf, t_str **env, char **envp, char *meta_str)
 {
 	int		i;
 	int		env_num;

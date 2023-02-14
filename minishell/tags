@@ -16,7 +16,6 @@ IGN	minishell.h	/^# define IGN /;"	d
 INCFLAGS	Makefile	/^INCFLAGS		= -I\/Users\/gyopark\/.brew\/opt\/readline\/include$/;"	m
 LIBFLAGS	Makefile	/^LIBFLAGS		= -L\/Users\/gyopark\/.brew\/opt\/readline\/lib$/;"	m
 LIBFT	Makefile	/^LIBFT			= libft$/;"	m
-LIBFT_H	libft.h	/^# define LIBFT_H$/;"	d
 LIBFT_H	libft/libft.h	/^# define LIBFT_H$/;"	d
 LIBFT_LIB	Makefile	/^LIBFT_LIB		= libft.a$/;"	m
 MINISHELL_H	minishell.h	/^# define MINISHELL_H$/;"	d
@@ -39,19 +38,20 @@ T_SQUOTE	minishell.h	/^# define T_SQUOTE /;"	d
 T_WORD	minishell.h	/^# define T_WORD /;"	d
 add_order	pipes_youngski/pipe_line4.c	/^char	**add_order(char **t, char *str, int flag)$/;"	f
 append_redirection	pipes_youngski/pipe_line3.c	/^int	append_redirection(int o_fd, t_token **head, t_data *data, int cmd_flag)$/;"	f
-built_cd	srcs/built_in1.c	/^int	built_cd(char **t)$/;"	f
-built_echo	srcs/built_in1.c	/^int	built_echo(char **t)$/;"	f
-built_env	srcs/built_in1.c	/^int	built_env(char **builtin, t_list *head)$/;"	f
-built_export	srcs/built_in1.c	/^int	built_export(char **builtin)$/;"	f
-built_pwd	srcs/built_in1.c	/^int	built_pwd(char **builtin)$/;"	f
-built_unset	srcs/built_in1.c	/^int	built_unset(char **builtin)$/;"	f
+built_cd	builtin/built_in1.c	/^int	built_cd(char **t, char **envp)$/;"	f
+built_echo	builtin/built_in1.c	/^int	built_echo(char **t)$/;"	f
+built_env	builtin/built_in1.c	/^int	built_env(char **builtin, t_list *head)$/;"	f
+built_export	builtin/built_in1.c	/^int	built_export(char **builtin, t_list *head)$/;"	f
+built_pwd	builtin/built_in1.c	/^int	built_pwd(char **builtin)$/;"	f
+built_unset	builtin/built_in1.c	/^int	built_unset(char **builtin, t_list *head)$/;"	f
 builtin	minishell.h	/^	char	**builtin;$/;"	m	struct:s_cover
-builtin_check	srcs/built_in1.c	/^int	builtin_check(char *str)$/;"	f
+builtin_check	builtin/built_in1.c	/^int	builtin_check(char *str)$/;"	f
+call_exit	builtin/built_in1.c	/^int	call_exit(char **builtin, t_list *head)$/;"	f
 call_next	doc_parse/parsing_y3.c	/^char	**call_next(char *line_temp, char **ret, char *line, int i)$/;"	f
 capacity	minishell.h	/^	int		capacity;$/;"	m	struct:s_str
 change_stream	pipes_youngski/pipe_line2.c	/^void	change_stream(t_token **head, t_data *data, int *cmd_flag, \\$/;"	f
 check_all_dollar	srcs/lex_env1.c	/^int	check_all_dollar(t_str **buf, char **str)$/;"	f
-check_builtin	srcs/built_in1.c	/^int	check_builtin(char **builtin, t_list *head)$/;"	f
+check_builtin	builtin/built_in1.c	/^int	check_builtin(char **builtin, t_list *head, char **envp)$/;"	f
 check_command	pipes_youngski/check_cmd.c	/^int	check_command(char **path, char *cmd)$/;"	f
 check_doc_next	srcs/doc_open2.c	/^int	check_doc_next(char **doc_str, int idx)$/;"	f
 check_meta_chr	srcs/lex_env1.c	/^char	*check_meta_chr(t_str **env)$/;"	f
@@ -59,8 +59,6 @@ check_rules	srcs/syntax_check1.c	/^int	check_rules(int *type_arr, int len)$/;"	f
 check_syntax	srcs/syntax_check1.c	/^int	check_syntax(t_token *head)$/;"	f
 clear_str	srcs/lex_free.c	/^void	clear_str(t_str *str)$/;"	f
 cmds	minishell.h	/^	int				cmds;$/;"	m	struct:s_token
-content	libft.h	/^	void			*content;$/;"	m	struct:s_list
-content	libft/libft.h	/^	void			*content;$/;"	m	struct:s_list
 copy_orders	pipes_youngski/pipe_line4.c	/^char	**copy_orders(char **t)$/;"	f
 count	minishell.h	/^	int		count;$/;"	m	struct:s_doc
 count_d_flag	srcs/doc_syntax.c	/^int	count_d_flag(int *in_squote, int *in_dquote, int *d_flag)$/;"	f
@@ -73,29 +71,37 @@ count_space	doc_parse/parsing_y.c	/^int	count_space(char *line)$/;"	f
 count_split_len	doc_parse/parsing_y3.c	/^int	count_split_len(char **line_temp, int *i, int *count)$/;"	f
 cp_stdin	minishell.h	/^	int		cp_stdin;$/;"	m	struct:s_cover
 cut_line	get_next_line/get_next_line.c	/^char	*cut_line(char *backup)$/;"	f
-cutting_t	srcs/built_in1.c	/^char	**cutting_t(char **t, int *flag)$/;"	f
+cutting_t	builtin/built_in1.c	/^char	**cutting_t(char **t, int *flag)$/;"	f
 data	minishell.h	/^	t_data	*data;$/;"	m	struct:s_cover
+data	minishell.h	/^	t_data	*data;$/;"	m	struct:s_tuple
 deep_copy_env	srcs/lex_tokenize.c	/^char	**deep_copy_env(char **envp)$/;"	f
-do_builtin	main.c	/^int	do_builtin(t_cover *cover, t_list *head)$/;"	f
+del_one	builtin/built_in1.c	/^void	del_one(char *t, t_list *head_first)$/;"	f
+do_builtin	main.c	/^int	do_builtin(t_cover *cover, t_list *head, char **envp)$/;"	f
 doc	minishell.h	/^	t_doc	*doc;$/;"	m	struct:s_cover
 doc_check	main.c	/^int	doc_check(t_cover *cover, char *line)$/;"	f
+doc_child	srcs/doc_open3.c	/^void	doc_child(int idx, int count, t_doc **doc, int *pipe_fd)$/;"	f
+doc_handler	srcs/sig_handle.c	/^void	doc_handler(int signo)$/;"	f
 doc_name	minishell.h	/^	char	**doc_name;$/;"	m	struct:s_data
+doc_parent	srcs/doc_open3.c	/^int	doc_parent(int idx, int count, t_doc **doc, int *pipe_fd)$/;"	f
 doc_syntax	srcs/doc_syntax.c	/^int	doc_syntax(char *str)$/;"	f
 doc_syntax_check	srcs/doc_syntax.c	/^int	doc_syntax_check(char *str, const int len)$/;"	f
 dup_pipes	pipes_youngski/pipe_line3.c	/^void	dup_pipes(t_token **head, int *pipes, t_data *data)$/;"	f
+env_error_check	builtin/env_export.c	/^int	env_error_check(char *key)$/;"	f
 env_read	srcs/lex_env1.c	/^int	env_read(t_str **buf, t_str **env, char *g_str)$/;"	f
 envp	minishell.h	/^	char	**envp;$/;"	m	struct:s_data
-error_check	env_export.c	/^int	error_check(void *key)$/;"	f
 exit_error	srcs/err_exit.c	/^int	exit_error(char *message, int signal, int exit_code)$/;"	f
+export_parsing	builtin/built_in1.c	/^int	export_parsing(t_list **head, char **t)$/;"	f
+find_cmd	pipes_youngski/check_cmd.c	/^int	find_cmd(char **path, char *path_cmd)$/;"	f
 find_path	pipes_youngski/pipe_line2.c	/^char	*find_path(char *argv[], char **envp, int i)$/;"	f
 flag	minishell.h	/^	int				flag;$/;"	m	struct:s_token
 flip_meta_chr	srcs/lex_env1.c	/^char	*flip_meta_chr(char *ret)$/;"	f
-forked_child_work	pipes_youngski/pipe_line2.c	/^void	forked_child_work(t_data *data, t_token **head, int *pipes,$/;"	f
+forked_child_work	pipes_youngski/pipe_line2.c	/^void	forked_child_work(t_tuple tup, int *pipes,$/;"	f
 free_str	srcs/lex_free.c	/^void	free_str(t_str *str)$/;"	f
 free_token	srcs/lex_free.c	/^void	free_token(t_token *cur)$/;"	f
 ft_atoi	libft/ft_atoi.c	/^int	ft_atoi(const char *str)$/;"	f
 ft_bzero	libft/ft_bzero.c	/^void	*ft_bzero(void *s, size_t n)$/;"	f
 ft_calloc	libft/ft_calloc.c	/^void	*ft_calloc(size_t count, size_t size)$/;"	f
+ft_charjoin	libft/ft_strjoin.c	/^char	*ft_charjoin(char *s1, char s2)$/;"	f
 ft_freeall	libft/ft_split.c	/^static void	ft_freeall(char **spl)$/;"	f	file:
 ft_isalnum	libft/ft_isalnum.c	/^int	ft_isalnum(int c)$/;"	f
 ft_isalpha	libft/ft_isalpha.c	/^int	ft_isalpha(int c)$/;"	f
@@ -104,9 +110,9 @@ ft_isdigit	libft/ft_isdigit.c	/^int	ft_isdigit(int c)$/;"	f
 ft_isprint	libft/ft_isprint.c	/^int	ft_isprint(int c)$/;"	f
 ft_itoa	libft/ft_itoa.c	/^char	*ft_itoa(int n)$/;"	f
 ft_len	libft/ft_itoa.c	/^static size_t	ft_len(long long *num)$/;"	f	file:
-ft_lstadd_back	env_export.c	/^void	ft_lstadd_back(t_list **lst, t_list *new)$/;"	f
-ft_lstlast	env_export.c	/^t_list	*ft_lstlast(t_list *lst)$/;"	f
-ft_lstnew	env_export.c	/^t_list	*ft_lstnew(void *key, void *value)$/;"	f
+ft_lstadd_back	builtin/env_export.c	/^void	ft_lstadd_back(t_list **lst, t_list *new)$/;"	f
+ft_lstlast	builtin/env_export.c	/^t_list	*ft_lstlast(t_list *lst)$/;"	f
+ft_lstnew	builtin/env_export.c	/^t_list	*ft_lstnew(void *key, void *value)$/;"	f
 ft_max	utils.c	/^int	ft_max(int a, int b)$/;"	f
 ft_memchr	libft/ft_memchr.c	/^void	*ft_memchr(const void *s, int c, size_t n)$/;"	f
 ft_memcmp	libft/ft_memcmp.c	/^int	ft_memcmp(const void *s1, const void *s2, size_t n)$/;"	f
@@ -138,12 +144,14 @@ g_exit_code	minishell.h	/^int	g_exit_code;$/;"	v
 get_cmds_num	srcs/syntax_check2.c	/^int	get_cmds_num(int *type_arr, int token_len)$/;"	f
 get_doc_count	srcs/doc_open2.c	/^int	get_doc_count(char **doc_str)$/;"	f
 get_env_num	srcs/lex_env1.c	/^int	get_env_num(char *envp)$/;"	f
+get_home	builtin/built_in1.c	/^char	*get_home(char **envp)$/;"	f
 get_limiter	srcs/doc_open2.c	/^char	**get_limiter(char **doc_str, t_doc *doc)$/;"	f
 get_next_line	get_next_line/get_next_line.c	/^char	*get_next_line(int fd)$/;"	f
 get_path	pipes_youngski/check_cmd.c	/^char	**get_path(char **envp)$/;"	f
 get_rid_str	srcs/doc_open2.c	/^char	*get_rid_str(char *doc_str, char *limiter)$/;"	f
 go_tokenize	srcs/lex_tokenize.c	/^t_token	*go_tokenize(char *cmd, char **envp, t_token *t)$/;"	f
 handle_line	main.c	/^int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)$/;"	f
+head	minishell.h	/^	t_token	**head;$/;"	m	struct:s_tuple
 head	minishell.h	/^	t_token	*head;$/;"	m	struct:s_cover
 heredoc_file_make	srcs/doc_open1.c	/^void	heredoc_file_make(int fd, char *limiter, int *pipe_fd)$/;"	f
 heredoc_redirection	pipes_youngski/pipe_line3.c	/^int	heredoc_redirection(t_token **head, t_data *data,$/;"	f
@@ -151,16 +159,18 @@ i_flag	minishell.h	/^	int		i_flag;$/;"	m	struct:s_data
 init_cover	srcs/init_1.c	/^t_cover	*init_cover(t_cover *cover)$/;"	f
 init_data	srcs/init_1.c	/^int	init_data(t_data *data, t_doc doc, char **envp, t_token *head)$/;"	f
 init_doc	srcs/init_2.c	/^t_doc	*init_doc(t_doc *doc)$/;"	f
-init_env_list	env_export.c	/^t_list	*init_env_list(char **env, t_list **head)$/;"	f
+init_env_list	builtin/env_export.c	/^t_list	*init_env_list(char **env, t_list **head)$/;"	f
 init_fd	srcs/init_1.c	/^void	init_fd(t_data *data)$/;"	f
-init_fork	pipes_youngski/pipe_line1.c	/^int	init_fork(t_token **head, t_data *data, int i, int *heredoc_count, t_list *env_head)$/;"	f
+init_fork	pipes_youngski/pipe_line1.c	/^int	init_fork(t_tuple tup, int i, int *heredoc_count, t_list *env_head)$/;"	f
 init_line	srcs/init_1.c	/^char	*init_line(char *line)$/;"	f
+init_make_env	builtin/built_in1.c	/^void	init_make_env(int *i, char **key, char **value, char *t)$/;"	f
 init_prompt_sig	srcs/init_1.c	/^void	init_prompt_sig(int argc, __attribute__((unused)) char *argv[])$/;"	f
 init_split	doc_parse/parsing_y3.c	/^void	init_split(int *i, int *j, char *line, char **line_temp)$/;"	f
 init_syntax_check	srcs/doc_syntax.c	/^int	init_syntax_check(int *s_flag, int *d_flag, int *in_dquote, int *in_squote)$/;"	f
 input_redirection	pipes_youngski/pipe_line3.c	/^int	input_redirection(int input_fd, t_token **head, t_data *data, int cmd_flag)$/;"	f
 io_fd	minishell.h	/^	int		io_fd[2];$/;"	m	struct:s_data
 is_char_space	srcs/lex_make_push.c	/^int	is_char_space(char c)$/;"	f
+is_file_directory	pipes_youngski/check_cmd.c	/^int	is_file_directory(char *cmd)$/;"	f
 is_line_end	srcs/lex_tokenize.c	/^int	is_line_end(char s)$/;"	f
 is_meta_chr	srcs/lex_env2.c	/^int	is_meta_chr(char c)$/;"	f
 is_sep	libft/ft_split.c	/^static int	is_sep(char s, char c)$/;"	f	file:
@@ -169,13 +179,14 @@ is_str_space	main.c	/^int	is_str_space(char *line)$/;"	f
 is_word_end	srcs/lex_tokenize.c	/^int	is_word_end(char s)$/;"	f
 keep_execve_chd	pipes_youngski/pipe_line5.c	/^char	**keep_execve_chd(t_data data, t_token **head, char **t, int *cmd_flag)$/;"	f
 keep_execve_par	pipes_youngski/pipe_line5.c	/^char	**keep_execve_par(t_token **head, char **builtin, int *cmd_flag)$/;"	f
-key	env_export.c	/^	char			*key;$/;"	m	struct:s_list	file:
+key	minishell.h	/^	char			*key;$/;"	m	struct:s_list
 len	minishell.h	/^	int		len;$/;"	m	struct:s_str
 limiters	minishell.h	/^	char	**limiters;$/;"	m	struct:s_doc
 main	main.c	/^int	main(int argc, char **argv, char **envp)$/;"	f
-make_doc_files	srcs/doc_open1.c	/^void	make_doc_files(int count, t_doc *doc)$/;"	f
-make_env_buf	srcs/lex_env1.c	/^void	make_env_buf(t_str **buf, t_str **env, char **envp)$/;"	f
-make_envp_arr	env_export.c	/^void	make_envp_arr(t_list *head, char ***envp)$/;"	f
+make_doc_files	srcs/doc_open3.c	/^void	make_doc_files(int count, t_doc *doc)$/;"	f
+make_env	builtin/built_in1.c	/^void	make_env(char *t, t_list **head)$/;"	f
+make_env_buf	srcs/lex_env1.c	/^int	make_env_buf(t_str **buf, t_str **env, char **envp, char *meta_str)\/\/환경변수 없으면 메타문자 buf에 가져다붙여야함$/;"	f
+make_envp_arr	builtin/env_export.c	/^char	**make_envp_arr(t_list *head)$/;"	f
 make_inside_char_double	doc_parse/parsing_y.c	/^void	make_inside_char_double(int *i, int *count, char *line_temp, char *ret)$/;"	f
 make_inside_char_single	doc_parse/parsing_y.c	/^void	make_inside_char_single(int *i, int *count, char *line_temp, char *ret)$/;"	f
 make_line	get_next_line/get_next_line.c	/^char	*make_line(char *backup, int i)$/;"	f
@@ -187,10 +198,8 @@ make_type_arr	srcs/syntax_check1.c	/^int	*make_type_arr(t_token *head, int *toke
 meet_eof	get_next_line/get_next_line.c	/^char	*meet_eof(char **backup, char *buf, int read_size)$/;"	f
 myfunc_split	doc_parse/parsing_y3.c	/^char	**myfunc_split(char *line, int i, int j, int count)$/;"	f
 name	minishell.h	/^	char	**name;$/;"	m	struct:s_doc
-new_value	env_export.c	/^void	new_value(t_list **head, void *key, void *value)$/;"	f
-next	env_export.c	/^	struct s_list	*next;$/;"	m	struct:s_list	typeref:struct:s_list::s_list	file:
-next	libft.h	/^	struct s_list	*next;$/;"	m	struct:s_list	typeref:struct:s_list::s_list
-next	libft/libft.h	/^	struct s_list	*next;$/;"	m	struct:s_list	typeref:struct:s_list::s_list
+new_value	builtin/env_export.c	/^void	new_value(t_list **head, char *key, char *value)$/;"	f
+next	minishell.h	/^	struct s_list	*next;$/;"	m	struct:s_list	typeref:struct:s_list::s_list
 next	minishell.h	/^	struct s_token	*next;$/;"	m	struct:s_token	typeref:struct:s_token::s_token
 o_flag	minishell.h	/^	int		o_flag;$/;"	m	struct:s_data
 open_file	srcs/doc_open1.c	/^int	open_file(char *filename, int idx, t_doc **doc, int *pipe_fd)$/;"	f
@@ -204,14 +213,14 @@ pipe_line	pipes_youngski/pipe_line1.c	/^int	pipe_line(t_data data, t_token *head
 pipe_split	doc_parse/parsing_y2.c	/^int	pipe_split(int *i, int *count, char *line_temp, char *ret)$/;"	f
 place_word	libft/ft_split.c	/^static void	place_word(char **spl, char const *s, char c, int *flag)$/;"	f	file:
 prev	minishell.h	/^	struct s_token	*prev;$/;"	m	struct:s_token	typeref:struct:s_token::s_token
-print_env	env_export.c	/^void	print_env(t_list *head)$/;"	f
-print_export	env_export.c	/^void	print_export(t_list *head)$/;"	f
+print_env	builtin/env_export.c	/^void	print_env(t_list *head)$/;"	f
+print_export	builtin/env_export.c	/^void	print_export(t_list *head)$/;"	f
 print_token	srcs/lex_free.c	/^void	print_token(t_token *cur)$/;"	f
 push_cmd	pipes_youngski/pipe_line2.c	/^char	**push_cmd(t_data *data, t_token **head, int *cmd_flag, int *hdoc_count)$/;"	f
 push_str	srcs/lex_make_push.c	/^void	push_str(t_str *str, char val)$/;"	f
 push_token	srcs/lex_make_push.c	/^t_token	*push_token(int type, t_str *buf, t_token *prev)$/;"	f
 read_cmd	pipes_youngski/pipe_line2.c	/^char	**read_cmd(t_data *data, t_token **head, int *heredoc_count)$/;"	f
-read_env	srcs/lex_read.c	/^void	read_env(char **s, t_str *buf, char **envp)$/;"	f
+read_env	srcs/lex_read.c	/^int	read_env(char **s, t_str *buf, char **envp)$/;"	f
 read_pipe_redir	srcs/lex_read.c	/^t_token	*read_pipe_redir(char **s, t_token *cur, t_str *buf)$/;"	f
 read_word	srcs/lex_read.c	/^t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)$/;"	f
 read_word_dquote	srcs/lex_read.c	/^int	read_word_dquote(char **s, t_str *buf, char **envp)$/;"	f
@@ -227,11 +236,12 @@ s	minishell.h	/^	char	*s;$/;"	m	struct:s_str
 s_cover	minishell.h	/^typedef struct s_cover$/;"	s
 s_data	minishell.h	/^typedef struct s_data$/;"	s
 s_doc	minishell.h	/^typedef struct s_doc$/;"	s
-s_list	env_export.c	/^typedef struct s_list$/;"	s	file:
-s_list	libft.h	/^typedef struct s_list$/;"	s
-s_list	libft/libft.h	/^typedef struct s_list$/;"	s
+s_list	minishell.h	/^typedef struct s_list$/;"	s
 s_str	minishell.h	/^typedef struct s_str$/;"	s
 s_token	minishell.h	/^typedef struct s_token$/;"	s
+s_tuple	minishell.h	/^typedef struct s_tuple$/;"	s
+see_next_word_meta	srcs/lex_read.c	/^int	see_next_word_meta(char **s, t_str **buf, char *g_str)$/;"	f
+see_next_word_null	srcs/lex_read.c	/^int	see_next_word_null(char **s, t_str **buf)$/;"	f
 set_signal	srcs/sig_handle.c	/^void	set_signal(int sig_int, int sig_quit)$/;"	f
 signal_handler	srcs/sig_handle.c	/^void	signal_handler(int signo)$/;"	f
 skip_space	doc_parse/parsing_y3.c	/^int	skip_space(int *i, char **line_temp)$/;"	f
@@ -241,15 +251,14 @@ syntax_err	srcs/syntax_check2.c	/^int	syntax_err(void)$/;"	f
 t_cover	minishell.h	/^}	t_cover;$/;"	t	typeref:struct:s_cover
 t_data	minishell.h	/^}	t_data;$/;"	t	typeref:struct:s_data
 t_doc	minishell.h	/^}	t_doc;$/;"	t	typeref:struct:s_doc
-t_list	env_export.c	/^}					t_list;$/;"	t	typeref:struct:s_list	file:
-t_list	libft.h	/^}					t_list;$/;"	t	typeref:struct:s_list
-t_list	libft/libft.h	/^}					t_list;$/;"	t	typeref:struct:s_list
+t_list	minishell.h	/^}	t_list;$/;"	t	typeref:struct:s_list
 t_str	minishell.h	/^}	t_str;$/;"	t	typeref:struct:s_str
 t_token	minishell.h	/^}	t_token;$/;"	t	typeref:struct:s_token
+t_tuple	minishell.h	/^}	t_tuple;$/;"	t	typeref:struct:s_tuple
 temp	minishell.h	/^	t_token	*temp;$/;"	m	struct:s_cover
 tokenize	srcs/lex_tokenize.c	/^t_token	*tokenize(char *s, char **envp)$/;"	f
 type	minishell.h	/^	int				type;$/;"	m	struct:s_token
-value	env_export.c	/^	char			*value;$/;"	m	struct:s_list	file:
+value	minishell.h	/^	char			*value;$/;"	m	struct:s_list
 wait_all	pipes_youngski/pipe_line5.c	/^int	wait_all(pid_t last_pid)$/;"	f
 with_signal_exit	pipes_youngski/pipe_line5.c	/^int	with_signal_exit(int *signo, int *status, int *i)$/;"	f
 zero	minishell.h	/^	int		zero;$/;"	m	struct:s_doc
