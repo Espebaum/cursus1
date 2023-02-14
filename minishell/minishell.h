@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 16:58:44 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/14 22:11:35 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@
 # include <stdlib.h>
 # include <termios.h>
 # include <errno.h>
-//# include <string.h>
 # include <signal.h>
 # include <fcntl.h>
 # include <sys/wait.h>
@@ -106,8 +105,6 @@ t_token	*go_tokenize(char *cmd, char **envp, t_token *t);
 void	set_signal(int sig_int, int sig_quit);
 int		doc_syntax(char *str);
 
-//
-
 //init functions
 t_cover	*init_cover(t_cover *cover);
 void	init_prompt_sig(int argc, __attribute__((unused)) char *argv[]);
@@ -115,6 +112,14 @@ char	*init_line(char *line);
 void	init_fd(t_data *data);
 int		init_data(t_data *data, t_doc doc, char **envp, t_token *head);
 t_doc	*init_doc(t_doc *doc);
+
+//syntax functions
+int		count_s_flag(int *in_squote, int *in_dquote, int *s_flag);
+int		count_d_flag(int *in_squote, int *in_dquote, int *d_flag);
+
+//parse functions
+int		redirection_split(int *i, int *count, char *line_temp, char *ret);
+int		pipe_split(int *i, int *count, char *line_temp, char *ret);
 
 //heredoc functions
 int		get_doc_count(char **doc_str);
@@ -163,6 +168,16 @@ int		env_read(t_str **buf, t_str **env, char *g_str);
 int		make_env_buf(t_str **buf, t_str **env, char **envp, char *meta_str);
 char	*check_meta_chr(t_str **env, int i, int len, int size);
 int		is_meta_chr(char c);
+char	*flip_meta_chr(char *ret);
+char	*make_meta_chr(char *ret, int *size, char meta_chr);
+char	*check_meta_chr(t_str **env, int i, int len, int size);
+void	free_meta_str(char *meta_str, t_str *env, t_str *buf);
+int		see_next_word_meta(char **s, t_str **buf, t_str **env, char *g_str);
+t_token	*make_retcur(t_str *buf, t_token *cur, int is_fail);
+void	init_fail_and_num(int *is_fail, int *num);
+int		see_next_word_null(char **s, t_str **buf);
+void	is_g_exit_code(char **s, t_str **buf, char *g_str, int i);
+void	push_2str(t_str **buf, char **s);
 
 //execute function
 char	**keep_execve_par(t_token **head, char **builtin, int *cmd_flag);
@@ -213,11 +228,31 @@ void	init_fd(t_data *data);
 int		ft_max(int a, int b);
 
 //env and export func
+int		built_export(char **builtin, t_list *head);
 t_list	*init_env_list(char **env, t_list **head);
 char	**make_envp_arr(t_list *head);
 void	print_env(t_list *head);
 void	print_export(t_list *head);
 void	new_value(t_list **head, char *key, char *value);
 int		env_error_check(char *key);
+void	make_env(char *t, t_list **head);
+int		built_env(char **builtin, t_list *head);
+void	del_one(char *t, t_list *head_first);
+
+//exit function
+int		call_exit(char **builtin, t_list *head);
+int		exit_num_arg_req(char *str);
+int		is_exit_code_num(char *str);
+int		non_exit_many_arg(void);
+
+//cd function
+int		built_cd(char **t, char **envp);
+
+//echo function
+int		built_echo(char **t);
+
+//envp utils functions
+void	ft_lstadd_back(t_list **lst, t_list *new);
+t_list	*ft_lstnew(void *key, void *value);
 
 #endif

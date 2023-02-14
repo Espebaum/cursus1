@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_export.c                                       :+:      :+:    :+:   */
+/*   envp_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 22:56:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/13 22:54:24 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/14 20:33:26 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ t_list	*ft_lstlast(t_list *lst)
 	return (lst);
 }
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_lstadd_back(t_list **lst, t_list *newlst)
 {
 	t_list	*temp;
 
 	if (*lst == NULL)
 	{
-		*lst = new;
+		*lst = newlst;
 		return ;
 	}
 	temp = ft_lstlast(*lst);
-	temp->next = new;
+	temp->next = newlst;
 }
 
 t_list	*ft_lstnew(void *key, void *value)
@@ -45,27 +45,6 @@ t_list	*ft_lstnew(void *key, void *value)
 	newlist->value = value;
 	newlist->next = NULL;
 	return (newlist);
-}
-
-int	env_error_check(char *key)
-{
-	char	*temp;
-	int		i;
-
-	if (!(key))
-		return (1);
-	i = 0;
-	if (key && key[0] == '=')
-		return (1);
-	while (temp[i] && temp[i] != '=')
-	{
-		if (ft_isalpha(temp[i]) || temp[i] == '_')
-			;
-		else
-			return (1);
-		i++;
-	}
-	return (0);
 }
 
 t_list	*init_env_list(char **env, t_list **head)
@@ -85,28 +64,6 @@ t_list	*init_env_list(char **env, t_list **head)
 		t++;
 	}
 	return (*head);
-}
-
-void	new_value(t_list **head, char *key, char *value)
-{
-	t_list	*temp;
-
-	temp = *head;
-	while (temp)
-	{
-		if (!strncmp(temp->key, key, ft_strlen(temp->key) + 1))
-		{
-			if (value)
-			{
-				if (temp->value)
-					free(temp->value);
-				temp->value = value;
-			}
-			return ;
-		}
-		temp = temp->next;
-	}
-	ft_lstadd_back(head, ft_lstnew(key, value));
 }
 
 char	**make_envp_arr(t_list *head)
@@ -135,52 +92,3 @@ char	**make_envp_arr(t_list *head)
 	}
 	return (ret);
 }
-
-void	print_env(t_list *head)
-{
-	t_list	*temp;
-	char	*key;
-	char	*value;
-
-	temp = head;
-	while (temp)
-	{
-		key = temp->key;
-		value = temp->value;
-		if (value)
-			printf("%s=%s\n", key, value);
-		temp = temp->next;
-	}
-}
-
-void	print_export(t_list *head)
-{
-	t_list	*temp;
-	char	*key;
-	char	*value;
-
-	temp = head;
-	while (temp)
-	{
-		key = temp->key;
-		value = temp->value;
-		if (value == 0)
-			printf("declar -x %s\n", key);
-		else
-			printf("declar -x %s=\"%s\"\n", key, value);
-		temp = temp->next;
-	}
-}
-
-/*
-//메인에서 반복문안에서 init_env_list, make_envp_arr 를 계속해준다.
-int	main(int argc, char **argv, char **env)
-{
-	t_list	*head;
-
-	head = init_env_list(env, &head);
-	new_value(&head, argv[1], argv[2]);
-	make_envp_arr(head, &env);
-	print_env(head);
-}
-*/

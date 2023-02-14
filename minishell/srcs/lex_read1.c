@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lex_read.c                                         :+:      :+:    :+:   */
+/*   lex_read1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 14:46:36 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/14 22:11:37 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,73 +42,6 @@ int	read_word_dquote(char **s, t_str *buf, char **envp)
 	return (0);
 }
 
-int	see_next_word_null(char **s, t_str **buf)
-{
-	if (*((*s) + 1) == '\0')
-	{
-		push_str(*buf, '$');
-		(*s)++;
-		return (1);
-	}
-	else
-		return (0);
-}
-
-void	free_meta_str(char *meta_str, t_str *env, t_str *buf)
-{
-	int	i;
-
-	i = -1;
-	if (meta_str)
-		while (meta_str[++i])
-			push_str(buf, meta_str[i]);
-	if (meta_str)
-		free(meta_str);
-	if (env->s)
-		free_str(env);
-}
-
-int	see_next_word_meta(char **s, t_str **buf, t_str **env, char *g_str)
-{
-	int		i;
-
-	i = -1;
-	if (*((*s) + 1) != '\0' && is_meta_chr(*((*s) + 1)) == 1)
-	{
-		if (*((*s) + 1) == '?')
-		{
-			while (g_str[++i])
-				push_str(*buf, g_str[i]);
-			(*s)++;
-			(*s)++;
-		}
-		else if (*((*s) + 1) == '\'')
-		{
-			(*s)++;
-			while (!is_word_end(**s) && **s != '\'')
-				push_str(*buf, *(*s)++);
-			return (1);
-		}
-		else if (*((*s) + 1) == '\"')
-		{
-			(*s)++;
-			return (1);
-		}
-		else
-		{
-			push_str(*buf, *(*s)++);
-			push_str(*buf, *(*s)++);
-		}
-		while (1)
-		{
-			if (**s == '$' || **s == '\0')
-				return (1);
-			push_str(*buf, (*(*s)++));
-		}
-	}
-	return (0);
-}
-
 int	read_env(char **s, t_str *buf, char **envp, char **temp)
 {
 	t_str	*env;
@@ -136,21 +69,6 @@ int	read_env(char **s, t_str *buf, char **envp, char **temp)
 	free(g_str);
 	free(temp);
 	return (1);
-}
-
-void	init_fail_and_num(int *is_fail, int *num)
-{
-	*is_fail = 0;
-	*num = 0;
-}
-
-t_token *make_retcur(t_str *buf, t_token *cur, int is_fail)
-{
-	if (is_fail)
-		cur = push_token(T_ERROR, buf, cur);
-	else
-		cur = push_token(T_WORD, buf, cur);
-	return (cur);
 }
 
 t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)

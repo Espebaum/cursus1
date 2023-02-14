@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doc_syntax.c                                       :+:      :+:    :+:   */
+/*   doc_syntax1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 12:28:04 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 17:23:53 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/14 21:38:44 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,39 +21,44 @@ int	init_syntax_check(int *s_flag, int *d_flag, int *in_dquote, int *in_squote)
 	return (0);
 }
 
-int	count_s_flag(int *in_squote, int *in_dquote, int *s_flag)
+int	is_all_space(char *str)
 {
-	if (*in_dquote != 1 && *in_squote == 0)
-		*in_squote = 1;
-	else
-		*in_squote = 0;
-	if (*in_dquote != 1)
-		(*s_flag)++;
-	return (0);
-}
-
-int	count_d_flag(int *in_squote, int *in_dquote, int *d_flag)
-{
-	if (*in_squote != 1 && *in_dquote == 0)
-		*in_dquote = 1;
-	else
-		*in_dquote = 0;
-	if (*in_squote != 1)
-		(*d_flag)++;
-	return (0);
-}
-
-int	doc_syntax_check(char *str, const int len)
-{
+	char	**spl;
+	int		len;
 	int		i;
+	int		j;
+
+	i = -1;
+	spl = ft_split(str, '|');
+	while (spl[++i])
+	{
+		j = 0;
+		len = ft_strlen(spl[i]);
+		while (spl[i][j] != '\0' && (spl[i][j] == ' ' || \
+				ft_strncmp("<<", &spl[i][j], 2) == 0))
+		{
+			if (ft_strncmp("<<", &spl[i][j], 2) == 0)
+				j++;
+			j++;
+			if (j == len)
+				return (-1);
+		}
+		printf("j : %d, len : %d\n", j, len);
+	}
+	return (0);
+}
+
+int	doc_syntax_check(char *str, const int len, int idx, int i)
+{
 	int		s_flag;
 	int		d_flag;
 	int		in_dquote;
 	int		in_squote;
 
-	i = -1;
 	init_syntax_check(&s_flag, &d_flag, &in_dquote, &in_squote);
 	if (str[0] == '|' || str[len - 1] == '|')
+		return (-1);
+	if (is_all_space(str) == -1)
 		return (-1);
 	while (++i < len)
 	{
@@ -80,7 +85,7 @@ int	doc_syntax(char *str)
 		if (str[i] == '<' && str[i + 1] == '<')
 		{
 			is_doc = 1;
-			if (doc_syntax_check(str, len) == -1)
+			if (doc_syntax_check(str, len, i + 2, -1) == -1)
 				return (-1);
 			return (is_doc);
 		}
