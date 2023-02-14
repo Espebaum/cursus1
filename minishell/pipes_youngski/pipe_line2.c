@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/13 22:41:18 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/14 19:06:13 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,11 @@ void	forked_child_work(t_tuple tup, int *pipes,
 	data = tup.data;
 	head = tup.head;
 	t = read_cmd(data, head, heredoc_count);
+	if (!(*t))
+	{
+		g_exit_code = 0;
+		exit(g_exit_code);
+	}
 	dup_pipes(head, pipes, data);
 	if ((*head) && (*head)->next)
 		(*head) = (*head)->next;
