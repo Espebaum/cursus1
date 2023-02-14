@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 17:08:34 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/14 17:29:45 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	doc_check(t_cover *cover, char *line)
 //doc -> 0 히어독 아님
 //doc -> 1 히어독인데 정상 종료
 //doc -> 2 히어독인데 Ctrl C
+//doc -> ? 히어독인데 Ctrl D
 
 int	do_builtin(t_cover *cover, t_list *head, char **envp)
 {

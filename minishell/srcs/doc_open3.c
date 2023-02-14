@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 18:19:56 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 16:57:50 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/14 17:34:59 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	make_doc_files(int count, t_doc *doc)
 	{
 		close(pipe_fd[1]);
 		waitpid(pid, &status, 0);
+		g_exit_code = WEXITSTATUS(status);
 		doc_parent(0, count, &doc, pipe_fd);
 		close(pipe_fd[0]);
-		g_exit_code = WEXITSTATUS(status);
 	}
 }
