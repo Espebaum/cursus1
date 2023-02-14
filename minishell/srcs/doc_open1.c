@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:28:36 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 17:44:01 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/14 17:55:31 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,13 @@ void	heredoc_file_make(int fd, char *limiter, int *pipe_fd)
 	while (1)
 	{
 		line = readline("here_doc> ");
-		if ((!line || ft_strncmp(line, limiter, ft_strlen(limiter) + 1) == 0) \
-				&& line[0] != 0)
+		if (!line)
+		{
+			g_exit_code = 15;
+			exit(g_exit_code);
+		}
+		if ((ft_strncmp(line, limiter, ft_strlen(limiter) + 1) == 0)
+			&& line[0] != 0)
 		{
 			free(line);
 			break ;
@@ -92,6 +97,11 @@ int	open_heredoc(t_doc *doc, char *line)
 		make_doc_files(doc->count, doc);
 	if (g_exit_code == 0)
 		return (1);
+	else if (g_exit_code == 15)
+	{
+		g_exit_code = 0;
+		return (3);
+	}
 	else
 		return (2);
 }

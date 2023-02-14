@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 17:29:45 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/14 17:56:09 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,26 @@ int	is_str_space(char *line)
 		line++;
 	}
 	return (1);
+}
+
+int	do_builtin(t_cover *cover, t_list *head, char **envp)
+{
+	int		o_fd;
+
+	o_fd = dup(1);
+	cover->temp = cover->head;
+	cover->builtin = read_cmd(cover->data, &(cover->temp), \
+	&(cover->doc->zero));
+	dup_pipes(NULL, cover->data->io_fd, cover->data);
+	if (check_builtin(cover->builtin, head, envp) >= 0)
+	{
+		dup2((*cover).cp_stdin, 0);
+		dup2(o_fd, 1);
+		return (-1);
+	}
+	dup2((*cover).cp_stdin, 0);
+	dup2(o_fd, 1);
+	return (0);
 }
 
 int	doc_check(t_cover *cover, char *line)
@@ -43,27 +63,7 @@ int	doc_check(t_cover *cover, char *line)
 //doc -> 0 히어독 아님
 //doc -> 1 히어독인데 정상 종료
 //doc -> 2 히어독인데 Ctrl C
-//doc -> ? 히어독인데 Ctrl D
-
-int	do_builtin(t_cover *cover, t_list *head, char **envp)
-{
-	int		o_fd;
-
-	o_fd = dup(1);
-	cover->temp = cover->head;
-	cover->builtin = read_cmd(cover->data, &(cover->temp), \
-	&(cover->doc->zero));
-	dup_pipes(NULL, cover->data->io_fd, cover->data);
-	if (check_builtin(cover->builtin, head, envp) >= 0)
-	{
-		dup2((*cover).cp_stdin, 0);
-		dup2(o_fd, 1);
-		return (-1);
-	}
-	dup2((*cover).cp_stdin, 0);
-	dup2(o_fd, 1);
-	return (0);
-}
+//doc -> 3 히어독인데 Ctrl D
 
 int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 {
@@ -73,6 +73,8 @@ int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 	if (doc == -1)
 		return (-1);
 	else if (doc == 2)
+		return (-1);
+	else if (doc == 3)
 		return (-1);
 	cover->head = go_tokenize(line, envp, cover->head);
 	if (check_syntax(cover->head) == -1)

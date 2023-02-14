@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 18:19:56 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 17:34:59 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/14 18:01:06 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	doc_child(int idx, int count, t_doc **doc, int *pipe_fd)
 	}
 	close(pipe_fd[1]);
 	close(pipe_fd[0]);
+	if (g_exit_code == 15)
+		exit (g_exit_code);
 	g_exit_code = 0;
 	exit(g_exit_code);
 }
@@ -75,6 +77,7 @@ void	make_doc_files(int count, t_doc *doc)
 		close(pipe_fd[1]);
 		waitpid(pid, &status, 0);
 		g_exit_code = WEXITSTATUS(status);
+		// printf("exit_code : %d\n", g_exit_code);
 		doc_parent(0, count, &doc, pipe_fd);
 		close(pipe_fd[0]);
 	}
