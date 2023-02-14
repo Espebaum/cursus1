@@ -312,6 +312,10 @@ int	exit_num_arg_req(char *str)
 
 int	is_exit_code_num(char *str)
 {
+	if (*str == '-')
+		str++;
+	if (*str == '\0')
+		return (0);
 	while (*str)
 	{
 		if (ft_isdigit(*str) == 0)
@@ -341,6 +345,8 @@ int	call_exit(char **builtin, t_list *head)
 		exit_num_arg_req(builtin[1]);
 	if (builtin[2] != NULL)
 		non_exit_many_arg();
+	exit_code = ft_atoi(builtin[1]);
+	exit(exit_code);
 	return (0);
 }
 // exit -> 정상 종료 -> exit(0)
