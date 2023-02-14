@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 16:43:30 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 17:08:55 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/14 19:49:27 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,19 @@ char	*get_home(char **envp)
 	return (*envp + 5);
 }
 
+int	move_home(char *home)
+{
+	if (!home)
+	{
+		printf("cd: HOME not set\n");
+		g_exit_code = 1;
+		return (1);
+	}
+	else
+		chdir(home);
+	return (0);
+}
+
 int	built_cd(char **t, char **envp)
 {
 	char	**temp;
@@ -113,21 +126,15 @@ int	built_cd(char **t, char **envp)
 	home = get_home(temp);
 	if (t[1] == 0)
 	{
-		if (!home)
-		{
-			printf("cd: HOME not set\n");
-			g_exit_code = 1;
+		if (move_home(home) == 1)
 			return (1);
-		}
-		else
-			chdir(home);
 	}
 	else
 	{
 		if (chdir(t[1]) != 0)
 		{
-			g_exit_code = 1;
 			printf("cd: %s: No such file or directory\n", t[1]);
+			g_exit_code = 1;
 			return (1);
 		}
 	}
@@ -143,7 +150,6 @@ int	built_pwd(char **builtin)
 	(void)builtin;
 	getcwd(t, 2048);
 	printf("%s\n", t);
-	//free(t);
 	g_exit_code = 0;
 	return (1);
 }
@@ -192,12 +198,17 @@ void	make_env(char *t, t_list **head)
 	new_value(head, key, value);
 }
 
+void	init_export_parsing(int	*ret, char **t)
+{
+	*ret = 0;
+	t++;
+}
+
 int	export_parsing(t_list **head, char **t)
 {
 	int		ret;
 
-	ret = 0;
-	t++;
+	init_export_parsing(&ret, t);
 	while (*t)
 	{
 		if (env_error_check(*t))
@@ -215,7 +226,7 @@ int	export_parsing(t_list **head, char **t)
 				ret = 1;
 				continue ;
 			}
-			make_env(*t, head); //make key, value and upload it
+			make_env(*t, head);
 			t++;
 		}
 	}
@@ -264,7 +275,7 @@ void	del_one(char *t, t_list *head_first)
 			if (head->value)
 				free(head->value);
 			free(head);
-			break;
+			break ;
 		}
 		prev = head;
 		head = head->next;
@@ -407,40 +418,51 @@ int	call_exit(char **builtin, t_list *head)
 }
 // exit -> 정상 종료 -> exit(0)
 // exit (long min ~ long max) -> 종료 -> exit(long min ~ long max)
-// exit (long min보다 작거나 long max보다 큼) -> exit: a: numeric argument required, exit(255)
+// exit (long min보다 작거나 long max보다 큼)
+//      -> exit: a: numeric argument required, exit(255)
 // exit 1 1 -> 종료 안함 -> exit: too many arguments
 // exit 1 a -> 이하 동문
 // exit	a -> 종료함(?) -> exit: a: numeric argument required, exit(255)
 // exit a 1 -> 종료함(?) -> exit: a: numeric argument required, exit(255)
+
+int	check_builtin_2(char **builtin, t_list *head, char **envp)
+{
+	int	result;
+
+	result = -1;
+	if (!ft_strncmp(builtin[0], "unset", 6) || (ft_strnstr(builtin[0], \
+					"unset", ft_strlen(builtin[0])) && access(builtin[0], \
+					X_OK) != -1))
+		result = built_unset(builtin, head);
+	else if (!ft_strncmp(builtin[0], "env", 4) || (ft_strnstr(builtin[0], \
+			"env", ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
+		result = built_env(builtin, head);
+	else if (!ft_strncmp(builtin[0], "exit", 5) || (ft_strnstr(builtin[0], \
+					"exit", ft_strlen(builtin[0])) && access(builtin[0], \
+					X_OK) != -1))
+		result = call_exit(builtin, head);
+	return (result);
+}
 
 int	check_builtin(char **builtin, t_list *head, char **envp)
 {
 	int	result;
 
 	result = -1;
-	if (!ft_strncmp(builtin[0], "echo", 5) || (ft_strnstr(builtin[0], "echo",
+	if (!ft_strncmp(builtin[0], "echo", 5) || (ft_strnstr(builtin[0], "echo", \
 				ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_echo(builtin);
-	else if (!ft_strncmp(builtin[0], "cd", 3) || (ft_strnstr(builtin[0], "cd",
+	else if (!ft_strncmp(builtin[0], "cd", 3) || (ft_strnstr(builtin[0], "cd", \
 					ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_cd(builtin, envp);
-	else if (!ft_strncmp(builtin[0], "pwd", 4) || (ft_strnstr(builtin[0], "pwd",
-					ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
+	else if (!ft_strncmp(builtin[0], "pwd", 4) || (ft_strnstr(builtin[0], \
+			"pwd", ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_pwd(builtin);
-	else if (!ft_strncmp(builtin[0], "export", 7) || (ft_strnstr(builtin[0],
-					"export", ft_strlen(builtin[0])) && access(builtin[0],
+	else if (!ft_strncmp(builtin[0], "export", 7) || (ft_strnstr(builtin[0], \
+					"export", ft_strlen(builtin[0])) && access(builtin[0], \
 					X_OK) != -1))
 		result = built_export(builtin, head);
-	else if (!ft_strncmp(builtin[0], "unset", 6) || (ft_strnstr(builtin[0],
-					"unset", ft_strlen(builtin[0])) && access(builtin[0],
-					X_OK) != -1))
-		result = built_unset(builtin, head);
-	else if (!ft_strncmp(builtin[0], "env", 4) || (ft_strnstr(builtin[0], "env",
-					ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
-		result = built_env(builtin, head);
-	else if (!ft_strncmp(builtin[0], "exit", 5) || (ft_strnstr(builtin[0],
-					"exit", ft_strlen(builtin[0])) && access(builtin[0],
-					X_OK) != -1))
-		result = call_exit(builtin, head);
+	else
+		result = check_builtin_2(builtin, head, envp);
 	return (result);
 }
