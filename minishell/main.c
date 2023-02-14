@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/13 20:32:09 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/14 12:00:36 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 	if (check_syntax(cover->head) == -1)
 		return (-1);
 	init_data(cover->data, *(cover->doc), envp, cover->head);
-	printf("s : %s\n", cover->head->str);
+	// printf("s : %s\n", cover->head->str);
 	if (cover->head->cmds == 1)
 		if (do_builtin(cover, head, envp) == -1)
 			return (-1);
@@ -98,24 +98,26 @@ int	main(int argc, char **argv, char **envp)
 	t_list				*head;
 
 	init_env_list(envp, &head);
-	cover = (t_cover *)malloc(sizeof(t_cover));
 	cover = init_cover(cover);
-	line = NULL;
 	tcgetattr(STDIN_FILENO, &term);
 	init_prompt_sig(argc, argv);
 	while (1)
 	{
-		// printf("g_exit_code : %d\n", g_exit_code);
 		init_fd(cover->data);
 		line = init_line(line);
 		if (*line != '\0' && !is_str_space(line))
+		{
 			if (handle_line(line, cover, envp, head) == -1)
+			{
+				envp = make_envp_arr(head);
 				continue ;
+			}
+		}
 		free(line);
-		envp = make_envp_arr(head);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (g_exit_code);
 }
 // (1) 부모 echo 실행시 출력 리다이렉션으로 안바뀌고 표준출력된
 // (2) ech"o hio" 세그폴트
+// printf("g_exit_code : %d\n", g_exit_code);
