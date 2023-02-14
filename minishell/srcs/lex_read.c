@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 13:40:14 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/14 14:25:20 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,21 @@ int	see_next_word_null(char **s, t_str **buf)
 		return (0);
 }
 
-int	see_next_word_meta(char **s, t_str **buf, char *g_str)
+void	free_meta_str(char *meta_str, t_str *env, t_str *buf)
+{
+	int	i;
+
+	i = -1;
+	if (meta_str)
+		while (meta_str[++i])
+			push_str(buf, meta_str[i]);
+	if (meta_str)
+		free(meta_str);
+	if (env->s)
+		free_str(env);
+}
+
+int	see_next_word_meta(char **s, t_str **buf, t_str **env, char *g_str)
 {
 	int		i;
 
@@ -67,6 +81,18 @@ int	see_next_word_meta(char **s, t_str **buf, char *g_str)
 				push_str(*buf, g_str[i]);
 			(*s)++;
 			(*s)++;
+		}
+		else if (*((*s) + 1) == '\'')
+		{
+			(*s)++;
+			while (!is_word_end(**s) && **s != '\'')
+				push_str(*buf, *(*s)++);
+			return (1);
+		}
+		else if (*((*s) + 1) == '\"')
+		{
+			(*s)++;
+			return (1);
 		}
 		else
 		{
@@ -83,20 +109,6 @@ int	see_next_word_meta(char **s, t_str **buf, char *g_str)
 	return (0);
 }
 
-void	free_meta_str(char *meta_str, t_str *env, t_str *buf)
-{
-	int	i;
-
-	i = -1;
-	if (meta_str)
-		while (meta_str[++i])
-			push_str(buf, meta_str[i]);
-	if (meta_str)
-		free(meta_str);
-	if (env->s)
-		free_str(env);
-}
-
 int	read_env(char **s, t_str *buf, char **envp, char **temp)
 {
 	t_str	*env;
@@ -108,7 +120,7 @@ int	read_env(char **s, t_str *buf, char **envp, char **temp)
 	g_str = ft_itoa(g_exit_code);
 	if (see_next_word_null(s, &buf) == 1)
 		return (1);
-	if (see_next_word_meta(s, &buf, g_str) == 1)
+	if (see_next_word_meta(s, &buf, &env, g_str) == 1)
 		return (1);
 	while (!is_word_end(*(++(*s))) && **s != '\"')
 	{
