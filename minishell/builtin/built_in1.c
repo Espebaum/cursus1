@@ -330,17 +330,17 @@ int	non_exit_many_arg()
 
 int	call_exit(char **builtin, t_list *head)
 {
-	int	is_num;
+	int	is_first_arg_num;
+	int	exit_code;
 
 	printf("exit\n");
 	if (builtin[1] == NULL)
 		exit(0);
-	is_num = is_exit_code_num(builtin[1]);
-	if (is_num == 0)
+	is_first_arg_num = is_exit_code_num(builtin[1]);
+	if (is_first_arg_num == 0)
 		exit_num_arg_req(builtin[1]);
 	if (builtin[2] != NULL)
 		non_exit_many_arg();
-	// if (is_num)
 	return (0);
 }
 // exit -> 정상 종료 -> exit(0)
