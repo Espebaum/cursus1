@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 16:43:30 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 19:49:27 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/14 19:57:37 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,21 @@ int	builtin_check(char *str)
 	return (0);
 }
 
+int	cutting_t2(char **t, int *flag, int i, int *j)
+{
+	(*j)++;
+	while (t[i][*j] != 0)
+	{
+		if (t[i][*j] != 'n' && t[i][*j] != 0)
+			return (1);
+		(*j)++;
+	}
+	if (t[i][(*j) - 1] == '-')
+		return (1);
+	if (t[i][*j] == 0)
+		*flag = 1;
+	return (0);
+}
 char	**cutting_t(char **t, int *flag)
 {
 	int		i;
@@ -45,17 +60,8 @@ char	**cutting_t(char **t, int *flag)
 		j = 0;
 		if (t[i][j] == '-')
 		{
-			j++;
-			while (t[i][j] != 0)
-			{
-				if (t[i][j] != 'n' && t[i][j] != 0)
-					return (temp);
-				j++;
-			}
-			if (t[i][j - 1] == '-')
+			if (cutting_t2(t, flag, i, &j))
 				return (temp);
-			if (t[i][j] == 0)
-				*flag = 1;
 		}
 		else
 			return (temp);
@@ -198,7 +204,7 @@ void	make_env(char *t, t_list **head)
 	new_value(head, key, value);
 }
 
-void	init_export_parsing(int	*ret, char **t)
+void	init_export_parsing(int *ret, char **t)
 {
 	*ret = 0;
 	t++;
@@ -206,7 +212,7 @@ void	init_export_parsing(int	*ret, char **t)
 
 int	export_parsing(t_list **head, char **t)
 {
-	int		ret;
+	int	ret;
 
 	init_export_parsing(&ret, t);
 	while (*t)
@@ -430,15 +436,14 @@ int	check_builtin_2(char **builtin, t_list *head, char **envp)
 	int	result;
 
 	result = -1;
-	if (!ft_strncmp(builtin[0], "unset", 6) || (ft_strnstr(builtin[0], \
-					"unset", ft_strlen(builtin[0])) && access(builtin[0], \
-					X_OK) != -1))
+	if (!ft_strncmp(builtin[0], "unset", 6) || (ft_strnstr(builtin[0], "unset",
+				ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_unset(builtin, head);
-	else if (!ft_strncmp(builtin[0], "env", 4) || (ft_strnstr(builtin[0], \
-			"env", ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
+	else if (!ft_strncmp(builtin[0], "env", 4) || (ft_strnstr(builtin[0], "env",
+					ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_env(builtin, head);
-	else if (!ft_strncmp(builtin[0], "exit", 5) || (ft_strnstr(builtin[0], \
-					"exit", ft_strlen(builtin[0])) && access(builtin[0], \
+	else if (!ft_strncmp(builtin[0], "exit", 5) || (ft_strnstr(builtin[0],
+					"exit", ft_strlen(builtin[0])) && access(builtin[0],
 					X_OK) != -1))
 		result = call_exit(builtin, head);
 	return (result);
@@ -449,17 +454,17 @@ int	check_builtin(char **builtin, t_list *head, char **envp)
 	int	result;
 
 	result = -1;
-	if (!ft_strncmp(builtin[0], "echo", 5) || (ft_strnstr(builtin[0], "echo", \
+	if (!ft_strncmp(builtin[0], "echo", 5) || (ft_strnstr(builtin[0], "echo",
 				ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_echo(builtin);
-	else if (!ft_strncmp(builtin[0], "cd", 3) || (ft_strnstr(builtin[0], "cd", \
+	else if (!ft_strncmp(builtin[0], "cd", 3) || (ft_strnstr(builtin[0], "cd",
 					ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_cd(builtin, envp);
-	else if (!ft_strncmp(builtin[0], "pwd", 4) || (ft_strnstr(builtin[0], \
-			"pwd", ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
+	else if (!ft_strncmp(builtin[0], "pwd", 4) || (ft_strnstr(builtin[0], "pwd",
+					ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
 		result = built_pwd(builtin);
-	else if (!ft_strncmp(builtin[0], "export", 7) || (ft_strnstr(builtin[0], \
-					"export", ft_strlen(builtin[0])) && access(builtin[0], \
+	else if (!ft_strncmp(builtin[0], "export", 7) || (ft_strnstr(builtin[0],
+					"export", ft_strlen(builtin[0])) && access(builtin[0],
 					X_OK) != -1))
 		result = built_export(builtin, head);
 	else
