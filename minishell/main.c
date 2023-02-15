@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/15 20:35:28 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 21:41:28 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ int	main(int argc, char **argv, char **envp)
 	struct termios		term;
 	t_list				*head;
 
+	line = NULL;
+	cover = NULL;
 	init_env_list(envp, &head);
 	cover = init_cover(cover);
 	tcgetattr(STDIN_FILENO, &term);
@@ -108,13 +110,8 @@ int	main(int argc, char **argv, char **envp)
 		init_fd(cover->data);
 		line = init_line(line);
 		if (*line != '\0' && !is_str_space(line))
-		{
-			if (handle_line(line, cover, envp, head) == -1)
-			{
-				envp = make_envp_arr(head);
-				continue ;
-			}
-		}
+			handle_line(line, cover, envp, head);
+		envp = make_envp_arr(head);
 		free(line);
 		// system("leaks a.out");
 	}

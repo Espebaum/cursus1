@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 20:19:39 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/15 20:36:11 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 21:38:41 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	env_error_check(char *key)
 	char	*temp;
 	int		i;
 
+	temp = NULL;
 	if (!(key))
 		return (1);
 	i = 0;
@@ -91,7 +92,7 @@ int	built_export(char **builtin, t_list *head)
 {
 	char	**t;
 
-	(void)builtin;
+	t = NULL;
 	if (!t)
 		return (0);
 	if (!builtin[1])

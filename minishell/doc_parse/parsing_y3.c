@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 19:30:06 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/15 19:01:24 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 21:28:50 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	count_inside_char_single(char *line_temp, char *ret)
 	ret = (char *)malloc(sizeof(char) * (count + 1));
 }
 
-char	**myfunc_split(char *line, int i, int j, int count_i)
+char	**myfunc_split(char *line, int i, int j)
 {
 	char	**ret;
 	char	*line_temp;

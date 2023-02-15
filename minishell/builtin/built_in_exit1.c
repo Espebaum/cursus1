@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 20:53:24 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 20:15:20 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 21:31:00 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	check_code_long(char *str)
 	return (ret);
 }
 
-int	call_exit(char **builtin, t_list *head)
+int	call_exit(char **builtin)
 {
 	int	is_first_arg_num;
 	int	exit_code;

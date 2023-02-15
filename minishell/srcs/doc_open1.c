@@ -6,13 +6,13 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:28:36 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 21:43:57 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 21:29:05 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	heredoc_file_make(int fd, char *limiter, int *pipe_fd)
+void	heredoc_file_make(int fd, char *limiter)
 {
 	char	*feed_line;
 	char	*line;
@@ -22,8 +22,8 @@ void	heredoc_file_make(int fd, char *limiter, int *pipe_fd)
 	while (1)
 	{
 		line = readline("here_doc> ");
-		if ((ft_strncmp(line, limiter, ft_strlen(limiter) + 1) == 0)
-			&& line[0] != 0 || !line)
+		if (((ft_strncmp(line, limiter, ft_strlen(limiter) + 1) == 0) && line[0] != 0)
+			|| !line)
 		{
 			free(line);
 			break ;
@@ -80,7 +80,7 @@ int	open_heredoc(t_doc *doc, char *line)
 	char	**doc_str;
 
 	doc = init_doc(doc);
-	doc_str = myfunc_split(line, 0, 0, 0);
+	doc_str = myfunc_split(line, 0, 0);
 	doc->count = get_doc_count(doc_str);
 	if (doc->count == -1)
 		return (-1);

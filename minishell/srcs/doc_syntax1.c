@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 12:28:04 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 21:38:44 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 21:26:59 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	is_all_space(char *str)
 	return (0);
 }
 
-int	doc_syntax_check(char *str, const int len, int idx, int i)
+int	doc_syntax_check(char *str, const int len, int i)
 {
 	int		s_flag;
 	int		d_flag;
@@ -85,7 +85,7 @@ int	doc_syntax(char *str)
 		if (str[i] == '<' && str[i + 1] == '<')
 		{
 			is_doc = 1;
-			if (doc_syntax_check(str, len, i + 2, -1) == -1)
+			if (doc_syntax_check(str, len, -1) == -1)
 				return (-1);
 			return (is_doc);
 		}

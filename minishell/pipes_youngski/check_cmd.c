@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 16:03:57 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/14 20:22:34 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 21:28:31 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int	find_cmd(char **path, char *path_cmd)
 int	check_command(char **path, char *cmd)
 {
 	char		*path_cmd;
-	struct stat	file_info;
 
 	is_file_directory(cmd);
 	if (access(cmd, X_OK) != -1)

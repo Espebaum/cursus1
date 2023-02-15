@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/15 20:33:23 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 21:28:24 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,12 @@ int	read_env(char **s, t_str *buf, char **envp, char **temp)
 	t_str	*env;
 	char	*g_str;
 	char	*meta_str;
-	char	*t;
 
 	env = make_str();
 	g_str = ft_itoa(g_exit_code);
 	if (see_next_word_null(s, &buf) == 1)
 		return (1);
-	if (see_next_word_meta(s, &buf, &env, g_str) == 1)
+	if (see_next_word_meta(s, &buf, g_str) == 1)
 		return (1);
 	while (!is_word_end(*(++(*s))) && **s != '\"')
 	{

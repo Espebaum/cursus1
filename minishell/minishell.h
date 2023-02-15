@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/15 20:31:07 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 21:30:41 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,17 +125,16 @@ int		pipe_split(int *i, int *count, char *line_temp, char *ret);
 int		get_doc_count(char **doc_str);
 int		make_inside_char_double(char *line_temp, char *ret);
 int		make_inside_char_single(char *line_temp, char *ret);
-char	**myfunc_split(char *line, int i, int j, int count);
 void	count_inside_char(int *i, int *count, char *line_temp, char my_char);
 void	count_pure_word(int *i, int *count, char *line_temp);
 int		count_space(char *line);
 int		make_pure_word(char *line_temp, char *ret);
-char	**myfunc_split(char *line, int i, int j, int count);
+char	**myfunc_split(char *line, int i, int j);
 void	init_split(int *i, int *j, char *line, char **line_temp);
 int		skip_space(int *i, char **line_temp);
 char	**call_next(char *line_temp, char **ret, char *line, int i);
 void	part_make_line(int *i, int *j, int *count, char **line_temp);
-void	doc_parent(int idx, int count, t_doc **doc, int *pipe_fd);
+void	doc_parent(int idx, t_doc **doc, int *pipe_fd);
 int		doc_child(int idx, int count, t_doc **doc, int *pipe_fd);
 void	make_doc_files(int count, t_doc *doc);
 int		open_file(char *filename, int idx, t_doc **doc, int *pipe_fd);
@@ -170,7 +169,7 @@ char	*flip_meta_chr(char *ret);
 char	*make_meta_chr(char *ret, int *size, char meta_chr);
 char	*check_meta_chr(t_str **env, int i, int len, int size);
 void	free_meta_str(char *meta_str, t_str *env, t_str *buf);
-int		see_next_word_meta(char **s, t_str **buf, t_str **env, char *g_str);
+int		see_next_word_meta(char **s, t_str **buf, char *g_str);
 t_token	*make_retcur(t_str *buf, t_token *cur, int is_fail);
 void	init_fail_and_num(int *is_fail, int *num);
 int		see_next_word_null(char **s, t_str **buf);
@@ -203,7 +202,7 @@ char	**copy_orders(char **t);
 char	**add_order(char **t, char *str, int flag);
 
 char	**get_limiter(char **doc_str, t_doc *doc);
-void	heredoc_file_make(int fd, char *limiter, int *pipe_fd);
+void	heredoc_file_make(int fd, char *limiter);
 void	close_all_opend_heredoc_fd(t_data *data, int count);
 int		free_pid_docs(int *pid, int *doc_fd);
 void	open_doc_file(t_data *data, char *t, int *i, int *k);
@@ -238,7 +237,7 @@ int		built_env(char **builtin, t_list *head);
 void	del_one(char *t, t_list *head_first);
 
 //exit function
-int		call_exit(char **builtin, t_list *head);
+int		call_exit(char **builtin);
 int		exit_num_arg_req(char *str);
 int		is_exit_code_num(char *str);
 int		non_exit_many_arg(void);

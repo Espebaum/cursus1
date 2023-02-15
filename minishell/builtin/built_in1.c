@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 16:43:30 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 20:30:49 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 21:30:30 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	built_unset(char **builtin, t_list *head)
 	return (1);
 }
 
-int	check_builtin_2(char **builtin, t_list *head, char **envp)
+int	check_builtin_2(char **builtin, t_list *head)
 {
 	int	result;
 
@@ -76,7 +76,7 @@ int	check_builtin_2(char **builtin, t_list *head, char **envp)
 	else if (!ft_strncmp(builtin[0], "exit", 5) || (ft_strnstr(builtin[0],
 				"exit", ft_strlen(builtin[0])) && access(builtin[0],
 				X_OK) != -1))
-		result = call_exit(builtin, head);
+		result = call_exit(builtin);
 	return (result);
 }
 
@@ -99,6 +99,6 @@ int	check_builtin(char **builtin, t_list *head, char **envp)
 				X_OK) != -1))
 		result = built_export(builtin, head);
 	else
-		result = check_builtin_2(builtin, head, envp);
+		result = check_builtin_2(builtin, head);
 	return (result);
 }

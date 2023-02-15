@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 18:19:56 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 21:38:39 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 21:27:39 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	doc_child(int idx, int count, t_doc **doc, int *pipe_fd)
 			continue ;
 		}
 		printf("limiter : %s\n", (*doc)->limiters[idx]);
-		heredoc_file_make(fd, (*doc)->limiters[idx], pipe_fd);
+		heredoc_file_make(fd, (*doc)->limiters[idx]);
 		idx++;
 		close(fd);
 	}
@@ -42,7 +42,7 @@ int	doc_child(int idx, int count, t_doc **doc, int *pipe_fd)
 }
 //31 printf("i : %d, limiter : %s\n\n", idx, doc->limiters[idx]);
 
-void	doc_parent(int idx, int count, t_doc **doc, int *pipe_fd)
+void	doc_parent(int idx, t_doc **doc, int *pipe_fd)
 {
 	char	*str;
 	int		len;
@@ -64,8 +64,6 @@ void	make_doc_files(int count, t_doc *doc)
 	int		pid;
 	int		pipe_fd[2];
 	int		status;
-	char	**temp;
-	int		asdf;
 
 	pipe(pipe_fd);
 	pid = fork();
@@ -77,7 +75,7 @@ void	make_doc_files(int count, t_doc *doc)
 		close(pipe_fd[1]);
 		waitpid(pid, &status, 0);
 		g_exit_code = WEXITSTATUS(status);
-		doc_parent(0, count, &doc, pipe_fd);
+		doc_parent(0, &doc, pipe_fd);
 		close(pipe_fd[0]);
 	}
 }

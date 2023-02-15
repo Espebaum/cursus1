@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:31:38 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/12 17:27:44 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 21:23:27 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ char	*ft_charjoin(char *s1, char s2)
 {
 	char	*strjoin;
 	size_t	len1;
-	size_t	len2;
 	char	*t;
 
 	t = (char *)malloc(sizeof(char) * 2);
