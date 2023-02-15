@@ -15,7 +15,10 @@
     "string_view": "c",
     "vector": "c",
     "get_next_line.h": "c",
-    "iterator": "c"
+    "iterator": "c",
+    "__bit_reference": "c",
+    "algorithm": "c",
+    "bitset": "c"
   },
   "editor.tabSize": 4,
   "editor.definitionLinkOpensInPeek": true,

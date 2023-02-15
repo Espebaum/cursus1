@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_y4.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 19:45:46 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/10 16:40:10 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 19:00:59 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,6 @@ int	redirection_count(int *i, int *count, char *line_temp)
 		return (1);
 	}
 	return (0);
-}
-
-void	count_pure_word(int *i, int *count, char *line_temp)
-{
-	if (redirection_count(i, count, line_temp))
-		return ;
-	if (line_temp[*i] == '|')
-	{
-		(*i)++;
-		(*count)++;
-		return ;
-	}
-	while (line_temp && line_temp[*i])
-	{
-		if (line_temp[*i] != ' ' && line_temp[*i] != '\'' && \
-				line_temp[*i] != '\"' && line_temp[*i] != '<' && \
-				line_temp[*i] != '>' && line_temp[*i] != '|')
-		{
-			(*i)++;
-			(*count)++;
-		}
-		else
-			return ;
-	}
 }
 
 void	part_make_line(int *i, int *j, int *count, char **line_temp)

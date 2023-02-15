@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 22:11:35 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 19:04:06 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,14 +123,13 @@ int		pipe_split(int *i, int *count, char *line_temp, char *ret);
 
 //heredoc functions
 int		get_doc_count(char **doc_str);
-void	make_inside_char_double(int *i, int *count, char *line_temp, char *ret);
-void	make_inside_char_single(int *i, int *count, char *line_temp, char *ret);
-void	make_pure_word(int *i, int *count, char *line_temp, char *ret);
+int		make_inside_char_double(char *line_temp, char *ret);
+int		make_inside_char_single(char *line_temp, char *ret);
 char	**myfunc_split(char *line, int i, int j, int count);
 void	count_inside_char(int *i, int *count, char *line_temp, char my_char);
 void	count_pure_word(int *i, int *count, char *line_temp);
 int		count_space(char *line);
-void	make_pure_word(int *i, int *count, char *line_temp, char *ret);
+int		make_pure_word(char *line_temp, char *ret);
 char	**myfunc_split(char *line, int i, int j, int count);
 void	init_split(int *i, int *j, char *line, char **line_temp);
 int		skip_space(int *i, char **line_temp);

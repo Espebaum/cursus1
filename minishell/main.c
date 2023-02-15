@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/15 17:56:37 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 18:39:45 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,3 @@ int	main(int argc, char **argv, char **envp)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (g_exit_code);
 }
-// (1) 부모 echo 실행시 출력 리다이렉션으로 안바뀌고 표준출력된
-// (2) ech"o hio" 세그폴트
-// printf("g_exit_code : %d\n", g_exit_code);
