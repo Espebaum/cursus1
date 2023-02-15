@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 22:06:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/15 20:34:47 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 20:56:03 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char	*check_meta_chr(t_str **env, int i, int len, int size)
 	char	*ret;
 	char	*str;
 	int		idx;
+	int		tmp;
 
 	idx = -1;
 	len = ft_strlen((*env)->s); // $HO..ME -> len 6
@@ -69,11 +70,12 @@ char	*check_meta_chr(t_str **env, int i, int len, int size)
 	while (++idx < i)
 		str[idx] = (*env)->s[idx]; // 환경변수 부분 채워줌
 	idx = -1;
+	tmp = i;
 	while (++idx < size) // 0 < 4
 		ret[idx] = (*env)->s[i++]; // ret : 환경변수 이후 부분 채워줌
 	clear_str(*env);
 	idx = -1;
-	while (++idx < i)
+	while (++idx < tmp)
 		push_str(*env, str[idx]);
 	free(str);
 	return (ret);
