@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 22:06:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 22:11:40 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 20:34:47 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,29 +49,32 @@ char	*make_meta_chr(char *ret, int *size, char meta_chr)
 
 char	*check_meta_chr(t_str **env, int i, int len, int size)
 {
-	char	*str;
 	char	*ret;
+	char	*str;
+	int		idx;
 
-	size = 1;
-	ret = ft_strdup("");
-	i = -1;
-	len = ft_strlen((*env)->s);
-	if (is_meta_chr((*env)->s[len - 1]) == 1)
+	idx = -1;
+	len = ft_strlen((*env)->s); // $HO..ME -> len 6
+	while ((*env)->s[i])
 	{
-		while (is_meta_chr((*env)->s[--len]) == 1)
-			ret = make_meta_chr(ret, &size, (*env)->s[len]);
+		if (is_meta_chr((*env)->s[i++]) != 1)
+			if (is_meta_chr((*env)->s[i]) == 1)
+				break ; // i 2
 	}
-	else
-		return (NULL);
-	ret = flip_meta_chr(ret);
-	str = (char *)malloc(sizeof(char) * (len + 1));
-	str[len] = '\0';
-	while (++i < len + 1)
-		str[i] = (*env)->s[i];
+	size = len - i; // size 4
+	str = (char *)malloc(sizeof(char) * (i + 1)); //3칸
+	str[i] = '\0';
+	ret = (char *)malloc(sizeof(char) * (size + 1)); //5칸
+	ret[size] = '\0'; // ret[4] NULL
+	while (++idx < i)
+		str[idx] = (*env)->s[idx]; // 환경변수 부분 채워줌
+	idx = -1;
+	while (++idx < size) // 0 < 4
+		ret[idx] = (*env)->s[i++]; // ret : 환경변수 이후 부분 채워줌
 	clear_str(*env);
-	i = -1;
-	while (++i < len + 1)
-		push_str(*env, str[i]);
+	idx = -1;
+	while (++idx < i)
+		push_str(*env, str[idx]);
 	free(str);
 	return (ret);
 }

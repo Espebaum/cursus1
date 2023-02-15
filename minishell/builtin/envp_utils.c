@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 22:56:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/15 18:39:45 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 20:43:52 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ t_list	*init_env_list(char **env, t_list **head)
 		t++;
 	}
 	free(str);
-	free(temp);
 	return (*head);
 }
 
@@ -79,22 +78,10 @@ char	**make_envp_arr(t_list *head)
 	temp = head;
 	while (temp)
 	{
-		printf("key : %s\nvalue : %s\n", temp->key, temp->value);
+		i++;
 		temp = temp->next;
 	}
-	temp = head;
-	while (temp)
-	{
-		if (!temp)
-			break ;
-		i++;
-		if (!(temp->next))
-			temp = temp->next;
-		else
-			break ;
-	}
-	printf("i : %d\n", i);
-	ret = (char **)malloc(sizeof(char *) * i + 1);
+	ret = (char **)malloc(sizeof(char *) * (i + 1));
 	ret[i] = 0;
 	i = 0;
 	while (head)

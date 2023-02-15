@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/15 18:39:45 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 20:35:28 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ int	main(int argc, char **argv, char **envp)
 			}
 		}
 		free(line);
+		// system("leaks a.out");
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (g_exit_code);
