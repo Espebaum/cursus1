@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 19:57:00 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/12 18:29:44 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 17:55:53 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,27 +47,24 @@ int	check_rules(int *type_arr, int len)
 	if (rule_pipe(type_arr, len) == -1
 		|| rule_redirection(type_arr, len) == -1
 		|| rule_error(type_arr, len) == -1)
+	{
+		free(type_arr);
 		return (-1);
+	}
+	free(type_arr);
 	return (0);
 }
 
-int	*make_type_arr(t_token *head, int *token_len)
+int	*make_type_arr(t_token *head, int token_len)
 {
 	t_token	*temp;
 	int		idx;
 	int		*type_arr;
 
 	idx = -1;
-	*token_len = -1;
-	temp = head;
-	while (temp)
-	{
-		(*token_len)++;
-		temp = temp->next;
-	}
 	temp = head->next;
-	type_arr = (int *) malloc(sizeof(int) * (*token_len));
-	while (++idx < *token_len)
+	type_arr = (int *) malloc(sizeof(int) * (token_len));
+	while (++idx < token_len)
 	{
 		type_arr[idx] = temp->type;
 		temp = temp->next;
@@ -81,9 +78,15 @@ int	check_syntax(t_token *head)
 	int		*type_arr;
 	t_token	*temp;
 
-	temp = head;
+	temp = head->next;
 	token_len = 0;
-	type_arr = make_type_arr(head, &token_len);
+	while (temp)
+	{
+		token_len++;
+		temp = temp->next;
+	}
+	type_arr = make_type_arr(head, token_len);
+	temp = head;
 	while (temp)
 	{
 		temp->cmds = get_cmds_num(type_arr, token_len);
