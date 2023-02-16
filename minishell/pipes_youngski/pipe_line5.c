@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 19:58:12 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 17:40:14 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 18:39:54 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char	**keep_execve_chd(t_data data, t_token **head, char **t, int *cmd_flag)
 	struct stat	file_info;
 
 	cmd = (*head)->str;
+	printf("%s\n", cmd);
 	lstat(cmd, &file_info);
 	if (cmd != NULL && cmd[0] != '\0')
 	{

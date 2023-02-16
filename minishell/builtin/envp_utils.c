@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 22:56:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/16 17:54:43 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 18:36:57 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ t_list	*init_env_list(char **env, t_list **head)
 			break ;
 		temp = ft_lstnew(str[0], str[1]);
 		ft_lstadd_back(head, temp);
-		free(str);
 		t++;
 	}
+	free(str);
 	return (*head);
 }
 

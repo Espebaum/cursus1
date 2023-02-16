@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 16:03:57 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/16 17:35:00 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 18:39:12 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	check_command(char **path, char *cmd)
 {
 	char		*path_cmd;
 
+	printf("%s\n", cmd);
 	is_file_directory(cmd);
 	if (access(cmd, X_OK) != -1)
 		return (1);
