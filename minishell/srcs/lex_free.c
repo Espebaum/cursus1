@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 15:52:55 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 20:22:26 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 21:01:17 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	free_str(t_str *str)
 {
 	free(str->s);
 	free(str);
+	str = 0;
 }
 
 void	clear_str(t_str *str)

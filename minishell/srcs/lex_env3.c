@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 22:06:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 20:31:42 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 20:58:36 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,15 @@ void	free_meta_str(char *meta_str, t_str **env, t_str *buf)
 		while (meta_str[++i])
 			push_str(buf, meta_str[i]);
 	if (meta_str)
+	{
 		free(meta_str);
-	if ((*env)->s)
+		meta_str = 0;
+	}
+	if (env && *env && (*env)->s)
+	{
 		free_str(*env);
+		*env = 0;
+	}
 }
 
 int	see_next_word_meta(char **s, t_str **buf, char *g_str)

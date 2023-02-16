@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 20:43:16 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 21:00:55 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	read_word_dquote(char **s, t_str *buf, char **envp)
 			read_env(s, buf, temp);
 		else
 			push_str(buf, *((*s)++));
+		free_spl(temp);
 	}
 	if (**s != '\"')
 		return (1);
