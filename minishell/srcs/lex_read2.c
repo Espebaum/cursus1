@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 22:08:28 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 22:11:38 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 16:47:56 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@ int	see_next_word_null(char **s, t_str **buf)
 		return (0);
 }
 
-void	is_g_exit_code(char **s, t_str **buf, char *g_str, int i)
+int	is_g_exit_code(char **s, t_str **buf, char *g_str, int i)
 {
 	while (g_str[++i])
 		push_str(*buf, g_str[i]);
 	(*s)++;
 	(*s)++;
+	return (1);
 }
 
 void	push_2str(t_str **buf, char **s)

@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 15:25:53 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 16:48:23 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ int		see_next_word_meta(char **s, t_str **buf, char *g_str);
 t_token	*make_retcur(t_str *buf, t_token *cur, int is_fail);
 void	init_fail_and_num(int *is_fail, int *num);
 int		see_next_word_null(char **s, t_str **buf);
-void	is_g_exit_code(char **s, t_str **buf, char *g_str, int i);
+int		is_g_exit_code(char **s, t_str **buf, char *g_str, int i);
 void	push_2str(t_str **buf, char **s);
 t_token	*get_rid_null_node(t_token *cur);
 
