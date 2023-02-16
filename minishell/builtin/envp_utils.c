@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 22:56:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/16 15:30:37 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 16:20:36 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	**make_envp_arr(t_list *head)
 
 	i = 0;
 	temp = head;
-	while (temp)
+	while (temp->next)
 	{
 		i++;
 		temp = temp->next;

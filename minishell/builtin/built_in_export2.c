@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 20:25:59 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 15:32:27 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 16:34:55 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,15 @@ void	make_env(char *t, t_list **head)
 			continue ;
 		}
 		else if (*t != '=' && flag == 0)
+		{
 			key[i++] = *t;
+			key[i] = 0;
+		}
 		else if (flag == 1)
+		{
 			value[i++] = *t;
+			value[i] = 0;
+		}
 		t++;
 	}
 	new_value(head, key, value);
