@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 13:48:47 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 22:10:44 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 22:31:00 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,14 @@ void	init_fd(t_data *data)
 
 int	init_data(t_data *data, t_doc doc, char **envp, t_token *head)
 {
-	if (data->path)
-		free_spl(data->path);
+	char	**temp;
+
+	temp = deep_copy_env(envp);
+	// printf("data->path[0] : %s", data->path[0]);
+	// if (data->path[0] != NULL)
+	// 	free_spl(data->path);
 	data->path = NULL;
-	data->path = get_path(envp);
+	data->path = get_path(temp);
 	data->envp = envp;
 	if (head->cmds != 0)
 		data->pid = (int *)malloc(sizeof(int) * head->cmds);
@@ -68,5 +72,6 @@ int	init_data(t_data *data, t_doc doc, char **envp, t_token *head)
 	if (!(data->pid))
 		return (1);
 	data->doc_name = doc.name;
+	free_spl(temp);
 	return (0);
 }
