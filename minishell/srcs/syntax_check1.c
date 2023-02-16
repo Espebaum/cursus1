@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 19:57:00 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 15:24:56 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 15:41:52 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	rule_pipe(int *type_arr, int len)
 {
 	int		i;
 
+	printf("len : %d\n", len);
 	if (type_arr[0] == T_PIPE || type_arr[len - 1] == T_PIPE)
 		return (-1);
 	i = 0;
@@ -47,10 +48,7 @@ int	check_rules(int *type_arr, int len)
 	if (rule_pipe(type_arr, len) == -1
 		|| rule_redirection(type_arr, len) == -1
 		|| rule_error(type_arr, len) == -1)
-	{
-		free(type_arr);
 		return (-1);
-	}
 	free(type_arr);
 	return (0);
 }

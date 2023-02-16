@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 13:48:47 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/15 22:45:17 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 15:44:41 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ int	init_data(t_data *data, t_doc doc, char **envp, t_token *head)
 {
 	data->path = get_path(envp);
 	data->envp = envp;
-	data->pid = (int *)malloc(sizeof(int) * head->cmds);
+	if (head->cmds != 0)
+		data->pid = (int *)malloc(sizeof(int) * head->cmds);
+	else
+		data->pid = NULL;
 	if (!(data->pid))
 		return (1);
 	data->doc_name = doc.name;

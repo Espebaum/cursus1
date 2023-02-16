@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:14:14 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 15:24:38 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 15:34:34 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	**deep_copy_env(char **envp)
 	while (envp[++i])
 		;
 	cp_envp = (char **)malloc(sizeof(char *) * (i + 1));
-	while (j < i)
+	while (j < i - 1)
 	{
 		cp_envp[j] = ft_strdup(envp[j]);
 		j++;
