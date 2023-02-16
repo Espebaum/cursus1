@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 16:48:23 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 20:31:54 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ t_token	*push_token(int type, t_str *str, t_token *prev);
 void	clear_str(t_str *str);
 void	resize_str(t_str *str);
 void	free_str(t_str *str);
+void	free_spl(char **temp);
 void	clear_str(t_str *str);
 int		is_word_end(char s);
 int		is_line_end(char s);
@@ -159,7 +160,7 @@ void	free_token(t_token *cur);
 t_token	*read_pipe_redir(char **s, t_token *cur, t_str *buf);
 t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp);
 char	*conv_env(char *name);
-int		read_env(char **s, t_str *buf, char **envp, char **temp);
+int		read_env(char **s, t_str *buf, char **temp);
 int		is_env_char(char s);
 int		get_env_num(char *envp);
 int		check_all_dollar(t_str **buf, char **str);
@@ -169,7 +170,7 @@ int		is_meta_chr(char c);
 char	*flip_meta_chr(char *ret);
 char	*make_meta_chr(char *ret, int *size, char meta_chr);
 char	*check_meta_chr(t_str **env, int i, int len, int size);
-void	free_meta_str(char *meta_str, t_str *env, t_str *buf);
+void	free_meta_str(char *meta_str, t_str **env, t_str *buf);
 int		see_next_word_meta(char **s, t_str **buf, char *g_str);
 t_token	*make_retcur(t_str *buf, t_token *cur, int is_fail);
 void	init_fail_and_num(int *is_fail, int *num);

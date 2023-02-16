@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 17:23:37 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 20:43:16 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	read_word_dquote(char **s, t_str *buf, char **envp)
 	{
 		temp = deep_copy_env(envp);
 		if (**s == '$')
-			read_env(s, buf, temp, 0);
+			read_env(s, buf, temp);
 		else
 			push_str(buf, *((*s)++));
 	}
@@ -42,7 +42,7 @@ int	read_word_dquote(char **s, t_str *buf, char **envp)
 	return (0);
 }
 
-int	read_env(char **s, t_str *buf, char **envp, char **temp)
+int	read_env(char **s, t_str *buf, char **temp)
 {
 	t_str	*env;
 	char	*g_str;
@@ -51,9 +51,17 @@ int	read_env(char **s, t_str *buf, char **envp, char **temp)
 	env = make_str();
 	g_str = ft_itoa(g_exit_code);
 	if (see_next_word_null(s, &buf) == 1)
+	{
+		free(g_str);
+		free_str(env);
 		return (1);
+	}
 	if (see_next_word_meta(s, &buf, g_str) == 1)
+	{
+		free(g_str);
+		free_str(env);
 		return (1);
+	}
 	(*s)++;
 	while (!is_word_end(**s) && **s != '\"')
 	{
@@ -63,12 +71,13 @@ int	read_env(char **s, t_str *buf, char **envp, char **temp)
 		(*s)++;
 	}
 	meta_str = check_meta_chr(&env, 0, 0, 0);
-	temp = deep_copy_env(envp);
 	if (make_env_buf(&buf, &env, temp, meta_str) == 0)
+	{
+		free(g_str);
 		return (0);
-	free_meta_str(meta_str, env, buf);
+	}
+	free_meta_str(meta_str, &env, buf);
 	free(g_str);
-	free(temp);
 	return (1);
 }
 
@@ -76,20 +85,24 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 {
 	int		is_fail;
 	int		num;
+	char	**temp;
 
 	init_fail_and_num(&is_fail, &num);
 	while (!is_word_end(**s))
 	{
 		if (**s == '$')
 		{
-			if (read_env(s, buf, envp, 0) == 0)
+			temp = deep_copy_env(envp);
+			if (read_env(s, buf, temp) == 0)
 			{
 				if (buf->s[0] != '\0')
 					push_token(T_WORD, buf, cur);
 				else
 					buf->null_flag = 1;
+				free_spl(temp);
 				return (cur);
 			}
+			free_spl(temp);
 		}
 		else if (**s == '\'')
 			is_fail |= read_word_squote(s, buf);

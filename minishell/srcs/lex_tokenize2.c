@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:33:41 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 19:15:14 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 19:40:14 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_token	*copy_token(t_token *cur)
 	temp->null_flag = cur->null_flag;
 	temp->next = cur->next;
 	temp->prev = cur->prev;
-	temp->str = cur->str;
+	temp->str = ft_strdup(cur->str);
 	temp->type = cur->type;
 	return (temp);
 }

@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 22:06:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 16:58:17 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 20:31:42 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	*check_meta_chr(t_str **env, int i, int len, int size)
 	return (ret);
 }
 
-void	free_meta_str(char *meta_str, t_str *env, t_str *buf)
+void	free_meta_str(char *meta_str, t_str **env, t_str *buf)
 {
 	int	i;
 
@@ -101,8 +101,8 @@ void	free_meta_str(char *meta_str, t_str *env, t_str *buf)
 			push_str(buf, meta_str[i]);
 	if (meta_str)
 		free(meta_str);
-	if (env->s)
-		free_str(env);
+	if ((*env)->s)
+		free_str(*env);
 }
 
 int	see_next_word_meta(char **s, t_str **buf, char *g_str)

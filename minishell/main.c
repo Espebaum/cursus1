@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 18:54:48 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 20:22:05 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,23 @@ int	doc_check(t_cover *cover, char *line)
 //doc -> 2 히어독인데 Ctrl C
 //doc -> 3 히어독인데 Ctrl D
 
+int	is_head_null(t_cover *cover)
+{
+	t_token	*temp;
+
+	temp = cover->head->next;
+	if (temp == NULL)
+	{
+		free_token(cover->head);
+		g_exit_code = 0;
+		return (1);
+	}
+	return (0);
+}
+
 int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 {
 	int		doc;
-	t_token	*temp;
 
 	doc = doc_check(cover, line);
 	if (doc == -1)
@@ -78,8 +91,7 @@ int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 	else if (doc == 3)
 		return (-1);
 	cover->head = go_tokenize(line, envp, cover->head);
-	temp = cover->head->next;
-	if (temp == NULL)
+	if (is_head_null(cover) == 1)
 		return (g_exit_code);
 	if (check_syntax(cover->head) == -1)
 		return (-1);
@@ -87,8 +99,7 @@ int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 	if (cover->head->cmds == 1)
 		if (do_builtin(cover, head, envp) == -1)
 			return (-1);
-	if (temp != NULL)
-		g_exit_code = pipe_line(*(cover->data), cover->head, *cover, head);
+	g_exit_code = pipe_line(*(cover->data), cover->head, *cover, head);
 	free_token(cover->head);
 	set_signal(SHE, SHE);
 	return (g_exit_code);
