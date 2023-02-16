@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 13:48:47 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 21:04:22 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 22:10:44 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ t_cover	*init_cover(t_cover *cover)
 	cover->data = (t_data *) malloc(sizeof(t_data));
 	cover->doc = (t_doc *) malloc(sizeof(t_doc));
 	cover->cp_stdin = dup(STDIN_FILENO);
-	cover->builtin = (char **)malloc(sizeof(char *));
-	cover->builtin[0] = 0;
 	return (cover);
 }
 
@@ -58,6 +56,9 @@ void	init_fd(t_data *data)
 
 int	init_data(t_data *data, t_doc doc, char **envp, t_token *head)
 {
+	if (data->path)
+		free_spl(data->path);
+	data->path = NULL;
 	data->path = get_path(envp);
 	data->envp = envp;
 	if (head->cmds != 0)

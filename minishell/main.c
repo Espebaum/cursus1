@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 21:04:49 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 22:07:40 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	do_builtin(t_cover *cover, t_list *head, char **envp)
 
 	o_fd = dup(1);
 	cover->temp = cover->head;
+	if (cover->builtin)
+		free_spl(cover->builtin);
 	cover->builtin = read_cmd(cover->data, &(cover->temp), \
 	&(cover->doc->zero));
 	dup_pipes(NULL, cover->data->io_fd, cover->data);
@@ -118,6 +120,7 @@ int	main(int argc, char **argv, char **envp)
 	line = NULL;
 	cover = NULL;
 	init_env_list(envp, &head);
+	envp = make_envp_arr(head);
 	cover = init_cover(cover);
 	tcgetattr(STDIN_FILENO, &term);
 	init_prompt_sig(argc, argv);
@@ -127,9 +130,9 @@ int	main(int argc, char **argv, char **envp)
 		line = init_line(line);
 		if (*line != '\0' && !is_str_space(line))
 			handle_line(line, cover, envp, head);
+		free_spl(envp);
 		envp = make_envp_arr(head);
 		free(line);
-		// system("leaks a.out");
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (g_exit_code);
