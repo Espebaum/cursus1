@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 20:19:39 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/15 21:38:41 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 15:26:51 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,16 @@
 
 int	env_error_check(char *key)
 {
-	char	*temp;
 	int		i;
 
-	temp = NULL;
 	if (!(key))
 		return (1);
 	i = 0;
 	if (key && key[0] == '=')
 		return (1);
-	while (temp[i] && temp[i] != '=')
+	while (key[i] && key[i] != '=')
 	{
-		if (ft_isalpha(temp[i]) || temp[i] == '_')
+		if (ft_isalpha(key[i]) || key[i] == '_')
 			;
 		else
 			return (1);
@@ -45,6 +43,7 @@ int	export_parsing(t_list **head, char **t)
 	int	ret;
 
 	init_export_parsing(&ret, t);
+	t++;
 	while (*t)
 	{
 		if (env_error_check(*t))
@@ -90,11 +89,6 @@ void	print_export(t_list *head)
 
 int	built_export(char **builtin, t_list *head)
 {
-	char	**t;
-
-	t = NULL;
-	if (!t)
-		return (0);
 	if (!builtin[1])
 	{
 		print_export(head);

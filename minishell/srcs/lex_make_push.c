@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:24:14 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/15 20:46:17 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 15:02:12 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_str	*make_str(void)
 	ret->len = 0;
 	ret->s = (char *) malloc(sizeof(char) * ret->capacity);
 	ret->s[0] = '\0';
+	ret->null_flag = 0;
 	return (ret);
 }
 
@@ -43,7 +44,7 @@ t_token	*make_token(void)
 	t->str = 0;
 	t->prev = 0;
 	t->next = 0;
-	t->flag = 0;
+	t->null_flag = 0;
 	return (t);
 }
 
@@ -57,6 +58,8 @@ t_token	*push_token(int type, t_str *buf, t_token *prev)
 	clear_str(buf);
 	prev->next = next;
 	next->prev = prev;
+	if (buf->null_flag == 1)
+		next->null_flag = 1;
 	return (next);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/15 21:30:41 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 15:25:53 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_str
 {
 	int		len;
 	int		capacity;
+	int		null_flag;
 	char	*s;
 }	t_str;
 
@@ -56,7 +57,7 @@ typedef struct s_token
 	char			*str;
 	struct s_token	*prev;
 	struct s_token	*next;
-	int				flag;
+	int				null_flag;
 }	t_token;
 
 typedef struct s_doc
@@ -175,6 +176,7 @@ void	init_fail_and_num(int *is_fail, int *num);
 int		see_next_word_null(char **s, t_str **buf);
 void	is_g_exit_code(char **s, t_str **buf, char *g_str, int i);
 void	push_2str(t_str **buf, char **s);
+t_token	*get_rid_null_node(t_token *cur);
 
 //execute function
 char	**keep_execve_par(t_token **head, char **builtin, int *cmd_flag);

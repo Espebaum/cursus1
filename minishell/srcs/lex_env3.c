@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 22:06:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/15 22:51:11 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 15:28:05 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,22 @@ char	*make_meta_chr(char *ret, int *size, char meta_chr)
 
 char	*check_meta_chr(t_str **env, int i, int len, int size)
 {
+	char	*tmp_str;
 	char	*ret;
 	char	*str;
 	int		idx;
 	int		tmp;
 
 	idx = -1;
+	tmp_str = (*env)->s;
+	while (*tmp_str)
+	{
+		if (is_meta_chr(*tmp_str) == 1)
+			break ;
+		tmp_str++;
+		if (*tmp_str == '\0')
+			return (NULL);
+	}
 	len = ft_strlen((*env)->s); // $HO..ME -> len 6
 	while ((*env)->s[i])
 	{

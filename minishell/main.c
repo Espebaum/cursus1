@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/15 21:45:19 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 14:51:50 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int	doc_check(t_cover *cover, char *line)
 
 int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 {
-	int	doc;
+	int		doc;
+	t_token	*temp;
 
 	doc = doc_check(cover, line);
 	if (doc == -1)
@@ -83,7 +84,9 @@ int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 	if (cover->head->cmds == 1)
 		if (do_builtin(cover, head, envp) == -1)
 			return (-1);
-	g_exit_code = pipe_line(*(cover->data), cover->head, *cover, head);
+	temp = cover->head->next;
+	if (temp != NULL)
+		g_exit_code = pipe_line(*(cover->data), cover->head, *cover, head);
 	free_token(cover->head);
 	set_signal(SHE, SHE);
 	return (g_exit_code);

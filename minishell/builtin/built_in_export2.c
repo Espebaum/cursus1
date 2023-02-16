@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 20:25:59 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 20:32:39 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 15:27:13 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	init_make_env(int *i, char **key, char **value, char *t)
 	len = ft_strlen(t);
 	*i = 0;
 	*key = (char *)malloc(sizeof(char) * (len + 1));
+	*key[0] = 0;
 	if (ft_strchr(t, '='))
 	{
 		*value = (char *)malloc(sizeof(char) * (len + 1));
@@ -74,7 +75,6 @@ void	init_make_env(int *i, char **key, char **value, char *t)
 	}
 	else
 		*value = 0;
-	*key[0] = 0;
 }
 
 void	make_env(char *t, t_list **head)

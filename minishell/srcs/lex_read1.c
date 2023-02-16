@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/15 23:00:44 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 15:28:06 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	read_env(char **s, t_str *buf, char **envp, char **temp)
 		return (1);
 	if (see_next_word_meta(s, &buf, g_str) == 1)
 		return (1);
+	(*s)++;
 	while (!is_word_end(**s) && **s != '\"')
 	{
 		if (**s == '$')
@@ -85,6 +86,8 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 			{
 				if (buf->s[0] != '\0')
 					push_token(T_WORD, buf, cur);
+				else
+					buf->null_flag = 1;
 				return (cur);
 			}
 		}
@@ -107,8 +110,6 @@ t_token	*read_pipe_redir(char **s, t_token *cur, t_str *buf)
 	{
 		push_str(buf, *((*s)++));
 		cur = push_token(T_REDIRECT, buf, cur);
-		if (*(*(s) - 1) == '<')
-			cur->flag = 1;
 	}
 	else
 	{
