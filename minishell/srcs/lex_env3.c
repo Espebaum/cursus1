@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 22:06:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/15 21:27:52 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 22:51:11 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,15 +108,19 @@ int	see_next_word_meta(char **s, t_str **buf, char *g_str)
 				push_str(*buf, *(*s)++);
 			return (1);
 		}
-		else if (*((*s)++ + 1) == '\"')
+		else if (*((*s) + 1) == '\"')
+		{
+			(*s)++;
 			return (1);
+		}
 		else
 			push_2str(buf, s);
-		while (1)
+		while (**s)
 		{
-			if (**s == '$' || **s == '\0')
+			if (**s == '\0' || **s == '$')
 				return (1);
-			push_str(*buf, (*(*s)++));
+			push_str(*buf, (**s));
+			(*s)++;
 		}
 	}
 	return (0);

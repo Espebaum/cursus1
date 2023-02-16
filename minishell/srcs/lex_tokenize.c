@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:14:14 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/15 21:22:22 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 21:54:50 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ t_token	*tokenize(char *s, char **envp)
 		else
 			cur = read_word(&s, cur, buf, temp);
 	}
+	// get_rid_null_node();
 	while (cur->prev)
 		cur = cur->prev;
 	free(temp);

@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 16:03:57 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/15 21:28:31 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/15 21:57:19 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ int	is_file_directory(char *cmd)
 {
 	struct stat	file_info;
 
+	printf("cmd : %s\n", cmd);
 	if (ft_strncmp(cmd, "./", 2) == 0 || ft_strncmp(cmd, "/", 1) == 0)
 	{
+		printf("asdf\n");
 		if (lstat(cmd, &file_info) < 0)
 			exit_error(cmd, 0, 1);
 		else if (S_ISDIR(file_info.st_mode))
