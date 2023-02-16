@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 14:07:24 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/12 17:28:28 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 17:46:20 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 char	*ft_charjoin(char *s1, char s2);
+void	ft_freeall(char **spl);
 
 #endif

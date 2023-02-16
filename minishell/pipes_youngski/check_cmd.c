@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 16:03:57 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/15 21:57:19 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 17:35:00 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	is_file_directory(char *cmd)
 	printf("cmd : %s\n", cmd);
 	if (ft_strncmp(cmd, "./", 2) == 0 || ft_strncmp(cmd, "/", 1) == 0)
 	{
-		printf("asdf\n");
 		if (lstat(cmd, &file_info) < 0)
 			exit_error(cmd, 0, 1);
 		else if (S_ISDIR(file_info.st_mode))
@@ -73,7 +72,13 @@ int	check_command(char **path, char *cmd)
 	if (access(cmd, X_OK) != -1)
 		return (1);
 	if (!path)
-		exit_error("missing path!", 0, 1);
+	{
+		ft_putstr_fd(cmd, 2);
+		write(2, ": ", 2);
+		ft_putstr_fd("No such file or directory\n", 2);
+		g_exit_code = 127;
+		exit (127);
+	}
 	path_cmd = ft_strjoin("/", cmd);
 	if (find_cmd(path, path_cmd) == 1)
 		return (1);

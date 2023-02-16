@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 16:43:30 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/15 21:30:30 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/16 17:00:32 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ int	builtin_check(char *str)
 		return (1);
 	if (!ft_strncmp("cd", str, 2) && str[2] == 2)
 		return (1);
-	if (!ft_strncmp("pwd", str, 4) && str[4] == 0)
+	if (!ft_strncmp("pwd", str, 4) && str[3] == 0)
 		return (1);
-	if (!ft_strncmp("export", str, 7) && str[7] == 0)
+	if (!ft_strncmp("export", str, 7) && str[6] == 0)
 		return (1);
-	if (!ft_strncmp("unset", str, 6) && str[6] == 0)
+	if (!ft_strncmp("unset", str, 6) && str[5] == 0)
 		return (1);
-	if (!ft_strncmp("env", str, 4) && str[4] == 0)
+	if (!ft_strncmp("env", str, 4) && str[3] == 0)
 		return (1);
-	if (!ft_strncmp("exit", str, 5) && str[5] == 0)
+	if (!ft_strncmp("exit", str, 5) && str[4] == 0)
 		return (1);
 	return (0);
 }
