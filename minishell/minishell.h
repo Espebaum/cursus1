@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 17:46:52 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 20:06:19 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ int		init_data(t_data *data, t_doc doc, char **envp, t_token *head);
 t_doc	*init_doc(t_doc *doc);
 int		is_path_gone(char **path);
 
-
 //syntax functions
 int		count_s_flag(int *in_squote, int *in_dquote, int *s_flag);
 int		count_d_flag(int *in_squote, int *in_dquote, int *d_flag);
@@ -129,7 +128,7 @@ int		get_doc_count(char **doc_str);
 int		make_inside_char_double(char *line_temp, char *ret);
 int		make_inside_char_single(char *line_temp, char *ret);
 void	count_inside_char(int *i, int *count, char *line_temp, char my_char);
-int 	count_pure_word(char *line_temp);
+int		count_pure_word(char *line_temp);
 int		count_space(char *line);
 int		make_pure_word(char *line_temp, char *ret);
 char	**myfunc_split(char *line, int i, int j);
@@ -256,7 +255,7 @@ int		built_cd(char **t, char **envp);
 int		built_echo(char **t);
 
 //envp utils functions
-void	ft_lstadd_back(t_list **lst, t_list *new);
+void	ft_lstadd_back(t_list **lst, t_list *newlst);
 t_list	*ft_lstnew(void *key, void *value);
 
 #endif

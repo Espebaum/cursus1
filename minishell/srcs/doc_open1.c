@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:28:36 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 17:16:07 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 20:03:37 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	heredoc_file_make(int fd, char *limiter)
 	while (1)
 	{
 		line = readline("here_doc> ");
-		if (((ft_strncmp(line, limiter, ft_strlen(limiter) + 1) == 0) && line[0] != 0)
+		if (((ft_strncmp(line, limiter, ft_strlen(limiter) + 1) == 0) \
+					&& line[0] != 0)
 			|| !line)
 		{
 			free(line);

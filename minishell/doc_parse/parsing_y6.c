@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 13:47:01 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/17 15:38:54 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 20:04:42 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ char	**myfunc_split(char *line, int i, int j)
 	ret[count_space(line_temp)] = 0;
 	index = 0;
 	count_i = 0;
-	/////////////////////////////
 	while (line_temp && *line_temp != 0)
 	{
 		index = 0;
@@ -131,7 +130,6 @@ char	**myfunc_split(char *line, int i, int j)
 			j++;
 		}
 	}
-	//ret[j] = (char *)malloc(sizeof(char) * (count_i + 1));
 	ret[j] = 0;
 	return (call_next(line_temp, ret, line, 0));
 }

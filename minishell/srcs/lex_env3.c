@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 22:06:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 20:58:36 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 20:02:02 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,24 +65,24 @@ char	*check_meta_chr(t_str **env, int i, int len, int size)
 		if (*tmp_str == '\0')
 			return (NULL);
 	}
-	len = ft_strlen((*env)->s); // $HO..ME -> len 6
+	len = ft_strlen((*env)->s);
 	while ((*env)->s[i])
 	{
 		if (is_meta_chr((*env)->s[i++]) != 1)
 			if (is_meta_chr((*env)->s[i]) == 1)
-				break ; // i 2
+				break ;
 	}
-	size = len - i; // size 4
-	str = (char *)malloc(sizeof(char) * (i + 1)); //3칸
+	size = len - i;
+	str = (char *)malloc(sizeof(char) * (i + 1));
 	str[i] = '\0';
-	ret = (char *)malloc(sizeof(char) * (size + 1)); //5칸
-	ret[size] = '\0'; // ret[4] NULL
+	ret = (char *)malloc(sizeof(char) * (size + 1));
+	ret[size] = '\0';
 	while (++idx < i)
-		str[idx] = (*env)->s[idx]; // 환경변수 부분 채워줌
+		str[idx] = (*env)->s[idx];
 	idx = -1;
 	tmp = i;
-	while (++idx < size) // 0 < 4
-		ret[idx] = (*env)->s[i++]; // ret : 환경변수 이후 부분 채워줌
+	while (++idx < size)
+		ret[idx] = (*env)->s[i++];
 	clear_str(*env);
 	idx = -1;
 	while (++idx < tmp)
