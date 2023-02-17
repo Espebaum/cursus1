@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 19:30:06 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/17 14:11:30 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/17 23:06:08 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,55 +30,12 @@ int	skip_space(int *i, char **line_temp)
 	return (0);
 }
 
-/*
-int	count_split_len(char **line_temp, int *i, int *count)
-{
-	if (!(*line_temp) && !(*line_temp)[*i])
-		return (1);
-	if ((*line_temp)[*i] != '\"' && *line_temp[*i] != '\'')
-		count_pure_word(i, count, line_temp[*i]);
-	else
-	{
-		if (*line_temp[*i] == '\'')
-			count_inside_char(i, count, line_temp[*i], '\'');
-		else if (*line_temp[*i] == '\"')
-			count_inside_char(i, count, line_temp[*i], '\"');
-	}
-	return (0);
-}
-*/
-/*
-void	count_inside_char_single(char *line_temp, char *ret)
-{
-	int	check_close;
-	int	count;
-
-	while (*ret)
-		ret++;
-	count = 0;
-	line_temp++;
-	check_close = 0;
-	while (*line_temp && check_close == 0)
-	{
-		if (*line_temp == '\'')
-		{
-			check_close = 1;
-			line_temp++;
-			break ;
-		}
-		line_temp++;
-		count++;
-	}
-	ret = (char *)malloc(sizeof(char) * (count + 1));
-}
-*/
 char	**call_next(char *line_temp, char **ret, char *line, int i)
 {
 	int		j;
 	char	*for_free;
 	int		count_i;
 	int		index;
-	int		asdf;
 
 	for_free = line_temp;
 	init_split(&i, &j, line, &line_temp);
@@ -107,8 +64,5 @@ char	**call_next(char *line_temp, char **ret, char *line, int i)
 		}
 	}
 	ret[j] = 0;
-	asdf = -1;
-	while (ret[++asdf])
-		printf("ret[%d] = %s\n", asdf, ret[asdf]);
 	return (ret);
 }

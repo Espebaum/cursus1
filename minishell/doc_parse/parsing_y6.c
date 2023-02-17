@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 13:47:01 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/17 20:04:42 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/17 23:07:59 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,17 @@ int	count_inside_char_single(char *line_temp)
 	return (count);
 }
 
-int	count_pure_word(char *line_temp)
+void	temp_count_plus_word(char **line_temp, int *count)
+{
+	(*line_temp)++;
+	(*count)++;
+}
+
+int	count_pure_word(char *line_temp, int count)
 {
 	int	sm_flag;
 	int	du_flag;
-	int	count;
 
-	count = 0;
 	init_pure_word(&sm_flag, &du_flag);
 	while (line_temp && *line_temp)
 	{
@@ -72,18 +76,15 @@ int	count_pure_word(char *line_temp)
 		{
 			if (*line_temp == '<')
 			{
-				line_temp++;
-				(count)++;
+				temp_count_plus_word(&line_temp, &count);
 			}
-			line_temp++;
-			(count)++;
+			temp_count_plus_word(&line_temp, &count);
 			return (count);
 		}
 		if (*line_temp && *line_temp != ' ' && *line_temp != '\''
 			&& *line_temp != '\"')
 		{
-			line_temp++;
-			(count)++;
+			temp_count_plus_word(&line_temp, &count);
 		}
 		else
 			return (count);
@@ -110,7 +111,7 @@ char	**myfunc_split(char *line, int i, int j)
 		while (*line_temp == ' ')
 			line_temp++;
 		if (*line_temp != '\"' && *line_temp != '\'')
-			index += count_pure_word(line_temp);
+			index += count_pure_word(line_temp, 0);
 		else if (*line_temp == '\'')
 			index += count_inside_char_single(line_temp);
 		else if (*line_temp == '\"')

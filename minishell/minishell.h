@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 23:00:15 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/17 23:07:42 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int		get_doc_count(char **doc_str);
 int		make_inside_char_double(char *line_temp, char *ret);
 int		make_inside_char_single(char *line_temp, char *ret);
 void	count_inside_char(int *i, int *count, char *line_temp, char my_char);
-int		count_pure_word(char *line_temp);
+int		count_pure_word(char *line_temp, int count);
 int		count_space(char *line);
 int		make_pure_word(char *line_temp, char *ret);
 char	**myfunc_split(char *line, int i, int j);
