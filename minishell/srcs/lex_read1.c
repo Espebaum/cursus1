@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 20:04:02 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/17 22:08:00 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,15 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 {
 	int		is_fail;
 	int		num;
+	char	**temp;
 
 	init_fail_and_num(&is_fail, &num);
 	while (!is_word_end(**s))
 	{
+		temp = envp;
 		if (**s == '$')
 		{
-			if (read_env(s, buf, envp) == 0)
+			if (read_env(s, buf, temp) == 0)
 			{
 				if (buf->s[0] != '\0')
 					push_token(T_WORD, buf, cur);
@@ -100,7 +102,7 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 		else if (**s == '\'')
 			is_fail |= read_word_squote(s, buf);
 		else if (**s == '\"')
-			is_fail |= read_word_dquote(s, buf, envp);
+			is_fail |= read_word_dquote(s, buf, temp);
 		else
 			push_str(buf, *((*s)++));
 	}

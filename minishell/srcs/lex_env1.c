@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:25:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 21:04:09 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 21:59:55 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 int	get_env_num(char *envp)
 {
 	int		cnt;
+	int		i;
 	char	*temp;
 
 	temp = envp;
+	i = 0;
 	cnt = 0;
 	if (temp[0] != '\0')
 	{
-		while (*temp != '=')
+		while (temp[i] != '=')
 		{
 			cnt++;
-			temp++;
+			i++;
 		}
 	}
 	return (cnt);
@@ -66,21 +68,20 @@ int	env_read(t_str **buf, t_str **env, char *g_str)
 int	make_env_buf(t_str **buf, t_str **env, char **envp, char *meta_str)
 {
 	int		i;
+	int		j;
 	int		env_num;
 
 	i = -1;
+	j = -1;
 	while (envp[++i])
 	{
 		env_num = get_env_num(envp[i]);
 		if (ft_strncmp((*env)->s, envp[i], ft_max(ft_strlen((*env)->s),
 					env_num)) == 0)
 		{
-			envp[i] += env_num + 1;
-			while (*envp[i] != '\0')
-			{
-				push_str((*buf), *envp[i]);
-				envp[i]++;
-			}
+			j += env_num + 1;
+			while (envp[i][++j] != '\0')
+				push_str((*buf), envp[i][j]);
 			return (1);
 		}
 	}

@@ -1,24 +1,6 @@
 {
   "files.associations": {
-    "minishell.h": "c",
-    "signal.h": "c",
-    "libft.h": "c",
-    "errno.h": "c",
-    "unistd.h": "c",
-    "readline.h": "c",
-    "history.h": "c",
-    "chrono": "c",
-    "unordered_map": "c",
-    "sstream": "c",
-    "array": "c",
-    "string": "c",
-    "string_view": "c",
-    "vector": "c",
-    "get_next_line.h": "c",
-    "iterator": "c",
-    "__bit_reference": "c",
-    "algorithm": "c",
-    "bitset": "c"
+    "minishell.h": "c"
   },
   "editor.tabSize": 4,
   "editor.definitionLinkOpensInPeek": true,
