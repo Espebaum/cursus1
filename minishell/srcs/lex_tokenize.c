@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:14:14 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 22:29:12 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 15:15:51 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	**deep_copy_env(char **envp)
 	while (envp[++i])
 		;
 	cp_envp = (char **)malloc(sizeof(char *) * (i + 1));
-	while (j < i - 1)
+	while (j < i)
 	{
 		cp_envp[j] = ft_strdup(envp[j]);
 		j++;
@@ -51,10 +51,12 @@ void	free_spl(char **temp)
 	int	i;
 
 	i = -1;
-	while (temp[++i])
+	while (temp && temp[++i])
 	{
 		free(temp[i]);
 		temp[i] = NULL;
+		if (temp[i + 1] == NULL)
+			break ;
 	}
 	free(temp);
 	temp = NULL;
@@ -73,14 +75,15 @@ t_token	*tokenize(char *s, char **envp)
 	buf = make_str();
 	while (*s != '\n' && *s)
 	{
-		temp = deep_copy_env(envp);
 		if (*s == '<' || *s == '>' || *s == '|')
 			cur = read_pipe_redir(&s, cur, buf);
 		else if (is_char_space(*s))
 			s++;
 		else
+		{
+			temp = deep_copy_env(envp);
 			cur = read_word(&s, cur, buf, temp);
-		free_spl(temp);
+		}
 	}
 	free_str(buf);
 	while (cur->prev)

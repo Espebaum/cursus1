@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 20:55:42 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 15:39:51 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int		get_doc_count(char **doc_str);
 int		make_inside_char_double(char *line_temp, char *ret);
 int		make_inside_char_single(char *line_temp, char *ret);
 void	count_inside_char(int *i, int *count, char *line_temp, char my_char);
-void	count_pure_word(int *i, int *count, char *line_temp);
+int 	count_pure_word(char *line_temp);
 int		count_space(char *line);
 int		make_pure_word(char *line_temp, char *ret);
 char	**myfunc_split(char *line, int i, int j);
@@ -139,6 +139,7 @@ void	doc_parent(int idx, t_doc **doc, int *pipe_fd);
 int		doc_child(int idx, int count, t_doc **doc, int *pipe_fd);
 void	make_doc_files(int count, t_doc *doc);
 int		open_file(char *filename, int idx, t_doc **doc, int *pipe_fd);
+void	init_pure_word(int *sm_flag, int *du_flag);
 
 //tokenize functions
 t_str	*make_str(void);

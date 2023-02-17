@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 16:03:57 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/16 18:39:12 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 15:31:44 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	is_file_directory(char *cmd)
 {
 	struct stat	file_info;
 
-	printf("cmd : %s\n", cmd);
 	if (ft_strncmp(cmd, "./", 2) == 0 || ft_strncmp(cmd, "/", 1) == 0)
 	{
 		if (lstat(cmd, &file_info) < 0)
@@ -68,12 +67,12 @@ int	check_command(char **path, char *cmd)
 {
 	char		*path_cmd;
 
-	printf("%s\n", cmd);
 	is_file_directory(cmd);
 	if (access(cmd, X_OK) != -1)
 		return (1);
 	if (!path)
 	{
+		printf("no path!\n");
 		ft_putstr_fd(cmd, 2);
 		write(2, ": ", 2);
 		ft_putstr_fd("No such file or directory\n", 2);

@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 18:19:56 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 20:16:09 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 15:13:57 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	doc_child(int idx, int count, t_doc **doc, int *pipe_fd)
 	g_exit_code = 0;
 	exit(g_exit_code);
 }
-//31 printf("i : %d, limiter : %s\n\n", idx, doc->limiters[idx]);
 
 void	doc_parent(int idx, t_doc **doc, int *pipe_fd)
 {
@@ -79,4 +78,3 @@ void	make_doc_files(int count, t_doc *doc)
 		close(pipe_fd[0]);
 	}
 }
-// printf("exit_code : %d\n", g_exit_code);

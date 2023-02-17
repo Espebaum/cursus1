@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 19:58:12 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 21:17:38 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 15:31:44 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ char	**keep_execve_par(t_token **head, char **builtin, int *cmd_flag)
 	ret = add_order(ret, cmd, cmd_flag[0]);
 	(*head) = (*head)->next;
 	cmd_flag[0] = 1;
-	free_spl(builtin);
 	return (ret);
 }
 
@@ -33,7 +32,6 @@ char	**keep_execve_chd(t_data data, t_token **head, char **t, int *cmd_flag)
 	struct stat	file_info;
 
 	cmd = (*head)->str;
-	printf("%s\n", cmd);
 	lstat(cmd, &file_info);
 	if (cmd != NULL && cmd[0] != '\0')
 	{
@@ -49,7 +47,6 @@ char	**keep_execve_chd(t_data data, t_token **head, char **t, int *cmd_flag)
 	ret = add_order(ret, cmd, cmd_flag[0]);
 	(*head) = (*head)->next;
 	cmd_flag[0] = 1;
-	free_spl(t);
 	return (ret);
 }
 

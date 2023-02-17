@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 19:30:06 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/16 16:56:37 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 14:11:30 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	count_split_len(char **line_temp, int *i, int *count)
 	return (0);
 }
 */
-
+/*
 void	count_inside_char_single(char *line_temp, char *ret)
 {
 	int	check_close;
@@ -71,28 +71,7 @@ void	count_inside_char_single(char *line_temp, char *ret)
 	}
 	ret = (char *)malloc(sizeof(char) * (count + 1));
 }
-
-char	**myfunc_split(char *line, int i, int j)
-{
-	char	**ret;
-	char	*line_temp;
-	int		index;
-
-	line_temp = line;
-	init_split(&i, &j, line, &line_temp);
-	ret = (char **)malloc(sizeof(char *) * (count_space(line_temp) + 1));
-	ret[count_space(line_temp)] = 0;
-	index = 0;
-	while (index < count_space(line_temp))
-	{
-		ret[index] = (char *)malloc(sizeof(char) * (1000));
-		ret[index][0] = 0;
-		ret[index + 1] = 0;
-		index++;
-	}
-	return (call_next(line_temp, ret, line, 0));
-}
-
+*/
 char	**call_next(char *line_temp, char **ret, char *line, int i)
 {
 	int		j;
@@ -125,11 +104,10 @@ char	**call_next(char *line_temp, char **ret, char *line, int i)
 				|| *(line_temp - 1) == '<'))
 		{
 			j++;
-			ret[j][0] = 0;
 		}
 	}
+	ret[j] = 0;
 	asdf = -1;
-	ret[j + 1] = 0;
 	while (ret[++asdf])
 		printf("ret[%d] = %s\n", asdf, ret[asdf]);
 	return (ret);

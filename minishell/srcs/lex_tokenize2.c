@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:33:41 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 22:09:43 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 15:13:37 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_token	*get_rid_null_node(t_token *cur)
 	cur = cur->next;
 	while (cur)
 	{
-		printf("flag : %d\n", cur->null_flag);
 		if (cur->null_flag == 0)
 		{
 			temp = copy_token(cur);

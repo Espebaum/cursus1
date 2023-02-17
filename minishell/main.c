@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 22:32:03 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 15:36:36 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ int	do_builtin(t_cover *cover, t_list *head, char **envp)
 
 	o_fd = dup(1);
 	cover->temp = cover->head;
-	// if (cover->builtin)
-	// 	free_spl(cover->builtin);
 	cover->builtin = read_cmd(cover->data, &(cover->temp), \
 	&(cover->doc->zero));
 	dup_pipes(NULL, cover->data->io_fd, cover->data);
@@ -38,6 +36,7 @@ int	do_builtin(t_cover *cover, t_list *head, char **envp)
 	{
 		dup2((*cover).cp_stdin, 0);
 		dup2(o_fd, 1);
+		free_spl(cover->builtin);
 		return (-1);
 	}
 	dup2((*cover).cp_stdin, 0);
@@ -81,6 +80,13 @@ int	is_head_null(t_cover *cover)
 	return (0);
 }
 
+int	is_path_gone(char **path)
+{
+	if (path && path[0] != NULL)
+		return (1);
+	return (0);
+}
+
 int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 {
 	int		doc;
@@ -101,10 +107,10 @@ int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 	if (cover->head->cmds == 1)
 		if (do_builtin(cover, head, envp) == -1)
 			return (-1);
-	free_spl(cover->builtin);
 	g_exit_code = pipe_line(*(cover->data), cover->head, *cover, head);
 	free_token(cover->head);
-	free_spl(cover->data->path);
+	if (is_path_gone(cover->data->path) == 0)
+		free_spl(cover->data->path);
 	set_signal(SHE, SHE);
 	return (g_exit_code);
 }

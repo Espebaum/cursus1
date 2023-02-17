@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 21:00:55 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 14:53:05 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,14 @@ int	read_word_squote(char **s, t_str *buf)
 
 int	read_word_dquote(char **s, t_str *buf, char **envp)
 {
-	char	**temp;
 
 	(*s)++;
 	while (!is_line_end(**s) && **s != '\"')
 	{
-		temp = deep_copy_env(envp);
 		if (**s == '$')
-			read_env(s, buf, temp);
+			read_env(s, buf, envp);
 		else
 			push_str(buf, *((*s)++));
-		free_spl(temp);
 	}
 	if (**s != '\"')
 		return (1);
@@ -86,24 +83,20 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 {
 	int		is_fail;
 	int		num;
-	char	**temp;
 
 	init_fail_and_num(&is_fail, &num);
 	while (!is_word_end(**s))
 	{
 		if (**s == '$')
 		{
-			temp = deep_copy_env(envp);
-			if (read_env(s, buf, temp) == 0)
+			if (read_env(s, buf, envp) == 0)
 			{
 				if (buf->s[0] != '\0')
 					push_token(T_WORD, buf, cur);
 				else
 					buf->null_flag = 1;
-				free_spl(temp);
 				return (cur);
 			}
-			free_spl(temp);
 		}
 		else if (**s == '\'')
 			is_fail |= read_word_squote(s, buf);
@@ -112,6 +105,7 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 		else
 			push_str(buf, *((*s)++));
 	}
+	free_spl(envp);
 	return (make_retcur(buf, cur, is_fail));
 }
 
