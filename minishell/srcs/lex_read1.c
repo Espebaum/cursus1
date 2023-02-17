@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 22:08:00 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 22:37:27 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,18 @@ int	read_word_dquote(char **s, t_str *buf, char **envp)
 	return (0);
 }
 
+int	see_next_word(char **s, t_str *env, char *g_str, t_str *buf)
+{
+	if (see_next_word_null(s, &buf) == 1 \
+			|| see_next_word_meta(s, &buf, g_str) == 1)
+	{
+		free(g_str);
+		free_str(env);
+		return (1);
+	}
+	return (0);
+}
+
 int	read_env(char **s, t_str *buf, char **temp)
 {
 	t_str	*env;
@@ -47,18 +59,8 @@ int	read_env(char **s, t_str *buf, char **temp)
 
 	env = make_str();
 	g_str = ft_itoa(g_exit_code);
-	if (see_next_word_null(s, &buf) == 1)
-	{
-		free(g_str);
-		free_str(env);
+	if (see_next_word(s, env, g_str, buf))
 		return (1);
-	}
-	if (see_next_word_meta(s, &buf, g_str) == 1)
-	{
-		free(g_str);
-		free_str(env);
-		return (1);
-	}
 	(*s)++;
 	while (!is_word_end(**s) && **s != '\"')
 	{
@@ -76,6 +78,18 @@ int	read_env(char **s, t_str *buf, char **temp)
 	free_meta_str(meta_str, &env, buf);
 	free(g_str);
 	return (1);
+}
+
+int	read_word_quote(char **s, t_str *buf, char **temp)
+{
+	int	is_fail;
+
+	is_fail = 0;
+	if (**s == '\'')
+		is_fail |= read_word_squote(s, buf);
+	else if (**s == '\"')
+		is_fail |= read_word_dquote(s, buf, temp);
+	return (is_fail);
 }
 
 t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
@@ -99,15 +113,12 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 				return (cur);
 			}
 		}
-		else if (**s == '\'')
-			is_fail |= read_word_squote(s, buf);
-		else if (**s == '\"')
-			is_fail |= read_word_dquote(s, buf, temp);
+		else if (**s == '\'' || **s == '\"')
+			is_fail = read_word_quote(s, buf, temp);
 		else
 			push_str(buf, *((*s)++));
 	}
-	free_spl(envp);
-	return (make_retcur(buf, cur, is_fail));
+	return (make_retcur(buf, cur, is_fail, &envp));
 }
 
 t_token	*read_pipe_redir(char **s, t_token *cur, t_str *buf)

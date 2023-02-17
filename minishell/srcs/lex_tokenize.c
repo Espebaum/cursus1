@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:14:14 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 22:18:17 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 22:19:29 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,7 @@ t_token	*tokenize(char *s, char **envp)
 	t_token	*cur;
 	t_str	*buf;
 	char	**temp;
-	int		flag;
 
-	flag = 0;
 	cur = make_token();
 	buf = make_str();
 	while (*s != '\n' && *s)
@@ -83,7 +81,6 @@ t_token	*tokenize(char *s, char **envp)
 		{
 			temp = deep_copy_env(envp);
 			cur = read_word(&s, cur, buf, temp);
-			// free_spl(temp);
 		}
 	}
 	free_str(buf);

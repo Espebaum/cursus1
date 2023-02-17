@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 22:08:28 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 21:13:10 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 22:36:27 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ void	init_fail_and_num(int *is_fail, int *num)
 	*num = 0;
 }
 
-t_token	*make_retcur(t_str *buf, t_token *cur, int is_fail)
+t_token	*make_retcur(t_str *buf, t_token *cur, int is_fail, char ***envp)
 {
+	free_spl(*envp);
 	if (is_fail)
 		cur = push_token(T_ERROR, buf, cur);
 	else

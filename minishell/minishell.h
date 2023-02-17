@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 20:06:19 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/17 22:36:16 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ char	*make_meta_chr(char *ret, int *size, char meta_chr);
 char	*check_meta_chr(t_str **env, int i, int len, int size);
 void	free_meta_str(char *meta_str, t_str **env, t_str *buf);
 int		see_next_word_meta(char **s, t_str **buf, char *g_str);
-t_token	*make_retcur(t_str *buf, t_token *cur, int is_fail);
+t_token	*make_retcur(t_str *buf, t_token *cur, int is_fail, char ***envp);
 void	init_fail_and_num(int *is_fail, int *num);
 int		see_next_word_null(char **s, t_str **buf);
 int		is_g_exit_code(char **s, t_str **buf, char *g_str, int i);
