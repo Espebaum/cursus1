@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 22:46:31 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/17 22:54:35 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ void	print_env(t_list *head);
 void	print_export(t_list *head);
 void	new_value(t_list **head, char *key, char *value);
 int		env_error_check(char *key);
-void	make_env(char *t, t_list **head);
+void	make_env(char *t, t_list **head, int i, int flag);
 int		built_env(char **builtin, t_list *head);
 void	del_one(char *t, t_list *head_first);
 

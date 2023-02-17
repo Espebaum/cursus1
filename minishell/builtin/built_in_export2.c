@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 20:25:59 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 16:34:55 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 22:58:15 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,22 +77,24 @@ void	init_make_env(int *i, char **key, char **value, char *t)
 		*value = 0;
 }
 
-void	make_env(char *t, t_list **head)
+void	setting_make_env(int *i, int *flag)
 {
-	int		flag;
+	*i = 0;
+	*flag = 1;
+}
+
+void	make_env(char *t, t_list **head, int i, int flag)
+{
 	char	*key;
 	char	*value;
-	int		i;
 
-	flag = 0;
 	init_make_env(&i, &key, &value, t);
 	while (t && *t)
 	{
 		if (*t == '=' && flag == 0)
 		{
 			t++;
-			i = 0;
-			flag = 1;
+			setting_make_env(&i, &flag);
 			continue ;
 		}
 		else if (*t != '=' && flag == 0)

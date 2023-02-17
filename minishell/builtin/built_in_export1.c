@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 20:19:39 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 16:22:48 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 22:54:59 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ int	export_parsing(t_list **head, char **t)
 {
 	int	ret;
 
-	init_export_parsing(&ret, t);
-	t++;
+	init_export_parsing(&ret, t++);
 	while (*t)
 	{
 		if (env_error_check(*t))
@@ -61,7 +60,7 @@ int	export_parsing(t_list **head, char **t)
 				ret = 1;
 				continue ;
 			}
-			make_env(*t, head);
+			make_env(*t, head, 0, 0);
 			t++;
 		}
 	}
