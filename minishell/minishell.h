@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 22:36:16 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/17 22:46:31 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ int		*find_heredoc_index(t_token *head, int count);
 char	**get_path(char **envp);
 int		check_command(char **path, char *cmd);
 void	forked_child_work(t_tuple tup, int *pipes, int *hc, t_list *env_head);
-char	**copy_orders(char **t);
+char	**copy_orders(char **t, int i);
 char	**add_order(char **t, char *str, int flag);
 
 char	**get_limiter(char **doc_str, t_doc *doc);

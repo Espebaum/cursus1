@@ -6,19 +6,17 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 18:19:51 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/17 16:58:37 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/17 22:46:21 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	**copy_orders(char **t)
+char	**copy_orders(char **t, int i)
 {
-	int		i;
 	char	**temp;
 	char	**ret;
 
-	i = 0;
 	temp = t;
 	while (temp && temp[i])
 		i++;
