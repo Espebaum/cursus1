@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 19:58:12 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 16:39:04 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/17 17:46:29 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ char	**keep_execve_chd(t_data data, t_token **head, char **t, int *cmd_flag)
 			if (builtin_check(cmd) == 0)
 				if (check_command(data.path, cmd) == 0
 					|| S_ISDIR(file_info.st_mode))
-					exit_error(cmd, 0, 127);
+					exit_error_cmd(cmd, 0, 127);
 	}
 	else
-		exit_error(cmd, 0, 127);
+		exit_error_cmd(cmd, 0, 127);
 	ret = copy_orders(t);
 	ret = add_order(ret, cmd, cmd_flag[0]);
 	(*head) = (*head)->next;

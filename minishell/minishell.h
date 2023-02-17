@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 17:08:16 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 17:46:52 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,7 @@ int		syntax_err(void);
 int		builtin_check(char *str);
 
 int		exit_error(char *message, int signal, int exit_code);
+int		exit_error_cmd(char *message, int signal, int exit_code);
 int		ft_perror(char *str, int signal, int exit_code);
 
 int		open_heredoc(t_doc *doc, char *line);

@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 16:03:57 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/17 15:31:44 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 17:50:33 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	check_command(char **path, char *cmd)
 		return (1);
 	if (!path)
 	{
-		printf("no path!\n");
 		ft_putstr_fd(cmd, 2);
 		write(2, ": ", 2);
 		ft_putstr_fd("No such file or directory\n", 2);

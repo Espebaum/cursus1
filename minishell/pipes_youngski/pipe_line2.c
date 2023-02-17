@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/17 17:33:26 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 17:39:17 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,9 @@ char	**push_cmd(t_data *data, t_token **head, int *cmd_flag, int *hdoc_count)
 
 	t = (char **)malloc(sizeof(char *));
 	t[0] = 0;
-	while ((*head) && (*head)->str && ft_strncmp((*head)->str, "|", 1))
+	while ((*head) && (*head)->str && (*head)->type != T_PIPE)
 	{
-		if ((*head)->type == T_REDIRECT && (!ft_strncmp((*head)->str, ">>", 2)
-				|| !ft_strncmp((*head)->str, "<<", 2)
-				|| !ft_strncmp((*head)->str, "<", 1)
-				|| !ft_strncmp((*head)->str, ">", 1)))
+		if ((*head)->type == T_REDIRECT)
 			change_stream(head, data, cmd_flag, hdoc_count);
 		else
 		{
