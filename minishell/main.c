@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 19:28:20 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 23:00:34 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	main(int argc, char **argv, char **envp)
 	line = NULL;
 	cover = NULL;
 	init_env_list(envp, &head);
-	envp = make_envp_arr(head);
+	envp = make_envp_arr(head, 0);
 	cover = init_cover(cover);
 	tcgetattr(STDIN_FILENO, &term);
 	init_prompt_sig(argc, argv);
@@ -137,7 +137,7 @@ int	main(int argc, char **argv, char **envp)
 		if (*line != '\0' && !is_str_space(line))
 			handle_line(line, cover, envp, head);
 		free_spl(envp);
-		envp = make_envp_arr(head);
+		envp = make_envp_arr(head, 0);
 		free(line);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);

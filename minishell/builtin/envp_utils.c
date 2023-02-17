@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 22:56:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/17 16:07:41 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 23:00:07 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,13 @@ t_list	*init_env_list(char **env, t_list **head)
 	return (*head);
 }
 
-char	**make_envp_arr(t_list *head)
+char	**make_envp_arr(t_list *head, int i)
 {
-	int		i;
 	char	*t;
 	char	*t_fr;
 	char	**ret;
 	t_list	*temp;
 
-	i = 0;
 	temp = head;
 	while (temp != 0)
 	{

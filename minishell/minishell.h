@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 22:54:35 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/17 23:00:15 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,7 @@ int		ft_max(int a, int b);
 //env and export func
 int		built_export(char **builtin, t_list *head);
 t_list	*init_env_list(char **env, t_list **head);
-char	**make_envp_arr(t_list *head);
+char	**make_envp_arr(t_list *head, int i);
 void	print_env(t_list *head);
 void	print_export(t_list *head);
 void	new_value(t_list **head, char *key, char *value);
