@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 16:09:03 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 17:15:37 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,6 @@ int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 			return (-1);
 	g_exit_code = pipe_line(*(cover->data), cover->head, *cover, head);
 	free_token(cover->head);
-	if (is_path_gone(cover->data->path) == 0)
-		free_spl(cover->data->path);
 	set_signal(SHE, SHE);
 	return (g_exit_code);
 }

@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 16:08:38 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 17:08:16 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ char	*init_line(char *line);
 void	init_fd(t_data *data);
 int		init_data(t_data *data, t_doc doc, char **envp, t_token *head);
 t_doc	*init_doc(t_doc *doc);
+int		is_path_gone(char **path);
+
 
 //syntax functions
 int		count_s_flag(int *in_squote, int *in_dquote, int *s_flag);
