@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 22:56:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/16 21:29:27 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 16:07:41 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	**make_envp_arr(t_list *head)
 
 	i = 0;
 	temp = head;
-	while (temp->next)
+	while (temp != 0)
 	{
 		i++;
 		temp = temp->next;
@@ -85,7 +85,7 @@ char	**make_envp_arr(t_list *head)
 	ret = (char **)malloc(sizeof(char *) * (i + 1));
 	ret[i] = 0;
 	i = 0;
-	while (head->next)
+	while (head != 0)
 	{
 		t = ft_strjoin(head->key, "=");
 		t_fr = t;

@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 19:58:12 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 15:31:44 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 16:23:34 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,13 @@ char	**keep_execve_par(t_token **head, char **builtin, int *cmd_flag)
 {
 	char	**ret;
 	char	*cmd;
+	char	**ret_free;
 
 	cmd = (*head)->str;
 	ret = copy_orders(builtin);
+	ret_free = ret;
 	ret = add_order(ret, cmd, cmd_flag[0]);
+	free_spl(ret_free);
 	(*head) = (*head)->next;
 	cmd_flag[0] = 1;
 	return (ret);
