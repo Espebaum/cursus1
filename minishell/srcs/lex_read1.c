@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 17:18:24 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 18:55:56 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 		else
 			push_str(buf, *((*s)++));
 	}
+	free_spl(envp);
 	return (make_retcur(buf, cur, is_fail));
 }
 

@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 20:53:24 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/15 21:31:00 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 19:19:58 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int	call_exit(char **builtin)
 	if (check_code_long(builtin[1]) == 1)
 		exit_num_arg_req(builtin[1]);
 	exit_code = ft_atoi(builtin[1]);
-	exit(exit_code);
-	return (0);
+	g_exit_code = exit_code;
+	exit(g_exit_code);
+	return (1);
 }

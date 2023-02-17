@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 16:43:30 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 14:05:57 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 19:37:12 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,10 @@ int	builtin_check(char *str)
 	return (0);
 }
 
-int	built_pwd(char **builtin)
+int	built_pwd(void)
 {
 	char	t[2048];
 
-	(void)builtin;
 	getcwd(t, 2048);
 	printf("%s\n", t);
 	g_exit_code = 0;
@@ -93,7 +92,7 @@ int	check_builtin(char **builtin, t_list *head, char **envp)
 		result = built_cd(builtin, envp);
 	else if (!ft_strncmp(builtin[0], "pwd", 4) || (ft_strnstr(builtin[0], "pwd",
 				ft_strlen(builtin[0])) && access(builtin[0], X_OK) != -1))
-		result = built_pwd(builtin);
+		result = built_pwd();
 	else if (!ft_strncmp(builtin[0], "export", 7) || (ft_strnstr(builtin[0],
 				"export", ft_strlen(builtin[0])) && access(builtin[0],
 				X_OK) != -1))
