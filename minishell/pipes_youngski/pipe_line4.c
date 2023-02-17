@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 18:19:51 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/17 16:29:48 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/17 16:58:37 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,46 +15,32 @@
 char	**copy_orders(char **t)
 {
 	int		i;
-	int		j;
-	char	**cp_envp;
+	char	**temp;
+	char	**ret;
 
-	i = -1;
-	j = 0;
-	while (t[++i])
-		;
-	cp_envp = (char **)malloc(sizeof(char *) * (i + 1));
-	while (j < i)
+	i = 0;
+	temp = t;
+	while (temp && temp[i])
+		i++;
+	if (i == 0)
 	{
-		cp_envp[j] = ft_strdup(t[j]);
-		j++;
+		ret = (char **)malloc(sizeof(char *) * 2);
+		ret[1] = 0;
+		free(t);
+		t = ret;
+		return (ret);
 	}
-	cp_envp[j] = NULL;
-	return (cp_envp);
-	// int		i;
-	// char	**temp;
-	// char	**ret;
-
-	// i = 0;
-	// temp = t;
-	// while (temp && temp[i])
-	// 	i++;
-	// if (i == 0)
-	// {
-	// 	ret = (char **)malloc(sizeof(char *) * 2);
-	// 	ret[1] = 0;
-	// 	t = ret;
-	// 	return (ret);
-	// }
-	// else
-	// {
-	// 	ret = (char **)malloc(sizeof(char *) * (i + 2));
-	// 	ret[i + 1] = 0;
-	// 	ret[i] = "";
-	// }
-	// i = -1;
-	// while (temp[++i])
-	// 	ret[i] = temp[i];
-	// return (ret);
+	else
+	{
+		ret = (char **)malloc(sizeof(char *) * (i + 2));
+		ret[i + 1] = 0;
+		ret[i] = "";
+	}
+	i = -1;
+	while (temp[++i])
+		ret[i] = temp[i];
+	free(t);
+	return (ret);
 }
 
 char	**add_order(char **t, char *str, int flag)
