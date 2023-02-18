@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 20:48:47 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 22:05:17 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	read_env(char **s, t_str *buf, char **temp)
 	if (see_next_word(s, env, g_str, buf))
 		return (1);
 	(*s)++;
-	while (!is_word_end(**s) && **s != '\"')
+	while (**s != '\"' && !is_word_end(**s))
 	{
 		if (**s == '$')
 			break ;

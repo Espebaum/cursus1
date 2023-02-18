@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 21:00:46 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 22:34:08 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,6 @@ int	doc_check(t_cover *cover, char *line)
 	return (doc);
 }
 
-int	is_head_null(t_cover *cover)
-{
-	t_token	*temp;
-
-	temp = cover->head->next;
-	if (temp == NULL)
-	{
-		free_token(cover->head);
-		g_exit_code = 0;
-		return (1);
-	}
-	return (0);
-}
-
 int	is_path_gone(char **path)
 {
 	if (path && path[0] != NULL)
@@ -118,6 +104,7 @@ int	main(int argc, char **argv, char **envp)
 	t_list				*head;
 
 	// atexit(leak_check);
+	head = NULL;
 	line = NULL;
 	cover = NULL;
 	init_env_list(envp, &head);
@@ -139,6 +126,7 @@ int	main(int argc, char **argv, char **envp)
 			cover->doc->name = NULL;
 		}
 		free(line);
+		dup2(cover->cp_stdout, 1);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (g_exit_code);

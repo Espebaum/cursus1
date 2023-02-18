@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 12:28:04 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 17:58:00 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 22:25:44 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,20 @@ int	is_all_space(char *str)
 	return (0);
 }
 
+int	first_last_arr(char *str)
+{
+	int	len;
+
+	len = ft_strlen(str);
+	if (str[0] == '|' || str[len - 1] == '|')
+		return (1);
+	else if (str[len - 1] == '<')
+		return (1);
+	else if (str[len - 1] == '>')
+		return (1);
+	return (0);
+}
+
 int	doc_syntax_check(char *str, const int len, int i)
 {
 	int		s_flag;
@@ -59,7 +73,7 @@ int	doc_syntax_check(char *str, const int len, int i)
 	int		in_squote;
 
 	init_syntax_check(&s_flag, &d_flag, &in_dquote, &in_squote);
-	if (str[0] == '|' || str[len - 1] == '|')
+	if (first_last_arr(str) == 1)
 		return (-1);
 	if (is_all_space(str) == -1)
 		return (-1);
@@ -83,13 +97,13 @@ int	doc_syntax(char *str)
 
 	is_doc = 0;
 	i = -1;
+	if (doc_syntax_check(str, len, -1) == -1)
+		return (-1);
 	while (++i < len - 1)
 	{
 		if (str[i] == '<' && str[i + 1] == '<')
 		{
 			is_doc = 1;
-			if (doc_syntax_check(str, len, -1) == -1)
-				return (-1);
 			return (is_doc);
 		}
 	}

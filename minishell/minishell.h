@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 19:47:17 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 22:29:47 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_cover
 	t_token	*head;
 	t_token	*temp;
 	int		cp_stdin;
+	int		cp_stdout;
 	char	**builtin;
 }	t_cover;
 

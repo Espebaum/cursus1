@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 13:48:47 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 20:48:40 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 22:30:02 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_cover	*init_cover(t_cover *cover)
 	cover->doc->limiters = NULL;
 	cover->doc->name = NULL;
 	cover->cp_stdin = dup(STDIN_FILENO);
+	cover->cp_stdout = dup(STDOUT_FILENO);
 	return (cover);
 }
 
