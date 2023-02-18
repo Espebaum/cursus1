@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 19:30:06 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/18 17:24:08 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 18:13:02 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ char	**call_next(char *line_temp, char **ret, char *line, int i)
 		if (*line_temp != '\"' && *line_temp != '\'')
 			count_i = make_pure_word(line_temp, ret[j]);
 		else if (*line_temp == '\'')
-			count_i = make_inside_char_single(line_temp, ret[j]);
+			count_i = make_inside_char_single(line_temp, ret[j], &j);
 		else if (*line_temp == '\"')
-			count_i = make_inside_char_double(line_temp, ret[j]);
+			count_i = make_inside_char_double(line_temp, ret[j], &j);
 		while ((line_temp && *line_temp) && index < count_i)
 		{
 			line_temp++;

@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 19:15:04 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/15 19:00:49 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 18:13:40 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	count_inside_char(int *i, int *count, char *line_temp, char my_char)
 	}
 }
 
-int	make_inside_char_double(char *line_temp, char *ret)
+int	make_inside_char_double(char *line_temp, char *ret, int *j)
 {
 	int	check_close;
 	int	count;
@@ -100,6 +100,11 @@ int	make_inside_char_double(char *line_temp, char *ret)
 		if (*line_temp == '\"')
 		{
 			check_close = 1;
+			if (count == 0)
+			{
+				ret[0] = 0;
+				(*j)++;
+			}
 			count += 2;
 			line_temp++;
 			return (count);
@@ -112,7 +117,7 @@ int	make_inside_char_double(char *line_temp, char *ret)
 	return (count);
 }
 
-int	make_inside_char_single(char *line_temp, char *ret)
+int	make_inside_char_single(char *line_temp, char *ret, int *j)
 {
 	int	check_close;
 	int	count;
@@ -128,6 +133,11 @@ int	make_inside_char_single(char *line_temp, char *ret)
 		{
 			check_close = 1;
 			line_temp++;
+			if (count == 0)
+			{
+				ret[0] = 0;
+				(*j)++;
+			}
 			count += 2;
 			return (count);
 		}

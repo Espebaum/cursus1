@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 16:34:35 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 19:47:17 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,8 @@ int		pipe_split(int *i, int *count, char *line_temp, char *ret);
 
 //heredoc functions
 int		get_doc_count(char **doc_str);
-int		make_inside_char_double(char *line_temp, char *ret);
-int		make_inside_char_single(char *line_temp, char *ret);
+int		make_inside_char_double(char *line_temp, char *ret, int *j);
+int		make_inside_char_single(char *line_temp, char *ret, int *j);
 void	count_inside_char(int *i, int *count, char *line_temp, char my_char);
 int		count_pure_word(char *line_temp, int count);
 int		count_space(char *line);
@@ -207,7 +207,7 @@ void	forked_child_work(t_tuple tup, int *pipes, int *hc, t_list *env_head);
 char	**copy_orders(char **t, int i);
 char	**add_order(char **t, char *str, int flag);
 
-char	**get_limiter(char **doc_str, t_doc *doc);
+void	get_limiter(char **doc_str, t_doc *doc);
 void	heredoc_file_make(int fd, char *limiter);
 void	close_all_opend_heredoc_fd(t_data *data, int count);
 int		free_pid_docs(int *pid, int *doc_fd);

@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:28:36 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 17:20:38 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 19:52:47 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@ void	heredoc_file_make(int fd, char *limiter)
 	while (1)
 	{
 		line = readline("here_doc> ");
-		if (((ft_strncmp(line, limiter, ft_strlen(limiter) + 1) == 0) \
-					&& line[0] != 0)
-			|| !line)
+		if (ft_strncmp(line, limiter, ft_strlen(limiter) + 1) == 0 || \
+			(limiter[0] == 0 && line[0] == 0) || !line)
 		{
 			free(line);
 			break ;
@@ -80,18 +79,21 @@ int	open_heredoc(t_doc *doc, char *line)
 {
 	char	**doc_str;
 
+	if (doc->limiters)
+		free_spl(doc->limiters);
 	doc = init_doc(doc);
 	doc_str = myfunc_split(line, 0, 0);
 	doc->count = get_doc_count(doc_str);
 	if (doc->count == -1)
 		return (-1);
-	if (doc->name)
-		free_spl(doc->name);
-	doc->name = (char **)malloc(sizeof(char *) * doc->count);
+	doc->name = (char **)malloc(sizeof(char *) * (doc->count + 1));
 	if (doc->limiters)
 		free_spl(doc->limiters);
-	doc->limiters = (char **)malloc(sizeof(char *) * doc->count);
-	doc->limiters = get_limiter(doc_str, doc);
+	doc->limiters = (char **)malloc(sizeof(char *) * (doc->count + 1));
+	get_limiter(doc_str, doc);
+	int	i = 0;
+	while (doc->limiters[i] != 0)
+		printf("limiter : %s\n", doc->limiters[i++]);
 	free_spl(doc_str);
 	if (doc->count > 0)
 		make_doc_files(doc->count, doc);
@@ -102,6 +104,5 @@ int	open_heredoc(t_doc *doc, char *line)
 		g_exit_code = 0;
 		return (3);
 	}
-	else
-		return (2);
+	return (2);
 }

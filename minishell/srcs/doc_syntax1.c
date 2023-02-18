@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 12:28:04 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/16 22:45:35 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 17:58:00 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ int	is_all_space(char *str)
 				j++;
 			j++;
 			if (j == len)
+			{
+				free_spl(spl);
 				return (-1);
+			}
 		}
 	}
 	free_spl(spl);

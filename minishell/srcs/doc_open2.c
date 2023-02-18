@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 14:41:07 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 14:24:49 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 19:51:13 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,51 +47,59 @@ int	get_doc_count(char **doc_str)
 			cnt++;
 		}
 	}
+	printf("doc count : %d\n", cnt);
 	return (cnt);
 }
 
-char	*get_rid_str(char *doc_str, char *limiter)
-{
-	int	i;
-	int	lim_idx;
+// char	*get_rid_str(char *doc_str, char *limiter)
+// {
+// 	int	i;
+// 	int	lim_idx;
 
-	i = -1;
-	lim_idx = 0;
-	while (doc_str[++i])
-		limiter[lim_idx++] = doc_str[i];
-	return (limiter);
-}
+// 	i = -1;
+// 	lim_idx = 0;
+// 	while (doc_str[++i])
+// 		limiter[lim_idx++] = doc_str[i];
+// 	return (limiter);
+// }
 
-char	*rid_quotes(char *doc_str)
-{
-	int		i;
-	char	*limiter;
-	int		limiter_len;
+// char	*rid_quotes(char *doc_str)
+// {
+// 	int		i;
+// 	char	*limiter;
+// 	int		limiter_len;
 
-	i = -1;
-	limiter_len = 0;
-	while (doc_str[++i])
-		limiter_len++;
-	limiter = (char *)malloc(sizeof(char) * (limiter_len + 1));
-	limiter[limiter_len] = '\0';
-	limiter = get_rid_str(doc_str, limiter);
-	return (limiter);
-}
+// 	i = -1;
+// 	limiter_len = 0;
+// 	while (doc_str[++i])
+// 		limiter_len++;
+// 	limiter = (char *)malloc(sizeof(char) * (limiter_len + 1));
+// 	limiter[limiter_len] = '\0';
+// 	limiter = get_rid_str(doc_str, limiter);
+// 	return (limiter);
+// }
 
-char	**get_limiter(char **doc_str, t_doc *doc)
+void	get_limiter(char **doc_str, t_doc *doc)
 {
 	int		idx;
 	int		j;
-	char	**limiters;
 
 	idx = 0;
-	limiters = doc->limiters;
 	j = 0;
+	// int	k = -1;
+	// while (doc_str[++k])
+	// 	printf("doc_str : %s\n", doc_str[k]);
 	while (doc_str[idx] && doc_str[idx + 1])
 	{
-		if (ft_strncmp(doc_str[idx], "<<", 3) == 0)
-			limiters[j++] = rid_quotes(doc_str[idx + 1]);
+		if (ft_strncmp(doc_str[idx], "<<", 2) == 0 && doc_str[idx][3] == 0)
+		{
+			doc->limiters[j++] = ft_strdup(doc_str[idx + 1]);
+			doc->limiters[j] = NULL;
+		}
 		idx++;
 	}
-	return (limiters);
+	j = 0;
+	while (doc->limiters[j])
+		printf("my limiter : %s\n", doc->limiters[j++]);
+	// return (doc->limiters);
 }
