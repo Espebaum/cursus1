@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 20:11:10 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 21:00:46 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 	else if (doc == 3)
 		return (-1);
 	cover->head = go_tokenize(line, envp, &(cover->head));
-	if (is_head_null(cover) == 1)
-		return (g_exit_code);
+	if (cover->head == NULL)
+		return (-1);
 	if (check_syntax(cover->head) == -1)
 		return (-1);
 	init_data(cover->data, *(cover->doc), envp, cover->head);
@@ -133,6 +133,11 @@ int	main(int argc, char **argv, char **envp)
 			handle_line(line, cover, envp, head);
 		free_spl(envp);
 		envp = make_envp_arr(head, 0);
+		if (cover->doc->name)
+		{
+			free_spl(cover->doc->name);
+			cover->doc->name = NULL;
+		}
 		free(line);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
