@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 14:19:19 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 16:03:40 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ int	is_str_space(char *line)
 
 int	do_builtin(t_cover *cover, t_list *head, char **envp)
 {
-	int		o_fd;
 	int		ret;
 
 	ret = 0;
-	o_fd = dup(1);
 	cover->temp = cover->head;
 	cover->builtin = read_cmd(cover->data, &(cover->temp), \
 	&(cover->doc->zero));
@@ -37,8 +35,8 @@ int	do_builtin(t_cover *cover, t_list *head, char **envp)
 	if (check_builtin(cover->builtin, head, envp) >= 0)
 		ret = -1;
 	free_spl(cover->builtin); // <- leaks fixed
-	dup2((*cover).cp_stdin, 0);
-	dup2(o_fd, 1);
+	dup2(cover->data->io_fd[1], 1);
+	close(cover->data->io_fd[1]);
 	return (ret);
 }
 
@@ -114,6 +112,11 @@ int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 //heredoc인데 정상종료 -> g_exit_code 건들지 않음
 //heredoc아님 ->
 
+void	leak_check(void)
+{
+	system("leaks a.out");
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char				*line;
@@ -121,6 +124,7 @@ int	main(int argc, char **argv, char **envp)
 	struct termios		term;
 	t_list				*head;
 
+	atexit(leak_check);
 	line = NULL;
 	cover = NULL;
 	init_env_list(envp, &head);
@@ -128,9 +132,9 @@ int	main(int argc, char **argv, char **envp)
 	cover = init_cover(cover);
 	tcgetattr(STDIN_FILENO, &term);
 	init_prompt_sig(argc, argv);
+	init_fd(cover->data);
 	while (1)
 	{
-		init_fd(cover->data);
 		line = init_line(line);
 		if (*line != '\0' && !is_str_space(line))
 			handle_line(line, cover, envp, head);
