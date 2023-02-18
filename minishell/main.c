@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 23:00:34 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/18 13:23:06 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,20 @@ int	is_str_space(char *line)
 int	do_builtin(t_cover *cover, t_list *head, char **envp)
 {
 	int		o_fd;
+	int		ret;
 
+	ret = 0;
 	o_fd = dup(1);
 	cover->temp = cover->head;
 	cover->builtin = read_cmd(cover->data, &(cover->temp), \
 	&(cover->doc->zero));
 	dup_pipes(NULL, cover->data->io_fd, cover->data);
 	if (check_builtin(cover->builtin, head, envp) >= 0)
-	{
-		dup2((*cover).cp_stdin, 0);
-		dup2(o_fd, 1);
-		free_spl(cover->builtin);
-		return (-1);
-	}
+		ret = -1;
+	free_spl(cover->builtin); // <- leaks fixed
 	dup2((*cover).cp_stdin, 0);
 	dup2(o_fd, 1);
-	return (0);
+	return (ret);
 }
 
 int	doc_check(t_cover *cover, char *line)
