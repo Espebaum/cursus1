@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 13:48:47 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 17:14:46 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 16:53:59 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 t_cover	*init_cover(t_cover *cover)
 {
 	cover = (t_cover *)malloc(sizeof(t_cover));
+	cover->head = NULL;
 	cover->data = (t_data *) malloc(sizeof(t_data));
 	cover->data->path = NULL;
 	cover->doc = (t_doc *) malloc(sizeof(t_doc));

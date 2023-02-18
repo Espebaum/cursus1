@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 16:03:40 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 17:07:19 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	do_builtin(t_cover *cover, t_list *head, char **envp)
 	free_spl(cover->builtin); // <- leaks fixed
 	dup2(cover->data->io_fd[1], 1);
 	close(cover->data->io_fd[1]);
+	if (ret == -1)
+		free(cover->data->pid);
 	return (ret);
 }
 
@@ -86,7 +88,13 @@ int	is_path_gone(char **path)
 int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 {
 	int		doc;
+	// t_token	*for_free;
 
+	// if (cover->head != NULL)
+	// 	free_token(cover->head);
+	// cover->head = NULL;
+	// cover->head = (t_token *)malloc(sizeof(t_token));
+	// for_free = cover->head;
 	doc = doc_check(cover, line);
 	if (doc == -1)
 		return (-1);
@@ -94,7 +102,7 @@ int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 		return (-1);
 	else if (doc == 3)
 		return (-1);
-	cover->head = go_tokenize(line, envp, cover->head);
+	cover->head = go_tokenize(line, envp, &(cover->head));
 	if (is_head_null(cover) == 1)
 		return (g_exit_code);
 	if (check_syntax(cover->head) == -1)
@@ -104,7 +112,8 @@ int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 		if (do_builtin(cover, head, envp) == -1)
 			return (-1);
 	g_exit_code = pipe_line(*(cover->data), cover->head, *cover, head);
-	free_token(cover->head);
+	// free_token(cover->head);
+	// cover->head = NULL;
 	set_signal(SHE, SHE);
 	return (g_exit_code);
 }
@@ -112,10 +121,10 @@ int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 //heredoc인데 정상종료 -> g_exit_code 건들지 않음
 //heredoc아님 ->
 
-void	leak_check(void)
-{
-	system("leaks a.out");
-}
+// void	leak_check(void)
+// {
+// 	system("leaks a.out");
+// }
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -124,7 +133,7 @@ int	main(int argc, char **argv, char **envp)
 	struct termios		term;
 	t_list				*head;
 
-	atexit(leak_check);
+	// atexit(leak_check);
 	line = NULL;
 	cover = NULL;
 	init_env_list(envp, &head);

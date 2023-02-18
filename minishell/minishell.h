@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 23:07:42 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/18 16:34:35 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ typedef struct s_tuple
 	t_data	*data;
 }	t_tuple;
 
-t_token	*go_tokenize(char *cmd, char **envp, t_token *t);
+t_token	*go_tokenize(char *cmd, char **envp, t_token **t);
 void	set_signal(int sig_int, int sig_quit);
 int		doc_syntax(char *str);
 

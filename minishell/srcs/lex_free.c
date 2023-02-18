@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 15:52:55 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 18:50:32 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 16:49:08 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	free_token(t_token *cur)
 
 	while (cur)
 	{
-		if (cur->str != NULL)
+		if (cur->str)
 			free(cur->str);
 		nxt = cur->next;
 		free(cur);

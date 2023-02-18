@@ -1,7 +1,8 @@
 {
   "files.associations": {
     "minishell.h": "c",
-    "typeinfo": "c"
+    "typeinfo": "c",
+    "ios": "c"
   },
   "editor.tabSize": 4,
   "editor.definitionLinkOpensInPeek": true,
