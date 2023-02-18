@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:28:36 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 19:52:47 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 19:56:57 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,6 @@ int	open_heredoc(t_doc *doc, char *line)
 		free_spl(doc->limiters);
 	doc->limiters = (char **)malloc(sizeof(char *) * (doc->count + 1));
 	get_limiter(doc_str, doc);
-	int	i = 0;
-	while (doc->limiters[i] != 0)
-		printf("limiter : %s\n", doc->limiters[i++]);
 	free_spl(doc_str);
 	if (doc->count > 0)
 		make_doc_files(doc->count, doc);

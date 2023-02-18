@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 14:41:07 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 19:51:13 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 19:54:15 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,9 @@ void	get_limiter(char **doc_str, t_doc *doc)
 
 	idx = 0;
 	j = 0;
-	// int	k = -1;
-	// while (doc_str[++k])
-	// 	printf("doc_str : %s\n", doc_str[k]);
 	while (doc_str[idx] && doc_str[idx + 1])
 	{
-		if (ft_strncmp(doc_str[idx], "<<", 2) == 0 && doc_str[idx][3] == 0)
+		if (ft_strncmp(doc_str[idx], "<<", 2) == 0 && doc_str[idx][2] == 0)
 		{
 			doc->limiters[j++] = ft_strdup(doc_str[idx + 1]);
 			doc->limiters[j] = NULL;
@@ -101,5 +98,4 @@ void	get_limiter(char **doc_str, t_doc *doc)
 	j = 0;
 	while (doc->limiters[j])
 		printf("my limiter : %s\n", doc->limiters[j++]);
-	// return (doc->limiters);
 }

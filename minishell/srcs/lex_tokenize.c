@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:14:14 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 17:24:26 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 20:10:15 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,14 @@ void	free_spl(char **temp)
 {
 	int	i;
 
-	i = -1;
-	while (temp && temp[++i])
+	i = 0;
+	while (temp && temp[i])
 	{
 		free(temp[i]);
 		temp[i] = NULL;
 		if (temp[i + 1] == NULL)
 			break ;
+		i++;
 	}
 	free(temp);
 	temp = NULL;
