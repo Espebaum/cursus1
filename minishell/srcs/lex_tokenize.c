@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:14:14 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 16:49:11 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 17:24:26 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ t_token	*tokenize(char *s, char **envp)
 
 t_token	*go_tokenize(char *cmd, char **envp, t_token **t)
 {
-	// *t = (t_token *)malloc(sizeof(t_token));
 	if (*t)
 		free_token(*t);
 	*t = NULL;

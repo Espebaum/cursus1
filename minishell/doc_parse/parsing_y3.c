@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 19:30:06 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/17 23:06:08 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/18 17:24:08 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,9 @@ int	skip_space(int *i, char **line_temp)
 char	**call_next(char *line_temp, char **ret, char *line, int i)
 {
 	int		j;
-	char	*for_free;
 	int		count_i;
 	int		index;
 
-	for_free = line_temp;
 	init_split(&i, &j, line, &line_temp);
 	j = 0;
 	while (line_temp && *line_temp != 0)
@@ -59,9 +57,7 @@ char	**call_next(char *line_temp, char **ret, char *line, int i)
 		}
 		if (ret[j] && *ret[j] && (*line_temp == ' ' || *line_temp == 0
 				|| *(line_temp - 1) == '<'))
-		{
 			j++;
-		}
 	}
 	ret[j] = 0;
 	return (ret);

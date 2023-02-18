@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:28:36 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 14:31:08 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 17:20:38 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,11 @@ int	open_heredoc(t_doc *doc, char *line)
 	doc->count = get_doc_count(doc_str);
 	if (doc->count == -1)
 		return (-1);
+	if (doc->name)
+		free_spl(doc->name);
 	doc->name = (char **)malloc(sizeof(char *) * doc->count);
+	if (doc->limiters)
+		free_spl(doc->limiters);
 	doc->limiters = (char **)malloc(sizeof(char *) * doc->count);
 	doc->limiters = get_limiter(doc_str, doc);
 	free_spl(doc_str);
@@ -101,4 +105,3 @@ int	open_heredoc(t_doc *doc, char *line)
 	else
 		return (2);
 }
-//printf("doc_str[0] : %s doc_str[1] : %s\n", doc_str[0], doc_str[1]);
