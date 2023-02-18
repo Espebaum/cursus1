@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 19:38:42 by gyopark           #+#    #+#             */
-/*   Updated: 2022/12/12 18:20:01 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 14:15:32 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ char	*get_next_line(int fd)
 	static char	*backup[OPEN_MAX];
 	char		*str;
 	int			read_size;
+	char		*for_free;
 
 	if (BUFFER_SIZE <= 0 || fd < 0 || fd >= OPEN_MAX)
 		return (0);
@@ -113,7 +114,9 @@ char	*get_next_line(int fd)
 		if (read_size <= 0)
 			return (meet_eof(&backup[fd], buf, read_size));
 		buf[read_size] = '\0';
+		for_free = backup[fd];
 		backup[fd] = ft_strjoin(backup[fd], buf);
+		free(for_free);
 	}
 	str = make_line(backup[fd], 0);
 	backup[fd] = cut_line(backup[fd]);

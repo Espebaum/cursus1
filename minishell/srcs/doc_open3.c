@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 18:19:56 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 13:56:52 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 14:30:10 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	doc_child(int idx, int count, t_doc **doc, int *pipe_fd)
 	set_signal(DOC, SHE);
 	while (idx < count)
 	{
-		if (access(filename, F_OK) != -1)
+		if (access(filename, F_OK) == -1)
 			fd = open_file(filename, idx, doc, pipe_fd);
 		else
 		{
@@ -49,7 +49,7 @@ void	doc_parent(int idx, t_doc **doc, int *pipe_fd)
 	len = 0;
 	while (idx <= (*doc)->count)
 	{
-		str = get_next_line(pipe_fd[0]);
+		str = get_next_line(pipe_fd[0]); // gnl leaks here
 		if (!str)
 			break ;
 		len = ft_strlen(str);
