@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:14:14 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 21:14:36 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/18 21:27:38 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,12 @@ t_token	*tokenize(char *s, char **envp)
 	free_str(buf);
 	while (cur->prev)
 		cur = cur->prev;
+	if (cur->next == NULL)
+	{
+		free_token(cur);
+		cur = NULL;
+		return (cur);
+	}
 	new_cur = get_rid_null_node(cur);
 	free_token(cur);
 	return (new_cur);
