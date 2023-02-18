@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 16:28:36 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 20:03:37 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/18 13:33:06 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	open_heredoc(t_doc *doc, char *line)
 	doc->name = (char **)malloc(sizeof(char *) * doc->count);
 	doc->limiters = (char **)malloc(sizeof(char *) * doc->count);
 	doc->limiters = get_limiter(doc_str, doc);
+	free_spl(doc_str);
 	if (doc->count > 0)
 		make_doc_files(doc->count, doc);
 	if (g_exit_code == 0)
