@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:25:28 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 17:49:13 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/19 15:01:51 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,17 @@ int	exit_error_cmd(char *message, int signal, int exit_code)
 	write(2, message, ft_strlen(message));
 	write(2, ": ", 2);
 	write(2, "command not found\n", ft_strlen("command not found\n"));
+	g_exit_code = exit_code + signal;
+	exit (g_exit_code);
+	return (1);
+}
+
+int exit_err_amb(char *cmd, int signal, int exit_code)
+{
+	write(2, cmd, ft_strlen(cmd));
+	write(2, ": ", 2);
+	write(2, "ambiguous redirect", ft_strlen("ambiguous redirect"));
+	write(2, "\n", 1);
 	g_exit_code = exit_code + signal;
 	exit (g_exit_code);
 	return (1);

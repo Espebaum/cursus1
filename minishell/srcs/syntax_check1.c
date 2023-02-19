@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 19:57:00 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 17:54:24 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/19 16:39:44 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,24 @@ int	*make_type_arr(t_token *head, int token_len)
 	return (type_arr);
 }
 
+int	check_ambiguous_node(t_token *temp)
+{
+	while (temp)
+	{
+		if (temp->type == T_REDIRECT && (ft_strncmp(temp->str, "<<", 2)))
+		{
+			if (temp->next->null_flag == 1)
+			{
+				printf(" : ambiguous redirect\n");
+				g_exit_code = 1;
+				return (1);
+			}
+		}
+		temp = temp->next;
+	}
+	return (0);
+}
+
 int	check_syntax(t_token *head)
 {
 	int		token_len;
@@ -88,6 +106,15 @@ int	check_syntax(t_token *head)
 	{
 		temp->cmds = get_cmds_num(type_arr, token_len);
 		temp = temp->next;
+	}
+	temp = head->next;
+	if (temp->cmds == 1)
+	{
+		if (check_ambiguous_node(temp) == 1)
+		{
+			free(type_arr);
+			return (-1);
+		}
 	}
 	if (check_rules(type_arr, token_len) == -1)
 	{

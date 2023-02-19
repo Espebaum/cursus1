@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 22:29:47 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/19 15:39:06 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <string.h>
 # include <termios.h>
 # include <errno.h>
 # include <signal.h>
@@ -108,6 +109,7 @@ void	set_signal(int sig_int, int sig_quit);
 int		doc_syntax(char *str);
 
 //init functions
+t_list	*init_env_list(char **env, t_list **head);
 t_cover	*init_cover(t_cover *cover);
 void	init_prompt_sig(int argc, __attribute__((unused)) char *argv[]);
 char	*init_line(char *line);
@@ -119,6 +121,7 @@ int		is_path_gone(char **path);
 //syntax functions
 int		count_s_flag(int *in_squote, int *in_dquote, int *s_flag);
 int		count_d_flag(int *in_squote, int *in_dquote, int *d_flag);
+int		is_quote_doc(char *str, int i, int len);
 
 //parse functions
 int		redirection_split(int *i, int *count, char *line_temp, char *ret);
@@ -180,7 +183,8 @@ void	init_fail_and_num(int *is_fail, int *num);
 int		see_next_word_null(char **s, t_str **buf);
 int		is_g_exit_code(char **s, t_str **buf, char *g_str, int i);
 void	push_2str(t_str **buf, char **s);
-t_token	*get_rid_null_node(t_token *cur);
+void	get_rid_null_node(t_token **cur);
+// t_token	*get_rid_null_node(t_token *cur);
 
 //execute function
 char	**keep_execve_par(t_token **head, char **builtin, int *cmd_flag);
@@ -191,14 +195,11 @@ int		rule_error(int *type_arr, int len);
 int		get_cmds_num(int *type_arr, int token_len);
 int		syntax_err(void);
 int		builtin_check(char *str);
-
 int		exit_error(char *message, int signal, int exit_code);
 int		exit_error_cmd(char *message, int signal, int exit_code);
 int		ft_perror(char *str, int signal, int exit_code);
-
 int		open_heredoc(t_doc *doc, char *line);
 int		pipe_line(t_data data, t_token *head, t_cover cover, t_list *env_head);
-
 int		init_fork(t_tuple tup, int i, int *heredoc_count, t_list *env_head);
 void	get_heredoc(t_token *head, t_data *data, int count);
 int		*find_heredoc_index(t_token *head, int count);
@@ -207,14 +208,12 @@ int		check_command(char **path, char *cmd);
 void	forked_child_work(t_tuple tup, int *pipes, int *hc, t_list *env_head);
 char	**copy_orders(char **t, int i);
 char	**add_order(char **t, char *str, int flag);
-
 void	get_limiter(char **doc_str, t_doc *doc);
 void	heredoc_file_make(int fd, char *limiter);
 void	close_all_opend_heredoc_fd(t_data *data, int count);
 int		free_pid_docs(int *pid, int *doc_fd);
 void	open_doc_file(t_data *data, char *t, int *i, int *k);
 void	read_dquote_env(char **s, t_str *buf, char **envp);
-
 int		output_redirection(int o_fd, t_token **head, \
 							t_data *data, int cmd_flag);
 int		input_redirection(int i_fd, t_token **head, t_data *data, int cmd_flag);
@@ -233,7 +232,6 @@ int		ft_max(int a, int b);
 
 //env and export func
 int		built_export(char **builtin, t_list *head);
-t_list	*init_env_list(char **env, t_list **head);
 char	**make_envp_arr(t_list *head, int i);
 void	print_env(t_list *head);
 void	print_export(t_list *head);
@@ -248,6 +246,7 @@ int		call_exit(char **builtin);
 int		exit_num_arg_req(char *str);
 int		is_exit_code_num(char *str);
 int		non_exit_many_arg(void);
+int 	exit_err_amb(char *message, int signal, int exit_code);
 
 //cd function
 int		built_cd(char **t, char **envp);

@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 22:05:17 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/19 17:29:56 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,13 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 			if (read_env(s, buf, temp) == 0)
 			{
 				if (buf->s[0] != '\0')
-					push_token(T_WORD, buf, cur);
+					cur = push_token(T_WORD, buf, cur);
 				else
+				{
 					buf->null_flag = 1;
-				if (envp)
-					free_spl(envp);
+					cur = push_token(T_WORD, buf, cur);
+				}
+				free_spl(envp);
 				return (cur);
 			}
 		}

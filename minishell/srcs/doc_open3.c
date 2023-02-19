@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 18:19:56 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 18:26:13 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/19 18:02:23 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,12 @@ int	doc_child(int idx, int count, t_doc **doc, int *pipe_fd)
 			filename = ft_strjoin(filename, "1");
 			continue ;
 		}
-		printf("limiter : %s\n", (*doc)->limiters[idx]);
 		heredoc_file_make(fd, (*doc)->limiters[idx]);
 		idx++;
 		close(fd);
 	}
 	close(pipe_fd[1]);
 	close(pipe_fd[0]);
-	printf("exitcode : %d\n", g_exit_code);
 	if (g_exit_code == 15)
 		exit (g_exit_code);
 	g_exit_code = 0;
@@ -50,7 +48,7 @@ void	doc_parent(int idx, t_doc **doc, int *pipe_fd)
 	len = 0;
 	while (idx <= (*doc)->count)
 	{
-		str = get_next_line(pipe_fd[0]); // gnl leaks here
+		str = get_next_line(pipe_fd[0]);
 		if (!str)
 			break ;
 		len = ft_strlen(str);

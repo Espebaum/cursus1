@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 14:14:14 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/18 22:00:25 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/19 17:12:53 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	free_spl(char **temp)
 
 t_token	*tokenize(char *s, char **envp)
 {
-	t_token	*new_cur;
+	// t_token	*new_cur;
 	t_token	*cur;
 	t_str	*buf;
 	char	**temp;
@@ -87,16 +87,20 @@ t_token	*tokenize(char *s, char **envp)
 	free_str(buf);
 	while (cur->prev)
 		cur = cur->prev;
-	if (cur->next == NULL)
-	{
-		free_token(cur);
-		cur = NULL;
-		return (cur);
-	}
-	new_cur = get_rid_null_node(cur);
-	free_token(cur);
-	return (new_cur);
+
+	return (cur);
 }
+
+	// if (cur->next == NULL)
+	// {
+	// 	free_token(cur);
+	// 	cur = NULL;
+	// 	return (cur);
+	// }
+	// new_cur = get_rid_null_node(cur);
+	// free_token(cur);
+	// cur = NULL;
+	// return (new_cur);
 
 t_token	*go_tokenize(char *cmd, char **envp, t_token **t)
 {

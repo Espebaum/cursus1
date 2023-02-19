@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 20:25:59 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 22:58:15 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/19 13:49:30 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	new_value(t_list **head, char *key, char *value)
 	temp = *head;
 	while (temp)
 	{
-		if (!strncmp(temp->key, key, ft_strlen(temp->key) + 1))
+		if (!ft_strncmp(temp->key, key, ft_strlen(temp->key) + 1))
 		{
 			if (value)
 			{

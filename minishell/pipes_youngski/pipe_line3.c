@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 14:19:35 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/18 22:26:41 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/19 17:00:35 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ int	output_redirection(int o_fd, t_token **head, t_data *data, int cmd_flag)
 
 	close(o_fd);
 	(*head) = (*head)->next;
-	filename = (*head)->str;
+	if ((*head)->null_flag == 1)
+		exit_err_amb((*head)->str, 0, 1);
+	else
+		filename = (*head)->str;
 	fd = open((*head)->str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1 && cmd_flag == 0)
 		exit_error((*head)->str, 0, 1);
@@ -62,7 +65,10 @@ int	input_redirection(int input_fd, t_token **head, t_data *data, int cmd_flag)
 
 	close(input_fd);
 	(*head) = (*head)->next;
-	filename = (*head)->str;
+	if ((*head)->null_flag == 1)
+		exit_err_amb((*head)->str, 0, 1);
+	else
+		filename = (*head)->str;
 	fd = open (filename, O_RDONLY);
 	if (fd == -1 && cmd_flag == 0)
 		exit_error((*head)->str, 0, 1);
@@ -80,7 +86,10 @@ int	append_redirection(int o_fd, t_token **head, t_data *data, int cmd_flag)
 
 	close(o_fd);
 	(*head) = (*head)->next;
-	filename = (*head)->str;
+	if ((*head)->null_flag == 1)
+		exit_err_amb((*head)->str, 0, 1);
+	else
+		filename = (*head)->str;
 	fd = open ((*head)->str, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1 && cmd_flag == 0)
 		exit_error((*head)->str, 0, 1);
@@ -105,7 +114,8 @@ int	heredoc_redirection(t_token **head, t_data *data,
 		exit_error((*head)->str, 0, 1);
 	else if (fd == -1 && cmd_flag == 1)
 		return (-1);
-	(*head) = (*head)->next;
+	if (*head)
+		(*head) = (*head)->next;
 	data->i_flag = 1;
 	return (fd);
 }

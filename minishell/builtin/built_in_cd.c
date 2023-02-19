@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 20:28:23 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/14 21:43:11 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/19 17:49:06 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,14 @@ int	move_home(char *home)
 		return (1);
 	}
 	else
-		chdir(home);
+	{
+		if (chdir(home) != 0)
+		{
+			printf("cd: %s: No such file or directory\n", home);
+			g_exit_code = 1;
+			return (1);
+		}
+	}
 	return (0);
 }
 
@@ -44,7 +51,10 @@ int	built_cd(char **t, char **envp)
 	if (t[1] == 0)
 	{
 		if (move_home(home) == 1)
+		{
+			free_spl(temp);
 			return (1);
+		}
 	}
 	else
 	{
@@ -56,6 +66,6 @@ int	built_cd(char **t, char **envp)
 		}
 	}
 	g_exit_code = 0;
-	free(temp);
+	free_spl(temp);
 	return (1);
 }

@@ -2,7 +2,12 @@
   "files.associations": {
     "minishell.h": "c",
     "typeinfo": "c",
-    "ios": "c"
+    "ios": "c",
+    "unistd.h": "c",
+    "__bit_reference": "c",
+    "__split_buffer": "c",
+    "string": "c",
+    "vector": "c"
   },
   "editor.tabSize": 4,
   "editor.definitionLinkOpensInPeek": true,
