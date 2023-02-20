@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 14:41:07 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/19 17:33:15 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/20 13:26:49 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,54 @@ int	get_doc_count(char **doc_str)
 	return (cnt);
 }
 
+char	*get_rid_str(char *doc_str, char *limiter)
+{
+	int		i;
+	int		lim_idx;
+
+	i = -1;
+	lim_idx = 0;
+	while (doc_str[++i])
+	{
+		if (doc_str[i] == '\'')
+			while (doc_str[++i] != '\'')
+				limiter[lim_idx++] = doc_str[i];
+		else if (doc_str[i] == '\"')
+			while (doc_str[++i] != '\"')
+				limiter[lim_idx++] = doc_str[i];
+		else
+			limiter[lim_idx++] = doc_str[i];
+	}
+	return (limiter);
+}
+
+char	*rid_quotes(char *doc_str)
+{
+	int		i;
+	char	*limiter;
+	int		limiter_len;
+
+	i = -1;
+	limiter_len = 0;
+	while (doc_str[++i])
+	{
+		if (doc_str[i] == '\'')
+			while (doc_str[++i] != '\'')
+				limiter_len++;
+		else if (doc_str[i] == '\"')
+		{
+			while (doc_str[++i] != '\"')
+				limiter_len++;
+		}
+		else
+			limiter_len++;
+	}
+	limiter = (char *) malloc(sizeof(char) * (limiter_len + 1));
+	limiter[limiter_len] = '\0';
+	limiter = get_rid_str(doc_str, limiter);
+	return (limiter);
+}
+
 void	get_limiter(char **doc_str, t_doc *doc)
 {
 	int		idx;
@@ -61,7 +109,7 @@ void	get_limiter(char **doc_str, t_doc *doc)
 	{
 		if (ft_strncmp(doc_str[idx], "<<", 2) == 0 && doc_str[idx][2] == 0)
 		{
-			doc->limiters[j++] = ft_strdup(doc_str[idx + 1]);
+			doc->limiters[j++] = rid_quotes(doc_str[idx + 1]);
 			doc->limiters[j] = NULL;
 		}
 		idx++;
