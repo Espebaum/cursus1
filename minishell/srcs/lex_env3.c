@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 22:06:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/20 14:02:01 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/20 14:51:50 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,42 +73,42 @@ char	*check_meta_chr(t_str **env, int i, int len, int size)
 	char	*ret;
 	char	*str;
 	int		idx;
-	int		tmp;
 
-	idx = -1;
+	str = NULL;
+	ret = NULL;
 	tmp_str = (*env)->s;
-	while (*tmp_str)
-	{
-		if (is_meta_chr(*tmp_str) == 1)
-			break ;
-		tmp_str++;
-		if (*tmp_str == '\0')
-			return (NULL);
-	}
+	if (is_all_non_meta(tmp_str) == 1)
+		return (NULL);
 	len = ft_strlen((*env)->s);
 	while ((*env)->s[i])
-	{
 		if (is_meta_chr((*env)->s[i++]) != 1)
 			if (is_meta_chr((*env)->s[i]) == 1)
 				break ;
-	}
 	size = len - i;
-	str = (char *)malloc(sizeof(char) * (i + 1));
-	str[i] = '\0';
-	ret = (char *)malloc(sizeof(char) * (size + 1));
-	ret[size] = '\0';
-	while (++idx < i)
-		str[idx] = (*env)->s[idx];
-	idx = -1;
-	tmp = i;
-	while (++idx < size)
-		ret[idx] = (*env)->s[i++];
+	str = make_non_meta(env, str, i);
+	ret = make_meta(env, ret, size, i);
 	clear_str(*env);
 	idx = -1;
-	while (++idx < tmp)
+	while (++idx < i)
 		push_str(*env, str[idx]);
 	free(str);
 	return (ret);
+}
+
+int	next_word_quote(char **s, t_str **buf)
+{
+	if (*((*s) + 1) == '\'')
+	{
+		(*s)++;
+		while (!is_word_end(**s) && **s != '\'')
+			push_str(*buf, *(*s)++);
+		return (1);
+	}
+	else
+	{
+		(*s)++;
+		return (1);
+	}
 }
 
 int	see_next_word_meta(char **s, t_str **buf, char *g_str)
@@ -117,25 +117,15 @@ int	see_next_word_meta(char **s, t_str **buf, char *g_str)
 	{
 		if (*((*s) + 1) == '?')
 			return (is_g_exit_code(s, buf, g_str, -1));
-		else if (*((*s) + 1) == '\'')
-		{
-			(*s)++;
-			while (!is_word_end(**s) && **s != '\'')
-				push_str(*buf, *(*s)++);
-			return (1);
-		}
-		else if (*((*s) + 1) == '\"')
-		{
-			(*s)++;
-			return (1);
-		}
+		else if (*((*s) + 1) == '\'' || *((*s) + 1) == '\"')
+			return (next_word_quote(s, buf));
 		else
 			push_2str(buf, s);
 		if (**s == '\0')
 			return (1);
 		while (**s)
 		{
-			if (**s == '\0' || **s == '$')
+			if (**s == '\0' || **s == '$' || **s == '\'' || **s == '\"')
 				return (1);
 			push_str(*buf, (**s));
 			(*s)++;

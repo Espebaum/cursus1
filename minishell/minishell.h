@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/20 14:00:36 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/20 14:20:33 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,9 @@ int		see_next_word_null(char **s, t_str **buf);
 int		is_g_exit_code(char **s, t_str **buf, char *g_str, int i);
 void	push_2str(t_str **buf, char **s);
 void	get_rid_null_node(t_token **cur);
-// t_token	*get_rid_null_node(t_token *cur);
+int		is_all_non_meta(char *tmp_str);
+char	*make_non_meta(t_str **env, char *str, int i);
+char	*make_meta(t_str **env, char *ret, int size, int i);
 
 //execute function
 char	**keep_execve_par(t_token **head, char **builtin, int *cmd_flag);

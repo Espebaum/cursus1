@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 12:28:04 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/20 14:00:49 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/20 14:35:02 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,11 @@ int	init_syntax_check(int *s_flag, int *d_flag, int *in_dquote, int *in_squote)
 	return (0);
 }
 
-int	is_all_space(char *str)
+int	is_all_space(char *str, int j)
 {
 	char	**spl;
 	int		len;
 	int		i;
-	int		j;
 
 	i = -1;
 	spl = ft_split(str, '|');
@@ -75,7 +74,7 @@ int	doc_syntax_check(char *str, const int len, int i)
 	init_syntax_check(&s_flag, &d_flag, &in_dquote, &in_squote);
 	if (first_last_arr(str) == 1)
 		return (-1);
-	if (is_all_space(str) == -1)
+	if (is_all_space(str, 0) == -1)
 		return (-1);
 	while (++i < len)
 	{

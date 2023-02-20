@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 16:03:57 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/17 18:45:26 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/20 15:12:26 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,18 @@ int	is_file_directory(char *cmd)
 
 int	find_cmd(char **path, char *path_cmd)
 {
-	int		i;
-	char	*tmp;
-	int		fd;
+	int			i;
+	char		*tmp;
+	int			fd;
+	struct stat	file_info;
 
 	i = -1;
 	while (path[++i])
 	{
 		tmp = ft_strjoin(path[i], path_cmd);
 		fd = access(tmp, X_OK);
-		if (fd != -1)
+		lstat(tmp, &file_info);
+		if (fd != -1 && !S_ISDIR(file_info.st_mode))
 		{
 			free(path_cmd);
 			return (1);

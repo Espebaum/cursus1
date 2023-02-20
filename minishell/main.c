@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/20 14:00:40 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/20 14:37:15 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,17 @@ int	handle_line(char *line, t_cover *cover, char **envp, t_list *head)
 	return (g_exit_code);
 }
 
+void	init_main(t_list **head, t_cover **cover, char **line, char ***envp)
+{
+	*head = 0;
+	*line = 0;
+	*cover = 0;
+	init_env_list(*envp, head);
+	*envp = make_envp_arr(*head, 0);
+	*cover = init_cover(*cover);
+	init_fd((*cover)->data);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char				*line;
@@ -102,15 +113,9 @@ int	main(int argc, char **argv, char **envp)
 	struct termios		term;
 	t_list				*head;
 
-	head = NULL;
-	line = NULL;
-	cover = NULL;
-	init_env_list(envp, &head);
-	envp = make_envp_arr(head, 0);
-	cover = init_cover(cover);
+	init_main(&head, &cover, &line, &envp);
 	tcgetattr(STDIN_FILENO, &term);
 	init_prompt_sig(argc, argv);
-	init_fd(cover->data);
 	while (1)
 	{
 		line = init_line(line);
