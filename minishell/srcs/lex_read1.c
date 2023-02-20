@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:22:29 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/19 17:29:56 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/20 13:49:27 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,19 @@ int	read_word_quote(char **s, t_str *buf, char **temp)
 	return (is_fail);
 }
 
+t_token	*make_nullcur(t_str *buf, t_token *cur, char ***envp)
+{
+	if (buf->s[0] != '\0')
+		cur = push_token(T_WORD, buf, cur);
+	else
+	{
+		buf->null_flag = 1;
+		cur = push_token(T_WORD, buf, cur);
+	}
+	free_spl(*envp);
+	return (cur);
+}
+
 t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 {
 	int		is_fail;
@@ -106,14 +119,7 @@ t_token	*read_word(char **s, t_token *cur, t_str *buf, char **envp)
 		{
 			if (read_env(s, buf, temp) == 0)
 			{
-				if (buf->s[0] != '\0')
-					cur = push_token(T_WORD, buf, cur);
-				else
-				{
-					buf->null_flag = 1;
-					cur = push_token(T_WORD, buf, cur);
-				}
-				free_spl(envp);
+				cur = make_nullcur(buf, cur, &envp);
 				return (cur);
 			}
 		}

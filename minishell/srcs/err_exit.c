@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:25:28 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/19 20:23:31 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/20 13:43:48 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	exit_error_cmd(char *message, int signal, int exit_code)
 	return (1);
 }
 
-int exit_err_amb(char *cmd, int signal, int exit_code)
+int	exit_err_amb(char *cmd, int signal, int exit_code)
 {
 	write(2, cmd, ft_strlen(cmd));
 	write(2, ": ", 2);

@@ -6,17 +6,18 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 19:30:06 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/20 13:27:22 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/20 13:44:27 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	init_split(int *i, int *j, char *line, char **line_temp)
+int	init_split(int *i, int *j, char *line, char **line_temp)
 {
 	*line_temp = line;
 	*i = 0;
 	*j = 0;
+	return (0);
 }
 
 int	skip_space(int *i, char **line_temp)
@@ -30,6 +31,12 @@ int	skip_space(int *i, char **line_temp)
 	return (0);
 }
 
+void	index_move_call_next(char **line_temp, int *index)
+{
+	(*line_temp)++;
+	(*index)++;
+}
+
 char	**call_next(char *line_temp, char **ret, char *line, int i)
 {
 	int		j;
@@ -37,7 +44,6 @@ char	**call_next(char *line_temp, char **ret, char *line, int i)
 	int		index;
 
 	init_split(&i, &j, line, &line_temp);
-	j = 0;
 	while (line_temp && *line_temp != 0)
 	{
 		index = 0;
@@ -51,10 +57,7 @@ char	**call_next(char *line_temp, char **ret, char *line, int i)
 		else if (*line_temp == '\"')
 			count_i = make_inside_char_double(line_temp, ret[j], &j);
 		while ((line_temp && *line_temp) && index < count_i)
-		{
-			line_temp++;
-			index++;
-		}
+			index_move_call_next(&line_temp, &index);
 		if (ret[j] && *ret[j] && (*line_temp == ' ' || *line_temp == 0
 				|| *(line_temp - 1) == '<'))
 			j++;

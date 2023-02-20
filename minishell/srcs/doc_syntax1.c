@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 12:28:04 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/19 20:23:02 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/20 14:00:49 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,7 @@ int	doc_syntax(char *str)
 		return (-1);
 	while (++i < len - 2)
 	{
-		if (str[i] == '<' && str[i + 1] == '<' && (str[i + 2] == '\"' || \
-			str[i + 2] == '\'' || str[i + 2] == '\"' || str[i + 2] == ' '))
+		if (str[i] == '<' && str[i + 1] == '<')
 		{
 			if (is_quote_doc(str, i, len) == 0)
 			{

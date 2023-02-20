@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 19:57:00 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/19 16:39:44 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/20 13:42:08 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,22 @@ int	check_rules(int *type_arr, int len)
 	return (0);
 }
 
-int	*make_type_arr(t_token *head, int token_len)
+int	*make_type_arr(t_token *head, int *token_len)
 {
 	t_token	*temp;
 	int		idx;
 	int		*type_arr;
 
+	temp = head->next;
+	while (temp)
+	{
+		(*token_len)++;
+		temp = temp->next;
+	}
 	idx = -1;
 	temp = head->next;
-	type_arr = (int *) malloc(sizeof(int) * (token_len));
-	while (++idx < token_len)
+	type_arr = (int *) malloc(sizeof(int) * (*token_len));
+	while (++idx < *token_len)
 	{
 		type_arr[idx] = temp->type;
 		temp = temp->next;
@@ -69,7 +75,7 @@ int	*make_type_arr(t_token *head, int token_len)
 	return (type_arr);
 }
 
-int	check_ambiguous_node(t_token *temp)
+int	check_ambiguous_node(t_token *temp, int *type_arr)
 {
 	while (temp)
 	{
@@ -78,6 +84,7 @@ int	check_ambiguous_node(t_token *temp)
 			if (temp->next->null_flag == 1)
 			{
 				printf(" : ambiguous redirect\n");
+				free(type_arr);
 				g_exit_code = 1;
 				return (1);
 			}
@@ -93,14 +100,8 @@ int	check_syntax(t_token *head)
 	int		*type_arr;
 	t_token	*temp;
 
-	temp = head->next;
 	token_len = 0;
-	while (temp)
-	{
-		token_len++;
-		temp = temp->next;
-	}
-	type_arr = make_type_arr(head, token_len);
+	type_arr = make_type_arr(head, &token_len);
 	temp = head;
 	while (temp)
 	{
@@ -109,13 +110,8 @@ int	check_syntax(t_token *head)
 	}
 	temp = head->next;
 	if (temp->cmds == 1)
-	{
-		if (check_ambiguous_node(temp) == 1)
-		{
-			free(type_arr);
+		if (check_ambiguous_node(temp, type_arr) == 1)
 			return (-1);
-		}
-	}
 	if (check_rules(type_arr, token_len) == -1)
 	{
 		free(type_arr);

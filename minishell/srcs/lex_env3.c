@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 22:06:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/17 20:02:02 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/20 14:02:01 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,26 @@ char	*make_meta_chr(char *ret, int *size, char meta_chr)
 		ret[i] = temp_ret[i];
 	ret[i] = meta_chr;
 	return (ret);
+}
+
+void	free_meta_str(char *meta_str, t_str **env, t_str *buf)
+{
+	int	i;
+
+	i = -1;
+	if (meta_str)
+		while (meta_str[++i])
+			push_str(buf, meta_str[i]);
+	if (meta_str)
+	{
+		free(meta_str);
+		meta_str = 0;
+	}
+	if (env && *env && (*env)->s)
+	{
+		free_str(*env);
+		*env = 0;
+	}
 }
 
 char	*check_meta_chr(t_str **env, int i, int len, int size)
@@ -89,26 +109,6 @@ char	*check_meta_chr(t_str **env, int i, int len, int size)
 		push_str(*env, str[idx]);
 	free(str);
 	return (ret);
-}
-
-void	free_meta_str(char *meta_str, t_str **env, t_str *buf)
-{
-	int	i;
-
-	i = -1;
-	if (meta_str)
-		while (meta_str[++i])
-			push_str(buf, meta_str[i]);
-	if (meta_str)
-	{
-		free(meta_str);
-		meta_str = 0;
-	}
-	if (env && *env && (*env)->s)
-	{
-		free_str(*env);
-		*env = 0;
-	}
 }
 
 int	see_next_word_meta(char **s, t_str **buf, char *g_str)

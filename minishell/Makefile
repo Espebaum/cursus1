@@ -6,14 +6,14 @@
 #    By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/20 18:54:22 by gyopark           #+#    #+#              #
-#    Updated: 2023/02/20 12:56:58 by youngski         ###   ########.fr        #
+#    Updated: 2023/02/20 13:54:41 by gyopark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
 
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -g3 
+CFLAGS			= -Wall -Wextra -Werror -g3 -fsanitize=address
 
 LIBFT			= libft
 LIBFT_LIB		= libft.a

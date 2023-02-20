@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/19 15:39:06 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/20 14:00:36 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int		count_pure_word(char *line_temp, int count);
 int		count_space(char *line);
 int		make_pure_word(char *line_temp, char *ret);
 char	**myfunc_split(char *line, int i, int j);
-void	init_split(int *i, int *j, char *line, char **line_temp);
+int		init_split(int *i, int *j, char *line, char **line_temp);
 int		skip_space(int *i, char **line_temp);
 char	**call_next(char *line_temp, char **ret, char *line, int i);
 void	part_make_line(int *i, int *j, int *count, char **line_temp);
@@ -246,7 +246,7 @@ int		call_exit(char **builtin);
 int		exit_num_arg_req(char *str);
 int		is_exit_code_num(char *str);
 int		non_exit_many_arg(void);
-int 	exit_err_amb(char *message, int signal, int exit_code);
+int		exit_err_amb(char *message, int signal, int exit_code);
 
 //cd function
 int		built_cd(char **t, char **envp);

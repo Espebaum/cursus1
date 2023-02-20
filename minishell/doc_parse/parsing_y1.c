@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 19:15:04 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/20 12:48:58 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/20 13:32:08 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int	make_inside_char_single(char *line_temp, char *ret, int *j)
 	ret[0] = *line_temp;
 	ret[1] = 0;
 	line_temp++;
-	while (*line_temp )
+	while (*line_temp)
 	{
 		if (*line_temp == '\'')
 		{

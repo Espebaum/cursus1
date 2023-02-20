@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 13:47:01 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/19 20:23:00 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/20 13:55:33 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,34 @@ int	count_pure_word(char *line_temp, int count)
 	return (count);
 }
 
+int	myfunc_if_func(char **line_temp_, int *index, int *count_i, int count)
+{
+	char	*line_temp;
+
+	line_temp = *line_temp_;
+	*index = 0;
+	while (*line_temp == ' ')
+	{
+		line_temp++;
+		count++;
+	}
+	if (*line_temp != '\"' && *line_temp != '\'')
+		*index += count_pure_word(line_temp, 0);
+	else if (*line_temp == '\'')
+		*index += count_inside_char_single(line_temp);
+	else if (*line_temp == '\"')
+		*index += count_inside_char_double(line_temp);
+	*count_i += *index;
+	while ((line_temp && *line_temp) && *index)
+	{
+		line_temp++;
+		count++;
+		(*index)--;
+	}
+	count += (*index);
+	return (count);
+}
+
 char	**myfunc_split(char *line, int i, int j)
 {
 	char	**ret;
@@ -100,28 +128,12 @@ char	**myfunc_split(char *line, int i, int j)
 	int		count_i;
 
 	line_temp = line;
-	init_split(&i, &j, line, &line_temp);
+	count_i = init_split(&i, &j, line, &line_temp);
 	ret = (char **)malloc(sizeof(char *) * (count_space(line_temp) + 1));
 	ret[count_space(line_temp)] = 0;
-	index = 0;
-	count_i = 0;
 	while (line_temp && *line_temp != 0)
 	{
-		index = 0;
-		while (*line_temp == ' ')
-			line_temp++;
-		if (*line_temp != '\"' && *line_temp != '\'')
-			index += count_pure_word(line_temp, 0);
-		else if (*line_temp == '\'')
-			index += count_inside_char_single(line_temp);
-		else if (*line_temp == '\"')
-			index += count_inside_char_double(line_temp);
-		count_i += index;
-		while ((line_temp && *line_temp) && index)
-		{
-			line_temp++;
-			index--;
-		}
+		line_temp += myfunc_if_func(&line_temp, &index, &count_i, 0);
 		if ((*line_temp == ' ' || *line_temp == 0 || *(line_temp - 1) == '<'))
 		{
 			ret[j] = (char *)malloc(sizeof(char) * (count_i + 2));
