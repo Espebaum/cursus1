@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 20:25:59 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/19 13:49:30 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/20 13:05:44 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	new_value(t_list **head, char *key, char *value)
 					free(temp->value);
 				temp->value = value;
 			}
+			free(temp->key);
+			temp->key = key;
 			return ;
 		}
 		temp = temp->next;
