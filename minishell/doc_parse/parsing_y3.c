@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 19:30:06 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/18 18:13:02 by youngski         ###   ########.fr       */
+/*   Updated: 2023/02/20 12:49:31 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,11 @@ char	**call_next(char *line_temp, char **ret, char *line, int i)
 			j++;
 	}
 	ret[j] = 0;
+	int asdf = 0;
+	while (ret[asdf])
+	{
+		printf("ret[%d] = %s\n", asdf, ret[asdf]);
+		asdf++;
+	}
 	return (ret);
 }
