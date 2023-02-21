@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 22:08:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/20 14:37:15 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/21 16:39:27 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,13 @@ int	do_builtin(t_cover *cover, t_list *head, char **envp)
 	cover->builtin = read_cmd(cover->data, &(cover->temp), \
 	&(cover->doc->zero));
 	dup_pipes(NULL, cover->data->io_fd, cover->data);
-	if (check_builtin(cover->builtin, head, envp) >= 0)
-		ret = -1;
+	if (check_made_builtin(cover->builtin))
+	{
+		if (check_builtin(cover->builtin, head, envp) >= 0)
+		{
+			ret = -1;
+		}
+	}
 	free_spl(cover->builtin);
 	dup2(cover->data->io_fd[1], 1);
 	close(cover->data->io_fd[1]);

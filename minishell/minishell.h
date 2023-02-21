@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/20 14:20:33 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/21 16:32:30 by youngski         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,6 +231,7 @@ char	**read_cmd(t_data *data, t_token **head, int *heredoc_count);
 char	**keep_execve(t_data data, t_token **head, char **t, int *flag);
 void	init_fd(t_data *data);
 int		ft_max(int a, int b);
+int		check_made_builtin(char **builtin);
 
 //env and export func
 int		built_export(char **builtin, t_list *head);

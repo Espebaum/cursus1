@@ -6,21 +6,21 @@
 #    By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/20 18:54:22 by gyopark           #+#    #+#              #
-#    Updated: 2023/02/20 14:03:19 by gyopark          ###   ########.fr        #
+#    Updated: 2023/02/21 16:38:38 by youngski         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
 
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS			= -Wall -Wextra -Werror -g3 
 
 LIBFT			= libft
 LIBFT_LIB		= libft.a
 
 RLFLAGS			= -lreadline
-LDFLAGS			= -L${HOME}/.brew/opt/readline/lib
-CPPFLAGS		= -I${HOME}/.brew/opt/readline/include
+LDFLAGS			= -L/usr/local/opt/readline/lib
+CPPFLAGS		= -I/usr/local/opt/readline/include
 
 SRCS			=	main.c							\
 					builtin/built_in_cd.c			\
@@ -31,6 +31,7 @@ SRCS			=	main.c							\
 					builtin/built_in_export1.c		\
 					builtin/built_in_export2.c		\
 					builtin/built_in1.c				\
+					builtin/built_in2.c				\
 					builtin/envp_utils.c			\
 					doc_parse/parsing_y1.c			\
 					doc_parse/parsing_y2.c			\
@@ -66,6 +67,7 @@ SRCS			=	main.c							\
 					srcs/syntax_check1.c			\
 					srcs/syntax_check2.c			\
 					srcs/utils.c
+
 
 OBJS			= $(SRCS:.c=.o)
 
