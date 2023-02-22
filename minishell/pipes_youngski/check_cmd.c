@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 16:03:57 by youngski          #+#    #+#             */
-/*   Updated: 2023/02/20 15:12:26 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/22 13:53:05 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	is_file_directory(char *cmd)
 	if (ft_strncmp(cmd, "./", 2) == 0 || ft_strncmp(cmd, "/", 1) == 0)
 	{
 		if (lstat(cmd, &file_info) < 0)
-			exit_error(cmd, 0, 1);
+			exit_error(cmd, 0, 127);
 		else if (S_ISDIR(file_info.st_mode))
 		{
 			ft_putstr_fd(cmd, 2);
