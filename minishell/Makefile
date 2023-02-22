@@ -6,7 +6,7 @@
 #    By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/20 18:54:22 by gyopark           #+#    #+#              #
-#    Updated: 2023/02/21 16:38:38 by youngski         ###   ########.fr        #
+#    Updated: 2023/02/22 13:39:12 by gyopark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,8 @@ LIBFT			= libft
 LIBFT_LIB		= libft.a
 
 RLFLAGS			= -lreadline
-LDFLAGS			= -L/usr/local/opt/readline/lib
-CPPFLAGS		= -I/usr/local/opt/readline/include
+LDFLAGS			= -L${HOME}/.brew/opt/readline/lib
+CPPFLAGS		= -I${HOME}/.brew/opt/readline/include
 
 SRCS			=	main.c							\
 					builtin/built_in_cd.c			\
