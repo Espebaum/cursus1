@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:33:41 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/19 17:07:01 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/23 17:33:00 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,31 +53,3 @@ void	get_rid_null_node(t_token **cur)
 			break ;
 	}
 }
-
-// t_token	*get_rid_null_node(t_token *cur)
-// {
-// 	t_token	*new_cur;
-// 	t_token	*temp;
-
-// 	new_cur = make_token();
-// 	cur = cur->next;
-// 	while (cur)
-// 	{
-// 		if (cur->null_flag == 0)
-// 		{
-// 			temp = copy_token(cur);
-// 			new_cur->next = temp;
-// 			temp->prev = new_cur;
-// 			new_cur = new_cur->next;
-// 		}
-// 		cur = cur->next;
-// 	}
-// 	while (new_cur->prev)
-// 		new_cur = new_cur->prev;
-// 	if (new_cur->next == NULL)
-// 	{
-// 		free(new_cur);
-// 		return (NULL);
-// 	}
-// 	return (new_cur);
-// }
