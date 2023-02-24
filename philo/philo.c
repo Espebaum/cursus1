@@ -1,26 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
+/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 16:02:07 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/23 20:22:21 by gyopark          ###   ########.fr       */
+/*   Created: 2023/02/24 15:00:15 by gyopark           #+#    #+#             */
+/*   Updated: 2023/02/24 15:44:25 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+int	ft_philo_init(t_philo **philo, t_arg *arg)
+{
+	int	i;
+
+	i = 0;
+	*philo = malloc(sizeof(t_philo) * arg->philo_num);
+	if (!(philo))
+		return (1);
+	while (i < arg->philo_num)
+	{
+		(*philo)[i].arg = arg;
+		(*philo)[i].id = i;
+		(*philo)[i].left = i;
+		(*philo)[i].right = (i + 1) % arg->philo_num;
+		(*philo)[i].last_eat_time = ft_get_time();
+		(*philo)[i].eat_count = 0;
+		i++;
+	}
+	return (0);
+}
+
 int	ft_arg_init_mutex(t_arg *arg)
 {
-	int		i;
+	int	i;
 
 	if (pthread_mutex_init(&(arg->print), NULL))
 		return (1);
 	arg->forks = malloc(sizeof(pthread_mutex_t) * arg->philo_num);
 	if (!(arg->forks))
 		return (1);
+	i = 0;
+	while (i < arg->philo_num)
+	{
+		if (pthread_mutex_init(&(arg->forks[i]), NULL))
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 int	ft_arg_init(t_arg *arg, int argc, char **argv)
@@ -53,16 +82,16 @@ int	main(int argc, char **argv)
 	int			errno;
 
 	if (argc != 5 && argc != 6)
-		return (printf("argument error"));
+		return (print_err("argument error", 3));
 	memset(&arg, 0, sizeof(t_arg));
 	errno = ft_arg_init(&arg, argc, argv);
 	if (errno)
-		return (printf("arg init error"));
+		return (print_err("arg init error", errno));
 	errno = ft_philo_init(&philo, &arg);
 	if (errno)
-		return (printf("philo init error"));
+		return (print_err("philo init error", errno));
 	errno = ft_philo_start(&arg, philo);
 	if (errno)
-		return (printf("philo start error"));
+		return (print_err("philo start error", errno));
 	return (0);
 }

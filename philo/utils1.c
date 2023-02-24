@@ -1,16 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 19:24:26 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/23 19:25:51 by gyopark          ###   ########.fr       */
+/*   Created: 2023/02/24 15:01:38 by gyopark           #+#    #+#             */
+/*   Updated: 2023/02/24 15:37:07 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+long	ft_get_time(void)
+{
+	struct timeval	tp;
+
+	gettimeofday(&tp, NULL);
+	return (tp.tv_sec * 10 + tp.tv_usec / 10);
+}
+
+int	print_err(char *message, int errno)
+{
+	char	*str;
+
+	str = strerror(errno);
+	write(2, message, ft_strlen(message));
+	write(2, ": ", 2);
+	write(2, str, ft_strlen(str));
+	write(2, "\n", 1);
+	return (1);
+}
 
 int	ft_isdigit(int c)
 {
