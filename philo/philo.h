@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:13:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/24 16:05:41 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/24 16:38:10 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,9 @@ typedef struct s_philo
 	int			id;			//철학자의 인덱스이다
 	int			left;		//왼쪽에 포크
 	int			right;		//오른쪽에 포크
-	pthread_t	thread;		
-	int			eat_count;	//먹은 횟수
-	// long		start_time;	//먹기 시작한 시간(어디에 들어가야할지 모르겠다)
 	long long	last_eat_time;	//가장 최근에 식사한 시간(모르겠다2);
+	int			eat_count;	//먹은 횟수
+	pthread_t	thread;		
 }	t_philo;
 
 int		print_err(char *message, int errno);
