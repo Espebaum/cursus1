@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:13:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/24 16:38:10 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/24 16:52:10 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ typedef struct s_arg
 	int					time_to_sleep;	//잠자는 시간
 	int					eat_times;		//먹어야할 횟수
 	long long			start_time;		//먹기 시작한 시간
-	int					finish;			//무엇이 끝났다는 것인지?
-	int					finished_eat;	//흠;
+	int					finish;			//
+	int					finished_eat;	//
 	int					*fork_status;	//포크의 상태
 	pthread_mutex_t		*forks;			//포크, 공유자원이다, 포크를 뮤텍스로 보호해줘야 한다
-	pthread_mutex_t		print;			//상태가 섞이면 안되므로 뮤텍스
+	pthread_mutex_t		print;			//마찬가지로 출력이 섞이면 안되므로 뮤텍스로 보호해준다
 }	t_arg;
 
 typedef struct s_philo
@@ -41,7 +41,7 @@ typedef struct s_philo
 	int			id;			//철학자의 인덱스이다
 	int			left;		//왼쪽에 포크
 	int			right;		//오른쪽에 포크
-	long long	last_eat_time;	//가장 최근에 식사한 시간(모르겠다2);
+	long long	last_eat_time;	//가장 최근에 식사한 시간
 	int			eat_count;	//먹은 횟수
 	pthread_t	thread;		
 }	t_philo;
