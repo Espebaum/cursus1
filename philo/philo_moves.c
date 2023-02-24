@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 15:01:42 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/24 15:03:29 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/24 16:06:08 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_philo_printf(t_arg *arg, int id, char *msg)
 	pthread_mutex_lock(&(arg->print));
 	if (!(arg->finish))
 	{
-		printf("%lld %d %s \n", now - arg->start_time, id + 1, msg);
+		printf("%lldms %d %s \n", now - arg->start_time, id + 1, msg);
 	}
 	pthread_mutex_unlock(&(arg->print));
 	return (0);

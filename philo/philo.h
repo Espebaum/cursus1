@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:13:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/24 14:52:04 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/24 16:05:41 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_arg
 	int					time_to_eat;	//밥먹는 시간
 	int					time_to_sleep;	//잠자는 시간
 	int					eat_times;		//먹어야할 횟수
-	int					start_time;		//먹기 시작한 시간
+	long long			start_time;		//먹기 시작한 시간
 	int					finish;			//무엇이 끝났다는 것인지?
 	int					finished_eat;	//흠;
 	int					*fork_status;	//포크의 상태
@@ -44,7 +44,7 @@ typedef struct s_philo
 	pthread_t	thread;		
 	int			eat_count;	//먹은 횟수
 	// long		start_time;	//먹기 시작한 시간(어디에 들어가야할지 모르겠다)
-	long		last_eat_time;	//가장 최근에 식사한 시간(모르겠다2);
+	long long	last_eat_time;	//가장 최근에 식사한 시간(모르겠다2);
 }	t_philo;
 
 int		print_err(char *message, int errno);

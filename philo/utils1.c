@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 15:01:38 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/24 15:37:07 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/24 15:51:44 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ long	ft_get_time(void)
 	struct timeval	tp;
 
 	gettimeofday(&tp, NULL);
-	return (tp.tv_sec * 10 + tp.tv_usec / 10);
+	return (tp.tv_sec * 1000 + tp.tv_usec / 1000);
 }
 
 int	print_err(char *message, int errno)
