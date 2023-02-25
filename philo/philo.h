@@ -6,7 +6,7 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 19:13:16 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/24 16:52:10 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/25 16:17:47 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ typedef struct s_arg
 	int					time_to_sleep;	//잠자는 시간
 	int					eat_times;		//먹어야할 횟수
 	long long			start_time;		//먹기 시작한 시간
-	int					finish;			//
-	int					finished_eat;	//
+	int					finish;			//플래그
+	int					finished_eat;	//플래그
 	int					*fork_status;	//포크의 상태
 	pthread_mutex_t		*forks;			//포크, 공유자원이다, 포크를 뮤텍스로 보호해줘야 한다
 	pthread_mutex_t		print;			//마찬가지로 출력이 섞이면 안되므로 뮤텍스로 보호해준다
@@ -48,7 +48,7 @@ typedef struct s_philo
 
 int		print_err(char *message, int errno);
 int		ft_atoi(const char *str);
-int		ft_philo_start(t_arg *arg, t_philo *philo);
+void	*ft_thread(void *argv);
 long	ft_get_time(void);
 size_t	ft_strlen(char *str);
 void	ft_philo_check_finish(t_arg *arg, t_philo *philo);

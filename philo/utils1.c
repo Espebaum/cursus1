@@ -6,18 +6,20 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 15:01:38 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/24 15:51:44 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/25 16:18:36 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	ft_get_time(void)
+size_t	ft_strlen(char *str)
 {
-	struct timeval	tp;
+	int		cnt;
 
-	gettimeofday(&tp, NULL);
-	return (tp.tv_sec * 1000 + tp.tv_usec / 1000);
+	cnt = 0;
+	while (*str++)
+		cnt++;
+	return (cnt);
 }
 
 int	print_err(char *message, int errno)

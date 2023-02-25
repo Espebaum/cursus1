@@ -6,11 +6,19 @@
 /*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 15:01:42 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/24 16:43:31 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/25 16:18:50 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+long	ft_get_time(void)
+{
+	struct timeval	tp;
+
+	gettimeofday(&tp, NULL);
+	return (tp.tv_sec * 1000 + tp.tv_usec / 1000);
+}
 
 void	ft_pass_time(long long wait_time, t_arg *arg)
 {
@@ -84,25 +92,5 @@ void	*ft_thread(void *argv)
 		ft_pass_time((long long)arg->time_to_sleep, arg);
 		ft_philo_printf(arg, philo->id, "is thinking");
 	}
-	return (0);
-}
-
-int	ft_philo_start(t_arg *arg, t_philo *philo)
-{
-	int		i;
-
-	i = 0;
-	while (i < arg->philo_num)
-	{
-		philo[i].last_eat_time = ft_get_time();
-		if (pthread_create(&(philo[i].thread), NULL, ft_thread, &(philo[i])))
-			return (1);
-		i++;
-	}
-	ft_philo_check_finish(arg, philo);
-	i = 0;
-	while (i < arg->philo_num)
-		pthread_join(philo[i++].thread, NULL);
-	ft_free_thread(arg, philo);
 	return (0);
 }

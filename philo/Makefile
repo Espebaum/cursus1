@@ -6,7 +6,7 @@
 #    By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/24 12:37:06 by gyopark           #+#    #+#              #
-#    Updated: 2023/02/24 16:37:37 by gyopark          ###   ########.fr        #
+#    Updated: 2023/02/25 16:18:58 by gyopark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,7 @@ CFLAGS			= -Wall -Wextra -Werror -g3
 SRCS			= philo.c		\
 				  philo_start.c	\
 				  philo_end.c	\
-				  utils1.c		\
-				  utils2.c
+				  utils1.c		
 
 OBJS			= $(SRCS:.c=.o)
 
