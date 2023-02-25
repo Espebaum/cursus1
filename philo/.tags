@@ -5,42 +5,47 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
 CC	Makefile	/^CC				= cc$/;"	m
-CFLAGS	Makefile	/^CFLAGS			= -Wall -Wextra -Werror -g3 -fsanitize=address$/;"	m
+CFLAGS	Makefile	/^CFLAGS			= -Wall -Wextra -Werror -g3$/;"	m
 NAME	Makefile	/^NAME			= philo$/;"	m
-OBJS	Makefile	/^OBJS			= $(SRCS:.c=.c)$/;"	m
+OBJS	Makefile	/^OBJS			= $(SRCS:.c=.o)$/;"	m
 PHILO_H	philo.h	/^# define PHILO_H$/;"	d
 SRCS	Makefile	/^SRCS			= philo.c		\\$/;"	m
 arg	philo.h	/^	t_arg		*arg;		\/\/각 철학자는 공유자원을 지닌다.$/;"	m	struct:s_philo
 eat_count	philo.h	/^	int			eat_count;	\/\/먹은 횟수$/;"	m	struct:s_philo
 eat_times	philo.h	/^	int					eat_times;		\/\/먹어야할 횟수$/;"	m	struct:s_arg
-finish	philo.h	/^	int					finish;$/;"	m	struct:s_arg
-finished_eat	philo.h	/^	int					finished_eat;$/;"	m	struct:s_arg
+finish	philo.h	/^	int					finish;			\/\/플래그$/;"	m	struct:s_arg
+finished_eat	philo.h	/^	int					finished_eat;	\/\/플래그$/;"	m	struct:s_arg
 fork_status	philo.h	/^	int					*fork_status;	\/\/포크의 상태$/;"	m	struct:s_arg
-forks	philo.h	/^	pthread_mutex_t		*forks;			\/\/포크, 공유자원이다$/;"	m	struct:s_arg
+forks	philo.h	/^	pthread_mutex_t		*forks;			\/\/포크, 공유자원이다, 포크를 뮤텍스로 보호해줘야 한다$/;"	m	struct:s_arg
 ft_arg_init	philo.c	/^int	ft_arg_init(t_arg *arg, int argc, char **argv)$/;"	f
 ft_arg_init_mutex	philo.c	/^int	ft_arg_init_mutex(t_arg *arg)$/;"	f
 ft_atoi	utils1.c	/^int	ft_atoi(const char *str)$/;"	f
-ft_get_time	utils1.c	/^long	ft_get_time(void)$/;"	f
+ft_free_thread	philo_end.c	/^void	ft_free_thread(t_arg *arg, t_philo *philo)$/;"	f
+ft_get_time	philo_start.c	/^long	ft_get_time(void)$/;"	f
 ft_isdigit	utils1.c	/^int	ft_isdigit(int c)$/;"	f
+ft_pass_time	philo_start.c	/^void	ft_pass_time(long long wait_time, t_arg *arg)$/;"	f
+ft_philo_action	philo_start.c	/^int	ft_philo_action(t_arg *arg, t_philo *philo)$/;"	f
+ft_philo_check_finish	philo_end.c	/^void	ft_philo_check_finish(t_arg *arg, t_philo *philo)$/;"	f
 ft_philo_init	philo.c	/^int	ft_philo_init(t_philo **philo, t_arg *arg)$/;"	f
-ft_philo_start	philo_moves.c	/^int	ft_philo_start(t_arg *arg, t_philo *philo)$/;"	f
-ft_strlen	utils2.c	/^size_t	ft_strlen(char *str)$/;"	f
+ft_philo_printf	philo_start.c	/^int	ft_philo_printf(t_arg *arg, int id, char *msg)$/;"	f
+ft_philo_start	philo.c	/^int	ft_philo_start(t_arg *arg, t_philo *philo)$/;"	f
+ft_strlen	utils1.c	/^size_t	ft_strlen(char *str)$/;"	f
+ft_thread	philo_start.c	/^void	*ft_thread(void *argv)$/;"	f
 id	philo.h	/^	int			id;			\/\/철학자의 인덱스이다$/;"	m	struct:s_philo
 is_space	utils1.c	/^int	is_space(char c)$/;"	f
-last_eat_time	philo.h	/^	long		last_eat_time;$/;"	m	struct:s_philo
+last_eat_time	philo.h	/^	long long	last_eat_time;	\/\/가장 최근에 식사한 시간$/;"	m	struct:s_philo
 left	philo.h	/^	int			left;		\/\/왼쪽에 포크$/;"	m	struct:s_philo
 main	philo.c	/^int	main(int argc, char **argv)$/;"	f
 philo_num	philo.h	/^	int					philo_num;		\/\/철학자의 수, 포크의 수$/;"	m	struct:s_arg
-print	philo.h	/^	pthread_mutex_t		print;			\/\/상태가 섞이면 안되므로 뮤텍스$/;"	m	struct:s_arg
+print	philo.h	/^	pthread_mutex_t		print;			\/\/마찬가지로 출력이 섞이면 안되므로 뮤텍스로 보호해준다$/;"	m	struct:s_arg
 print_err	utils1.c	/^int	print_err(char *message, int errno)$/;"	f
 right	philo.h	/^	int			right;		\/\/오른쪽에 포크$/;"	m	struct:s_philo
 s_arg	philo.h	/^typedef struct s_arg$/;"	s
 s_philo	philo.h	/^typedef struct s_philo$/;"	s
-start_time	philo.h	/^	long		start_time;$/;"	m	struct:s_philo
+start_time	philo.h	/^	long long			start_time;		\/\/먹기 시작한 시간$/;"	m	struct:s_arg
 t_arg	philo.h	/^}	t_arg;$/;"	t	typeref:struct:s_arg
 t_philo	philo.h	/^}	t_philo;$/;"	t	typeref:struct:s_philo
 thread	philo.h	/^	pthread_t	thread;		$/;"	m	struct:s_philo
-thread_start	philo_moves.c	/^void *thread_start(void *argv)$/;"	f
 time_to_die	philo.h	/^	int					time_to_die;	\/\/수명$/;"	m	struct:s_arg
 time_to_eat	philo.h	/^	int					time_to_eat;	\/\/밥먹는 시간$/;"	m	struct:s_arg
 time_to_sleep	philo.h	/^	int					time_to_sleep;	\/\/잠자는 시간$/;"	m	struct:s_arg

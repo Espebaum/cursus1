@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_end.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 15:01:46 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/24 16:55:58 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/25 19:35:29 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ void	ft_philo_check_finish(t_arg *arg, t_philo *philo)
 	while (!arg->finish)
 	{
 		if ((arg->eat_times != 0) && (arg->philo_num == arg->finished_eat))
-		{
 			arg->finish = 1;
-			break ;
-		}
 		i = 0;
 		while (i < arg->philo_num)
 		{
@@ -44,7 +41,6 @@ void	ft_philo_check_finish(t_arg *arg, t_philo *philo)
 			{
 				ft_philo_printf(arg, i, "died");
 				arg->finish = 1;
-				break ;
 			}
 			i++;
 		}

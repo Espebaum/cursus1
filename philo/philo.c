@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 15:00:15 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/25 16:18:47 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/25 19:28:35 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_philo_start(t_arg *arg, t_philo *philo)
 {
-	int		i;
+	int				i;
 
 	i = 0;
 	while (i < arg->philo_num)
@@ -46,7 +46,6 @@ int	ft_philo_init(t_philo **philo, t_arg *arg)
 		(*philo)[i].id = i;
 		(*philo)[i].left = i;
 		(*philo)[i].right = (i + 1) % arg->philo_num;
-		(*philo)[i].last_eat_time = ft_get_time();
 		(*philo)[i].eat_count = 0;
 		i++;
 	}
@@ -113,6 +112,6 @@ int	main(int argc, char **argv)
 	errno = ft_philo_start(&arg, philo);
 	if (errno)
 		return (print_err("philo start error", errno));
-	system("leaks philo");
 	return (0);
 }
+	//system("leaks philo");

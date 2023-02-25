@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_start.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 15:01:42 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/25 16:18:50 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/25 19:18:08 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	*ft_thread(void *argv)
 		ft_philo_printf(arg, philo->id, "is sleeping");
 		ft_pass_time((long long)arg->time_to_sleep, arg);
 		ft_philo_printf(arg, philo->id, "is thinking");
+		usleep(500);
 	}
 	return (0);
 }
