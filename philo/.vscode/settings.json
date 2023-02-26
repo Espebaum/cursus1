@@ -2,6 +2,8 @@
     "files.associations": {
         "pthread.h": "c",
         "chrono": "c",
-        "time.h": "c"
-    }
+        "time.h": "c",
+        "philosophers.h": "c"
+    },
+    "editor.definitionLinkOpensInPeek": true
 }
