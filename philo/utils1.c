@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyopark <gyopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 15:01:38 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/25 16:31:24 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/26 16:59:12 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philosophers.h"
 
 size_t	ft_strlen(char *str)
 {
@@ -51,7 +51,7 @@ int	is_space(char c)
 		return (0);
 }
 
-int	ft_atoi(const char *str)
+int	ft_atoi(char *str)
 {
 	long long	cnt;
 	long long	is_minus;

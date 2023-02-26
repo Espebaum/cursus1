@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "pthread.h": "c",
+        "chrono": "c",
+        "time.h": "c"
+    }
+}
