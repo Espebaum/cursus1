@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:13:51 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/26 19:48:35 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/27 13:32:39 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 
 typedef struct s_philo	t_philo;
+
 typedef struct s_arg
 {
 	int				philo_num;
@@ -30,12 +31,15 @@ typedef struct s_arg
 	int				max_eat_times;
 	long			start_time;
 	int				*fork_status;
-	int				is_safe; //생존여부를 체크하기 위한 변수라고 한다.
+	int				is_safe;
 	t_philo			*philo;
-	pthread_mutex_t	print; // 출력을 lock해줄 print
-	pthread_mutex_t	*forks; // 포크를 lock해줄 forks
-	pthread_mutex_t check_fork; // 포크사용여부 확인을 lock해줄 check_fork
-	pthread_mutex_t	eats; // 식사여부 확인을 lock해줄 eats
+	pthread_mutex_t	print;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	check_fork;
+	pthread_mutex_t	eats;
+	pthread_mutex_t	safe;
+	pthread_mutex_t	time;
+	pthread_mutex_t	e_count;
 }	t_arg;
 
 typedef struct s_philo
@@ -65,5 +69,7 @@ void	do_think(t_philo *philo, t_arg *arg);
 int		check_eat_time(t_arg *arg);
 int		check_eat_num(t_arg *arg);
 void	finish_thread(t_arg *arg);
+int		check_is_safe(t_arg *arg);
+void	ft_check_die(t_arg *arg);
 
 #endif

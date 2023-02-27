@@ -1,0 +1,8 @@
+*.out
+*.o
+*.a
+*.swp
+
+*.log
+
+example_
