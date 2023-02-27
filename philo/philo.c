@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 16:02:31 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/27 13:32:38 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/27 16:09:12 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ft_philo_init(t_arg *arg)
 		arg->philo[i].left_fork = i;
 		arg->philo[i].right_fork = (i + 1) % arg->philo_num;
 		arg->philo[i].shared_arg = arg;
-		arg->philo[i].id = i + 1;
+		arg->philo[i].id = i;
 		i++;
 	}
 	return (0);

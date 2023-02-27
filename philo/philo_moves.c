@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 18:30:39 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/27 13:32:36 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/27 16:11:18 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	ft_pass_time(t_arg *arg, long time_to_move)
 		now = ft_get_time();
 		if ((now - start) >= time_to_move)
 			break ;
+		usleep(100);
 	}
 }
 
@@ -62,6 +63,9 @@ void	do_eat(t_philo *philo, t_arg *arg)
 	if (check_is_safe(arg))
 	{
 		pthread_mutex_lock(&(arg->eats));
+		pthread_mutex_lock(&(arg->time));
+		philo->last_eat_time = ft_get_time();
+		pthread_mutex_unlock(&(arg->time));
 		ft_philo_print(arg, philo, "is eating");
 		pthread_mutex_unlock(&(arg->eats));
 	}

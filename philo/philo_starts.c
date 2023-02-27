@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 17:18:23 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/27 13:53:45 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/27 16:29:49 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,13 @@
 
 int	ft_philo_print(t_arg *arg, t_philo *phi, char *msg)
 {
-	long long	now;
+	long	time;
 
-	now = ft_get_time();
-	if (now == -1)
-	{
-		return (-1);
-	}
 	pthread_mutex_lock(&(arg->print));
+	time = ft_get_time() - arg->start_time;
 	if (check_is_safe(arg) == 1)
 	{
-		printf("%lldms %d %s \n", now - arg->start_time, phi->id, msg);
+		printf("%ldms %d %s \n", time, (phi->id) + 1, msg);
 	}
 	pthread_mutex_unlock(&(arg->print));
 	return (0);
@@ -38,12 +34,9 @@ int	pickup_fork2(t_philo *phi, t_arg *arg)
 	pthread_mutex_lock(&(arg->forks[phi->right_fork]));
 	ft_philo_print(arg, phi, "has taken a fork");
 	arg->fork_status[phi->right_fork] = 1;
-	do_eat(phi, arg);
 	pthread_mutex_unlock(&(arg->check_fork));
+	do_eat(phi, arg);
 	ft_pass_time(arg, arg->time_to_eat);
-	pthread_mutex_lock(&(arg->time));
-	phi->last_eat_time = ft_get_time();
-	pthread_mutex_unlock(&(arg->time));
 	pthread_mutex_lock(&(arg->check_fork));
 	arg->fork_status[phi->right_fork] = 0;
 	arg->fork_status[phi->left_fork] = 0;
@@ -75,7 +68,7 @@ void	*ft_thread(void *philo)
 
 	phi = (t_philo *)philo;
 	arg = phi->shared_arg;
-	if (!phi->id % 2)
+	if (phi->id % 2)
 		usleep(1000);
 	while (check_is_safe(arg))
 	{

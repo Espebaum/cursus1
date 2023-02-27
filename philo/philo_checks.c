@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 17:28:25 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/27 13:36:33 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/27 16:21:33 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ int	check_eat_time(t_arg *arg)
 		pthread_mutex_lock(&(arg->time));
 		time = ft_get_time() - arg->philo[i].last_eat_time;
 		pthread_mutex_unlock(&(arg->time));
-		if (time > (long)arg->time_to_die)
+		if (time >= (long)arg->time_to_die)
 		{
-			pthread_mutex_lock(&(arg->print));
 			pthread_mutex_lock(&(arg->safe));
 			arg->is_safe = 0;
 			pthread_mutex_unlock(&(arg->safe));
+			pthread_mutex_lock(&(arg->print));
 			printf("%ldms %d is died\n", \
-					ft_get_time() - arg->start_time, arg->philo[i].id);
+					ft_get_time() - arg->start_time, arg->philo[i].id + 1);
 			pthread_mutex_unlock(&(arg->print));
 			return (1);
 		}

@@ -6,7 +6,7 @@
 /*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:27:23 by gyopark           #+#    #+#             */
-/*   Updated: 2023/02/27 13:32:34 by gyopark          ###   ########.fr       */
+/*   Updated: 2023/02/27 16:26:43 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,19 @@ void	ft_check_die(t_arg *arg)
 			if (check_eat_num(arg))
 				break ;
 		pthread_mutex_unlock(&(arg->eats));
+		usleep(200);
 	}
 	pthread_mutex_unlock(&(arg->eats));
 	finish_thread(arg);
+}
+
+void	destroy_mutexs(t_arg *arg)
+{
+	pthread_mutex_destroy(&(arg->print));
+	pthread_mutex_destroy(&(arg->eats));
+	pthread_mutex_destroy(&(arg->check_fork));
+	pthread_mutex_destroy(&(arg->time));
+	pthread_mutex_destroy(&(arg->e_count));
 }
 
 void	finish_thread(t_arg *arg)
@@ -41,6 +51,8 @@ void	finish_thread(t_arg *arg)
 			i++;
 		}
 	}
+	else
+		pthread_detach(arg->philo[0].thread);
 	i = 0;
 	while (i < arg->philo_num)
 	{
@@ -50,9 +62,5 @@ void	finish_thread(t_arg *arg)
 	free(arg->forks);
 	free(arg->philo);
 	free(arg->fork_status);
-	pthread_mutex_destroy(&(arg->print));
-	pthread_mutex_destroy(&(arg->eats));
-	pthread_mutex_destroy(&(arg->check_fork));
-	pthread_mutex_destroy(&(arg->time));
-	pthread_mutex_destroy(&(arg->e_count));
+	destroy_mutexs(arg);
 }
