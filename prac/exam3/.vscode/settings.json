@@ -1,0 +1,7 @@
+{
+    "42norminette.trace.server": "messages",
+    "42norminette.showErrors": "one",
+    "files.associations": {
+        "stdio.h": "c"
+    }
+}

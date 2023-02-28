@@ -4,7 +4,7 @@
 
 typedef struct drawing drawing, *Pdrawing;
 
-struct drawing
+struct drawing										//첫째 라인
 {
 	int width;
 	int height;
@@ -13,7 +13,7 @@ struct drawing
 
 typedef struct rectangle rectangle, *Prectangle;
 
-struct rectangle
+struct rectangle									//직사각형의 정보
 {
 	char type;
 	float x;
@@ -104,9 +104,9 @@ void print_info(drawing *zone)
 
 int execute(FILE *file)
 {
-	int scan_ret;
-	rectangle rect;
-	drawing drawing;
+	int scan_ret;		//인수체크
+	rectangle rect;		//직사각형 구조체
+	drawing drawing;	//그리기 구조체
 
 	if (!get_info(file, &drawing))
 	{
@@ -133,8 +133,8 @@ int main(int argc, char **argv)
 
 	if (argc == 2)
 	{
-		file = fopen(argv[1], "r");
-		if (file && !execute(file))
+		file = fopen(argv[1], "r");								// FILE *fopen(const char *filename, const char *mode), "r", 읽기 위해 텍스트 파일을 엽니다. 파일이 있어야 합니다;
+		if (file && !execute(file))								// 
 			return 0;
 		i = ft_strlen("Error: Operation file corrupted\n");
 		write(1, "Error: Operation file corrupted\n", i);

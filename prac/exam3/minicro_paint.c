@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minicro_paint.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaur <abaur@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gyopark < gyopark@student.42seoul.kr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/23 20:52:00 by abaur             #+#    #+#             */
-/*   Updated: 2021/01/29 17:53:01 by abaur            ###   ########.fr       */
+/*   Updated: 2023/02/28 14:32:46 by gyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 
 #define DEBUG 1
 
-FILE* g_filestream;
-char* g_rendertexture;
-int   g_width, g_height;
+FILE*	g_filestream;
+char*	g_rendertexture;
+int		g_width, g_height;
 #define pixel(x, y)	g_rendertexture[(y * g_width) + x]
 
 /*
@@ -58,7 +58,7 @@ struct s_op
 static void renderflush(int fd)
 {
 	for (int y=0; y<g_height; y++)
-	{
+	{ 
 		write(fd, &pixel(0, y), g_width); // Get the adress of the first pixel in a row, and prints the entire row.
 		write(fd, "\n", 1);
 	}
@@ -230,15 +230,15 @@ static int clean_exit(int status)
 
 extern int main(int argc, char** argv)
 {
-	if (argc != 2)
+	if (argc != 2)																		//인자 체크
 	{
-		write(STDOUT_FILENO, "Error: argument\n", 16);
-		return (EXIT_FAILURE);
+		write(STDOUT_FILENO, "Error: argument\n", 16);									//표준 출력에 개행과 함께 에러 출력
+		return (EXIT_FAILURE);															//return 1
 	}
 
-	g_filestream = fopen(argv[1], "r");
-	if (!g_filestream)
-		return(clean_exit(EXIT_FAILURE));
+	g_filestream = fopen(argv[1], "r");													//파일 open
+	if (!g_filestream)																	//null이면
+		return(clean_exit(EXIT_FAILURE));												//return 1
 	
 	if (!get_header())
 		return(clean_exit(EXIT_FAILURE));

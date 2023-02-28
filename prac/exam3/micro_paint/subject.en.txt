@@ -14,7 +14,8 @@ $> ./micro_paint do not fear mathematics | cat -e
 Error: argument$
 $> 
 
-If any problem occurs while you open and/or read the "operation file" write "Error: Operation file corrupted" followed by a \n in STDOUT
+If any problem occurs while you open and/or read the "operation file" write "Error: Operation file corrupted" followed 
+by a \n in STDOUT
 
 The "operation file" will contains lines with one operation per line
 If a line is incorrect an error occurs.
@@ -25,7 +26,8 @@ The lines must be read in order and therefore operations must be executed in the
 There must be at least one space between each variable in a line
 
 WIDTH HEIGHT BACKGROUND_CHAR
-This line is always the first line of the file and it defines the zone where to draw. Your program should not display anything outside the draw zone. It must be there only once.
+This line is always the first line of the file and it defines the zone where to draw. Your program should not 
+display anything outside the draw zone. It must be there only once.
 - WIDTH: must be a int with 0 < WIDTH <= 300, the horizontal number of characters to use for the draw zone
 - HEIGHT: must be a int with 0 < HEIGHT <= 300, the vertical number of characters to use for the draw zone 
 - BACKGROUND_CHAR: any empty space will be filled with BACKGROUND_CHAR
@@ -48,7 +50,8 @@ This operation will draw a filled rectangle
 - HEIGHT: a positive float but not 0, the height of the rectangle (vertical)
 - CHAR: the char use to draw the rectangle
 
-The draw zone is divided in rectangles that can contain one character each (because we are in a terminal...), we will call them pixel
+The draw zone is divided in rectangles that can contain one character each (because we are in a terminal...), 
+we will call them pixel
 To make everything easier, we will use only the top left corner of the pixel to know if that pixel is in a rectangle or not
 A pixel with a top left corner with a distance bigger or equal than 1 from the border of a rectangle is not part of an empty rectangle 
 A pixel with a top left corner with a distance lower than 1 from the border of a rectangle is part of an empty rectangle.
